@@ -1,0 +1,50 @@
+{
+  "$schema": "./schemas/tool-types.schema.json",
+  "version": 1,
+  "toolTypes": [
+    {
+      "id": "map",
+      "displayName": "地图工具",
+      "status": "full-chain-v1",
+      "description": "用于游戏地图、点位、地点筛选、点位详情和地图交互类 H5 工具页面。",
+      "template": "templates/map.json",
+      "componentRegistry": "components/map.json",
+      "datasourceSchema": "datasource-schema/map.meta.schema.json; datasource-schema/map.normalized.schema.json; datasource-schema/tile-manifest.schema.json",
+      "mapping": "mapping/map.json",
+      "examples": "examples/map.json",
+      "classificationSignals": [
+        "数据用于地图或场景区域展示",
+        "数据包含点位、地点、坐标、区域或标记信息",
+        "页面需要基于地图底图定位内容"
+      ]
+    },
+    {
+      "id": "wiki",
+      "displayName": "Wiki",
+      "status": "registered-only",
+      "description": "用于百科、条目、图鉴、资料库等结构化信息页面。",
+      "template": "TODO_NOT_DEFINED",
+      "componentRegistry": "TODO_NOT_DEFINED",
+      "datasourceSchema": "TODO_FROM_DATASOURCE",
+      "mapping": "TODO_FROM_DATASOURCE",
+      "examples": "TODO_FROM_DATASOURCE",
+      "classificationSignals": [
+        "TODO_DEFINE_WITH_USER"
+      ]
+    },
+    {
+      "id": "guide-config",
+      "displayName": "攻略配置",
+      "status": "registered-only",
+      "description": "用于攻略配置、构筑搭配、方案选择、条件筛选等工具页面。",
+      "template": "TODO_NOT_DEFINED",
+      "componentRegistry": "TODO_NOT_DEFINED",
+      "datasourceSchema": "TODO_FROM_DATASOURCE",
+      "mapping": "TODO_FROM_DATASOURCE",
+      "examples": "TODO_FROM_DATASOURCE",
+      "classificationSignals": [
+        "TODO_DEFINE_WITH_USER"
+      ]
+    }
+  ]
+}

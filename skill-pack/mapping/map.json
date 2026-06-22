@@ -1,0 +1,110 @@
+{
+  "$schema": "../schemas/mapping.schema.json",
+  "version": 1,
+  "toolType": "map",
+  "status": "standard-package-v1",
+  "inputPackage": {
+    "meta": "map.meta.json",
+    "data": "map.normalized.json",
+    "optionalTileManifest": "maps[].tile.manifest"
+  },
+  "outputSchema": "../OUTPUT_SCHEMA.json",
+  "rules": [
+    "Only consume the standardized map package. Do not consume a raw crawled source directly.",
+    "Do not invent fields that are absent from map.meta.json or map.normalized.json.",
+    "Keep tile rendering rules data-driven from maps[].tile.",
+    "Keep marker visual size fixed during zoom; recalculate marker screen position from marker.position and current view state.",
+    "For missing marker detail fields, omit that field and use the title-only detail fallback.",
+    "For one-map packages, follow uiRules.singleMapSelect.",
+    "For manifest tiles, use the declared tile manifest. Do not scan directories to infer missing tiles."
+  ],
+  "fieldMappings": [
+    {
+      "source": "map.meta.json > game.name",
+      "target": "pageMeta.title",
+      "required": true
+    },
+    {
+      "source": "map.meta.json > game.logo",
+      "target": "regions[left-panel.header].components[Layout.PictureTitle].props.logoSrc",
+      "required": false
+    },
+    {
+      "source": "map.meta.json > maps[]",
+      "target": "regions[left-panel.controls].components[Form.Select].props.options",
+      "required": true
+    },
+    {
+      "source": "map.meta.json > uiRules.singleMapSelect",
+      "target": "regions[left-panel.controls].components[Form.Select].props.disabled or omitted",
+      "required": true
+    },
+    {
+      "source": "map.normalized.json > categories[].groups[]",
+      "target": "regions[left-panel.controls].components[Base.DropdownItem/Form.Checkbox].dataBinding.groups",
+      "required": true
+    },
+    {
+      "source": "map.normalized.json > markers[]",
+      "target": "regions[map.canvas].components[Feedback.Tooltip].dataBinding.markers",
+      "required": true
+    },
+    {
+      "source": "map.normalized.json > markers[].detail",
+      "target": "regions[map.detail].components[Layout.DescribeCard].dataBinding.selectedMarker.detail",
+      "required": false
+    },
+    {
+      "source": "map.normalized.json > areas[] where type=center-label",
+      "target": "regions[map.canvas].components[dataBinding.areaLabels]",
+      "required": false
+    },
+    {
+      "source": "map.meta.json > assets.iconBase + categories[].groups[].icon",
+      "target": "assets[type=icon]",
+      "required": false
+    },
+    {
+      "source": "map.meta.json > maps[].tile.urlTemplate or maps[].tile.manifest",
+      "target": "assets[type=tile-template or tile-manifest]",
+      "required": true
+    }
+  ],
+  "regionMappings": [
+    {
+      "regionId": "left-panel.header",
+      "components": [
+        "Layout.PictureTitle"
+      ]
+    },
+    {
+      "regionId": "left-panel.controls",
+      "components": [
+        "Form.Select",
+        "Form.SearchBar",
+        "Base.DropdownItem",
+        "Form.Checkbox",
+        "Layout.Scroll"
+      ]
+    },
+    {
+      "regionId": "map.canvas",
+      "components": [
+        "Feedback.Tooltip",
+        "Base.Button"
+      ]
+    },
+    {
+      "regionId": "map.detail",
+      "components": [
+        "Layout.DescribeCard"
+      ]
+    },
+    {
+      "regionId": "bottom-action",
+      "components": [
+        "Base.Button"
+      ]
+    }
+  ]
+}

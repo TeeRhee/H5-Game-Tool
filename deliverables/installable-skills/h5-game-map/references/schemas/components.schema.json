@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.game-h5-tool/schemas/components.schema.json",
+  "title": "Component Registry Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "toolType",
+    "source",
+    "status",
+    "components"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "version": {
+      "type": "integer"
+    },
+    "toolType": {
+      "type": "string"
+    },
+    "source": {
+      "type": "object"
+    },
+    "status": {
+      "type": "string"
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/component"
+      }
+    }
+  },
+  "$defs": {
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "figmaName",
+        "observedUse",
+        "props"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "figmaName": {
+          "type": "string"
+        },
+        "observedVariants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "observedUse": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "typography": {
+          "type": "object"
+        },
+        "props": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

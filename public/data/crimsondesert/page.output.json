@@ -1,0 +1,395 @@
+{
+  "version": 1,
+  "toolType": "map",
+  "templateId": "map",
+  "pageMeta": {
+    "title": "红色沙漠 Map Tool",
+    "description": "红色沙漠 standardized map H5 page configuration.",
+    "sourceStatus": "bound-to-datasource"
+  },
+  "regions": [
+    {
+      "id": "left-panel.header",
+      "components": [
+        {
+          "id": "map-logo",
+          "componentId": "Layout.PictureTitle",
+          "props": {
+            "logoSrc": "images/logo.png",
+            "title": "红色沙漠"
+          },
+          "dataBinding": {
+            "source": "map.meta.json > game"
+          }
+        }
+      ]
+    },
+    {
+      "id": "left-panel.controls",
+      "components": [
+        {
+          "id": "map-select",
+          "componentId": "Form.Select",
+          "props": {
+            "options": [
+              {
+                "id": "world",
+                "label": "世界地图"
+              }
+            ],
+            "value": "world",
+            "disabled": true
+          },
+          "dataBinding": {
+            "source": "map.meta.json > maps"
+          }
+        },
+        {
+          "id": "map-search",
+          "componentId": "Form.SearchBar",
+          "props": {
+            "value": "",
+            "placeholder": "Search markers or filters"
+          },
+          "dataBinding": {
+            "source": "renderer state > query"
+          }
+        },
+        {
+          "id": "filter-tree",
+          "componentId": "Base.DropdownItem",
+          "props": {
+            "childComponent": "Form.Checkbox",
+            "countVisible": true
+          },
+          "dataBinding": {
+            "source": "map.normalized.json > categories[].groups[]",
+            "state": "renderer state > visibleGroupIds"
+          }
+        },
+        {
+          "id": "filter-scroll",
+          "componentId": "Layout.Scroll",
+          "props": {
+            "visible": true
+          },
+          "dataBinding": {
+            "source": "renderer state > filterScroll"
+          }
+        }
+      ]
+    },
+    {
+      "id": "map.canvas",
+      "components": [
+        {
+          "id": "marker-layer",
+          "componentId": "Feedback.Tooltip",
+          "props": {
+            "visible": true,
+            "content": "TODO_FROM_DATASOURCE"
+          },
+          "dataBinding": {
+            "source": "map.normalized.json > markers",
+            "position": "markers[].position",
+            "icon": "categories[].groups[].icon resolved through assets.iconBase"
+          }
+        },
+        {
+          "id": "zoom-in",
+          "componentId": "Base.Button",
+          "props": {
+            "variant": "neutral",
+            "appearance": "filled",
+            "size": "small",
+            "iconOnly": true,
+            "action": "zoomIn"
+          }
+        },
+        {
+          "id": "zoom-out",
+          "componentId": "Base.Button",
+          "props": {
+            "variant": "neutral",
+            "appearance": "filled",
+            "size": "small",
+            "iconOnly": true,
+            "action": "zoomOut"
+          }
+        }
+      ]
+    },
+    {
+      "id": "map.detail",
+      "components": [
+        {
+          "id": "marker-detail",
+          "componentId": "Layout.DescribeCard",
+          "props": {
+            "open": false,
+            "title": "TODO_FROM_DATASOURCE"
+          },
+          "dataBinding": {
+            "source": "renderer state > selectedMarker",
+            "fields": "markers[].title, markers[].detail.description, markers[].detail.image, markers[].detail.tips, markers[].detail.reward",
+            "fallback": "show-title-only"
+          }
+        }
+      ]
+    },
+    {
+      "id": "bottom-action",
+      "components": [
+        {
+          "id": "clear-filters",
+          "componentId": "Base.Button",
+          "props": {
+            "variant": "primary",
+            "appearance": "filled",
+            "size": "small",
+            "action": "resetFilters"
+          },
+          "dataBinding": {
+            "source": "renderer state > query and visibleGroupIds"
+          }
+        }
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "id": "game-logo",
+      "type": "image",
+      "source": "images/logo.png"
+    },
+    {
+      "id": "tile-world",
+      "type": "tile-template",
+      "source": "maps/world/{z}/{x}/{y}.png"
+    },
+    {
+      "id": "icon-group-7692",
+      "type": "icon",
+      "source": "icons/1.png"
+    },
+    {
+      "id": "icon-group-7784",
+      "type": "icon",
+      "source": "icons/2.png"
+    },
+    {
+      "id": "icon-group-7694",
+      "type": "icon",
+      "source": "icons/3.png"
+    },
+    {
+      "id": "icon-group-7695",
+      "type": "icon",
+      "source": "icons/4.png"
+    },
+    {
+      "id": "icon-group-7693",
+      "type": "icon",
+      "source": "icons/5.png"
+    },
+    {
+      "id": "icon-group-7763",
+      "type": "icon",
+      "source": "icons/6.png"
+    },
+    {
+      "id": "icon-group-7696",
+      "type": "icon",
+      "source": "icons/7.png"
+    },
+    {
+      "id": "icon-group-7701",
+      "type": "icon",
+      "source": "icons/8.png"
+    },
+    {
+      "id": "icon-group-7702",
+      "type": "icon",
+      "source": "icons/9.png"
+    },
+    {
+      "id": "icon-group-7700",
+      "type": "icon",
+      "source": "icons/10.png"
+    },
+    {
+      "id": "icon-group-7697",
+      "type": "icon",
+      "source": "icons/11.png"
+    },
+    {
+      "id": "icon-group-7737",
+      "type": "icon",
+      "source": "icons/12.png"
+    },
+    {
+      "id": "icon-group-7741",
+      "type": "icon",
+      "source": "icons/13.png"
+    },
+    {
+      "id": "icon-group-7742",
+      "type": "icon",
+      "source": "icons/14.png"
+    },
+    {
+      "id": "icon-group-7739",
+      "type": "icon",
+      "source": "icons/15.png"
+    },
+    {
+      "id": "icon-group-7738",
+      "type": "icon",
+      "source": "icons/16.png"
+    },
+    {
+      "id": "icon-group-7743",
+      "type": "icon",
+      "source": "icons/17.png"
+    },
+    {
+      "id": "icon-group-7753",
+      "type": "icon",
+      "source": "icons/18.png"
+    },
+    {
+      "id": "icon-group-7751",
+      "type": "icon",
+      "source": "icons/19.png"
+    },
+    {
+      "id": "icon-group-7740",
+      "type": "icon",
+      "source": "icons/20.png"
+    },
+    {
+      "id": "icon-group-7746",
+      "type": "icon",
+      "source": "icons/21.png"
+    },
+    {
+      "id": "icon-group-7748",
+      "type": "icon",
+      "source": "icons/22.png"
+    },
+    {
+      "id": "icon-group-7747",
+      "type": "icon",
+      "source": "icons/23.png"
+    },
+    {
+      "id": "icon-group-7749",
+      "type": "icon",
+      "source": "icons/24.png"
+    },
+    {
+      "id": "icon-group-7756",
+      "type": "icon",
+      "source": "icons/25.png"
+    },
+    {
+      "id": "icon-group-7754",
+      "type": "icon",
+      "source": "icons/26.png"
+    },
+    {
+      "id": "icon-group-7755",
+      "type": "icon",
+      "source": "icons/27.png"
+    },
+    {
+      "id": "icon-group-7762",
+      "type": "icon",
+      "source": "icons/28.png"
+    },
+    {
+      "id": "icon-group-7732",
+      "type": "icon",
+      "source": "icons/29.png"
+    },
+    {
+      "id": "icon-group-7720",
+      "type": "icon",
+      "source": "icons/30.png"
+    },
+    {
+      "id": "icon-group-7736",
+      "type": "icon",
+      "source": "icons/31.png"
+    },
+    {
+      "id": "icon-group-7735",
+      "type": "icon",
+      "source": "icons/32.png"
+    },
+    {
+      "id": "icon-group-7734",
+      "type": "icon",
+      "source": "icons/33.png"
+    },
+    {
+      "id": "icon-group-7727",
+      "type": "icon",
+      "source": "icons/34.png"
+    },
+    {
+      "id": "icon-group-7715",
+      "type": "icon",
+      "source": "icons/35.png"
+    },
+    {
+      "id": "icon-group-7719",
+      "type": "icon",
+      "source": "icons/36.png"
+    },
+    {
+      "id": "icon-group-7717",
+      "type": "icon",
+      "source": "icons/37.png"
+    },
+    {
+      "id": "icon-group-7781",
+      "type": "icon",
+      "source": "icons/38.png"
+    },
+    {
+      "id": "icon-group-7782",
+      "type": "icon",
+      "source": "icons/39.png"
+    },
+    {
+      "id": "icon-group-7757",
+      "type": "icon",
+      "source": "icons/40.png"
+    },
+    {
+      "id": "icon-group-7758",
+      "type": "icon",
+      "source": "icons/41.png"
+    },
+    {
+      "id": "icon-group-7765",
+      "type": "icon",
+      "source": "icons/42.png"
+    },
+    {
+      "id": "icon-group-7699",
+      "type": "icon",
+      "source": "icons/43.png"
+    },
+    {
+      "id": "icon-group-7783",
+      "type": "icon",
+      "source": "icons/44.png"
+    }
+  ],
+  "warnings": [
+    "Single map package: map select should be disabled by renderer.",
+    "Single map package: Form.Select disabled by uiRules.singleMapSelect."
+  ]
+}

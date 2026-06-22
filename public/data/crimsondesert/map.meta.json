@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../skill-pack/datasource-schema/map.meta.schema.json",
+  "version": 1,
+  "game": {
+    "id": "crimsondesert",
+    "name": "红色沙漠",
+    "logo": "images/logo.png"
+  },
+  "maps": [
+    {
+      "id": "world",
+      "name": "世界地图",
+      "default": true,
+      "tile": {
+        "sourceType": "template",
+        "urlTemplate": "maps/world/{z}/{x}/{y}.png",
+        "tileSize": 256,
+        "imageType": "png",
+        "minZoom": 0,
+        "maxZoom": 8,
+        "maxNativeZoom": 6,
+        "tileOrigin": "top-left",
+        "indexOrder": "z-x-y"
+      },
+      "coordinate": {
+        "origin": "top-left",
+        "axis": "x-right-y-down",
+        "width": 8192,
+        "height": 8192,
+        "projectZoom": 5
+      }
+    }
+  ],
+  "assets": {
+    "iconBase": "icons/",
+    "imageBase": "images/"
+  },
+  "uiRules": {
+    "singleMapSelect": "disabled",
+    "detailFallback": "show-title-only",
+    "areaDisplay": "center-label"
+  }
+}
