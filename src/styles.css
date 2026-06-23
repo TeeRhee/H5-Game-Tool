@@ -90,7 +90,7 @@ button:disabled {
 
 .map-popup {
   position: relative;
-  width: 1349px;
+  width: 1160px;
   height: 800px;
   max-width: 100%;
   margin: 0 auto;
@@ -190,7 +190,7 @@ button:disabled {
   z-index: 1;
   left: 0;
   top: 0;
-  width: 1349px;
+  width: 1160px;
   height: 800px;
   min-width: 0;
 }
@@ -215,7 +215,7 @@ button:disabled {
   position: absolute;
   left: 0;
   top: 0;
-  width: 1349px;
+  width: 1160px;
   height: 800px;
   transform-origin: 0 0;
   will-change: transform;
@@ -239,7 +239,7 @@ button:disabled {
 
 .map-canvas__map-image {
   position: absolute;
-  left: 516px;
+  left: 421px;
   top: 46px;
   width: 529px;
   height: 708px;
@@ -326,6 +326,16 @@ button:disabled {
   height: 28px;
   padding: 0;
   border-radius: var(--radius-md);
+}
+
+.map-canvas__zoom-button.gt-button--stroke {
+  border-color: #f5f7fa;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.map-canvas__zoom-button.gt-button--stroke:hover,
+.map-canvas__zoom-button.gt-button--stroke:focus-visible {
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .map-status {
@@ -991,7 +1001,7 @@ button:disabled {
 }
 
 .gt-describe-card--has-image {
-  min-height: 288px;
+  min-height: 266px;
 }
 
 .gt-describe-card--no-image {

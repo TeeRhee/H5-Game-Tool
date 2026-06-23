@@ -1,0 +1,5 @@
+interface:
+  display_name: "H5 Map Page Composer"
+  short_description: "Compose H5 map pages from approved contracts"
+  default_prompt: "Use $h5-map-page-composer to generate a constrained H5 map page JSON from a standard package or create a template-based page skeleton with TODO_FROM_DATASOURCE placeholders."
+

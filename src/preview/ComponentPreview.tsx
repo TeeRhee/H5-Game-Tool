@@ -21,7 +21,7 @@ import {
 } from "../components/game-tool";
 
 const DEFAULT_DATA_BASE = "/data/crimsondesert/";
-const CANVAS_WIDTH = 1349;
+const CANVAS_WIDTH = 1160;
 const CANVAS_HEIGHT = 800;
 
 function getDataBase() {
@@ -682,6 +682,8 @@ export function ComponentPreview() {
             <Button
               className="map-canvas__zoom-button"
               variant="neutral"
+              appearance="stroke"
+              size="xsmall"
               iconOnly
               aria-label="放大地图"
               leftIcon={<RemixIcon name="add-fill" size={20} />}
@@ -692,6 +694,8 @@ export function ComponentPreview() {
             <Button
               className="map-canvas__zoom-button"
               variant="neutral"
+              appearance="stroke"
+              size="xsmall"
               iconOnly
               aria-label="缩小地图"
               leftIcon={<RemixIcon name="subtract-line" size={20} />}

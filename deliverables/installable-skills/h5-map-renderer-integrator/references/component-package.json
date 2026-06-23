@@ -1,0 +1,19 @@
+{
+  "packageName": "@h5-game-tool/map-components",
+  "version": "0.1.1",
+  "defaultPackageSpec": "@h5-game-tool/map-components@0.1.1",
+  "source": "npm-or-compatible-tarball",
+  "exports": {
+    "components": "@h5-game-tool/map-components",
+    "styles": "@h5-game-tool/map-components/style.css",
+    "tokens": "@h5-game-tool/map-components/tokens.css"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "notes": [
+    "Update defaultPackageSpec after publishing the component package to npm, an internal registry, a git URL, or a .tgz URL.",
+    "For local handoff testing, pass --package-spec <absolute-or-relative-path-to-component-package-folder-or-tarball>."
+  ]
+}

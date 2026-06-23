@@ -1,0 +1,5 @@
+interface:
+  display_name: "H5 Map Renderer Integrator"
+  short_description: "Wire generated H5 map pages into front-end projects"
+  default_prompt: "Use $h5-map-renderer-integrator to connect page.output.json and a standard map package into an existing front-end renderer project without consuming raw crawler data."
+

@@ -1,0 +1,115 @@
+{
+  "$schema": "../schemas/template.schema.json",
+  "version": 1,
+  "id": "map",
+  "displayName": "地图工具模板",
+  "source": {
+    "type": "figma",
+    "fileKey": "fnA9NEBTDyxU94M0fvNy8e",
+    "nodeId": "58:1896",
+    "notes": "Based on the existing Figma map frame and observed component instances."
+  },
+  "status": "design-contract-ready",
+  "viewport": {
+    "observedWidth": 1160,
+    "observedHeight": 800,
+    "responsiveRules": "TODO_DEFINE_WITH_USER",
+    "templateColors": {
+      "windowBackground": "#1F2224",
+      "panelBackground": "#2C3134",
+      "searchBackground": "#353A3D",
+      "fieldStroke": "#43484B",
+      "windowStroke": "#757575 @ 40%"
+    }
+  },
+  "regions": [
+    {
+      "id": "left-panel.header",
+      "displayName": "左侧 Logo 区",
+      "purpose": "按地图模板预留游戏 Logo 图片区域，不渲染普通文字标题。",
+      "allowedComponents": [
+        "Layout.PictureTitle"
+      ],
+      "dataRequirement": "TODO_FROM_USER_ASSET"
+    },
+    {
+      "id": "left-panel.controls",
+      "displayName": "左侧筛选与搜索区",
+      "purpose": "承载地图筛选、搜索和分类入口。",
+      "allowedComponents": [
+        "Form.Select",
+        "Form.SearchBar",
+        "Base.DropdownCard",
+        "Base.DropdownOption",
+        "Base.DropdownItem",
+        "Base.Divider",
+        "Form.Checkbox",
+        "Layout.Scroll"
+      ],
+      "layout": {
+        "sidebar": "x=12, y=12, w=264, h=776, radius=8",
+        "scroll": "Layout.Scroll instance x=252, y=102, w=12, h=586 inside Panel Content; used for the left filter list visual scrollbar."
+      },
+      "dataRequirement": "TODO_FROM_DATASOURCE"
+    },
+    {
+      "id": "map.canvas",
+      "displayName": "地图主区域",
+      "purpose": "作为贯穿整个弹窗的底层地图画布，展示地图底图、点位和地图交互层；Sidebar 与 Footer 叠在其上方。",
+      "allowedComponents": [
+        "Feedback.Tooltip",
+        "Base.Button"
+      ],
+      "pendingDataBoundElements": [
+        "map background image or tile layer",
+        "marker layer",
+        "zoom control buttons"
+      ],
+      "layout": {
+        "canvas": "x=0, y=0, w=1160, h=800",
+        "observedMapImage": "x=516, y=46, w=529, h=708",
+        "observedTooltipInstance": "x=658, y=386, w=32, h=38; renderer anchor uses bottom-center tail point",
+        "zoomControls": "x=1301, y=12, w=36, h=64"
+      },
+      "dataRequirement": "TODO_FROM_DATASOURCE"
+    },
+    {
+      "id": "map.detail",
+      "displayName": "地图详情浮层",
+      "purpose": "展示选中点位或对象的说明信息。",
+      "allowedComponents": [
+        "Layout.DescribeCard"
+      ],
+      "dataRequirement": "TODO_FROM_DATASOURCE"
+    },
+    {
+      "id": "top-toolbar",
+      "displayName": "顶部工具栏",
+      "purpose": "Figma 中的 Windows 窗口最小化、最大化、关闭示意，不属于 H5 页面内组件。",
+      "allowedComponents": [],
+      "dataRequirement": "NOT_RENDERED_BY_AI"
+    },
+    {
+      "id": "bottom-action",
+      "displayName": "底部主操作区",
+      "purpose": "承载地图页面的主要行动按钮；地图类型 v0 中用于取消所有筛选。",
+      "allowedComponents": [
+        "Base.Button"
+      ],
+      "dataRequirement": "ACTION_CLEAR_ALL_FILTERS"
+    }
+  ],
+  "requiredRendererBehavior": [
+    "Reject unknown region ids.",
+    "Reject components not listed in the target region's allowedComponents.",
+    "Reject arbitrary HTML or arbitrary component code in AI output.",
+    "Map canvas content should support pan/drag and mouse-wheel zoom in the renderer/layout layer.",
+    "Map background/content scales with zoom; Tooltip markers keep a constant visual size while their positions are recalculated from map coordinates.",
+    "Tooltip markers must render below Layout.DescribeCard when overlapping.",
+    "Layout.DescribeCard title and close button must align on the same visual row when image and description are absent.",
+    "When the pointer is inside map.canvas, canvas drag and wheel zoom should prevent native image dragging and prevent the surrounding page from scrolling.",
+    "Do not render development-only counters or status text in final generated pages. Preview-only marker count text such as shown/total markers is not part of the Figma map template.",
+    "Bottom action button clears search text and all active filter selections.",
+    "Allow data-bound values only after datasource schema and mapping exist."
+  ]
+}

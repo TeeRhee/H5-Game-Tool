@@ -11,7 +11,7 @@
   },
   "status": "design-contract-ready",
   "viewport": {
-    "observedWidth": 1349,
+    "observedWidth": 1160,
     "observedHeight": 800,
     "responsiveRules": "TODO_DEFINE_WITH_USER",
     "templateColors": {
@@ -66,10 +66,10 @@
         "zoom control buttons"
       ],
       "layout": {
-        "canvas": "x=0, y=0, w=1349, h=800",
-        "observedMapImage": "x=516, y=46, w=529, h=708",
+        "canvas": "x=0, y=0, w=1160, h=800",
+        "observedMapImage": "x=421, y=46, w=529, h=708",
         "observedTooltipInstance": "x=658, y=386, w=32, h=38; renderer anchor uses bottom-center tail point",
-        "zoomControls": "x=1301, y=12, w=36, h=64"
+        "zoomControls": "x=1112, y=12, w=36, h=64"
       },
       "dataRequirement": "TODO_FROM_DATASOURCE"
     },
@@ -80,6 +80,9 @@
       "allowedComponents": [
         "Layout.DescribeCard"
       ],
+      "layout": {
+        "describeCard": "x=868, y=522, w=280, h=266; fixed to the lower-right of the 1160 x 800 map template"
+      },
       "dataRequirement": "TODO_FROM_DATASOURCE"
     },
     {

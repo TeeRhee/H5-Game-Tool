@@ -448,7 +448,7 @@
                                               "description":  "Body/SM, 12px/18px, Microsoft YaHei UI Regular"
                                           },
                            "observedStructure":  {
-                                                     "sourceSize":  "280x288 with image/media area",
+                                                    "sourceSize":  "280x266 with image/media area",
                                                      "layoutRule":  "When imageSrc is absent, card height must adapt to title and description content instead of keeping the full image-card height.",
                                                      "closeButton":  "Top-right close button default state has transparent background; hover/focus state shows the white alpha background.",
                                                      "noMediaTitleRow":  "When imageSrc and description are both absent, title and close button must align on the same visual row; close top offset is adjusted only for the no-image state.",

@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.game-h5-tool/datasource-schema/map.normalized.schema.json",
+  "title": "Normalized Map Data Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "categories",
+    "markers"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "version": {
+      "type": "integer",
+      "const": 1
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/category"
+      }
+    },
+    "markers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/marker"
+      }
+    },
+    "areas": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/area"
+      }
+    }
+  },
+  "$defs": {
+    "category": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "groups"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/group"
+          }
+        }
+      }
+    },
+    "group": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "count"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "icon": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "marker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "mapId",
+        "categoryId",
+        "groupId",
+        "title",
+        "position"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mapId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "categoryId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "groupId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "position": {
+          "$ref": "#/$defs/point"
+        },
+        "detail": {
+          "$ref": "#/$defs/detail"
+        },
+        "raw": {
+          "type": "object"
+        }
+      }
+    },
+    "area": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "mapId",
+        "name",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mapId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "position": {
+          "$ref": "#/$defs/point"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "center-label",
+            "polygon"
+          ]
+        },
+        "polygon": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "$ref": "#/$defs/point"
+          }
+        }
+      }
+    },
+    "point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      }
+    },
+    "detail": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "tips": {
+          "type": "string"
+        },
+        "reward": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

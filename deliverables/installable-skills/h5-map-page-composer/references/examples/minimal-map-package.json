@@ -1,0 +1,188 @@
+{
+  "version": 1,
+  "toolType": "map",
+  "sourcePackage": "public/data/crimsondesert",
+  "note": "Real Crimson Desert sample reduced to one category, one group, one marker, and one area. The full package is validated by npm run validate:crimsondesert.",
+  "input": {
+    "map.meta.json": {
+      "version": 1,
+      "game": {
+        "id": "crimsondesert",
+        "name": "Red Desert",
+        "logo": "images/logo.png"
+      },
+      "maps": [
+        {
+          "id": "world",
+          "name": "World Map",
+          "default": true,
+          "tile": {
+            "sourceType": "template",
+            "urlTemplate": "maps/world/{z}/{x}/{y}.png",
+            "tileSize": 256,
+            "imageType": "png",
+            "minZoom": 0,
+            "maxZoom": 8,
+            "maxNativeZoom": 6,
+            "tileOrigin": "top-left",
+            "indexOrder": "z-x-y"
+          },
+          "coordinate": {
+            "origin": "top-left",
+            "axis": "x-right-y-down",
+            "width": 8192,
+            "height": 8192,
+            "projectZoom": 5
+          }
+        }
+      ],
+      "assets": {
+        "iconBase": "icons/",
+        "imageBase": "images/"
+      },
+      "uiRules": {
+        "singleMapSelect": "disabled",
+        "detailFallback": "show-title-only",
+        "areaDisplay": "center-label"
+      }
+    },
+    "map.normalized.json": {
+      "version": 1,
+      "categories": [
+        {
+          "id": "cat-%e5%9c%b0%e7%82%b9",
+          "name": "Location",
+          "groups": [
+            {
+              "id": "group-7692",
+              "name": "Stronghold",
+              "icon": "1.png",
+              "count": 491
+            }
+          ]
+        }
+      ],
+      "markers": [
+        {
+          "id": "point-1",
+          "mapId": "world",
+          "categoryId": "cat-%e5%9c%b0%e7%82%b9",
+          "groupId": "group-7692",
+          "title": "Sea Fog Wreckage",
+          "position": {
+            "x": 3331.9307726256566,
+            "y": 5220.5377131165815
+          },
+          "detail": {},
+          "raw": {
+            "sourceId": 1,
+            "sourceGroupId": 7692
+          }
+        }
+      ],
+      "areas": [
+        {
+          "id": "area-1",
+          "mapId": "world",
+          "name": "Pavel",
+          "position": {
+            "x": 4144.700488745698,
+            "y": 3130.1844459565636
+          },
+          "type": "center-label"
+        }
+      ]
+    }
+  },
+  "expectedOutputShape": {
+    "version": 1,
+    "toolType": "map",
+    "templateId": "map",
+    "pageMeta": {
+      "title": "Red Desert Map Tool",
+      "sourceStatus": "bound-to-datasource"
+    },
+    "regions": [
+      {
+        "id": "left-panel.header",
+        "components": [
+          {
+            "id": "map-logo",
+            "componentId": "Layout.PictureTitle",
+            "props": {
+              "logoSrc": "images/logo.png",
+              "title": "Red Desert"
+            },
+            "dataBinding": {
+              "source": "map.meta.json > game"
+            }
+          }
+        ]
+      },
+      {
+        "id": "left-panel.controls",
+        "components": [
+          {
+            "id": "map-select",
+            "componentId": "Form.Select",
+            "props": {
+              "options": [
+                {
+                  "id": "world",
+                  "label": "World Map"
+                }
+              ],
+              "value": "world",
+              "disabled": true
+            },
+            "dataBinding": {
+              "source": "map.meta.json > maps"
+            }
+          },
+          {
+            "id": "map-search",
+            "componentId": "Form.SearchBar",
+            "props": {
+              "value": "",
+              "placeholder": "Search markers or filters"
+            },
+            "dataBinding": {
+              "source": "renderer state > query"
+            }
+          }
+        ]
+      },
+      {
+        "id": "map.canvas",
+        "components": [
+          {
+            "id": "marker-layer",
+            "componentId": "Feedback.Tooltip",
+            "props": {
+              "visible": true,
+              "content": "TODO_FROM_DATASOURCE"
+            },
+            "dataBinding": {
+              "source": "map.normalized.json > markers"
+            }
+          }
+        ]
+      }
+    ],
+    "assets": [
+      {
+        "id": "game-logo",
+        "type": "image",
+        "source": "images/logo.png"
+      },
+      {
+        "id": "tile-world",
+        "type": "tile-template",
+        "source": "maps/world/{z}/{x}/{y}.png"
+      }
+    ],
+    "warnings": [
+      "Single map package: Form.Select disabled by uiRules.singleMapSelect."
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+interface:
+  display_name: "H5 Map Data Normalizer"
+  short_description: "Normalize and validate game map data"
+  default_prompt: "Use $h5-map-data-normalizer to inspect raw game map data, create a standard map package, and validate it without guessing missing field meanings."
+

@@ -1,0 +1,45 @@
+{
+  "name": "@h5-game-tool/map-components",
+  "version": "0.1.1",
+  "description": "Reusable React components, tokens, and styles for H5 game map tools.",
+  "type": "module",
+  "private": false,
+  "sideEffects": [
+    "./dist/style.css",
+    "./dist/tokens.css"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./style.css": "./dist/style.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "package.json",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node scripts/copy-assets.mjs",
+    "clean": "node scripts/clean.mjs"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "remixicon": "^4.9.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "typescript": "^5.7.0"
+  }
+}

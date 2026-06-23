@@ -53,9 +53,10 @@ The v1 runnable target is the `map` tool type. `wiki` and `guide-config` are reg
 - The renderer should call registered components from the component registry instead of accepting arbitrary component names.
 - For any component-related change, synchronize implementation, styles, preview usage, component registry JSON, Figma documentation cards, and validation results together.
 - The map left header is a reserved game-logo image area. Use a user-provided logo asset; do not invent a logo and do not render a normal text title there.
-- `map.canvas` is the full-window background canvas (`1349 x 800`) under the Sidebar and Footer overlays. Do not treat it as only the right-side visible map area.
+- `map.canvas` is the full-window background canvas (`1160 x 800`) under the Sidebar and Footer overlays. Do not treat it as only the right-side visible map area.
 - The map Sidebar is `x=12, y=12, w=264, h=776` with radius `8`.
 - The left filter list uses `Layout.Scroll` as a visual scrollbar. In the current template it is `x=252, y=102, w=12, h=586` inside Panel Content; the renderer may bind it to the real list scroll state.
+- `Layout.DescribeCard` is fixed to the lower-right of the map template at `x=868, y=522, w=280, h=266`.
 - Do not render development-only status text in final generated pages. The local preview may show debug counters such as "shown markers / total markers", but this is not part of the Figma map template and must not be emitted by the skill output.
 - For map canvas rendering, pan/drag and wheel zoom belong to the layout/renderer layer. Background content may scale, but Tooltip marker visual size must remain constant while marker screen positions are recalculated from map coordinates and zoom.
 - Tooltip markers must render below `Layout.DescribeCard` when overlapping, because `Layout.DescribeCard` is the active detail surface.
