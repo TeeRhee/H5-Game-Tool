@@ -1,4 +1,4 @@
-/* H5 Game Tool Design Tokens
+﻿/* H5 Game Tool Design Tokens
  * Source: Figma file fnA9NEBTDyxU94M0fvNy8e
  * Exported: 2026-06-24 11:18:09 +08:00
  * Includes all Figma variable modes: Primitives/PC, Primitives/Mobile, Semantic/Dark, Semantic/Light.
@@ -395,6 +395,7 @@
   --space-layout-section-gap: var(--space-layout-300);
   --space-layout-section-gap-lg: var(--space-layout-700);
 }
+
 [data-theme="light"], .theme-light, .mode-light {
   --color-bg-alpha-soft: var(--color-alpha-black-alpha-4);
   --color-bg-alpha-strong: var(--color-alpha-black-alpha-12);
@@ -464,3 +465,6 @@
   --space-layout-section-gap: var(--space-layout-300);
   --space-layout-section-gap-lg: var(--space-layout-700);
 }
+
+
+

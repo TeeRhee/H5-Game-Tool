@@ -2,7 +2,7 @@
   "$schema": "../schemas/mapping.schema.json",
   "version": 1,
   "toolType": "map",
-  "status": "standard-package-v1",
+  "status": "standard-package-v1-mobile-aligned",
   "inputPackage": {
     "meta": "map.meta.json",
     "data": "map.normalized.json",
@@ -16,7 +16,18 @@
     "Keep marker visual size fixed during zoom; recalculate marker screen position from marker.position and current view state.",
     "For missing marker detail fields, omit that field and use the title-only detail fallback.",
     "For one-map packages, follow uiRules.singleMapSelect.",
-    "For manifest tiles, use the declared tile manifest. Do not scan directories to infer missing tiles."
+    "For manifest tiles, use the declared tile manifest. Do not scan directories to infer missing tiles.",
+    "Desktop and mobile consume the same standardized map package and share the same state model.",
+    "On mobile, map select binds to mobile.bottom-sheet.controls instead of left-panel.controls.",
+    "On mobile, search binds to mobile.search-overlay; do not nest Form.SearchBar inside BottomSheet.",
+    "On mobile, category and group rows bind to mobile.bottom-sheet.list instead of the desktop sidebar list.",
+    "On mobile, clear-all action binds to mobile.bottom-sheet.footer.",
+    "Theme mode is selected from the host/original website background: dark source uses dark tokens; light source uses light tokens when provided by the token export.",
+    "Mobile selected-marker detail binds selected marker detail to mobile.map.detail using Layout.DescribeCard and hides the bottom sheet while the detail card is open.",
+    "Mobile selected Tooltip marker may use a selected visual state, but marker coordinates still come from map.normalized.json > markers[].position.",
+    "Mobile search-focused state may temporarily omit the footer action; this does not change the clear-all action contract.",
+    "Mobile bottomSheetCollapsed state keeps the sheet handle and map select visible at x=0,y=620,w=375,h=100, clips list content, and hides footer actions without changing data bindings.",
+    "Mobile selected-marker detail hides the bottom sheet while Layout.DescribeCard is open; closing the detail card restores the previous bottomSheetState."
   ],
   "fieldMappings": [
     {
@@ -68,6 +79,56 @@
       "source": "map.meta.json > maps[].tile.urlTemplate or maps[].tile.manifest",
       "target": "assets[type=tile-template or tile-manifest]",
       "required": true
+    },
+    {
+      "source": "map.meta.json > maps[]",
+      "target": "regions[mobile.bottom-sheet.controls].components[Form.Select].props.options",
+      "required": true
+    },
+    {
+      "source": "map.meta.json > uiRules.singleMapSelect",
+      "target": "regions[mobile.bottom-sheet.controls].components[Form.Select].props.disabled or omitted",
+      "required": true
+    },
+    {
+      "source": "runtime state > searchQuery",
+      "target": "regions[mobile.search-overlay].components[Form.SearchBar].props.value",
+      "required": false
+    },
+    {
+      "source": "map.normalized.json > categories[].groups[]",
+      "target": "regions[mobile.bottom-sheet.list].components[Base.DropdownItem/Form.Checkbox/Base.Badge].dataBinding.groups",
+      "required": true
+    },
+    {
+      "source": "map.normalized.json > markers[]",
+      "target": "regions[mobile.map.canvas or map.canvas].components[Feedback.Tooltip].dataBinding.markers",
+      "required": true
+    },
+    {
+      "source": "runtime state > clearAllFilters",
+      "target": "regions[mobile.bottom-sheet.footer].components[Base.Button].props.action=resetFilters",
+      "required": true
+    },
+    {
+      "source": "map.normalized.json > selected marker detail",
+      "target": "regions[mobile.map.detail].components[Layout.DescribeCard].dataBinding.selectedMarker.detail",
+      "required": false
+    },
+    {
+      "source": "runtime state > selectedMarkerId",
+      "target": "regions[map.canvas].components[Feedback.Tooltip].props.selected",
+      "required": false
+    },
+    {
+      "source": "runtime state > bottomSheetState",
+      "target": "regions[mobile.bottom-sheet.controls/list/footer].layoutState collapsed|default|expanded|searchFocused",
+      "required": false
+    },
+    {
+      "source": "runtime state > closeSelectedMarkerDetail",
+      "target": "regions[mobile.map.detail].visibility=false and restore previous bottomSheetState",
+      "required": false
     }
   ],
   "regionMappings": [
@@ -104,6 +165,39 @@
       "regionId": "bottom-action",
       "components": [
         "Base.Button"
+      ]
+    },
+    {
+      "regionId": "mobile.bottom-sheet.controls",
+      "components": [
+        "Form.Select"
+      ]
+    },
+    {
+      "regionId": "mobile.search-overlay",
+      "components": [
+        "Form.SearchBar"
+      ]
+    },
+    {
+      "regionId": "mobile.bottom-sheet.list",
+      "components": [
+        "Base.DropdownItem",
+        "Form.Checkbox",
+        "Base.Divider",
+        "Base.Badge"
+      ]
+    },
+    {
+      "regionId": "mobile.bottom-sheet.footer",
+      "components": [
+        "Base.Button"
+      ]
+    },
+    {
+      "regionId": "mobile.map.detail",
+      "components": [
+        "Layout.DescribeCard"
       ]
     }
   ]

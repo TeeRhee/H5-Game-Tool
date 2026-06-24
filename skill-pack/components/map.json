@@ -1,480 +1,538 @@
 {
-    "$schema":  "../schemas/components.schema.json",
-    "version":  1,
-    "toolType":  "map",
-    "source":  {
-                   "type":  "figma",
-                   "fileKey":  "fnA9NEBTDyxU94M0fvNy8e",
-                   "nodeId":  "58:1896"
-               },
-    "status":  "react-props-v0",
-    "components":  [
-                       {
-                           "id":  "Layout.PictureTitle",
-                           "figmaName":  "Layout / PictureTitle / Default",
-                           "observedUse":  "left-panel.header",
-                           "observedStructure":  {
-                                                     "size":  "264x80",
-                                                     "logoSlot":  "208x60, x=28, y=10, centered inside the header area",
-                                                     "rule":  "This component reserves the game logo image area. It does not render a visible text title in the map template."
-                                                 },
-                           "props":  {
-                                         "logoSrc":  {
-                                                         "type":  "string",
-                                                         "required":  true,
-                                                         "source":  "TODO_FROM_USER_ASSET",
-                                                         "rule":  "User-provided game logo image. Do not invent or substitute a fake logo."
-                                                     },
-                                         "title":  {
-                                                       "type":  "string",
-                                                       "required":  false,
-                                                       "source":  "TODO_FROM_DATASOURCE_OR_USER_INPUT",
-                                                       "rule":  "Used only for accessibility/alt text if available; not rendered as visible title text in the map header."
-                                                   }
-                                     }
-                       },
-                       {
-                           "id":  "Layout.Scroll",
-                           "figmaName":  "Layout / Scroll /Default",
-                           "observedUse":  "left-panel.controls",
-                           "observedVariants":  [
-                                                    "Style=Default, Size=X-Small"
-                                                ],
-                           "observedStructure":  {
-                                                     "templateInstance":  "x=252, y=102, w=12, h=586 inside Panel Content",
-                                                     "track":  "12px wide, background follows panel background #2C3134 in the map template",
-                                                     "thumb":  "4px wide, 80px high, x=4, radius 999, fill #FFFFFF @ 12%",
-                                                     "rule":  "Use as the visual scrollbar for the left filter list. It reflects the list scroll position; it does not define datasource fields."
-                                                 },
-                           "props":  {
-                                         "scrollTop":  {
-                                                           "type":  "number",
-                                                           "required":  false,
-                                                           "source":  "renderer state"
-                                                       },
-                                         "scrollHeight":  {
-                                                              "type":  "number",
-                                                              "required":  false,
-                                                              "source":  "renderer state"
-                                                          },
-                                         "viewportHeight":  {
-                                                                "type":  "number",
-                                                                "required":  false,
-                                                                "source":  "renderer state"
-                                                            },
-                                         "visible":  {
-                                                         "type":  "boolean",
-                                                         "required":  false,
-                                                         "default":  true,
-                                                         "rule":  "Renderer may hide it when list content does not overflow."
-                                                     }
-                                     }
-                       },
-                       {
-                           "id":  "Form.Select",
-                           "figmaName":  "Form / Select / Default",
-                           "observedVariants":  [
-                                                    "state=default",
-                                                    "state=hover",
-                                                    "state=active",
-                                                    "state=filled",
-                                                    "state=disable"
-                                                ],
-                           "observedUse":  "left-panel.controls",
-                           "typography":  {
-                                              "label":  "Inline Figma text, Microsoft YaHei Regular, 14px/19.5px"
-                                          },
-                           "props":  {
-                                         "options":  {
-                                                         "type":  "array",
-                                                         "required":  true,
-                                                         "source":  "TODO_FROM_DATASOURCE"
-                                                     },
-                                         "value":  {
-                                                       "type":  "string",
-                                                       "required":  false,
-                                                       "source":  "selected state"
-                                                   },
-                                         "placeholder":  {
-                                                             "type":  "string",
-                                                             "required":  false,
-                                                             "default":  "选择地图"
-                                                         },
-                                         "disabled":  {
-                                                          "type":  "boolean",
-                                                          "required":  false,
-                                                          "default":  false,
-                                                          "rule":  "When true, render state=disable and do not open DropdownCard. Renderer may also disable Select when the datasource has only one map and uiRules.singleMapSelect requests disabled behavior."
-                                                      }
-                                     },
-                           "observedStructure":  {
-                                                     "size":  "248x42",
-                                                     "states":  {
-                                                                    "default":  "background #2C3134, stroke #43484B, text #ECEEF0, arrow #767C7F",
-                                                                    "hover":  "background #43484B, stroke #43484B, text #ECEEF0, arrow #AEB4B8",
-                                                                    "active":  "background #2C3134, stroke #DCB325, text #ECEEF0, arrow-up #ECEEF0",
-                                                                    "disable":  "background #2C3134, stroke #43484B, text #ECEEF0, arrow #696E72; no dropdown interaction"
-                                                                }
-                                                 }
-                       },
-                       {
-                           "id":  "Form.SearchBar",
-                           "figmaName":  "Form / SearchBar / Default",
-                           "observedVariants":  [
-                                                    "state=default",
-                                                    "state=hover",
-                                                    "state=active"
-                                                ],
-                           "observedUse":  "left-panel.controls",
-                           "typography":  {
-                                              "input":  "Body/MD, 14px/20px, Microsoft YaHei UI Regular",
-                                              "placeholder":  "Default color #AEB4B8; hover color #ECEEF0; active text color #FFFFFF."
-                                          },
-                           "observedStructure":  {
-                                                     "size":  "248x36",
-                                                     "states":  {
-                                                                    "default":  "opacity 80%, background #353A3D, no visible stroke",
-                                                                    "hover":  "opacity 80%, background #43484B, no visible stroke",
-                                                                    "active":  "opacity 80%, background #2C3134, 1px #DCB325 stroke, empty focused input, clear icon hidden",
-                                                                    "filled":  "opacity 80%, background #2C3134, 1px #DCB325 stroke, filled input text, right close-circle-fill icon visible"
-                                                                },
-                                                     "icons":  {
-                                                                   "leading":  "search-2-line, 18x18",
-                                                                   "clear":  "close-circle-fill, 18x18, filled state only"
-                                                               }
-                                                 },
-                           "props":  {
-                                         "value":  {
-                                                       "type":  "string",
-                                                       "required":  true,
-                                                       "source":  "user input"
-                                                   },
-                                         "placeholder":  {
-                                                             "type":  "string",
-                                                             "required":  false,
-                                                             "default":  "搜索"
-                                                         },
-                                         "onClear":  {
-                                                         "type":  "interaction",
-                                                         "required":  false,
-                                                         "rule":  "Clear button appears only when value is non-empty."
-                                                     }
-                                     }
-                       },
-                       {
-                           "id":  "Form.Checkbox",
-                           "figmaName":  "Form / Checkbox / Default",
-                           "observedVariants":  [
-                                                    "checkState=Default, interactionState=Default",
-                                                    "checkState=Default, interactionState=Hover",
-                                                    "checkState=Default, interactionState=Pressed",
-                                                    "checkState=Default, interactionState=Disabled",
-                                                    "checkState=Active, interactionState=Default",
-                                                    "checkState=Active, interactionState=Hover",
-                                                    "checkState=Active, interactionState=Pressed",
-                                                    "checkState=Active, interactionState=Disabled",
-                                                    "checkState=indeterminate, interactionState=Default",
-                                                    "checkState=indeterminate, interactionState=Hover",
-                                                    "checkState=indeterminate, interactionState=Pressed",
-                                                    "checkState=indeterminate, interactionState=Disabled"
-                                                ],
-                           "observedUse":  "left-panel.controls",
-                           "typography":  {
-                                              "label":  "Body/MD, 14px/20px, Microsoft YaHei UI Regular"
-                                          },
-                           "props":  {
-                                         "label":  {
-                                                       "type":  "string",
-                                                       "required":  true,
-                                                       "source":  "TODO_FROM_DATASOURCE"
-                                                   },
-                                         "state":  {
-                                                       "type":  "enum",
-                                                       "required":  true,
-                                                       "values":  [
-                                                                      "checked",
-                                                                      "unchecked",
-                                                                      "indeterminate"
-                                                                  ]
-                                                   },
-                                         "child":  {
-                                                       "type":  "boolean",
-                                                       "required":  false,
-                                                       "default":  false,
-                                                       "rule":  "child items use 32px left padding"
-                                                   }
-                                     }
-                       },
-                       {
-                           "id":  "Base.DropdownItem",
-                           "figmaName":  "Base / DropdownItem / Default",
-                           "observedVariants":  [
-                                                    "state=Default",
-                                                    "state=Hover",
-                                                    "state=Pressed"
-                                                ],
-                           "observedUse":  "left-panel.controls",
-                           "typography":  {
-                                              "label":  "Body/MD, 14px/20px, Microsoft YaHei UI Regular",
-                                              "count":  "Label/MD, 12px/14px, Microsoft YaHei UI Regular"
-                                          },
-                           "props":  {
-                                         "label":  {
-                                                       "type":  "string",
-                                                       "required":  true,
-                                                       "source":  "TODO_FROM_DATASOURCE"
-                                                   },
-                                         "count":  {
-                                                       "type":  "number",
-                                                       "required":  false,
-                                                       "source":  "TODO_FROM_DATASOURCE",
-                                                       "rule":  "required for child/item rows when source provides counts; parent rows do not need count"
-                                                   },
-                                         "active":  {
-                                                        "type":  "boolean",
-                                                        "required":  false,
-                                                        "default":  false
-                                                    },
-                                         "child":  {
-                                                       "type":  "boolean",
-                                                       "required":  false,
-                                                       "default":  false
-                                                   },
-                                         "icon":  {
-                                                      "type":  "remixicon",
-                                                      "required":  false,
-                                                      "source":  "TODO_FROM_DATASOURCE",
-                                                      "format":  "ri-{name}-{style} or {name}-{style}",
-                                                      "example":  "map-pin-line"
-                                                  }
-                                     }
-                       },
-                       {
-                           "id":  "Base.DropdownCard",
-                           "figmaName":  "Base / Dropdowncard / Default",
-                           "observedUse":  "left-panel.controls",
-                           "typography":  {
-                                              "children":  "Typography comes from nested Base.DropdownOption."
-                                          },
-                           "props":  {
-                                         "children":  {
-                                                          "type":  "component[]",
-                                                          "required":  true,
-                                                          "allowedComponents":  [
-                                                                                    "Base.DropdownOption"
-                                                                                ]
-                                                      },
-                                         "widthBehavior":  {
-                                                               "type":  "layout-rule",
-                                                               "required":  false,
-                                                               "rule":  "When used as Form.Select dropdown content, width must match the Select trigger width."
-                                                           },
-                                         "onRequestClose":  {
-                                                                "type":  "interaction",
-                                                                "required":  false,
-                                                                "rule":  "click outside closes floating card"
-                                                            }
-                                     }
-                       },
-                       {
-                           "id":  "Base.DropdownOption",
-                           "figmaName":  "Base / Dropdownoption / Default",
-                           "observedVariants":  [
-                                                    "state=Default",
-                                                    "state=Hover",
-                                                    "state=Selected",
-                                                    "state=Active"
-                                                ],
-                           "observedUse":  "inside Base.DropdownCard",
-                           "typography":  {
-                                              "label":  "Body/MD, 14px/20px, Microsoft YaHei UI Regular"
-                                          },
-                           "props":  {
-                                         "label":  {
-                                                       "type":  "string",
-                                                       "required":  true,
-                                                       "source":  "TODO_FROM_DATASOURCE"
-                                                   },
-                                         "state":  {
-                                                       "type":  "enum",
-                                                       "required":  false,
-                                                       "values":  [
-                                                                      "default",
-                                                                      "hover",
-                                                                      "selected",
-                                                                      "active"
-                                                                  ],
-                                                       "default":  "default"
-                                                   },
-                                         "selected":  {
-                                                          "type":  "boolean",
-                                                          "required":  false,
-                                                          "default":  false,
-                                                          "rule":  "Selected option shows a right-side check-line icon."
-                                                      }
-                                     }
-                       },
-                       {
-                           "id":  "Base.Divider",
-                           "figmaName":  "Base / Divider / Content-Default",
-                           "observedUse":  "left-panel.controls",
-                           "props":  {
-                                         "rule":  "Only render between expanded DropdownItem content and the next parent item in the sidebar."
-                                     }
-                       },
-                       {
-                           "id":  "Base.Badge",
-                           "figmaName":  "Base / Badge / Default",
-                           "observedUse":  "component-library",
-                           "props":  "TODO_DEFINE_FROM_COMPONENT_IMPLEMENTATION"
-                       },
-                       {
-                           "id":  "Base.Button",
-                           "figmaName":  "Base / Button / Primary-Default-MD",
-                           "observedVariants":  [
-                                                    "variant=Primary",
-                                                    "variant=Neutral",
-                                                    "appearance=Filled",
-                                                    "appearance=Stroke",
-                                                    "state=Default",
-                                                    "state=Hover",
-                                                    "state=Focus",
-                                                    "state=Disabled",
-                                                    "size=Medium",
-                                                    "size=Small",
-                                                    "size=XSmall",
-                                                    "iconOnly=On",
-                                                    "iconOnly=Off"
-                                                ],
-                           "observedUse":  [
-                                               "bottom-action"
-                                           ],
-                           "typography":  {
-                                              "label":  "Body/MD, 14px/20px, Microsoft YaHei UI Regular"
-                                          },
-                           "props":  {
-                                         "variant":  {
-                                                         "type":  "enum",
-                                                         "required":  false,
-                                                         "values":  [
-                                                                        "primary",
-                                                                        "neutral"
-                                                                    ],
-                                                         "default":  "primary"
-                                                     },
-                                         "appearance":  {
-                                                            "type":  "enum",
-                                                            "required":  false,
-                                                            "values":  [
-                                                                           "filled",
-                                                                           "stroke"
-                                                                       ],
-                                                            "default":  "filled"
-                                                        },
-                                         "size":  {
-                                                      "type":  "enum",
-                                                      "required":  false,
-                                                      "values":  [
-                                                                     "medium",
-                                                                     "small",
-                                                                     "xsmall"
-                                                                 ],
-                                                      "default":  "small"
-                                                  },
-                                         "iconOnly":  {
-                                                          "type":  "boolean",
-                                                          "required":  false,
-                                                          "default":  false
-                                                      },
-                                         "action":  {
-                                                        "type":  "enum",
-                                                        "required":  false,
-                                                        "values":  [
-                                                                       "resetFilters",
-                                                                       "TODO_DEFINE_WITH_USER"
-                                                                   ]
-                                                    }
-                                     }
-                       },
-                       {
-                           "id":  "Feedback.Tooltip",
-                           "figmaName":  "Feedback / Tooltip / Default",
-                           "observedUse":  "map.canvas",
-                           "observedStructure":  {
-                                                     "size":  "32x38",
-                                                     "body":  "32x32 white container, radius 6, padding 4, shadow",
-                                                     "icon":  "24x24 point/category icon inside body",
-                                                     "tail":  "bottom-center white tail",
-                                                     "positioning":  "x/y coordinates anchor the bottom-center tail tip to the map point inside the pannable and zoomable map coordinate system.",
-                                                     "zoomRule":  "Tooltip marker visual size stays constant during map zoom; the map canvas renderer recalculates screen x/y from map coordinates and zoom.",
-                                                     "rule":  "This component represents a map point marker, not a visible text bubble.",
-                                                     "layerRule":  "Tooltip markers must stay below Layout.DescribeCard when they overlap; DescribeCard is the active detail surface."
-                                                 },
-                           "props":  {
-                                         "content":  {
-                                                         "type":  "string",
-                                                         "required":  true,
-                                                         "source":  "TODO_FROM_DATASOURCE",
-                                                         "rule":  "Used as point label/accessibility text and short point info; not rendered as visible text inside Tooltip."
-                                                     },
-                                         "icon":  {
-                                                      "type":  "component|image",
-                                                      "required":  false,
-                                                      "source":  "TODO_FROM_DATASOURCE",
-                                                      "rule":  "Use point/category icon when datasource provides one; otherwise renderer may use a neutral map marker icon."
-                                                  },
-                                         "visible":  {
-                                                         "type":  "boolean",
-                                                         "required":  true
-                                                     },
-                                         "x":  {
-                                                   "type":  "number",
-                                                   "required":  false,
-                                                   "source":  "TODO_FROM_DATASOURCE"
-                                               },
-                                         "y":  {
-                                                   "type":  "number",
-                                                   "required":  false,
-                                                   "source":  "TODO_FROM_DATASOURCE"
-                                               }
-                                     }
-                       },
-                       {
-                           "id":  "Layout.DescribeCard",
-                           "figmaName":  "Layout / DescribeCard / Default",
-                           "observedUse":  "map.detail",
-                           "typography":  {
-                                              "title":  "Body/MD, 14px/20px, Microsoft YaHei UI Regular",
-                                              "description":  "Body/SM, 12px/18px, Microsoft YaHei UI Regular"
-                                          },
-                           "observedStructure":  {
-                                                    "sourceSize":  "280x266 with image/media area",
-                                                     "layoutRule":  "When imageSrc is absent, card height must adapt to title and description content instead of keeping the full image-card height.",
-                                                     "closeButton":  "Top-right close button default state has transparent background; hover/focus state shows the white alpha background.",
-                                                     "noMediaTitleRow":  "When imageSrc and description are both absent, title and close button must align on the same visual row; close top offset is adjusted only for the no-image state.",
-                                                     "layerRule":  "DescribeCard must render above Tooltip markers in map.canvas."
-                                                 },
-                           "props":  {
-                                         "title":  {
-                                                       "type":  "string",
-                                                       "required":  true,
-                                                       "source":  "TODO_FROM_DATASOURCE"
-                                                   },
-                                         "description":  {
-                                                             "type":  "string",
-                                                             "required":  false,
-                                                             "source":  "TODO_FROM_DATASOURCE"
-                                                         },
-                                         "imageSrc":  {
-                                                          "type":  "string",
-                                                          "required":  false,
-                                                          "source":  "TODO_FROM_DATASOURCE"
-                                                      },
-                                         "open":  {
-                                                      "type":  "boolean",
-                                                      "required":  true
-                                                  }
-                                     }
-                       }
-                   ]
+  "$schema": "../schemas/components.schema.json",
+  "version": 1,
+  "toolType": "map",
+  "source": {
+    "type": "figma",
+    "fileKey": "fnA9NEBTDyxU94M0fvNy8e",
+    "desktopNodeId": "58:1896",
+    "mobileNodeId": "214:3308",
+    "notes": "Component names and mobile use rules aligned to the latest design-system page."
+  },
+  "status": "react-props-v0-mobile-aligned",
+  "components": [
+    {
+      "id": "Layout.PictureTitle",
+      "figmaName": "Layout / PictureTitle / Default",
+      "observedUse": "left-panel.header",
+      "observedStructure": {
+        "size": "264x80",
+        "logoSlot": "208x60, x=28, y=10, centered inside the header area",
+        "rule": "This component reserves the game logo image area. It does not render a visible text title in the map template."
+      },
+      "props": {
+        "logoSrc": {
+          "type": "string",
+          "required": true,
+          "source": "TODO_FROM_USER_ASSET",
+          "rule": "User-provided game logo image. Do not invent or substitute a fake logo."
+        },
+        "title": {
+          "type": "string",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE_OR_USER_INPUT",
+          "rule": "Used only for accessibility/alt text if available; not rendered as visible title text in the map header."
+        }
+      }
+    },
+    {
+      "id": "Layout.Scroll",
+      "figmaName": "Layout / Scroll / Default",
+      "observedUse": "left-panel.controls",
+      "observedVariants": [
+        "Style=Default, Size=X-Small"
+      ],
+      "observedStructure": {
+        "templateInstance": "x=252, y=102, w=12, h=586 inside Panel Content",
+        "track": "12px wide, background follows panel background #2C3134 in the map template",
+        "thumb": "4px wide, 80px high, x=4, radius 999, fill #FFFFFF @ 12%",
+        "rule": "Use as the visual scrollbar for the left filter list. It reflects the list scroll position; it does not define datasource fields."
+      },
+      "props": {
+        "scrollTop": {
+          "type": "number",
+          "required": false,
+          "source": "renderer state"
+        },
+        "scrollHeight": {
+          "type": "number",
+          "required": false,
+          "source": "renderer state"
+        },
+        "viewportHeight": {
+          "type": "number",
+          "required": false,
+          "source": "renderer state"
+        },
+        "visible": {
+          "type": "boolean",
+          "required": false,
+          "default": true,
+          "rule": "Renderer may hide it when list content does not overflow."
+        }
+      }
+    },
+    {
+      "id": "Form.Select",
+      "figmaName": "Form / Select / Default",
+      "observedVariants": [
+        "state=default",
+        "state=hover",
+        "state=active",
+        "state=filled",
+        "state=disable"
+      ],
+      "observedUse": [
+        "desktop:left-panel.controls",
+        "mobile:bottom-sheet.controls"
+      ],
+      "typography": {
+        "label": "Tokenized Body/MD; use --type-font-family-primary, --type-size-200, --type-line-height-200. Prefer mobile-specific type token when present."
+      },
+      "props": {
+        "options": {
+          "type": "array",
+          "required": true,
+          "source": "TODO_FROM_DATASOURCE"
+        },
+        "value": {
+          "type": "string",
+          "required": false,
+          "source": "selected state"
+        },
+        "placeholder": {
+          "type": "string",
+          "required": false,
+          "default": "选择地图"
+        },
+        "disabled": {
+          "type": "boolean",
+          "required": false,
+          "default": false,
+          "rule": "When true, render state=disable and do not open DropdownCard. Renderer may also disable Select when the datasource has only one map and uiRules.singleMapSelect requests disabled behavior."
+        }
+      },
+      "observedStructure": {
+        "size": "248x42",
+        "states": {
+          "default": "background #2C3134, stroke #43484B, text #ECEEF0, arrow #767C7F",
+          "hover": "background #43484B, stroke #43484B, text #ECEEF0, arrow #AEB4B8",
+          "active": "background #2C3134, stroke #DCB325, text #ECEEF0, arrow-up #ECEEF0",
+          "disable": "background #2C3134, stroke #43484B, text #ECEEF0, arrow #696E72; no dropdown interaction"
+        },
+        "mobile": "343x42 in BottomSheet, x=16, y=28, background var(--color-bg-soft), stroke var(--color-stroke-sub)"
+      }
+    },
+    {
+      "id": "Form.SearchBar",
+      "figmaName": "Form / SearchBar / Default",
+      "observedVariants": [
+        "state=default",
+        "state=hover",
+        "state=active"
+      ],
+      "observedUse": [
+        "desktop:left-panel.controls",
+        "mobile:search-overlay"
+      ],
+      "typography": {
+        "input": "Tokenized Body/MD; use --type-font-family-primary, --type-size-200, --type-line-height-200. Prefer mobile-specific type token when present.",
+        "placeholder": "Default color #AEB4B8; hover color #ECEEF0; active text color #FFFFFF."
+      },
+      "observedStructure": {
+        "size": "248x36",
+        "states": {
+          "default": "opacity 80%, background #353A3D, no visible stroke",
+          "hover": "opacity 80%, background #43484B, no visible stroke",
+          "active": "opacity 80%, background #2C3134, 1px #DCB325 stroke, empty focused input, clear icon hidden",
+          "filled": "opacity 80%, background #2C3134, 1px #DCB325 stroke, filled input text, right close-circle-fill icon visible"
+        },
+        "icons": {
+          "leading": "search-2-line, 18x18",
+          "clear": "close-circle-fill, 18x18, filled state only"
+        },
+        "mobile": "343x36 mobile search overlay at x=16, y=52 inside MapCollectionModal; not a BottomSheet child and not clipped by BottomSheet height.",
+        "mobileFocused": "Search-focused state keeps SearchBar overlay x=16, y=52, w=343, h=36 while BottomSheet is expanded to x=0, y=68, w=375, h=652; footer omitted in observed state.",
+        "mobileCollapsed": "In the fully collapsed mobile sheet state, SearchBar remains as MapCollectionModal overlay at x=16, y=52, w=343, h=36; do not move it into the 100px BottomSheet.",
+        "mobileMarkerSelected": "When a marker is selected, SearchBar remains visible as MapCollectionModal overlay at x=16, y=52, w=343, h=36; BottomSheet is hidden and Layout.DescribeCard appears at x=16, y=602, w=343, h=86."
+      },
+      "props": {
+        "value": {
+          "type": "string",
+          "required": true,
+          "source": "user input"
+        },
+        "placeholder": {
+          "type": "string",
+          "required": false,
+          "default": "搜索"
+        },
+        "onClear": {
+          "type": "interaction",
+          "required": false,
+          "rule": "Clear button appears only when value is non-empty."
+        }
+      }
+    },
+    {
+      "id": "Form.Checkbox",
+      "figmaName": "Form / Checkbox / Default",
+      "observedVariants": [
+        "checkState=Default, interactionState=Default",
+        "checkState=Default, interactionState=Hover",
+        "checkState=Default, interactionState=Pressed",
+        "checkState=Default, interactionState=Disabled",
+        "checkState=Active, interactionState=Default",
+        "checkState=Active, interactionState=Hover",
+        "checkState=Active, interactionState=Pressed",
+        "checkState=Active, interactionState=Disabled",
+        "checkState=indeterminate, interactionState=Default",
+        "checkState=indeterminate, interactionState=Hover",
+        "checkState=indeterminate, interactionState=Pressed",
+        "checkState=indeterminate, interactionState=Disabled"
+      ],
+      "observedUse": "left-panel.controls",
+      "typography": {
+        "label": "Body/MD, 14px/20px, Microsoft YaHei UI Regular"
+      },
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "source": "TODO_FROM_DATASOURCE"
+        },
+        "state": {
+          "type": "enum",
+          "required": true,
+          "values": [
+            "checked",
+            "unchecked",
+            "indeterminate"
+          ]
+        },
+        "child": {
+          "type": "boolean",
+          "required": false,
+          "default": false,
+          "rule": "child items use 32px left padding"
+        }
+      }
+    },
+    {
+      "id": "Base.DropdownItem",
+      "figmaName": "Base / DropdownItem / Default",
+      "observedVariants": [
+        "state=Default",
+        "state=Hover",
+        "state=Pressed"
+      ],
+      "observedUse": [
+        "desktop:left-panel.controls",
+        "mobile:bottom-sheet.list"
+      ],
+      "typography": {
+        "label": "Tokenized Body/MD, 14px/20px or mobile-specific text token when present",
+        "count": "Tokenized Label/MD, 12px/14px"
+      },
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "source": "TODO_FROM_DATASOURCE"
+        },
+        "count": {
+          "type": "number",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "required for child/item rows when source provides counts; parent rows do not need count"
+        },
+        "active": {
+          "type": "boolean",
+          "required": false,
+          "default": false
+        },
+        "child": {
+          "type": "boolean",
+          "required": false,
+          "default": false
+        },
+        "icon": {
+          "type": "remixicon",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE",
+          "format": "ri-{name}-{style} or {name}-{style}",
+          "example": "map-pin-line"
+        }
+      },
+      "observedStructure": {
+        "mobile": "343x36 row in SheetItemList; child rows use 32px left padding, optional 20px icon, optional count badge."
+      }
+    },
+    {
+      "id": "Base.DropdownCard",
+      "figmaName": "Base / DropdownCard / Default",
+      "observedUse": "left-panel.controls",
+      "typography": {
+        "children": "Typography comes from nested Base.DropdownOption."
+      },
+      "props": {
+        "children": {
+          "type": "component[]",
+          "required": true,
+          "allowedComponents": [
+            "Base.DropdownOption"
+          ]
+        },
+        "widthBehavior": {
+          "type": "layout-rule",
+          "required": false,
+          "rule": "When used as Form.Select dropdown content, width must match the Select trigger width."
+        },
+        "onRequestClose": {
+          "type": "interaction",
+          "required": false,
+          "rule": "click outside closes floating card"
+        }
+      }
+    },
+    {
+      "id": "Base.DropdownOption",
+      "figmaName": "Base / DropdownOption / Default",
+      "observedVariants": [
+        "state=Default",
+        "state=Hover",
+        "state=Selected",
+        "state=Active"
+      ],
+      "observedUse": "inside Base.DropdownCard",
+      "typography": {
+        "label": "Body/MD, 14px/20px, Microsoft YaHei UI Regular"
+      },
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "source": "TODO_FROM_DATASOURCE"
+        },
+        "state": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "default",
+            "hover",
+            "selected",
+            "active"
+          ],
+          "default": "default"
+        },
+        "selected": {
+          "type": "boolean",
+          "required": false,
+          "default": false,
+          "rule": "Selected option shows a right-side check-line icon."
+        }
+      }
+    },
+    {
+      "id": "Base.Divider",
+      "figmaName": "Base / Divider / Content-Default",
+      "observedUse": [
+        "desktop:left-panel.controls",
+        "mobile:bottom-sheet.list"
+      ],
+      "props": {
+        "rule": "Only render between expanded DropdownItem content and the next parent item in the sidebar."
+      },
+      "observedStructure": {
+        "mobile": "343x4 divider between mobile category groups"
+      }
+    },
+    {
+      "id": "Base.Badge",
+      "figmaName": "Base / Badge / Default",
+      "observedUse": [
+        "desktop:left-panel.controls",
+        "mobile:bottom-sheet.list"
+      ],
+      "props": "TODO_DEFINE_FROM_COMPONENT_IMPLEMENTATION",
+      "observedStructure": {
+        "mobile": "count badge at row end, uses --color-bg-alpha-weak and Label/MD tokens"
+      }
+    },
+    {
+      "id": "Base.Button",
+      "figmaName": "Base / Button / Primary-Default-MD",
+      "observedVariants": [
+        "variant=Primary",
+        "variant=Neutral",
+        "appearance=Filled",
+        "appearance=Stroke",
+        "state=Default",
+        "state=Hover",
+        "state=Focus",
+        "state=Disabled",
+        "size=Medium",
+        "size=Small",
+        "size=XSmall",
+        "iconOnly=On",
+        "iconOnly=Off"
+      ],
+      "observedUse": [
+        "desktop:bottom-action",
+        "mobile:bottom-sheet.footer"
+      ],
+      "typography": {
+        "label": "Body/MD, 14px/20px, Microsoft YaHei UI Regular"
+      },
+      "props": {
+        "variant": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "primary",
+            "neutral"
+          ],
+          "default": "primary"
+        },
+        "appearance": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "filled",
+            "stroke"
+          ],
+          "default": "filled"
+        },
+        "size": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "medium",
+            "small",
+            "xsmall"
+          ],
+          "default": "small"
+        },
+        "iconOnly": {
+          "type": "boolean",
+          "required": false,
+          "default": false
+        },
+        "action": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "resetFilters",
+            "TODO_DEFINE_WITH_USER"
+          ]
+        }
+      },
+      "observedStructure": {
+        "mobilePrimary": "343x48 button in SheetFooter, x=16, y=12",
+        "mobileSearchFocused": "Footer/button may be omitted in MobileMapSearchFocusedScreen while search is focused.",
+        "mobileCollapsed": "Footer/button is hidden in MobileMapBottomSheetCollapsedScreen.",
+        "mobileMarkerSelected": "Footer/button and BottomSheet are hidden while selected marker detail card is open."
+      }
+    },
+    {
+      "id": "Feedback.Tooltip",
+      "figmaName": "Feedback / Tooltip / Default",
+      "observedUse": [
+        "desktop:map.canvas",
+        "mobile:map.canvas"
+      ],
+      "observedStructure": {
+        "size": "32x38",
+        "body": "32x32 white container, radius 6, padding 4, shadow",
+        "icon": "24x24 point/category icon inside body",
+        "tail": "bottom-center white tail",
+        "positioning": "x/y coordinates anchor the bottom-center tail tip to the map point inside the pannable and zoomable map coordinate system.",
+        "zoomRule": "Tooltip marker visual size stays constant during map zoom; the map canvas renderer recalculates screen x/y from map coordinates and zoom.",
+        "rule": "This component represents a map point marker, not a visible text bubble.",
+        "layerRule": "Tooltip markers must stay below Layout.DescribeCard when they overlap; DescribeCard is the active detail surface.",
+        "mobile": "Default marker 32x38 in default/collapsed/expanded/search states; selected marker may be 40x46 at x=163,y=315 in MobileMapMarkerSelectedScreen."
+      },
+      "props": {
+        "content": {
+          "type": "string",
+          "required": true,
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Used as point label/accessibility text and short point info; not rendered as visible text inside Tooltip."
+        },
+        "icon": {
+          "type": "component|image",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Use point/category icon when datasource provides one; otherwise renderer may use a neutral map marker icon."
+        },
+        "visible": {
+          "type": "boolean",
+          "required": true
+        },
+        "x": {
+          "type": "number",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE"
+        },
+        "y": {
+          "type": "number",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE"
+        },
+        "selected": {
+          "type": "boolean",
+          "required": false,
+          "default": false,
+          "rule": "When true, renderer may use the observed selected marker visual state while preserving map-coordinate anchoring."
+        }
+      },
+      "observedVariants": [
+        "state=default",
+        "state=selected"
+      ]
+    },
+    {
+      "id": "Layout.DescribeCard",
+      "figmaName": "Layout / DescribeCard / Default",
+      "observedUse": [
+        "desktop:map.detail",
+        "mobile:mobile.map.detail"
+      ],
+      "typography": {
+        "title": "Body/MD, 14px/20px, Microsoft YaHei UI Regular",
+        "description": "Body/SM, 12px/18px, Microsoft YaHei UI Regular"
+      },
+      "observedStructure": {
+        "sourceSize": "280x266 with image/media area",
+        "layoutRule": "When imageSrc is absent, card height must adapt to title and description content instead of keeping the full image-card height.",
+        "closeButton": "Top-right close button default state has transparent background; hover/focus state shows the white alpha background.",
+        "noMediaTitleRow": "When imageSrc and description are both absent, title and close button must align on the same visual row; close top offset is adjusted only for the no-image state.",
+        "layerRule": "DescribeCard must render above Tooltip markers in map.canvas.",
+        "mobileRule": "Do not use the desktop fixed lower-right 280x266 position on mobile. Use mobile.map.detail when specified.",
+        "mobileSelected": "343x86 at x=16, y=602 in MobileMapMarkerSelectedScreen; render only for selected marker detail and hide BottomSheet while open.",
+        "mobileCloseRule": "When the mobile detail card close action fires, clear selectedMarkerId and restore the previous BottomSheet state instead of staying in markerSelected."
+      },
+      "props": {
+        "title": {
+          "type": "string",
+          "required": true,
+          "source": "TODO_FROM_DATASOURCE"
+        },
+        "description": {
+          "type": "string",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE"
+        },
+        "imageSrc": {
+          "type": "string",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE"
+        },
+        "open": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    }
+  ]
 }
