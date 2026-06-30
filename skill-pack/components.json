@@ -7,7 +7,7 @@
     "fileKey": "fnA9NEBTDyxU94M0fvNy8e",
     "desktopNodeId": "58:1896",
     "mobileNodeId": "214:3308",
-    "notes": "Shared component registry compiled from the design-system page. Current entries come from the map and wiki contracts and are reused by other types until a type-specific delta appears."
+    "notes": "Shared component registry compiled from the design-system page and React implementation. Tool templates decide where each component can be used."
   },
   "status": "shared-registry-v1",
   "components": [

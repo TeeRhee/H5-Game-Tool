@@ -1,12 +1,12 @@
 {
-  "packageName": "@h5-game-tool/map-components",
+  "packageName": "@h5-game-tool/components",
   "version": "0.1.1",
-  "defaultPackageSpec": "@h5-game-tool/map-components@0.1.1",
+  "defaultPackageSpec": "@h5-game-tool/components@0.1.1",
   "source": "npm-or-compatible-tarball",
   "exports": {
-    "components": "@h5-game-tool/map-components",
-    "styles": "@h5-game-tool/map-components/style.css",
-    "tokens": "@h5-game-tool/map-components/tokens.css"
+    "components": "@h5-game-tool/components",
+    "styles": "@h5-game-tool/components/style.css",
+    "tokens": "@h5-game-tool/components/tokens.css"
   },
   "peerDependencies": {
     "react": ">=18",

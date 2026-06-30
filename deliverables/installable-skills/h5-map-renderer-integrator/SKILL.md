@@ -19,7 +19,7 @@ page.output.json + standard map package + existing front-end project -> wired H5
 4. Read `references/page-output-to-react.md` if the target project is React or Vite.
 5. Inspect the target project before editing.
 6. Connect renderer state to the generated page JSON and standard map package.
-7. Import `@h5-game-tool/map-components/style.css` once in the app entry or equivalent.
+7. Import `@h5-game-tool/components/style.css` once in the app entry or equivalent.
 8. Keep component names, region ids, and token values aligned with the page-composer contracts.
 9. Run the target project's build or dev validation command.
 

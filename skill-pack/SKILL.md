@@ -28,7 +28,7 @@ The v1 runnable target is the `map` tool type. `wiki` now has its own template f
 7. If `map.meta.json` uses `tile.sourceType = "manifest"`, validate the referenced tile manifest against `map/datasource-schema/tile-manifest.schema.json`.
 8. Validate cross-file references: marker `mapId`, area `mapId`, marker `categoryId`, marker `groupId`, group counts, icon paths, image paths, tile template or manifest paths.
 9. Generate the structured H5 page JSON from the standardized package and `OUTPUT_SCHEMA.json`.
-10. Validate that every referenced component exists in the map component registry.
+10. Validate that every referenced component exists in the shared component registry.
 11. Validate that every rendered component is placed in an allowed template region.
 12. Pass the standardized package directory to the H5 renderer. The local renderer accepts `?data=/data/<package>/`.
 

@@ -79,11 +79,7 @@ TypeScript 编译配置。
 
 AI 执行手册。说明 AI 如何读取工具类型、验证标准包、生成页面 JSON，以及什么时候必须停止询问缺失字段。
 
-### `skill-pack/README.md`
-
-项目背景和整体说明。用于理解为什么要先做标准地图包，而不是让 AI 直接消费原始爬虫结构。
-
-### `skill-pack/DEVELOPER_HANDOFF.md`
+### `skill-pack/map/DEVELOPER_HANDOFF.md`
 
 给开发的接入说明。新游戏地图接入时优先读这个文件。
 
@@ -121,7 +117,7 @@ AI 最终页面 JSON 的输出格式约束。生成器输出的 `page.output.jso
 
 ### `skill-pack/components.json`
 
-地图类型可用组件注册表。AI 和生成器只能引用这里登记过的组件，不能自由发明组件。
+共享组件注册表。AI 和生成器只能引用这里登记过的组件，不能自由发明组件；具体页面能用哪些组件由对应 template 决定。
 
 包含组件示例：
 
@@ -154,29 +150,17 @@ AI 最终页面 JSON 的输出格式约束。生成器输出的 `page.output.jso
 
 校验不规则瓦片清单。适用于无法用 `{z}/{x}/{y}` 路径模板表达的地图瓦片。
 
-### `README.md`
-
-数据源 schema 目录说明。
-
 ## `skill-pack/mapping/`
 
 ### `mapping/map.json`
 
 标准地图字段到页面区域、组件 props、renderer state 的映射表。AI 和生成器按它把数据绑定到页面。
 
-### `mapping/README.md`
-
-字段映射目录说明。
-
 ## `skill-pack/examples/`
 
 ### `examples/map.json`
 
 地图类型的输入到输出样例。使用 Crimson Desert 的真实标准包抽样，避免 AI 学到虚构字段。
-
-### `examples/README.md`
-
-样例目录说明。
 
 ## `skill-pack/schemas/`
 
@@ -200,7 +184,7 @@ AI 最终页面 JSON 的输出格式约束。生成器输出的 `page.output.jso
 校验 skill-pack 内部引用：
 
 - tool type 指向的模板、组件、schema、mapping、example 是否存在。
-- map template 允许的组件是否都在组件注册表中。
+- template 允许的组件是否都在组件注册表中。
 - map mapping 引用的 region 和 component 是否合法。
 
 运行：

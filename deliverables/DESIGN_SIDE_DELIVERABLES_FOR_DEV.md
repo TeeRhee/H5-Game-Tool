@@ -25,8 +25,8 @@
 | `mapping/map.json` | `skill-pack/mapping/map.json`; page composer references | 数据字段到页面组件 props 的绑定层。当前仍受真实数据源限制。 | 当前真实数据字段未最终确认时，不能擅自补全；实现侧可以暂时不依赖完整映射，但不能编造字段。 | 当前可暂缓，不可伪造。 |
 | `OUTPUT_SCHEMA.json` | `skill-pack/OUTPUT_SCHEMA.json`; page composer references | 页面输出 JSON 的格式约束。防止 AI 输出任意 HTML 或任意 React 代码。 | 不能忽略。renderer 和页面生成都应接受这个结构化输出边界。 | 不可忽略。 |
 | `MAP_V0_STATUS.md` | `skill-pack/MAP_V0_STATUS.md` | 地图 V0 封版记录。记录已确认布局、交互、占位资源和仍待数据源补齐项。 | 日常接入可以不读；调试布局、交互、层级和数据缺口时必须参考。 | 条件性可忽略。 |
-| 组件包源码 | `component-packages/h5-game-map-components/` | React 组件、样式、token、类型声明的维护源。 | 只接入页面时可以不打开源码；需要改组件、改 token、发新版本时不能忽略。 | 条件性可忽略。 |
-| 组件包 tarball | `deliverables/h5-game-tool-map-components-0.1.1.tgz` | 开发工程实际安装的本地 npm 包。包含可运行 React 组件、类型声明、`style.css` 和 `tokens.css`。 | 不能忽略。目标前端工程必须安装它或等价集成其内容。 | 不可忽略。 |
+| 组件包源码 | `component-packages/h5-game-tool-components/` | React 组件、样式、token、类型声明的维护源。 | 只接入页面时可以不打开源码；需要改组件、改 token、发新版本时不能忽略。 | 条件性可忽略。 |
+| 组件包 tarball | `deliverables/h5-game-tool-components-0.1.1.tgz` | 开发工程实际安装的本地 npm 包。包含可运行 React 组件、类型声明、`style.css` 和 `tokens.css`。 | 不能忽略。目标前端工程必须安装它或等价集成其内容。 | 不可忽略。 |
 | 预览占位图片 | `public/assets/preview/map-placeholder.png`; `public/assets/preview/game-logo-placeholder.png` | 本地 preview 用的地图和 Logo 占位图。不是通用数据默认值。 | 开发接入真实数据时可以忽略；跑当前 demo 或对齐 preview 时需要保留。 | 可忽略，不能误当真实数据。 |
 | renderer demo | `deliverables/H5-Game-Map-Renderer-Demo-2026-06-18.zip`; 当前仓库 `src/` | 可运行参考工程，用于查看地图页面和 Crimson Desert 示例。 | 如果目标工程已有 renderer，可以不直接交付 demo；如果要验证效果或参考实现，不能忽略。 | 可选。 |
 
@@ -35,7 +35,7 @@
 如果目标只是把当前地图工具接入一个前端工程，最少需要：
 
 ```txt
-h5-game-tool-map-components-0.1.1.tgz
+h5-game-tool-components-0.1.1.tgz
 page.output.json
 标准地图包：
   map.meta.json
@@ -47,7 +47,7 @@ page.output.json
 
 同时需要遵守：
 
-- 引入组件包样式：`import "@h5-game-tool/map-components/style.css";`
+- 引入组件包样式：`import "@h5-game-tool/components/style.css";`
 - 以 `OUTPUT_SCHEMA.json` 约束 `page.output.json`。
 - 以标准地图包作为数据入口，不直接消费原始爬虫数据。
 - 保持默认工具视口 `1160 x 800`，不要把地图画布误写成右侧局部区域。
@@ -56,7 +56,7 @@ page.output.json
 
 以下情况可以不直接阅读或处理设计侧源文件：
 
-- 只安装 `h5-game-tool-map-components-0.1.1.tgz` 并使用既有组件。
+- 只安装 `h5-game-tool-components-0.1.1.tgz` 并使用既有组件。
 - 只渲染已经生成并校验过的 `page.output.json`。
 - 只跑已有 Crimson Desert demo，不修改视觉和交互。
 - 目标工程只需要复用组件包，不维护组件源码。

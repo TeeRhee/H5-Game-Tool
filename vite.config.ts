@@ -5,7 +5,7 @@ import { defineConfig, type Plugin } from "vite";
 
 const TOKEN_FILES = [
   "design-system-pack/tokens.css",
-  "component-packages/h5-game-map-components/src/tokens.css",
+  "component-packages/h5-game-tool-components/src/tokens.css",
 ];
 
 function updateTokenDeclaration(css: string, name: string, value: string) {

@@ -9,11 +9,13 @@ Shared design assets are maintained globally. Type-specific page contracts live 
 
 These files are shared across all tool types:
 
+- `README.md`
 - `skill-pack/DESIGN.md`
 - `skill-pack/SKILL.md`
-- `skill-pack/DEVELOPER_HANDOFF.md`
+- `skill-pack/components.json`
 - `skill-pack/tool-types.json`
 - `skill-pack/OUTPUT_SCHEMA.json`
+- `design-system-pack/DESIGN.md`
 - `design-system-pack/tokens.css`
 - `skill-pack/schemas/`
 
@@ -24,10 +26,16 @@ This layer defines the rules, token source, output shape, and contract validatio
 Reusable UI components live here:
 
 - `src/components/game-tool/`
-- `component-packages/h5-game-map-components/src/components/game-tool/` only as a packaged mirror
+- `component-packages/h5-game-tool-components/src/components/game-tool/` only as a packaged mirror
 
 The code under `src/components/game-tool/` is the source of truth for component behavior.
 Type pages choose which shared components to use through their own template and mapping contracts.
+
+### Documentation rule
+
+Keep repository navigation in `README.md`, detailed folder ownership in `REPO_STRUCTURE.md`, and handoff/package usage in `DELIVERY_MANUAL.md`.
+
+Do not add per-folder README files for map, wiki, schema, examples, or mapping folders unless that folder is an independently installable package. The component package keeps its own README because it is included in npm tarballs and is read by downstream consumers.
 
 ### 3. Type-specific contract layer
 
@@ -78,7 +86,6 @@ The following are the main files and folders that do not fit the long-term maint
 
 - `deliverables/*.zip`
 - `deliverables/*.tgz`
-- `component-packages/h5-game-map-components/`
 - `deliverables/installable-skills/`
 - `deliverables/H5-Game-*`
 - `deliverables/H5-Map-*`

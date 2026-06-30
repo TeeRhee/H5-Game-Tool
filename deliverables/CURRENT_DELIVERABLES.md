@@ -13,7 +13,7 @@
 1. 安装数据清洗 skill：`H5-Map-Data-Normalizer-Skill-2026-06-23.zip`
 2. 安装页面生成 skill：`H5-Map-Page-Composer-Skill-2026-06-23.zip`
 3. 如果要接入现有前端工程，再安装 renderer 接入 skill：`H5-Map-Renderer-Integrator-Skill-2026-06-23.zip`
-4. 在目标前端工程里安装组件包：`h5-game-tool-map-components-0.1.1.tgz`
+4. 在目标前端工程里安装组件包：`h5-game-tool-components-0.1.1.tgz`
 5. 只有需要跑参考 demo 时，才使用 `H5-Game-Map-Renderer-Demo-2026-06-18.zip`
 
 ## 当前应该使用的文件
@@ -23,8 +23,8 @@
 | `H5-Map-Data-Normalizer-Skill-2026-06-23.zip` | 数据清洗 skill。负责把原始地图数据转换成标准地图包，并校验 `map.meta.json`、`map.normalized.json`、瓦片、图标、点位、区域等关系。 | 安装到 Codex skills 目录。提供原始数据后，让 AI 使用这个 skill 写 adapter、生成标准包、跑校验。 |
 | `H5-Map-Page-Composer-Skill-2026-06-23.zip` | 页面生成 skill。负责读取 `DESIGN.md`、token、页面 template、组件注册表、mapping 和 `OUTPUT_SCHEMA.json`，生成 `page.output.json`。 | 安装到 Codex skills 目录。标准数据包完整时生成页面 JSON；数据不完整时生成页面骨架，并用 `TODO_FROM_DATASOURCE` 标出缺失数据。 |
 | `H5-Map-Renderer-Integrator-Skill-2026-06-23.zip` | 工程接入 skill。负责把 `page.output.json`、标准地图包和组件包接入已有的前端工程。 | 需要落地到工程时安装。该 skill 会指导 AI 先安装组件包，再把 renderer 状态、页面区域和组件绑定起来。 |
-| `h5-game-tool-map-components-0.1.1.tgz` | 本地 npm 组件包。包含代码化 React 组件、类型声明、`style.css` 和 `tokens.css`。 | 在目标前端工程中执行 `npm install <path-to>/h5-game-tool-map-components-0.1.1.tgz`。 |
-| `H5-Game-Map-Components-Package-0.1.1.zip` | 组件库源码包。包含源码、dist、构建配置和 README，用于后续维护组件库。 | 需要改组件、改 token、改样式、重新打包新版本时使用。普通页面接入通常不需要这个 zip。 |
+| `h5-game-tool-components-0.1.1.tgz` | 本地 npm 组件包。包含代码化 React 组件、类型声明、`style.css` 和 `tokens.css`。 | 在目标前端工程中执行 `npm install <path-to>/h5-game-tool-components-0.1.1.tgz`。 |
+| `H5-Game-Tool-Components-Package-0.1.1.zip` | 组件库源码包。包含源码、dist、构建配置和 README，用于后续维护组件库。 | 需要改组件、改 token、改样式、重新打包新版本时使用。普通页面接入通常不需要这个 zip。 |
 | `H5-Game-Map-Renderer-Demo-2026-06-18.zip` | 可运行 renderer demo。包含示例工程和 Crimson Desert 示例数据。 | 仅在需要参考完整运行效果时使用。该 demo 不是 skill 的必要依赖，也不是组件库发布包。 |
 
 ## 组件包安装方式
@@ -32,25 +32,25 @@
 在目标前端工程根目录执行：
 
 ```sh
-npm install <path-to>/h5-game-tool-map-components-0.1.1.tgz
+npm install <path-to>/h5-game-tool-components-0.1.1.tgz
 ```
 
 安装后在工程入口或全局样式入口引入一次样式：
 
 ```ts
-import "@h5-game-tool/map-components/style.css";
+import "@h5-game-tool/components/style.css";
 ```
 
 在页面或 renderer 中引入组件：
 
 ```ts
-import { Button, SearchBar, Select } from "@h5-game-tool/map-components";
+import { Button, SearchBar, Select } from "@h5-game-tool/components";
 ```
 
 使用 `h5-map-renderer-integrator` skill 时，也可以让 AI 运行：
 
 ```sh
-node scripts/install-components.mjs --target <front-end-project> --package-spec <path-to>/h5-game-tool-map-components-0.1.1.tgz
+node scripts/install-components.mjs --target <front-end-project> --package-spec <path-to>/h5-game-tool-components-0.1.1.tgz
 ```
 
 ## 三个 Skill 分别什么时候用
@@ -120,7 +120,7 @@ page.output.json
 | `deliverables/installable-skills/h5-map-data-normalizer/` | 数据清洗 skill 的源码目录。 |
 | `deliverables/installable-skills/h5-map-page-composer/` | 页面生成 skill 的源码目录。 |
 | `deliverables/installable-skills/h5-map-renderer-integrator/` | 工程接入 skill 的源码目录。 |
-| `component-packages/h5-game-map-components/` | 独立维护的 React 组件库目录。 |
+| `component-packages/h5-game-tool-components/` | 独立维护的 React 组件库目录。 |
 | `skill-pack/` | 仓库内的原始规范来源，包含 map 工具契约、template、schema、token 等。 |
 | `src/` | 当前 renderer demo 的源码目录。 |
 
@@ -149,7 +149,7 @@ page.output.json
 H5-Map-Data-Normalizer-Skill-2026-06-23.zip
 H5-Map-Page-Composer-Skill-2026-06-23.zip
 H5-Map-Renderer-Integrator-Skill-2026-06-23.zip
-h5-game-tool-map-components-0.1.1.tgz
+h5-game-tool-components-0.1.1.tgz
 ```
 
 如果还需要查看完整运行效果，再额外提供：
