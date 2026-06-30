@@ -1,4 +1,0 @@
-interface:
-  display_name: "H5 Game Map"
-  short_description: "Validate and generate H5 game map pages"
-  default_prompt: "Use $h5-game-map to validate a standardized game map package and generate constrained H5 page JSON."

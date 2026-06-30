@@ -44,7 +44,7 @@ Each tool type owns its own page template and related contract files.
 Current examples:
 
 - Map: `skill-pack/map/templates/map.json`, `skill-pack/components.json`, `skill-pack/map/mapping/map.json`, `skill-pack/map/examples/map.json`, `skill-pack/map/datasource-schema/`
-- Wiki: `skill-pack/wiki/templates/wiki.json`
+- Wiki: `skill-pack/wiki/DESIGN.md`, `skill-pack/wiki/templates/wiki.json`, `skill-pack/wiki/mapping/wiki.json`
 
 Planned direction:
 
@@ -70,6 +70,14 @@ These folders contain generated packages, archives, and handoff copies:
 
 These are not the canonical maintenance surface. They are useful as exports, snapshots, or package artifacts.
 
+### 6. Planning and working-doc layer
+
+These folders contain implementation plans, checklists, and non-packaged working notes:
+
+- `docs/`
+
+Do not place planning documents under `deliverables/`. A file belongs in `deliverables/` only when it is meant to be handed off, installed, archived, or used to explain a generated package.
+
 ## Current Clean Boundaries
 
 Keep these ideas separate:
@@ -79,6 +87,7 @@ Keep these ideas separate:
 - Type rules are not global rules.
 - Preview code is not the contract source.
 - Generated deliverables are not canonical source files.
+- Plans and checklists are not deliverables.
 
 ## Cleanup Candidates
 

@@ -8,6 +8,7 @@ This repository maintains the design contracts, shared React components, and gen
 - `component-packages/h5-game-tool-components/`: shared React component package. Tool types such as map and wiki should consume this as one component library.
 - `skill-pack/`: AI and renderer contracts. Shared files live at the root, while each tool type owns its templates, mappings, examples, and datasource rules in its own folder.
 - `skill-pack/schemas/`: JSON schemas for validating contract files.
+- `docs/`: planning notes, implementation checklists, and non-packaged working documents.
 - `deliverables/`: generated zip and tarball handoff files. Treat source folders as canonical, then regenerate deliverables when source changes.
 - `src/`: local preview and renderer demo source.
 - `scripts/`: validation, token sync, packaging, and data adapter scripts.
@@ -31,6 +32,8 @@ This keeps map, wiki, and future tool types visually consistent while allowing e
 - `skill-pack/SKILL.md`: execution rules for AI-assisted generation.
 - `skill-pack/components.json`: shared component registry.
 - `skill-pack/OUTPUT_SCHEMA.json`: page output contract.
+- `skill-pack/wiki/DESIGN.md`: Wiki-specific human-readable design rules.
+- `docs/wiki/WIKI_FILE_PLAN.md`: Wiki implementation plan and status checklist.
 - `component-packages/h5-game-tool-components/README.md`: install and import instructions for the component package.
 
 ## Validation

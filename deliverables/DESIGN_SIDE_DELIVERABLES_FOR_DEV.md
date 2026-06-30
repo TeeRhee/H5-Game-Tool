@@ -2,7 +2,7 @@
 
 本文档面向开发实现侧，说明当前 H5 Game Tool 项目里哪些内容属于设计侧交付、它们的具体作用，以及在开发落地时是否可以忽略。
 
-当前判断基准为 2026-06-23 交付结构：三个 installable skill、一个本地组件包、一个可选 renderer demo。默认工具视口为 `1160 x 800`。
+当前判断基准为 2026-06-23 交付结构：三个 installable skill、一个本地组件包、一个组件源码包和当前交付聚合包。map 默认工具视口为 `1160 x 800`。
 
 ## 总结
 
@@ -21,14 +21,14 @@
 | `DESIGN.md` | `deliverables/installable-skills/h5-map-page-composer/references/DESIGN.md` | 人可读设计规则。说明布局、视觉、组件使用、不要自由发挥的规则。 | 如果只安装组件包并接入现成输出，可以不逐行阅读；如果要改 renderer、改布局或让 AI 重新生成页面，不能忽略。 | 条件性可忽略。 |
 | `tokens.css` | `design-system-pack/tokens.css`; 组件包内 `tokens.css` | 设计 token。承载颜色、字体、间距、圆角等视觉变量，是代码组件和生成结果保持一致的基础。 | 不能忽略。可以不手工改，但必须被组件包或全局样式正确引入。 | 不可忽略。 |
 | `templates/map.json` | `skill-pack/map/templates/map.json`; page composer references | 地图页面骨架。定义 `1160 x 800` 页面区域、组件槽位、布局结构。 | 如果只渲染既有 `page.output.json`，可以不直接读；如果要生成页面或改页面结构，不能忽略。 | 条件性可忽略。 |
-| `components/map.json` | `skill-pack/components.json`; page composer references | 组件注册表。定义 AI 当前允许使用哪些 Figma/React 组件。 | 不能在页面生成链路里忽略，否则 AI 可能使用不存在或未实现的组件。纯手写 renderer 时可以作为参考，但不建议跳过。 | 生成链路不可忽略。 |
-| `mapping/map.json` | `skill-pack/mapping/map.json`; page composer references | 数据字段到页面组件 props 的绑定层。当前仍受真实数据源限制。 | 当前真实数据字段未最终确认时，不能擅自补全；实现侧可以暂时不依赖完整映射，但不能编造字段。 | 当前可暂缓，不可伪造。 |
+| `components.json` | `skill-pack/components.json`; page composer references | 共享组件注册表。定义 AI 当前允许使用哪些 Figma/React 组件。 | 不能在页面生成链路里忽略，否则 AI 可能使用不存在或未实现的组件。纯手写 renderer 时可以作为参考，但不建议跳过。 | 生成链路不可忽略。 |
+| `mapping/map.json` | `skill-pack/map/mapping/map.json`; page composer references | 数据字段到页面组件 props 的绑定层。当前仍受真实数据源限制。 | 当前真实数据字段未最终确认时，不能擅自补全；实现侧可以暂时不依赖完整映射，但不能编造字段。 | 当前可暂缓，不可伪造。 |
 | `OUTPUT_SCHEMA.json` | `skill-pack/OUTPUT_SCHEMA.json`; page composer references | 页面输出 JSON 的格式约束。防止 AI 输出任意 HTML 或任意 React 代码。 | 不能忽略。renderer 和页面生成都应接受这个结构化输出边界。 | 不可忽略。 |
-| `MAP_V0_STATUS.md` | `skill-pack/MAP_V0_STATUS.md` | 地图 V0 封版记录。记录已确认布局、交互、占位资源和仍待数据源补齐项。 | 日常接入可以不读；调试布局、交互、层级和数据缺口时必须参考。 | 条件性可忽略。 |
+| `MAP_V0_STATUS.md` | `skill-pack/map/MAP_V0_STATUS.md` | 地图 V0 封版记录。记录已确认布局、交互、占位资源和仍待数据源补齐项。 | 日常接入可以不读；调试布局、交互、层级和数据缺口时必须参考。 | 条件性可忽略。 |
 | 组件包源码 | `component-packages/h5-game-tool-components/` | React 组件、样式、token、类型声明的维护源。 | 只接入页面时可以不打开源码；需要改组件、改 token、发新版本时不能忽略。 | 条件性可忽略。 |
 | 组件包 tarball | `deliverables/h5-game-tool-components-0.1.1.tgz` | 开发工程实际安装的本地 npm 包。包含可运行 React 组件、类型声明、`style.css` 和 `tokens.css`。 | 不能忽略。目标前端工程必须安装它或等价集成其内容。 | 不可忽略。 |
 | 预览占位图片 | `public/assets/preview/map-placeholder.png`; `public/assets/preview/game-logo-placeholder.png` | 本地 preview 用的地图和 Logo 占位图。不是通用数据默认值。 | 开发接入真实数据时可以忽略；跑当前 demo 或对齐 preview 时需要保留。 | 可忽略，不能误当真实数据。 |
-| renderer demo | `deliverables/H5-Game-Map-Renderer-Demo-2026-06-18.zip`; 当前仓库 `src/` | 可运行参考工程，用于查看地图页面和 Crimson Desert 示例。 | 如果目标工程已有 renderer，可以不直接交付 demo；如果要验证效果或参考实现，不能忽略。 | 可选。 |
+| renderer preview 源码 | 当前仓库 `src/` 和 `public/data/crimsondesert/` | 可运行参考实现，用于查看地图页面和 Crimson Desert 示例。 | 如果目标工程已有 renderer，可以不直接接入；如果要验证效果或参考实现，不能忽略。 | 可选。 |
 
 ## 开发实现侧最小必需内容
 
@@ -58,7 +58,7 @@ page.output.json
 
 - 只安装 `h5-game-tool-components-0.1.1.tgz` 并使用既有组件。
 - 只渲染已经生成并校验过的 `page.output.json`。
-- 只跑已有 Crimson Desert demo，不修改视觉和交互。
+- 只跑已有 Crimson Desert preview，不修改视觉和交互。
 - 目标工程只需要复用组件包，不维护组件源码。
 
 这些情况下，设计侧内容已经通过组件包、样式、token、schema 和生成结果间接进入实现侧。
@@ -92,7 +92,7 @@ page.output.json
 5. `mapping/map.json` 当前不能靠猜补齐。
    真实字段、坐标、分类、点位和详情关系必须来自开发数据源或确认 mock。
 
-6. renderer demo 是参考工程，不是必须交付给线上工程的依赖。
+6. renderer preview 是参考实现，不是必须交付给线上工程的依赖。
    真正的实现依赖是组件包、标准地图包和结构化页面输出。
 
 ## 建议给开发的交付口径

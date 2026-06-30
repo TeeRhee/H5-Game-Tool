@@ -1,20 +1,15 @@
 # 当前交付文件清单
 
-这份文档列出当前建议使用和交付的文件。现有文件已经拆成三类：
+本文档列出当前仍建议使用和交付的文件。`deliverables/` 现在只保留打包、安装、交付、归档相关内容；计划表和实施清单放在 `docs/`。
 
-- Codex Skill：用于让本机 Codex 按规范清洗数据、生成页面、接入工程。
-- 本地组件包：用于在前端工程中安装代码化组件、样式和 token。
-- Renderer Demo：仅在需要可运行参考工程时使用。
-
-默认工具页面尺寸已经统一为 `1160 x 800`。地图、Wiki，以及后续其他游戏轻工具类型都应按这个尺寸作为默认设计和生成基准。
+当前完整生成链路仍以 `map` 类型为主。`wiki` 已有 design/template/mapping 草案，但还没有数据源 schema、example 和生成链路，因此暂不进入当前交付包。
 
 ## 推荐使用顺序
 
 1. 安装数据清洗 skill：`H5-Map-Data-Normalizer-Skill-2026-06-23.zip`
 2. 安装页面生成 skill：`H5-Map-Page-Composer-Skill-2026-06-23.zip`
-3. 如果要接入现有前端工程，再安装 renderer 接入 skill：`H5-Map-Renderer-Integrator-Skill-2026-06-23.zip`
-4. 在目标前端工程里安装组件包：`h5-game-tool-components-0.1.1.tgz`
-5. 只有需要跑参考 demo 时，才使用 `H5-Game-Map-Renderer-Demo-2026-06-18.zip`
+3. 如需接入现有前端工程，安装 renderer 接入 skill：`H5-Map-Renderer-Integrator-Skill-2026-06-23.zip`
+4. 在目标前端工程安装组件包：`h5-game-tool-components-0.1.1.tgz`
 
 ## 当前应该使用的文件
 
@@ -22,10 +17,11 @@
 | --- | --- | --- |
 | `H5-Map-Data-Normalizer-Skill-2026-06-23.zip` | 数据清洗 skill。负责把原始地图数据转换成标准地图包，并校验 `map.meta.json`、`map.normalized.json`、瓦片、图标、点位、区域等关系。 | 安装到 Codex skills 目录。提供原始数据后，让 AI 使用这个 skill 写 adapter、生成标准包、跑校验。 |
 | `H5-Map-Page-Composer-Skill-2026-06-23.zip` | 页面生成 skill。负责读取 `DESIGN.md`、token、页面 template、组件注册表、mapping 和 `OUTPUT_SCHEMA.json`，生成 `page.output.json`。 | 安装到 Codex skills 目录。标准数据包完整时生成页面 JSON；数据不完整时生成页面骨架，并用 `TODO_FROM_DATASOURCE` 标出缺失数据。 |
-| `H5-Map-Renderer-Integrator-Skill-2026-06-23.zip` | 工程接入 skill。负责把 `page.output.json`、标准地图包和组件包接入已有的前端工程。 | 需要落地到工程时安装。该 skill 会指导 AI 先安装组件包，再把 renderer 状态、页面区域和组件绑定起来。 |
+| `H5-Map-Renderer-Integrator-Skill-2026-06-23.zip` | 工程接入 skill。负责把 `page.output.json`、标准地图包和组件包接入已有前端工程。 | 需要落地到工程时安装。该 skill 会指导 AI 先安装组件包，再把 renderer 状态、页面区域和组件绑定起来。 |
 | `h5-game-tool-components-0.1.1.tgz` | 本地 npm 组件包。包含代码化 React 组件、类型声明、`style.css` 和 `tokens.css`。 | 在目标前端工程中执行 `npm install <path-to>/h5-game-tool-components-0.1.1.tgz`。 |
 | `H5-Game-Tool-Components-Package-0.1.1.zip` | 组件库源码包。包含源码、dist、构建配置和 README，用于后续维护组件库。 | 需要改组件、改 token、改样式、重新打包新版本时使用。普通页面接入通常不需要这个 zip。 |
-| `H5-Game-Map-Renderer-Demo-2026-06-18.zip` | 可运行 renderer demo。包含示例工程和 Crimson Desert 示例数据。 | 仅在需要参考完整运行效果时使用。该 demo 不是 skill 的必要依赖，也不是组件库发布包。 |
+| `H5-Game-Tool-Current-Deliverables-2026-06-23.zip` | 当前交付聚合包。包含本清单、设计侧说明、三个 map skill、组件 tarball 和组件源码包。 | 对外发一份完整当前交付时使用。 |
+| `DESIGN_SIDE_DELIVERABLES_FOR_DEV.md` | 开发实现侧说明。解释哪些设计侧交付物不能忽略，哪些只在改布局、改视觉或改组件时需要看。 | 给接入方或工程 AI 阅读。 |
 
 ## 组件包安装方式
 
@@ -89,7 +85,7 @@ validation report
 references/DESIGN.md
 design-system-pack/tokens.css
 references/templates/map.json
-references/components/map.json
+references/components.json
 references/mapping/map.json
 references/OUTPUT_SCHEMA.json
 ```
@@ -121,25 +117,18 @@ page.output.json
 | `deliverables/installable-skills/h5-map-page-composer/` | 页面生成 skill 的源码目录。 |
 | `deliverables/installable-skills/h5-map-renderer-integrator/` | 工程接入 skill 的源码目录。 |
 | `component-packages/h5-game-tool-components/` | 独立维护的 React 组件库目录。 |
-| `skill-pack/` | 仓库内的原始规范来源，包含 map 工具契约、template、schema、token 等。 |
-| `src/` | 当前 renderer demo 的源码目录。 |
+| `skill-pack/` | 仓库内的原始规范来源，包含各工具类型契约、template、schema、token 等。 |
+| `docs/` | 计划、实施清单和非打包工作文档。 |
+| `src/` | 当前 renderer preview 的源码目录。 |
 
 ## 当前规范默认值
 
-- 默认工具视口：`1160 x 800`
+- map 默认工具视口：`1160 x 800`
+- wiki 默认工具视口：`1000 x 610`
 - 地图画布：覆盖整个 `1160 x 800` 工具窗口，Sidebar 和底部操作区叠在其上方
 - 组件包版本：`0.1.1`
-- token 来源：用户提供的最新版 `tokens.css`
+- token 来源：`design-system-pack/tokens.css`
 - 页面生成方式：结构化 JSON，不生成任意 HTML 或任意 React 代码
-
-## 不建议再用于新交付的旧文件
-
-下面这些是早期 all-in-one 或拆分前的包。可以保留作历史备份，但新交付不要再优先使用：
-
-| 文件 | 说明 |
-| --- | --- |
-| `H5-Game-Map-Codex-Skill-installable-2026-06-18.zip` | 旧版单一地图 skill 包，未按当前三 skill 结构拆分。 |
-| `H5-Game-Tool-Map-Skill-deliverable-2026-06-18.zip` | 旧版大交付包，包含内容较重，边界不如当前结构清晰。 |
 
 ## 最简交付建议
 
@@ -152,8 +141,8 @@ H5-Map-Renderer-Integrator-Skill-2026-06-23.zip
 h5-game-tool-components-0.1.1.tgz
 ```
 
-如果还需要查看完整运行效果，再额外提供：
+如果需要一份完整当前交付包，提供：
 
 ```txt
-H5-Game-Map-Renderer-Demo-2026-06-18.zip
+H5-Game-Tool-Current-Deliverables-2026-06-23.zip
 ```

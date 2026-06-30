@@ -1,0 +1,193 @@
+{
+  "$schema": "../../schemas/mapping.schema.json",
+  "version": 1,
+  "toolType": "wiki",
+  "status": "template-mapping-draft",
+  "inputPackage": {
+    "status": "TODO_FROM_DATASOURCE",
+    "rule": "A standardized Wiki datasource package has not been defined yet. Do not consume raw crawled data directly and do not invent field paths in this mapping."
+  },
+  "outputSchema": "../OUTPUT_SCHEMA.json",
+  "rules": [
+    "Only bind data that exists in a confirmed Wiki datasource or development-approved mock.",
+    "Do not invent category, entry, route, image, badge, count, progress, attribute, table, or rich-text fields.",
+    "Use TODO_FROM_DATASOURCE for every source path until the Wiki datasource contract is confirmed.",
+    "Use the shared component registry at skill-pack/components.json. Wiki does not maintain a separate component registry.",
+    "Use only components allowed by the target region in skill-pack/wiki/templates/wiki.json.",
+    "Keep the default Wiki canvas at 1000 x 610.",
+    "Keep mobile mapping undefined until mobile Wiki design nodes or explicit implementation constraints are supplied.",
+    "Missing optional fields should collapse the related UI element instead of showing fabricated placeholder content.",
+    "Breadcrumb labels and target routes must come from datasource or routing context.",
+    "Pagination state must come from datasource or renderer state, not from hardcoded sample values.",
+    "Detail tables must use structured column and row data when available; do not encode table data as plain rich text."
+  ],
+  "fieldMappings": [
+    {
+      "source": "TODO_FROM_DATASOURCE > wiki title and aggregate counts",
+      "target": "regions[home.summary].dataBinding",
+      "required": true
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE > top-level categories",
+      "target": "regions[home.category-grid].components[Game.CategoryCard].dataBinding.categories",
+      "required": true
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT > active top navigation",
+      "target": "regions[shell.header].components[Nav.TopBar].props.items",
+      "required": true
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE_OR_RENDERER_STATE > global search query",
+      "target": "regions[shell.header].components[Form.SearchBar].props.value",
+      "required": false
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT > secondary breadcrumbs",
+      "target": "regions[secondary.breadcrumbs].components[Nav.Breadcrumbs].props.items",
+      "required": true
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE > selected category entries",
+      "target": "regions[secondary.card-list].components[Layout.DescribeCard].dataBinding.entries",
+      "required": true
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE_OR_RENDERER_STATE > pagination",
+      "target": "regions[secondary.card-list].components[Nav.Pagination].props",
+      "required": false
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT > detail breadcrumbs",
+      "target": "regions[detail.breadcrumbs].components[Nav.Breadcrumbs].props.items",
+      "required": true
+    },
+    {
+      "source": "RENDERER_SCROLL_STATE",
+      "target": "regions[detail.content-shell].components[Layout.Scroll].props",
+      "required": false
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE > selected detail summary",
+      "target": "regions[detail.hero-card].components[Layout.DescribeCard or Game.ShowCard].dataBinding.detail",
+      "required": true
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE > selected detail attributes and badges",
+      "target": "regions[detail.attribute-section].dataBinding.attributes",
+      "required": false
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE > related entries and progress values",
+      "target": "regions[detail.related-section].components[Game.ShowCard/Game.ProgressBarLabel/Game.ProgressBar].dataBinding.related",
+      "required": false
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE > structured detail sections and tables",
+      "target": "regions[detail.detail-card-section].components[Layout.DetailCard/Data.TableHeaderCell/Data.TableRowCell].dataBinding.sections",
+      "required": false
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE > extended rich text, media, or additional tables",
+      "target": "regions[detail.extended-section].components[Layout.DetailCard/Base.Image/Data.TableHeaderCell/Data.TableRowCell].dataBinding.extendedContent",
+      "required": false
+    }
+  ],
+  "regionMappings": [
+    {
+      "regionId": "shell.background",
+      "components": [
+        "Layout.Background"
+      ]
+    },
+    {
+      "regionId": "shell.header",
+      "components": [
+        "Nav.Header",
+        "Nav.TopBar",
+        "Form.SearchBar"
+      ]
+    },
+    {
+      "regionId": "home.summary",
+      "components": []
+    },
+    {
+      "regionId": "home.category-grid",
+      "components": [
+        "Game.CategoryCard",
+        "Base.Badge"
+      ]
+    },
+    {
+      "regionId": "secondary.breadcrumbs",
+      "components": [
+        "Nav.Breadcrumbs"
+      ]
+    },
+    {
+      "regionId": "secondary.card-list",
+      "components": [
+        "Layout.DescribeCard",
+        "Base.Image",
+        "Base.Badge",
+        "Nav.Pagination"
+      ]
+    },
+    {
+      "regionId": "detail.breadcrumbs",
+      "components": [
+        "Nav.Breadcrumbs"
+      ]
+    },
+    {
+      "regionId": "detail.content-shell",
+      "components": [
+        "Layout.Scroll"
+      ]
+    },
+    {
+      "regionId": "detail.hero-card",
+      "components": [
+        "Layout.DescribeCard",
+        "Game.ShowCard",
+        "Base.Image",
+        "Base.Badge"
+      ]
+    },
+    {
+      "regionId": "detail.attribute-section",
+      "components": [
+        "Base.Badge"
+      ]
+    },
+    {
+      "regionId": "detail.related-section",
+      "components": [
+        "Game.ShowCard",
+        "Game.ProgressBarLabel",
+        "Game.ProgressBar",
+        "Base.Image",
+        "Base.Badge"
+      ]
+    },
+    {
+      "regionId": "detail.detail-card-section",
+      "components": [
+        "Layout.DetailCard",
+        "Data.TableHeaderCell",
+        "Data.TableRowCell",
+        "Base.Badge"
+      ]
+    },
+    {
+      "regionId": "detail.extended-section",
+      "components": [
+        "Layout.DetailCard",
+        "Base.Image",
+        "Data.TableHeaderCell",
+        "Data.TableRowCell"
+      ]
+    }
+  ]
+}
