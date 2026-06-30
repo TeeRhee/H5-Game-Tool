@@ -25,7 +25,7 @@ standard map package or partial brief -> DESIGN.md + template + components + map
 - Do not generate arbitrary HTML, arbitrary React code, or arbitrary component names.
 - Use only components registered in `references/components/map.json`.
 - Place components only in regions allowed by `references/templates/map.json`.
-- Use `references/tokens.css` and `references/DESIGN.md` for visual choices.
+- Use `design-system-pack/tokens.css` and `references/DESIGN.md` for visual choices.
 - Keep the map header as a logo image area. Do not invent a visible text logo.
 - Keep data uncertainty visible with `TODO_FROM_DATASOURCE`; do not fabricate markers, counts, coordinates, or detail content.
 - When data is incomplete, prefer a useful static shell: logo slot, disabled map select, search input, empty filter tree, map canvas, hidden detail card, and clear-filters action.
@@ -37,7 +37,7 @@ standard map package or partial brief -> DESIGN.md + template + components + map
 - `references/templates/map.json` defines template regions and renderer behavior.
 - `references/components/map.json` defines allowed components and props.
 - `references/mapping/map.json` defines data-to-region/component bindings.
-- `references/tokens.css` contains implementation tokens.
+- `design-system-pack/tokens.css` contains implementation tokens.
 - `scripts/generate-map-output.mjs` emits page JSON from a standard package.
 - `scripts/validate-page-contracts.mjs` checks template/component/mapping consistency.
 

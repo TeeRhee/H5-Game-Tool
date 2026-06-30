@@ -60,7 +60,7 @@
       "themeRule": "Use dark map tokens by default. If a future token export provides explicit light/dark selectors, mount the map container under the host-selected mode instead of duplicating token values."
     },
     "templateColors": {
-      "tokenSource": "tokens/tokens.css",
+      "tokenSource": "design-system-pack/tokens.css",
       "windowBackground": "var(--color-bg-black)",
       "panelBackground": "var(--color-bg-soft)",
       "searchBackground": "var(--color-bg-sub)",
@@ -252,7 +252,7 @@
     "On mobile, render bottom-sheet controls instead of the desktop left sidebar.",
     "On mobile, keep BottomSheet list scrolling independent from map pan/zoom gestures.",
     "On mobile, share search, filter, selected map, selected marker, and clear-all state with the desktop model.",
-    "Use semantic tokens from tokens/tokens.css; do not hardcode colors when a token exists.",
+    "Use semantic tokens from design-system-pack/tokens.css; do not hardcode colors when a token exists.",
     "Mobile selected-marker state may render the selected Tooltip marker at 40x46 while default markers remain 32x38.",
     "Mobile selected-marker state renders Layout.DescribeCard at x=16, y=602, w=343, h=86, hides BottomSheet while open, and omits the desktop fixed detail position.",
     "Mobile expanded and search-focused states move BottomSheet to x=0, y=68, w=375, h=652.",

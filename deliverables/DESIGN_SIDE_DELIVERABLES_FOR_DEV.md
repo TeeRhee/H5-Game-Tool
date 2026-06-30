@@ -19,7 +19,7 @@
 | --- | --- | --- | --- | --- |
 | Figma 地图模板 | Figma file `fnA9NEBTDyxU94M0fvNy8e`, node `58:11293` | 原始设计源。定义地图弹窗结构、层级、视觉尺寸、颜色和组件关系。 | 日常接入可以不直接打开；实现布局、修视觉差异、同步新设计时不能忽略。 | 可作为参考忽略，不能作为源头废弃。 |
 | `DESIGN.md` | `deliverables/installable-skills/h5-map-page-composer/references/DESIGN.md` | 人可读设计规则。说明布局、视觉、组件使用、不要自由发挥的规则。 | 如果只安装组件包并接入现成输出，可以不逐行阅读；如果要改 renderer、改布局或让 AI 重新生成页面，不能忽略。 | 条件性可忽略。 |
-| `tokens.css` | `design-system-pack/tokens.css`; `deliverables/installable-skills/h5-map-page-composer/references/tokens.css`; 组件包内 `tokens.css` | 设计 token。承载颜色、字体、间距、圆角等视觉变量，是代码组件和生成结果保持一致的基础。 | 不能忽略。可以不手工改，但必须被组件包或全局样式正确引入。 | 不可忽略。 |
+| `tokens.css` | `design-system-pack/tokens.css`; 组件包内 `tokens.css` | 设计 token。承载颜色、字体、间距、圆角等视觉变量，是代码组件和生成结果保持一致的基础。 | 不能忽略。可以不手工改，但必须被组件包或全局样式正确引入。 | 不可忽略。 |
 | `templates/map.json` | `skill-pack/map/templates/map.json`; page composer references | 地图页面骨架。定义 `1160 x 800` 页面区域、组件槽位、布局结构。 | 如果只渲染既有 `page.output.json`，可以不直接读；如果要生成页面或改页面结构，不能忽略。 | 条件性可忽略。 |
 | `components/map.json` | `skill-pack/components.json`; page composer references | 组件注册表。定义 AI 当前允许使用哪些 Figma/React 组件。 | 不能在页面生成链路里忽略，否则 AI 可能使用不存在或未实现的组件。纯手写 renderer 时可以作为参考，但不建议跳过。 | 生成链路不可忽略。 |
 | `mapping/map.json` | `skill-pack/mapping/map.json`; page composer references | 数据字段到页面组件 props 的绑定层。当前仍受真实数据源限制。 | 当前真实数据字段未最终确认时，不能擅自补全；实现侧可以暂时不依赖完整映射，但不能编造字段。 | 当前可暂缓，不可伪造。 |

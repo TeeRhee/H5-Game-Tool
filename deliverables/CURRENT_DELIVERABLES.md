@@ -87,7 +87,7 @@ validation report
 
 ```txt
 references/DESIGN.md
-references/tokens.css
+design-system-pack/tokens.css
 references/templates/map.json
 references/components/map.json
 references/mapping/map.json

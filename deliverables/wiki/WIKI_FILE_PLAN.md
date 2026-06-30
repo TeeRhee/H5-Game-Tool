@@ -18,7 +18,7 @@
 | 3 | `src/preview/ComponentPreview.tsx` | 复用并改造 | 预览工作台入口。负责在组件库预览和现有地图 demo 之间切换。 | `ComponentGallery.tsx`、原地图 demo 逻辑 | 默认进入 Components；切到 Map demo 后原地图仍可加载。 |
 | 4 | `src/styles.css` | 复用并扩展 | 全局样式、组件样式、预览页样式、token 表格样式。必须继续引入当前 token 文件。 | `design-system-pack/tokens.css` | 组件预览页无文本溢出，移动端单列展示。 |
 | 5 | `skill-pack/wiki/DESIGN.md` | 新建 | Wiki 页面的人读设计规则：页面框架、信息层级、组件使用边界、响应式策略、禁止自由发挥项。 | Figma Wiki 设计、现有 demo 截图 | AI 能据此说明页面结构，但不把它当机器契约。 |
-| 6 | `skill-pack/wiki/tokens.css` | 新建或镜像 | Wiki 专用 token 引用点。初期可镜像当前 `design-system-pack/tokens.css`，后续如 Wiki 有单独 token 再拆。 | 当前 token 文件 | CSS 变量无未定义引用；和组件预览页显示一致。 |
+| 6 | `skill-pack/wiki/tokens.css` | 暂不创建 | Wiki 当前直接使用 `design-system-pack/tokens.css`。如果后续 Wiki 需要独立 token 再拆分，不在当前版本重复存放。 | 当前 token 文件 | CSS 变量无未定义引用；和组件预览页显示一致。 |
 | 7 | `skill-pack/wiki/components.wiki.json` | 新建 | Wiki 可用组件注册表。定义允许 AI 使用的组件 ID、React 组件名、用途、必要 props 和禁止替代规则。 | 组件预览页、Figma 组件命名 | 注册表中的组件都能在源码中找到实现。 |
 | 8 | `skill-pack/wiki/templates/wiki.json` | 新建 | Wiki 页面机器可读骨架。定义 1160x800 默认画布、顶部区域、导航区、内容列表区、详情区、分页或筛选区。 | `DESIGN.md`、Wiki demo 信息架构 | JSON 能表达页面区块，不包含编造数据。 |
 | 9 | `skill-pack/wiki/mapping/wiki.json` | 新建 | demo 数据字段到组件 props 的映射层。记录标题、分类、图标、图片、正文、标签、状态等字段来自哪里。 | 前端 demo 数据结构 | 不清楚的字段使用 `TODO_FROM_DATASOURCE`。 |
