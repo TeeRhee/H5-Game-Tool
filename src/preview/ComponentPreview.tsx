@@ -6,13 +6,14 @@ import {
   useState,
   type PointerEvent,
 } from "react";
+import { ComponentGallery } from "./ComponentGallery";
 import {
   Button,
   type CheckboxState,
-  DescribeCard,
   Divider,
   DropdownItem,
   PictureTitle,
+  PopupDescribeCard,
   RemixIcon,
   SearchBar,
   Select,
@@ -157,7 +158,7 @@ function getTileZoom(scale: number, coordinateWidth: number, tileSize: number, m
   return clamp(Number.isFinite(zoom) ? zoom : minZoom, minZoom, maxNativeZoom);
 }
 
-export function ComponentPreview() {
+function MapDemoPreview() {
   const [meta, setMeta] = useState<MapMeta | null>(null);
   const [data, setData] = useState<NormalizedMapData | null>(null);
   const [tileManifests, setTileManifests] = useState<Record<string, TileManifest>>({});
@@ -511,22 +512,22 @@ export function ComponentPreview() {
 
   if (loadError) {
     return (
-      <main className="preview-shell">
+      <div className="map-demo-frame">
         <section className="map-loading">{loadError}</section>
-      </main>
+      </div>
     );
   }
 
   if (!meta || !data || !selectedMap) {
     return (
-      <main className="preview-shell">
+      <div className="map-demo-frame">
         <section className="map-loading">正在加载红色沙漠地图数据...</section>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className="preview-shell preview-shell--map-only">
+    <div className="map-demo-frame">
       <section className="preview-intro">
         <div>
           <p className="preview-kicker">Game H5 Tool</p>
@@ -705,7 +706,7 @@ export function ComponentPreview() {
             </Button>
           </div>
           {selectedMarker ? (
-            <DescribeCard
+            <PopupDescribeCard
               open={detailOpen}
               title={selectedMarker.title}
               description={markerDetailDescription}
@@ -715,6 +716,46 @@ export function ComponentPreview() {
           ) : null}
         </section>
       </section>
+    </div>
+  );
+}
+
+export function ComponentPreview() {
+  const [activeView, setActiveView] = useState<"components" | "map">("components");
+
+  return (
+    <main className="preview-shell preview-shell--workbench">
+      <section className="preview-intro preview-intro--workbench">
+        <div>
+          <p className="preview-kicker">H5 Game Tool</p>
+          <h1>组件和 Token 预览</h1>
+          <p>
+            集中查看已经实现的 game-tool 组件、当前设计 token、设计稿 style，以及原有地图示例。
+          </p>
+        </div>
+        <div className="preview-view-switch" role="tablist" aria-label="预览视图">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeView === "components"}
+            className={activeView === "components" ? "preview-view-switch__item preview-view-switch__item--active" : "preview-view-switch__item"}
+            onClick={() => setActiveView("components")}
+          >
+            组件库
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeView === "map"}
+            className={activeView === "map" ? "preview-view-switch__item preview-view-switch__item--active" : "preview-view-switch__item"}
+            onClick={() => setActiveView("map")}
+          >
+            地图示例
+          </button>
+        </div>
+      </section>
+
+      {activeView === "components" ? <ComponentGallery /> : <MapDemoPreview />}
     </main>
   );
 }

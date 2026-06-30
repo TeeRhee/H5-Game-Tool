@@ -44,7 +44,7 @@ h5-game-map/
   references/
     OUTPUT_SCHEMA.json
     tool-types.json
-    datasource-schema/
+    map/datasource-schema/
     templates/
     components/
     mapping/

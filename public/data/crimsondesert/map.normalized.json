@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../skill-pack/datasource-schema/map.normalized.schema.json",
+  "$schema": "../../../skill-pack/map/datasource-schema/map.normalized.schema.json",
   "version": 1,
   "categories": [
     {

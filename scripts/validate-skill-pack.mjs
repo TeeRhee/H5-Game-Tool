@@ -23,15 +23,19 @@ function existsInSkill(relativePath) {
   return fs.existsSync(path.join(skillDir, relativePath));
 }
 
+function isTodoPath(value) {
+  return String(value).startsWith("TODO_");
+}
+
 function validateToolTypes(errors) {
   const toolTypes = readJson("tool-types.json");
 
   for (const toolType of toolTypes.toolTypes ?? []) {
-    if (!toolType.template.startsWith("TODO_")) {
+    if (!isTodoPath(toolType.template)) {
       assert(existsInSkill(toolType.template), `Tool type ${toolType.id} template is missing: ${toolType.template}`, errors);
     }
 
-    if (!toolType.componentRegistry.startsWith("TODO_")) {
+    if (!isTodoPath(toolType.componentRegistry)) {
       assert(
         existsInSkill(toolType.componentRegistry),
         `Tool type ${toolType.id} component registry is missing: ${toolType.componentRegistry}`,
@@ -40,56 +44,60 @@ function validateToolTypes(errors) {
     }
 
     for (const schemaPath of String(toolType.datasourceSchema).split(";").map((item) => item.trim()).filter(Boolean)) {
-      if (!schemaPath.startsWith("TODO_")) {
+      if (!isTodoPath(schemaPath)) {
         assert(existsInSkill(schemaPath), `Tool type ${toolType.id} datasource schema is missing: ${schemaPath}`, errors);
       }
     }
 
-    if (!String(toolType.mapping).startsWith("TODO_")) {
+    if (!isTodoPath(toolType.mapping)) {
       assert(existsInSkill(toolType.mapping), `Tool type ${toolType.id} mapping is missing: ${toolType.mapping}`, errors);
     }
 
-    if (!String(toolType.examples).startsWith("TODO_")) {
+    if (!isTodoPath(toolType.examples)) {
       assert(existsInSkill(toolType.examples), `Tool type ${toolType.id} examples are missing: ${toolType.examples}`, errors);
     }
   }
 }
 
-function validateMapTemplateReferences(errors) {
-  const template = readJson("templates/map.json");
-  const registry = readJson("components/map.json");
+function validateTemplateComponentReferences(toolType, errors) {
+  if (isTodoPath(toolType.template) || isTodoPath(toolType.componentRegistry)) return;
+
+  const template = readJson(toolType.template);
+  const registry = readJson(toolType.componentRegistry);
   const componentIds = new Set((registry.components ?? []).map((component) => component.id));
 
   for (const region of template.regions ?? []) {
     for (const componentId of region.allowedComponents ?? []) {
       assert(
         componentIds.has(componentId),
-        `Template region ${region.id} allows unknown component ${componentId}`,
+        `Tool type ${toolType.id} region ${region.id} allows unknown component ${componentId}`,
         errors,
       );
     }
   }
 }
 
-function validateMapMappingReferences(errors) {
-  const template = readJson("templates/map.json");
-  const registry = readJson("components/map.json");
-  const mapping = readJson("mapping/map.json");
+function validateMappingReferences(toolType, errors) {
+  if (isTodoPath(toolType.mapping) || isTodoPath(toolType.template) || isTodoPath(toolType.componentRegistry)) return;
+
+  const template = readJson(toolType.template);
+  const registry = readJson(toolType.componentRegistry);
+  const mapping = readJson(toolType.mapping);
   const regionsById = new Map((template.regions ?? []).map((region) => [region.id, region]));
   const componentIds = new Set((registry.components ?? []).map((component) => component.id));
 
-  assert(mapping.toolType === "map", "Map mapping toolType must be map", errors);
+  assert(mapping.toolType === toolType.id, `${toolType.id} mapping toolType must be ${toolType.id}`, errors);
 
   for (const regionMapping of mapping.regionMappings ?? []) {
     const region = regionsById.get(regionMapping.regionId);
-    assert(Boolean(region), `Map mapping references unknown region ${regionMapping.regionId}`, errors);
+    assert(Boolean(region), `${toolType.id} mapping references unknown region ${regionMapping.regionId}`, errors);
 
     for (const componentId of regionMapping.components ?? []) {
-      assert(componentIds.has(componentId), `Map mapping references unknown component ${componentId}`, errors);
+      assert(componentIds.has(componentId), `${toolType.id} mapping references unknown component ${componentId}`, errors);
       if (region) {
         assert(
           (region.allowedComponents ?? []).includes(componentId),
-          `Map mapping places ${componentId} in disallowed region ${region.id}`,
+          `${toolType.id} mapping places ${componentId} in disallowed region ${region.id}`,
           errors,
         );
       }
@@ -97,12 +105,19 @@ function validateMapMappingReferences(errors) {
   }
 }
 
+function validateContracts(errors) {
+  const toolTypes = readJson("tool-types.json");
+  for (const toolType of toolTypes.toolTypes ?? []) {
+    validateTemplateComponentReferences(toolType, errors);
+    validateMappingReferences(toolType, errors);
+  }
+}
+
 function main() {
   const errors = [];
 
   validateToolTypes(errors);
-  validateMapTemplateReferences(errors);
-  validateMapMappingReferences(errors);
+  validateContracts(errors);
 
   if (errors.length) {
     for (const error of errors) console.error(`ERROR ${error}`);
@@ -114,7 +129,7 @@ function main() {
       {
         skillDir: path.relative(repoRoot, skillDir),
         status: "valid",
-        checks: ["tool-type references", "map template component references", "map mapping references", "JSON without BOM"],
+        checks: ["tool-type references", "template component references", "mapping references", "JSON without BOM"],
       },
       null,
       2,

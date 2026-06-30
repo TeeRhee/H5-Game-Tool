@@ -79,8 +79,7 @@
         "state=default",
         "state=hover",
         "state=active",
-        "state=filled",
-        "state=disable"
+        "state=Disabled"
       ],
       "observedUse": [
         "desktop:left-panel.controls",
@@ -103,13 +102,13 @@
         "placeholder": {
           "type": "string",
           "required": false,
-          "default": "选择地图"
+          "default": "閫夋嫨鍦板浘"
         },
         "disabled": {
           "type": "boolean",
           "required": false,
           "default": false,
-          "rule": "When true, render state=disable and do not open DropdownCard. Renderer may also disable Select when the datasource has only one map and uiRules.singleMapSelect requests disabled behavior."
+          "rule": "When true, render state=Disabled and do not open DropdownCard. Renderer may also disable Select when the datasource has only one map and uiRules.singleMapSelect requests disabled behavior."
         }
       },
       "observedStructure": {
@@ -118,7 +117,7 @@
           "default": "background #2C3134, stroke #43484B, text #ECEEF0, arrow #767C7F",
           "hover": "background #43484B, stroke #43484B, text #ECEEF0, arrow #AEB4B8",
           "active": "background #2C3134, stroke #DCB325, text #ECEEF0, arrow-up #ECEEF0",
-          "disable": "background #2C3134, stroke #43484B, text #ECEEF0, arrow #696E72; no dropdown interaction"
+          "disabled": "background #2C3134, stroke #43484B, text #ECEEF0, arrow #696E72; no dropdown interaction"
         },
         "mobile": "343x42 in BottomSheet, x=16, y=28, background var(--color-bg-soft), stroke var(--color-stroke-sub)"
       }
@@ -129,7 +128,8 @@
       "observedVariants": [
         "state=default",
         "state=hover",
-        "state=active"
+        "state=active",
+        "state=filled"
       ],
       "observedUse": [
         "desktop:left-panel.controls",
@@ -165,7 +165,7 @@
         "placeholder": {
           "type": "string",
           "required": false,
-          "default": "搜索"
+          "default": "鎼滅储"
         },
         "onClear": {
           "type": "interaction",
@@ -209,6 +209,18 @@
             "unchecked",
             "indeterminate"
           ]
+        },
+        "interactionState": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "default",
+            "hover",
+            "pressed",
+            "disabled"
+          ],
+          "default": "default",
+          "rule": "Mirrors Figma interactionState variants; disabled may also be derived from the disabled prop."
         },
         "child": {
           "type": "boolean",
@@ -413,6 +425,18 @@
           ],
           "default": "small"
         },
+        "state": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "default",
+            "hover",
+            "focus",
+            "disabled"
+          ],
+          "default": "default",
+          "rule": "Used by preview and visual-state rendering; runtime interaction may also use CSS pseudo states and disabled."
+        },
         "iconOnly": {
           "type": "boolean",
           "required": false,
@@ -536,3 +560,5 @@
     }
   ]
 }
+
+

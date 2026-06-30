@@ -75,7 +75,7 @@ function slugFromText(text) {
 
 function buildStandardPackage(points) {
   const meta = {
-    $schema: "../../../skill-pack/datasource-schema/map.meta.schema.json",
+    $schema: "../../../skill-pack/map/datasource-schema/map.meta.schema.json",
     version: 1,
     game: {
       id: "crimsondesert",
@@ -177,7 +177,7 @@ function buildStandardPackage(points) {
   return {
     meta,
     normalized: {
-      $schema: "../../../skill-pack/datasource-schema/map.normalized.schema.json",
+      $schema: "../../../skill-pack/map/datasource-schema/map.normalized.schema.json",
       version: 1,
       categories,
       markers,

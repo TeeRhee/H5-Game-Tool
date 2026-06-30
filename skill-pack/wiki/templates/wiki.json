@@ -1,0 +1,345 @@
+{
+  "$schema": "../../schemas/template.schema.json",
+  "version": 1,
+  "id": "wiki",
+  "displayName": "Wiki Tool Template",
+  "source": {
+    "type": "figma",
+    "fileKey": "fnA9NEBTDyxU94M0fvNy8e",
+    "pageNodeId": "167:628",
+    "pageName": "Wiki class template components and notes",
+    "stateNodes": {
+      "home": "167:630",
+      "secondaryList": "304:5972",
+      "detailLargeCardExpanded": "304:17202",
+      "detailAllStates": "304:9319"
+    },
+    "notes": "Template contract derived from the Wiki design-system page. Keep this file separate from the map template contract."
+  },
+  "status": "design-contract-draft",
+  "viewport": {
+    "defaultCanvas": {
+      "width": 1000,
+      "height": 610,
+      "rule": "Use 1000 x 610 as the default generated Wiki canvas across Wiki template outputs."
+    },
+    "observedFigmaViewport": {
+      "width": 1000,
+      "height": 610,
+      "rule": "The referenced Figma Wiki frames are 1000 x 610 snapshots; generated output should match this default canvas and use vertical scrolling for overflow content."
+    },
+    "responsiveRules": {
+      "desktop": {
+        "breakpoint": "min-width: 768px",
+        "canvas": "x=0, y=0, w=1000, h=610",
+        "header": "x=0, y=0, w=1000, h=68",
+        "body": "x=0, y=64 or 68, w=1000, h=542 or 546 depending on state",
+        "contentInset": "home uses x=32, list/detail use x=20 or x=32 according to observed state",
+        "scrollbar": "right edge visual scroll component; home x=988, list/detail x=980 or x=988 depending on content state"
+      },
+      "mobile": {
+        "breakpoint": "max-width: 767px",
+        "status": "TODO_FROM_FIGMA_OR_IMPLEMENTATION",
+        "rule": "No mobile Wiki state was captured in this template pass. Do not invent a mobile layout from the desktop frames; define a mobile template only after mobile design nodes or implementation constraints are supplied."
+      }
+    },
+    "templateColors": {
+      "tokenSource": "../../../design-system-pack/tokens.css",
+      "windowBackground": "var(--color-bg-black)",
+      "surfaceBackground": "var(--color-bg-soft)",
+      "subSurfaceBackground": "var(--color-bg-sub)",
+      "fieldStroke": "var(--color-stroke-sub)",
+      "activeStroke": "var(--color-primary-dark)",
+      "textPrimary": "var(--color-text-strong)",
+      "textSecondary": "var(--color-text-soft)"
+    }
+  },
+  "regions": [
+    {
+      "id": "shell.background",
+      "displayName": "Wiki background shell",
+      "purpose": "Renders the full-page dark tool background behind all Wiki states.",
+      "allowedComponents": [
+        "Layout.Background"
+      ],
+      "layout": {
+        "home": "x=0, y=0, w=1000, h=610",
+        "list": "x=0, y=0, w=1000, h=610",
+        "detail": "x=0, y=0, w=1000, h=610"
+      },
+      "dataRequirement": "STATIC_TEMPLATE_CHROME"
+    },
+    {
+      "id": "shell.header",
+      "displayName": "Wiki header navigation and search",
+      "purpose": "Top navigation shell shared by home, secondary list, and detail pages. It contains category navigation and the global Wiki search entry.",
+      "allowedComponents": [
+        "Nav.Header",
+        "Nav.TopBar",
+        "Form.SearchBar"
+      ],
+      "layout": {
+        "header": "x=0, y=0, w=1000, h=68",
+        "topBar": "x=32, y=32, observed tab row inside Nav.Header",
+        "search": "right aligned inside header, observed x=748, y=32, w=220, h=36"
+      },
+      "dataRequirement": "TODO_FROM_DATASOURCE"
+    },
+    {
+      "id": "home.summary",
+      "displayName": "Wiki home summary",
+      "purpose": "Shows the Wiki title and aggregate counts before the category grid.",
+      "allowedComponents": [],
+      "layout": {
+        "pageSummary": "WikiHome Content x=32, y=20, w=936; PageSummary x=0, y=0, w=190, h=56",
+        "titleRow": "x=0, y=0, h=28; game name prefix plus Wiki suffix",
+        "metaRow": "x=0, y=36, h=20; category count and item count"
+      },
+      "pendingDataBoundElements": [
+        "game title",
+        "category count",
+        "total item count"
+      ],
+      "dataRequirement": "TODO_FROM_DATASOURCE"
+    },
+    {
+      "id": "home.category-grid",
+      "displayName": "Wiki category grid",
+      "purpose": "Primary Wiki home content. Displays top-level category cards in a four-column desktop grid.",
+      "allowedComponents": [
+        "Game.CategoryCard",
+        "Base.Badge"
+      ],
+      "layout": {
+        "grid": "x=32, y=164, w=936, h=492 inside the 1000 x 610 frame; continue vertical scrolling after visible rows",
+        "columns": "4 columns, each card w=225, h=114",
+        "columnGap": "12px",
+        "rowGap": "12px",
+        "observedRows": "4 rows visible or clipped in WikiHome",
+        "cardContent": "title, short description, icon/avatar cluster, count badge, trailing arrow"
+      },
+      "pendingDataBoundElements": [
+        "category id",
+        "category title",
+        "category description",
+        "category icon or avatar list",
+        "category item count",
+        "target route"
+      ],
+      "dataRequirement": "TODO_FROM_DATASOURCE"
+    },
+    {
+      "id": "secondary.breadcrumbs",
+      "displayName": "Secondary page breadcrumbs",
+      "purpose": "Shows the path from Wiki root to the selected category/list page.",
+      "allowedComponents": [
+        "Nav.Breadcrumbs"
+      ],
+      "layout": {
+        "breadcrumbs": "SecondaryPage Body x=20, y=16, w=216, h=28; detail pages may expand to w=338"
+      },
+      "pendingDataBoundElements": [
+        "breadcrumb labels",
+        "breadcrumb target routes",
+        "active breadcrumb"
+      ],
+      "dataRequirement": "TODO_FROM_DATASOURCE"
+    },
+    {
+      "id": "secondary.card-list",
+      "displayName": "Secondary page card list",
+      "purpose": "Displays Wiki entries under a selected category in a three-column grid.",
+      "allowedComponents": [
+        "Layout.DescribeCard",
+        "Base.Image",
+        "Base.Badge",
+        "Nav.Pagination"
+      ],
+      "layout": {
+        "listContainer": "x=32, y=128, w=936, h=408 in SecondaryPage",
+        "grid": "3 columns, each card w=306.6667, h=96",
+        "columnGap": "8px",
+        "rowGap": "8px",
+        "pagination": "x=0, y=482, w=1000, h=64 inside SecondaryPage Body"
+      },
+      "pendingDataBoundElements": [
+        "entry id",
+        "entry title",
+        "entry description",
+        "entry image",
+        "entry badge",
+        "entry meta values",
+        "pagination page",
+        "pagination total pages"
+      ],
+      "dataRequirement": "TODO_FROM_DATASOURCE"
+    },
+    {
+      "id": "detail.breadcrumbs",
+      "displayName": "Detail page breadcrumbs",
+      "purpose": "Shows the full navigation path from Wiki root to a selected detail entry.",
+      "allowedComponents": [
+        "Nav.Breadcrumbs"
+      ],
+      "layout": {
+        "breadcrumbs": "x=20, y=16, w=338, h=28 in detail states"
+      },
+      "pendingDataBoundElements": [
+        "root label",
+        "category label",
+        "detail label",
+        "target routes"
+      ],
+      "dataRequirement": "TODO_FROM_DATASOURCE"
+    },
+    {
+      "id": "detail.content-shell",
+      "displayName": "Detail content scroll shell",
+      "purpose": "Owns the long vertical Wiki detail content area and the right-side visual scrollbar.",
+      "allowedComponents": [
+        "Layout.Scroll"
+      ],
+      "layout": {
+        "detailContent": "x=20, y=128, w=960; observed height ranges from 1022 to 1212 depending on expanded content",
+        "scroll": "x=980, y=60, w=12; height is 466 in large-card-expanded and 1015 in all-states reference"
+      },
+      "dataRequirement": "RENDERER_SCROLL_STATE"
+    },
+    {
+      "id": "detail.hero-card",
+      "displayName": "Detail hero card",
+      "purpose": "Top summary card for the selected Wiki item. Use the observed large DescribeCard state or compact ShowCard state according to content density.",
+      "allowedComponents": [
+        "Layout.DescribeCard",
+        "Game.ShowCard",
+        "Base.Image",
+        "Base.Badge"
+      ],
+      "layout": {
+        "largeDescribeCard": "DetailPageLargeCardExpanded HeroSection x=0, y=0, w=960, h=128; card x=16, y=16, w=928, h=96",
+        "compactShowCard": "DetailPageAllStates HeroSection x=0, y=0, w=960, h=108; card x=16, y=16, w=928, h=76"
+      },
+      "pendingDataBoundElements": [
+        "detail title",
+        "detail summary",
+        "detail image",
+        "detail badge",
+        "detail meta values"
+      ],
+      "dataRequirement": "TODO_FROM_DATASOURCE"
+    },
+    {
+      "id": "detail.attribute-section",
+      "displayName": "Detail attribute section",
+      "purpose": "Displays grouped base attributes, short text facts, and status badges for the selected Wiki item.",
+      "allowedComponents": [
+        "Base.Badge"
+      ],
+      "layout": {
+        "largeExpanded": "ExpandedSections item x=16, y=16, w=928, h=154",
+        "allStates": "DetailSections item x=16, y=16, w=928, h=84",
+        "divider": "horizontal divider spans w=928 when key-value rows are present"
+      },
+      "pendingDataBoundElements": [
+        "section title",
+        "attribute labels",
+        "attribute values",
+        "badge labels",
+        "badge tone"
+      ],
+      "dataRequirement": "TODO_FROM_DATASOURCE"
+    },
+    {
+      "id": "detail.related-section",
+      "displayName": "Detail related card section",
+      "purpose": "Displays related rewards, linked entries, or progress-like cards inside the detail page.",
+      "allowedComponents": [
+        "Game.ShowCard",
+        "Game.ProgressBarLabel",
+        "Game.ProgressBar",
+        "Base.Image",
+        "Base.Badge"
+      ],
+      "layout": {
+        "largeExpanded": "section x=16, y=190, w=928, h=208; related card row x=0, y=62, w=928, h=76",
+        "allStates": "section x=16, y=120, w=928, h=138; related card row x=0, y=62, w=928, h=76",
+        "twoColumnCards": "two cards per row, each w=458, h=76, gap=12"
+      },
+      "pendingDataBoundElements": [
+        "related entry title",
+        "related entry summary",
+        "related image",
+        "related badge",
+        "progress value",
+        "target route"
+      ],
+      "dataRequirement": "TODO_FROM_DATASOURCE"
+    },
+    {
+      "id": "detail.detail-card-section",
+      "displayName": "Detail structured information section",
+      "purpose": "Displays structured long-form detail blocks such as attributes, descriptions, tables, and grouped notes.",
+      "allowedComponents": [
+        "Layout.DetailCard",
+        "Data.TableHeaderCell",
+        "Data.TableRowCell",
+        "Base.Badge"
+      ],
+      "layout": {
+        "largeExpanded": "Layout.DetailCard x=16, y=418, w=928, h=328",
+        "allStates": "Layout.DetailCard x=16, y=388, w=928, h=258",
+        "table": "full-width table inside card; observed columns include level, attack, price, material"
+      },
+      "pendingDataBoundElements": [
+        "section title",
+        "section description",
+        "table columns",
+        "table rows",
+        "canvas or media block"
+      ],
+      "dataRequirement": "TODO_FROM_DATASOURCE"
+    },
+    {
+      "id": "detail.extended-section",
+      "displayName": "Detail extended content section",
+      "purpose": "Holds additional long Wiki content below the structured card, such as rich text, image canvas, or extra grouped detail modules.",
+      "allowedComponents": [
+        "Layout.DetailCard",
+        "Base.Image",
+        "Data.TableHeaderCell",
+        "Data.TableRowCell"
+      ],
+      "layout": {
+        "largeExpanded": "x=16, y=766, w=928, h=302",
+        "allStates": "x=16, y=666, w=928, h=232",
+        "canvasBlock": "observed large empty media/canvas block spans w=928 when present"
+      },
+      "pendingDataBoundElements": [
+        "rich text blocks",
+        "media blocks",
+        "additional tables",
+        "extra sections"
+      ],
+      "dataRequirement": "TODO_FROM_DATASOURCE"
+    }
+  ],
+  "requiredRendererBehavior": [
+    "Render Wiki output in a 1000 x 610 default canvas unless a host shell explicitly overrides the size.",
+    "Keep this Wiki template independent from skill-pack/map/templates/map.json; do not merge Wiki regions into the map contract.",
+    "Reject unknown region ids.",
+    "Reject arbitrary HTML or arbitrary component code in AI output.",
+    "Use only components listed in the target region's allowedComponents when a region declares allowed components.",
+    "Do not invent datasource fields; use TODO_FROM_DATASOURCE until the Wiki mapping contract defines source fields.",
+    "Use semantic tokens from the Wiki or shared token source; do not hardcode colors when a token exists.",
+    "Header navigation and search are shared across home, secondary list, and detail states.",
+    "Home state renders a category grid after the summary block; secondary state renders a list grid plus pagination; detail state renders breadcrumbs plus vertically scrollable detail content.",
+    "In secondary list state, keep the observed 3-column card grid on desktop and bind pagination separately from card data.",
+    "In detail state, content may exceed the visible canvas height. Keep the page scroll model in the renderer layer and sync the visual Layout.Scroll component to scroll state.",
+    "Use the Figma frame size 1000 x 610 as the default Wiki canvas and allow vertical scrolling for content overflow.",
+    "Do not invent a mobile Wiki layout until mobile Wiki design nodes or explicit implementation constraints are supplied.",
+    "Preserve breadcrumb hierarchy and active state. Breadcrumb labels and target routes must come from datasource or routing context.",
+    "Cards should not fabricate images, badges, counts, progress, or table values. Missing optional fields should collapse gracefully rather than showing placeholder data in final output.",
+    "Related cards and progress cards share the detail data model but must remain optional sections controlled by datasource availability.",
+    "Tables must use structured column and row data; do not encode tables as plain rich text when table structure is available."
+  ]
+}

@@ -59,8 +59,8 @@ export function generateMapPage(packageDir, output) {
     throw new Error(validation.errors.map((error) => `ERROR ${error}`).join("\n"));
   }
 
-  const template = loadSkillContract("templates/map.json");
-  const registry = loadSkillContract("components/map.json");
+  const template = loadSkillContract("map/templates/map.json");
+  const registry = loadSkillContract("components.json");
   const componentIds = new Set(registry.components.map((component) => component.id));
   const meta = validation.meta;
   const data = validation.data;

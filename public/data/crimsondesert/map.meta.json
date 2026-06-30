@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../skill-pack/datasource-schema/map.meta.schema.json",
+  "$schema": "../../../skill-pack/map/datasource-schema/map.meta.schema.json",
   "version": 1,
   "game": {
     "id": "crimsondesert",

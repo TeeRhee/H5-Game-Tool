@@ -16,7 +16,7 @@ The desktop layout keeps the map canvas full-window under overlay controls. The 
 
 ## Token Source
 
-Use `tokens/tokens.css` from this package as the source of truth for color, radius, spacing, and typography variables. Do not hardcode local color values when a semantic token exists.
+Use `design-system-pack/tokens.css` as the source of truth for color, radius, spacing, and typography variables. Do not hardcode local color values when a semantic token exists.
 
 Use semantic tokens first:
 

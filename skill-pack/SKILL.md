@@ -7,14 +7,14 @@ description: Generate and validate map-type game H5 tool pages from standardized
 
 Use this skill to turn a game map data source into a constrained H5 map tool page.
 
-The v1 runnable target is the `map` tool type. `wiki` and `guide-config` are registered as future tool types, but they are outside this skill's first packaged scope.
+The v1 runnable target is the `map` tool type. `wiki` now has its own template file, and `guide-config` is still a registered future type outside this skill's first packaged scope.
 
 ## Current Inputs
 
 - A standardized map data package from development.
 - Optional raw crawled data for reference only.
 - The design contracts in this folder.
-- The design tokens in `tokens/tokens.css`.
+- The design tokens in `design-system-pack/tokens.css`.
 - The map layout and components from Figma file `fnA9NEBTDyxU94M0fvNy8e`, node `58:1896`.
 
 ## Execution Flow
@@ -22,10 +22,10 @@ The v1 runnable target is the `map` tool type. `wiki` and `guide-config` are reg
 1. Read `tool-types.json`.
 2. If the input is raw crawled data, inspect the uploaded source and create a source-specific adapter when the required field meanings are clear. Run the adapter to create a standardized map package. If key meanings are unclear, stop and request the missing mapping decisions.
 3. If the input is already a standardized map package, use it directly.
-4. Read `templates/map.json`, `components/map.json`, and `datasource-schema/MAP_DATASOURCE_CONTRACT.md`.
-5. Validate `map.meta.json` against `datasource-schema/map.meta.schema.json`.
-6. Validate `map.normalized.json` against `datasource-schema/map.normalized.schema.json`.
-7. If `map.meta.json` uses `tile.sourceType = "manifest"`, validate the referenced tile manifest against `datasource-schema/tile-manifest.schema.json`.
+4. Read `map/templates/map.json`, `components.json`, and `map/datasource-schema/MAP_DATASOURCE_CONTRACT.md`.
+5. Validate `map.meta.json` against `map/datasource-schema/map.meta.schema.json`.
+6. Validate `map.normalized.json` against `map/datasource-schema/map.normalized.schema.json`.
+7. If `map.meta.json` uses `tile.sourceType = "manifest"`, validate the referenced tile manifest against `map/datasource-schema/tile-manifest.schema.json`.
 8. Validate cross-file references: marker `mapId`, area `mapId`, marker `categoryId`, marker `groupId`, group counts, icon paths, image paths, tile template or manifest paths.
 9. Generate the structured H5 page JSON from the standardized package and `OUTPUT_SCHEMA.json`.
 10. Validate that every referenced component exists in the map component registry.
@@ -70,12 +70,12 @@ The v1 runnable target is the `map` tool type. `wiki` and `guide-config` are reg
 The map type has design-side contracts:
 
 - Tool type registration exists in `tool-types.json`.
-- Layout contract exists in `templates/map.json`.
-- Component registry exists in `components/map.json`.
-- Current v0 preview/layout status is recorded in `MAP_V0_STATUS.md`.
-- Design tokens exist in `tokens/tokens.css`.
-- Standardized map package contract exists in `datasource-schema/MAP_DATASOURCE_CONTRACT.md`.
-- Standardized map package schemas exist in `datasource-schema/map.meta.schema.json`, `datasource-schema/map.normalized.schema.json`, and `datasource-schema/tile-manifest.schema.json`.
+- Layout contract exists in `map/templates/map.json`.
+- Component registry exists in `components.json`.
+- Current v0 preview/layout status is recorded in `map/MAP_V0_STATUS.md`.
+- Design tokens exist in `design-system-pack/tokens.css`.
+- Standardized map package contract exists in `map/datasource-schema/MAP_DATASOURCE_CONTRACT.md`.
+- Standardized map package schemas exist in `map/datasource-schema/map.meta.schema.json`, `map/datasource-schema/map.normalized.schema.json`, and `map/datasource-schema/tile-manifest.schema.json`.
 
 ## Pending Per-Game Adapters
 
@@ -162,7 +162,7 @@ Generate constrained page JSON for any validated map package:
 npm run generate:map-output -- --package <standard-map-package-dir> --output <standard-map-package-dir>/page.output.json
 ```
 
-Use `DEVELOPER_HANDOFF.md` when handing the map package contract to developers.
+Use `map/DEVELOPER_HANDOFF.md` when handing the map package contract to developers.
 
 ## Map H5 V1 Packaging
 

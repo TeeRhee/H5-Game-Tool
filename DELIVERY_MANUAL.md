@@ -105,7 +105,7 @@ AI 最终页面 JSON 的输出格式约束。生成器输出的 `page.output.jso
 
 ## `skill-pack/templates/`
 
-### `templates/map.json`
+### `skill-pack/map/templates/map.json`
 
 地图页面模板。定义页面区域、每个区域允许出现哪些组件、画布和侧栏布局规则。
 
@@ -119,7 +119,7 @@ AI 最终页面 JSON 的输出格式约束。生成器输出的 `page.output.jso
 
 ## `skill-pack/components/`
 
-### `components/map.json`
+### `skill-pack/components.json`
 
 地图类型可用组件注册表。AI 和生成器只能引用这里登记过的组件，不能自由发明组件。
 
@@ -134,7 +134,7 @@ AI 最终页面 JSON 的输出格式约束。生成器输出的 `page.output.jso
 - `Layout.DescribeCard`
 - `Base.Button`
 
-## `skill-pack/datasource-schema/`
+## `skill-pack/map/datasource-schema/`
 
 标准地图数据包的数据契约。
 
@@ -189,7 +189,7 @@ AI 最终页面 JSON 的输出格式约束。生成器输出的 `page.output.jso
 
 ## `skill-pack/tokens/`
 
-### `tokens/tokens.css`
+### `design-system-pack/tokens.css`
 
 设计 token。React 组件和样式应优先使用这里定义的颜色、字体、间距、圆角等变量。
 

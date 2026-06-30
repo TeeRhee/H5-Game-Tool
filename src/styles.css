@@ -1,5 +1,5 @@
 @import "remixicon/fonts/remixicon.css";
-@import "../skill-pack/tokens/tokens.css";
+@import "../design-system-pack/tokens.css";
 
 * {
   box-sizing: border-box;
@@ -12,6 +12,8 @@ body {
   color: var(--color-text-strong);
   background: var(--color-bg-black);
   font-family: var(--type-font-family-primary), "Microsoft YaHei UI", Inter, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
 }
 
 :root {
@@ -315,7 +317,7 @@ button:disabled {
   background: var(--gt-panel-bg);
 }
 
-.map-popup__canvas .gt-describe-card {
+.map-popup__canvas .gt-popup-describe-card {
   right: 12px;
   bottom: 12px;
 }
@@ -361,6 +363,576 @@ button:disabled {
   font-size: var(--gt-text-body-md-size);
 }
 
+.preview-shell--workbench {
+  width: min(100%, 1520px);
+}
+
+.preview-intro--workbench {
+  align-items: center;
+}
+
+.preview-view-switch,
+.token-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--color-stroke-soft);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-soft);
+}
+
+.preview-view-switch__item,
+.token-tab {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--radius-md);
+  color: var(--color-text-soft);
+  background: transparent;
+  font-family: var(--gt-font-family-ui);
+  font-size: var(--gt-text-body-md-size);
+  line-height: var(--gt-text-body-md-line);
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.preview-view-switch__item--active,
+.token-tab--active {
+  color: var(--color-text-strong);
+  background: var(--color-bg-surface);
+}
+
+.map-demo-frame {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+}
+
+.gallery-workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.gallery-section {
+  display: grid;
+  gap: 18px;
+}
+
+.gallery-section__heading {
+  display: grid;
+  max-width: 840px;
+  gap: 8px;
+}
+
+.gallery-section__heading h2 {
+  margin: 0;
+  font-size: var(--type-size-600);
+  line-height: var(--type-line-height-600);
+}
+
+.gallery-section__heading p {
+  margin: 0;
+  color: var(--color-text-soft);
+  font-size: var(--type-size-200);
+  line-height: var(--type-line-height-300);
+}
+
+.gallery-section__heading code {
+  color: var(--color-primary-base);
+  font-family: var(--type-font-family-number), Consolas, monospace;
+}
+
+.component-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.wiki-component-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.gallery-card {
+  display: flex;
+  min-width: 0;
+  min-height: 220px;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--color-stroke-soft);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-soft);
+}
+
+.gallery-card--wide {
+  grid-column: 1 / -1;
+}
+
+.gallery-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border-bottom: 1px solid var(--color-stroke-soft);
+}
+
+.gallery-card__header h3 {
+  margin: 0;
+  font-size: var(--type-size-300);
+  line-height: var(--type-line-height-300);
+}
+
+.gallery-card__header p {
+  margin: 6px 0 0;
+  color: var(--color-text-soft);
+  font-size: var(--type-size-100);
+  line-height: var(--type-line-height-100);
+}
+
+.gallery-card__body {
+  display: flex;
+  min-height: 0;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px;
+}
+
+.gallery-card--wide .gallery-card__body {
+  align-items: stretch;
+  overflow-x: auto;
+}
+
+.gallery-card .gt-dropdown-card {
+  width: min(100%, 300px);
+}
+
+.wiki-component-board .gallery-card {
+  min-height: 260px;
+}
+
+.wiki-preview-page-body {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: 32px;
+}
+
+.wiki-preview-bg-slab {
+  width: 100%;
+  min-height: 120px;
+  padding: 24px;
+  border: 1px solid var(--color-stroke-soft);
+}
+
+.wiki-preview-bg-demo {
+  display: grid;
+  gap: 8px;
+  color: var(--color-text-soft);
+  font-size: var(--type-size-100);
+  line-height: var(--type-line-height-100);
+}
+
+.wiki-preview-bg-demo strong {
+  color: var(--color-text-strong);
+  font-size: var(--type-size-300);
+  line-height: var(--type-line-height-300);
+}
+
+.wiki-preview-stack {
+  display: grid;
+  width: 100%;
+  gap: 12px;
+}
+
+.wiki-preview-stack--compact {
+  justify-items: start;
+}
+
+.wiki-preview-image-row {
+  display: grid;
+  grid-template-columns: 96px 160px minmax(220px, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.wiki-preview-image-row .gt-wiki-image {
+  max-height: 160px;
+}
+
+.wiki-preview-image-row .gt-wiki-image img {
+  max-height: 160px;
+}
+
+.wiki-preview-split {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(220px, 300px);
+  align-items: start;
+  gap: 12px;
+}
+
+.wiki-describe-preview {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  align-items: start;
+  gap: 18px 24px;
+}
+
+.wiki-describe-preview__group {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+}
+
+.wiki-describe-preview__group > span {
+  color: var(--color-text-weak);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.gallery-select-preview {
+  position: relative;
+  min-height: 148px;
+}
+
+.gallery-state-stack,
+.gallery-control-column {
+  display: grid;
+  gap: 14px;
+}
+
+.gallery-state-row {
+  display: grid;
+  gap: 8px;
+}
+
+.gallery-state-label {
+  color: var(--color-text-soft);
+  font-size: var(--type-size-100);
+  line-height: var(--type-line-height-100);
+}
+
+.gallery-control-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.checkbox-matrix {
+  display: grid;
+  width: fit-content;
+  align-items: center;
+  justify-items: center;
+  gap: 12px 18px;
+  grid-template-columns: 96px repeat(4, 72px);
+}
+
+.checkbox-matrix .gallery-state-label {
+  justify-self: start;
+}
+
+.gallery-list-preview {
+  display: grid;
+  gap: 4px;
+  padding: 8px;
+  border-radius: var(--radius-lg);
+  background: var(--gt-panel-bg);
+}
+
+.gallery-picture-frame {
+  display: grid;
+  width: 288px;
+  max-width: 100%;
+  place-items: center;
+  border-radius: var(--radius-lg);
+  background: var(--gt-panel-bg);
+}
+
+.gallery-tooltip-preview {
+  position: relative;
+  min-height: 140px;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    var(--gt-map-bg);
+  background-size: 24px 24px;
+}
+
+.gallery-tooltip-preview--single {
+  display: grid;
+  place-items: center;
+}
+
+.gallery-tooltip-preview--single .gt-tooltip {
+  position: relative;
+  left: auto !important;
+  top: auto !important;
+  transform: translateY(19px) scale(var(--gt-tooltip-scale));
+}
+
+.gallery-describe-preview {
+  position: relative;
+  min-height: 320px;
+}
+
+.gallery-describe-variants {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  min-height: 356px;
+  gap: 16px;
+  padding: 24px 18px 18px;
+  background: #4f4f4f;
+}
+
+.gallery-describe-preview .gt-popup-describe-card {
+  left: 0;
+  right: auto;
+  bottom: 0;
+}
+
+.gallery-utility-preview {
+  display: grid;
+  gap: 12px;
+}
+
+.gallery-scroll-preview {
+  position: relative;
+  width: 36px;
+  height: 160px;
+  border-radius: var(--radius-lg);
+  background: var(--gt-panel-bg);
+}
+
+.gallery-scroll-preview .gt-scroll {
+  position: absolute;
+  inset: 0;
+  height: 160px;
+}
+
+.style-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.style-meta-pill {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  padding: 0 10px;
+  border: 1px solid var(--color-stroke-soft);
+  border-radius: var(--radius-900);
+  color: var(--color-text-soft);
+  background: var(--color-bg-soft);
+  font-size: var(--type-size-100);
+  line-height: var(--type-line-height-100);
+}
+
+.style-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.style-card {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--color-stroke-soft);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-soft);
+}
+
+.style-card h3 {
+  margin: 0;
+  font-size: var(--type-size-300);
+  line-height: var(--type-line-height-300);
+}
+
+.style-card p {
+  margin: 0;
+  color: var(--color-text-soft);
+  font-size: var(--type-size-100);
+  line-height: var(--type-line-height-100);
+}
+
+.style-token-list {
+  display: grid;
+  gap: 8px;
+}
+
+.style-token-row {
+  display: grid;
+  grid-template-columns: auto minmax(180px, 1fr) minmax(96px, 0.7fr);
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-text-soft);
+  font-size: var(--type-size-100);
+  line-height: var(--type-line-height-100);
+}
+
+.style-token-row code {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--color-text-strong);
+  font-family: var(--type-font-family-number), Consolas, monospace;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.style-token-row span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.token-sync-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-stroke-soft);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-soft);
+  background: var(--color-bg-soft);
+  font-size: var(--type-size-100);
+  line-height: var(--type-line-height-100);
+}
+
+.token-toolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 420px) 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.token-tabs {
+  justify-self: start;
+  flex-wrap: wrap;
+}
+
+.token-table-wrap {
+  width: 100%;
+  min-width: 0;
+  max-height: 640px;
+  overflow: auto;
+  contain: paint;
+  border: 1px solid var(--color-stroke-soft);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-soft);
+}
+
+.token-table {
+  width: 100%;
+  min-width: 920px;
+  border-collapse: collapse;
+  font-size: var(--type-size-100);
+  line-height: var(--type-line-height-100);
+}
+
+.token-table th,
+.token-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--color-stroke-soft);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.token-table th {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  color: var(--color-text-soft);
+  background: var(--gt-panel-bg);
+  font-weight: var(--gt-text-weight-regular);
+}
+
+.token-table code {
+  color: var(--color-text-strong);
+  font-family: var(--type-font-family-number), Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.token-swatch {
+  display: inline-block;
+  width: 36px;
+  height: 24px;
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.token-text-preview {
+  display: inline-flex;
+  max-width: 220px;
+  min-height: 24px;
+  align-items: center;
+  overflow: hidden;
+  color: var(--color-text-soft);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.token-value-field {
+  display: block;
+}
+
+.token-value-field input {
+  width: 100%;
+  min-width: 260px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--color-stroke-soft);
+  border-radius: var(--radius-md);
+  color: var(--color-text-strong);
+  background: var(--gt-panel-bg);
+  font-family: var(--type-font-family-number), Consolas, monospace;
+  font-size: 16px;
+  line-height: var(--type-line-height-200);
+}
+
+.token-value-field input:focus {
+  border-color: var(--color-primary-base);
+  outline: 2px solid rgba(255, 215, 50, 0.18);
+  outline-offset: 0;
+}
+
+.token-save-state {
+  min-width: 64px;
+  color: var(--color-text-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.token-save-state--saving {
+  color: var(--color-blue-400);
+}
+
+.token-save-state--saved {
+  color: var(--color-green-400);
+}
+
+.token-save-state--error {
+  color: var(--color-red-400);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
 .component-board {
   margin-top: 32px;
 }
@@ -397,12 +969,12 @@ button:disabled {
   min-height: 176px;
 }
 
-.describe-card-preview {
+.popup-describe-card-preview {
   position: relative;
   min-height: 132px;
 }
 
-.describe-card-preview .gt-describe-card {
+.popup-describe-card-preview .gt-popup-describe-card {
   left: 0;
   right: auto;
   bottom: auto;
@@ -417,6 +989,7 @@ button:disabled {
 .inline-row {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
 }
 
@@ -424,36 +997,61 @@ button:disabled {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-element-gap-sm);
+  gap: var(--space-element-padding-mid);
   min-width: 0;
   border: 1px solid transparent;
   border-radius: var(--radius-lg);
   font-family: var(--gt-font-family-ui);
-  font-size: var(--gt-text-body-md-size);
-  font-weight: var(--gt-text-weight-regular);
+  font-size: var(--type-size-200);
+  font-weight: var(--type-weight-regular);
   letter-spacing: 0;
-  line-height: var(--gt-text-body-md-line);
+  line-height: var(--type-line-height-200);
   transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
 }
 
 .gt-button--medium {
   min-height: 44px;
-  padding: 0 18px;
+  padding: 0 10px;
+  font-size: var(--type-size-300);
+  font-weight: var(--type-weight-bold);
+  line-height: var(--type-line-height-300);
+}
+
+.gt-button--primary.gt-button--medium:not(.gt-button--icon-only) {
+  min-height: 48px;
+  padding: 0 var(--space-element-padding-lg);
 }
 
 .gt-button--small {
   min-height: 36px;
-  padding: 0 14px;
+  padding: 0 var(--space-element-padding-md);
 }
 
 .gt-button--xsmall {
   min-height: 28px;
-  padding: 0 10px;
+  gap: 2px;
+  padding: 0 6px;
 }
 
 .gt-button--icon-only {
   width: 36px;
+  min-height: 36px;
   padding: 0;
+}
+
+.gt-button--medium.gt-button--icon-only {
+  width: 40px;
+  min-height: 40px;
+}
+
+.gt-button--primary.gt-button--medium.gt-button--icon-only {
+  width: 44px;
+  min-height: 44px;
+}
+
+.gt-button--xsmall.gt-button--icon-only {
+  width: 28px;
+  min-height: 28px;
 }
 
 .gt-button--primary.gt-button--filled {
@@ -461,36 +1059,96 @@ button:disabled {
   background: var(--color-primary-base);
 }
 
-.gt-button--primary.gt-button--filled:hover {
+.gt-button--primary.gt-button--filled:hover,
+.gt-button--primary.gt-button--filled.gt-button--state-hover {
   background: var(--color-primary-dark);
 }
 
-.gt-button--neutral.gt-button--filled {
-  color: var(--color-text-strong);
-  background: var(--color-bg-surface);
+.gt-button--primary.gt-button--filled:focus-visible,
+.gt-button--primary.gt-button--filled.gt-button--state-focus {
+  background: var(--color-primary-darker);
 }
 
-.gt-button--neutral.gt-button--filled:hover {
-  background: var(--color-bg-hover);
+.gt-button--neutral.gt-button--filled {
+  color: var(--color-static-black);
+  background: var(--color-bg-reverse);
+}
+
+.gt-button--neutral.gt-button--filled:hover,
+.gt-button--neutral.gt-button--filled.gt-button--state-hover {
+  background: var(--color-bg-reverse-hover);
+}
+
+.gt-button--neutral.gt-button--filled:focus-visible,
+.gt-button--neutral.gt-button--filled.gt-button--state-focus {
+  background: var(--color-bg-reverse-pressed);
 }
 
 .gt-button--stroke {
-  color: var(--color-text-strong);
-  border-color: var(--color-stroke-sub);
-  background: transparent;
+  background: var(--color-bg-alpha-soft);
 }
 
-.gt-button--stroke:hover {
+.gt-button--primary.gt-button--stroke {
+  color: var(--color-primary-base);
+  border-color: var(--color-primary-base);
+}
+
+.gt-button--neutral.gt-button--stroke {
+  color: var(--color-stroke-strong);
+  border-color: var(--color-stroke-strong);
+}
+
+.gt-button--stroke:hover,
+.gt-button--stroke.gt-button--state-hover {
   background: var(--color-bg-alpha-weak);
 }
 
-.gt-button:disabled {
+.gt-button--primary.gt-button--stroke:hover,
+.gt-button--primary.gt-button--stroke.gt-button--state-hover {
+  border-color: var(--color-primary-dark);
+}
+
+.gt-button--primary.gt-button--stroke.gt-button--medium:hover,
+.gt-button--primary.gt-button--stroke.gt-button--medium.gt-button--state-hover {
+  color: var(--color-primary-dark);
+}
+
+.gt-button--stroke:focus-visible,
+.gt-button--stroke.gt-button--state-focus {
+  outline: 0;
+}
+
+.gt-button--primary.gt-button--stroke:focus-visible,
+.gt-button--primary.gt-button--stroke.gt-button--state-focus {
+  color: var(--color-primary-darker);
+  border-color: var(--color-primary-darker);
+  background: var(--color-bg-alpha-soft);
+}
+
+.gt-button--neutral.gt-button--stroke.gt-button--medium:focus-visible,
+.gt-button--neutral.gt-button--stroke.gt-button--medium.gt-button--state-focus {
+  background: var(--color-bg-alpha-strong);
+}
+
+.gt-button:disabled,
+.gt-button--state-disabled {
   color: var(--color-text-disabled);
   background: var(--color-bg-disabled);
+  border-color: transparent;
+}
+
+.gt-button__label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 4px;
 }
 
 .gt-button__icon {
   display: inline-flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
 }
 
 .gt-search {
@@ -507,11 +1165,13 @@ button:disabled {
   opacity: 0.8;
 }
 
-.gt-search:hover {
+.gt-search:hover,
+.gt-search--hover {
   background: var(--color-bg-hover);
 }
 
-.gt-search:focus-within {
+.gt-search:focus-within,
+.gt-search--active {
   background: var(--gt-panel-bg);
   border-color: var(--color-primary-dark);
 }
@@ -547,11 +1207,13 @@ button:disabled {
   color: var(--color-text-soft);
 }
 
-.gt-search:hover input::placeholder {
+.gt-search:hover input::placeholder,
+.gt-search--hover input::placeholder {
   color: var(--color-text-sub);
 }
 
-.gt-search:focus-within input::placeholder {
+.gt-search:focus-within input::placeholder,
+.gt-search--active input::placeholder {
   color: transparent;
 }
 
@@ -567,7 +1229,7 @@ button:disabled {
   background: transparent;
 }
 
-.gt-describe-card__close {
+.gt-popup-describe-card__close {
   display: grid;
   place-items: center;
   border: 0;
@@ -597,8 +1259,18 @@ button:disabled {
   line-height: 19.5px;
 }
 
-.gt-select__trigger:hover {
+.gt-select__trigger:hover,
+.gt-select__trigger--hover {
   background: var(--color-bg-hover);
+}
+
+.gt-select__trigger--active {
+  border-color: var(--color-primary-dark);
+  background: var(--gt-panel-bg);
+}
+
+.gt-select__trigger--active .gt-select__icon {
+  color: var(--color-text-strong);
 }
 
 .gt-select__label {
@@ -722,12 +1394,14 @@ button:disabled {
   padding-left: 32px;
 }
 
-.gt-dropdown-item:hover {
+.gt-dropdown-item:hover,
+.gt-dropdown-item--hover {
   color: var(--color-text-strong);
   background: var(--color-bg-hover);
 }
 
-.gt-dropdown-item:active {
+.gt-dropdown-item:active,
+.gt-dropdown-item--pressed {
   background: var(--color-bg-hover);
 }
 
@@ -948,6 +1622,7 @@ button:disabled {
 }
 
 .gt-tooltip {
+  --gt-tooltip-scale: 1;
   position: absolute;
   z-index: 8;
   width: 32px;
@@ -956,7 +1631,10 @@ button:disabled {
   border: 0;
   color: var(--color-static-black);
   background: transparent;
-  transform: translate(-50%, -100%);
+  transform: translate(-50%, -100%) scale(var(--gt-tooltip-scale));
+  transform-origin: 50% 100%;
+  transition: transform 180ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  will-change: transform;
 }
 
 .gt-tooltip__body {
@@ -983,11 +1661,16 @@ button:disabled {
 }
 
 .gt-tooltip:hover .gt-tooltip__body,
-.gt-tooltip:focus-visible .gt-tooltip__body {
+.gt-tooltip:focus-visible .gt-tooltip__body,
+.gt-tooltip--selected .gt-tooltip__body {
   box-shadow: 0 2px 4px rgba(14, 18, 27, 0.08), 0 14px 28px rgba(14, 18, 27, 0.12);
 }
 
-.gt-describe-card {
+.gt-tooltip--selected {
+  --gt-tooltip-scale: 1.25;
+}
+
+.gt-popup-describe-card {
   position: absolute;
   z-index: 12;
   right: 24px;
@@ -1000,61 +1683,1263 @@ button:disabled {
   box-shadow: none;
 }
 
-.gt-describe-card--has-image {
+.gt-popup-describe-card--has-image {
   min-height: 266px;
 }
 
-.gt-describe-card--no-image {
+.gt-popup-describe-card--no-image {
   height: auto;
 }
 
-.gt-describe-card__close {
-  position: absolute;
-  z-index: 2;
-  right: 8px;
-  top: 8px;
+.gt-popup-describe-card__content {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+}
+
+.gt-popup-describe-card__header {
+  display: flex;
+  min-height: 28px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.gt-popup-describe-card__close {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
   width: 28px;
   height: 28px;
+  padding: 0;
+  border: 0;
   border-radius: var(--radius-md);
+  color: var(--color-icon-strong);
   background: transparent;
 }
 
-.gt-describe-card--no-image .gt-describe-card__close {
-  top: 12px;
-}
-
-.gt-describe-card__close:hover,
-.gt-describe-card__close:focus-visible {
+.gt-popup-describe-card__close:hover,
+.gt-popup-describe-card__close:focus-visible {
   background: var(--color-bg-alpha-strong);
 }
 
-.gt-describe-card__image {
+.gt-popup-describe-card__media {
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--color-alpha-white-alpha-4);
+}
+
+.gt-popup-describe-card__image {
   width: 100%;
-  height: 120px;
+  height: 176px;
+  display: block;
   object-fit: cover;
 }
 
-.gt-describe-card__body {
-  padding: 16px;
-}
-
-.gt-describe-card h2 {
-  margin: 0;
+.gt-popup-describe-card h2 {
+  width: 100%;
+  margin: 0 0 0 4px;
   font-family: var(--gt-font-family-ui);
   font-size: var(--gt-text-body-md-size);
-  font-weight: var(--gt-text-weight-regular);
+  font-weight: var(--gt-text-weight-bold);
   letter-spacing: 0;
   line-height: var(--gt-text-body-md-line);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.gt-describe-card p {
-  margin: 10px 0 0;
+.gt-popup-describe-card p {
+  margin: 0;
+  padding: 0 6px 8px;
   color: var(--color-text-soft);
   font-family: var(--gt-font-family-ui);
   font-size: var(--gt-text-body-sm-size);
   font-weight: var(--gt-text-weight-regular);
   letter-spacing: 0;
   line-height: var(--gt-text-body-sm-line);
+}
+
+.gt-wiki-badge {
+  display: inline-flex;
+  min-width: 0;
+  min-height: 22px;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 6px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-sub);
+  background: var(--color-alpha-white-alpha-4);
+  font-size: var(--type-size-100);
+  font-weight: var(--type-weight-regular);
+  line-height: var(--type-line-height-25);
+  white-space: nowrap;
+}
+
+.gt-wiki-badge--info,
+.gt-wiki-badge--primary {
+  color: var(--color-status-info);
+  background: var(--color-status-info-bg);
+}
+
+.gt-wiki-badge--primary {
+  color: var(--color-primary-base);
+  background: var(--color-brand-alpha-700);
+}
+
+.gt-wiki-badge--success {
+  color: var(--color-green-400);
+  background: var(--color-green-alpha-700);
+}
+
+.gt-wiki-badge--error {
+  color: var(--color-status-error);
+  background: var(--color-status-error-bg);
+}
+
+.gt-wiki-badge--warning {
+  color: var(--color-status-warning);
+  background: var(--color-status-warning-bg);
+}
+
+.gt-wiki-background {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 16% 0%, rgba(255, 215, 50, 0.10), transparent 28%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 36%),
+    var(--color-bg-black);
+}
+
+.gt-wiki-header {
+  display: flex;
+  width: 100%;
+  min-width: 1016px;
+  height: 68px;
+  box-sizing: border-box;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 32px 32px 0;
+  background: transparent;
+}
+
+.gt-wiki-header__search {
+  display: flex;
+  width: 220px;
+  flex: 0 0 220px;
+  justify-content: flex-end;
+  max-width: 220px;
+  min-width: 0;
+}
+
+.gt-wiki-header__search .gt-search {
+  height: 36px;
+  border-color: var(--color-stroke-area);
+  border-radius: 6px;
+  background: transparent;
+}
+
+.gt-wiki-topbar {
+  --gt-topbar-active-offset: 0px;
+  --gt-topbar-item-gap: 8px;
+  --gt-topbar-item-width: 80px;
+  position: relative;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  border-radius: var(--radius-md);
+  background: var(--color-alpha-white-alpha-2);
+  isolation: isolate;
+}
+
+.gt-wiki-topbar::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: var(--gt-topbar-item-width);
+  height: 1px;
+  background: var(--color-primary-base);
+  content: "";
+  pointer-events: none;
+  transform: translate3d(var(--gt-topbar-active-offset), 0, 0);
+  transition: transform 220ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  will-change: transform;
+}
+
+.gt-wiki-topbar-item,
+.gt-wiki-breadcrumb-item,
+.gt-wiki-navigate-item,
+.gt-wiki-pagination-cell,
+.gt-wiki-pagination__arrow,
+.gt-wiki-command-item,
+.gt-wiki-category-card,
+.gt-wiki-show-card {
+  border: 0;
+  font-family: var(--gt-font-family-ui);
+  letter-spacing: 0;
+}
+
+.gt-wiki-topbar-item {
+  position: relative;
+  display: inline-flex;
+  z-index: 1;
+  min-width: 80px;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 0;
+  color: var(--color-text-weak);
+  background: transparent;
+  font-size: var(--type-size-200);
+  font-weight: var(--type-weight-regular);
+  line-height: var(--type-line-height-200);
+  transition: color 150ms ease, background 150ms ease;
+}
+
+.gt-wiki-topbar-item--hover,
+.gt-wiki-topbar-item:hover {
+  color: var(--color-text-soft);
+  background: transparent;
+}
+
+.gt-wiki-command-item--hover,
+.gt-wiki-command-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.gt-wiki-topbar-item--active {
+  color: var(--color-text-sub);
+  background: linear-gradient(180deg, rgba(254, 235, 132, 0.016) 0%, rgba(255, 215, 50, 0.08) 100%);
+  font-weight: var(--type-weight-bold);
+}
+
+.gt-wiki-topbar-item--active:hover {
+  color: var(--color-text-sub);
+  background: linear-gradient(180deg, rgba(254, 235, 132, 0.016) 0%, rgba(255, 215, 50, 0.08) 100%);
+}
+
+.gt-wiki-category-card,
+.gt-wiki-show-card {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--color-stroke-soft);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-strong);
+  background: var(--color-bg-soft);
+  text-align: left;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.gt-wiki-category-card {
+  width: min(100%, 265px);
+  min-height: 114px;
+  align-items: start;
+  gap: 12px;
+  padding: 12px;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--color-alpha-white-alpha-2);
+  box-shadow: 0 1px 2px rgba(255, 255, 255, 0.03);
+}
+
+.gt-wiki-category-card:hover,
+.gt-wiki-category-card--hover {
+  background: var(--color-alpha-white-alpha-4);
+  box-shadow: 0 0 0 1px var(--color-stroke-soft), 0 1px 2px rgba(255, 255, 255, 0.03);
+}
+
+.gt-wiki-show-card:hover {
+  border-color: var(--color-stroke-sub);
+  background: var(--color-bg-hover);
+}
+
+.gt-wiki-image img,
+.gt-wiki-show-card .gt-wiki-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gt-wiki-category-card__content,
+.gt-wiki-show-card__content {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.gt-wiki-category-card__header {
+  display: flex;
+  min-width: 0;
+  min-height: 24px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.gt-wiki-category-card__title,
+.gt-wiki-show-card__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gt-wiki-category-card__title {
+  color: var(--color-text-strong);
+  font-size: var(--type-size-200);
+  font-weight: var(--type-weight-regular);
+  line-height: var(--type-line-height-200);
+}
+
+.gt-wiki-show-card__title {
+  font-size: var(--type-size-300);
+  line-height: var(--type-line-height-300);
+}
+
+.gt-wiki-category-card__description,
+.gt-wiki-show-card__description,
+.gt-wiki-category-card__meta {
+  overflow: hidden;
+  color: var(--color-text-soft);
+  font-size: var(--type-size-100);
+  line-height: var(--type-line-height-100);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gt-wiki-category-card__arrow,
+.gt-wiki-show-card__arrow {
+  color: var(--color-icon-soft);
+}
+
+.gt-wiki-category-card__arrow {
+  display: grid;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: var(--radius-full);
+  color: var(--color-static-white);
+  background: var(--color-bg-black);
+}
+
+.gt-wiki-category-card__stats {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 32px;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px 4px 4px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-black);
+}
+
+.gt-wiki-category-card__avatars {
+  display: inline-flex;
+  align-items: center;
+}
+
+.gt-wiki-category-card__avatar {
+  position: relative;
+  display: block;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--color-brand-700), var(--color-brand-100));
+  box-shadow: 0 0 0 2px var(--color-bg-black);
+}
+
+.gt-wiki-category-card__avatar + .gt-wiki-category-card__avatar {
+  margin-left: -2px;
+}
+
+.gt-wiki-category-card__avatar--1 {
+  z-index: 3;
+}
+
+.gt-wiki-category-card__avatar--2 {
+  z-index: 2;
+  background: linear-gradient(135deg, var(--color-yellow-300), var(--color-yellow-800));
+}
+
+.gt-wiki-category-card__avatar--3 {
+  z-index: 1;
+  background: linear-gradient(135deg, var(--color-blue-200), var(--color-blue-800));
+}
+
+.gt-wiki-category-card__avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gt-wiki-image {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  color: var(--color-icon-soft);
+  background: var(--color-bg-alpha-soft);
+}
+
+.gt-wiki-image--1-1 {
+  aspect-ratio: 1;
+}
+
+.gt-wiki-image--3-2 {
+  aspect-ratio: 3 / 2;
+}
+
+.gt-wiki-image--16-9 {
+  aspect-ratio: 16 / 9;
+}
+
+.gt-wiki-pagination {
+  display: grid;
+  grid-template-columns: 200px auto 200px;
+  align-items: center;
+  justify-content: stretch;
+  gap: 12px;
+  min-height: 64px;
+  padding: 16px 32px;
+  background: transparent;
+}
+
+.gt-wiki-pagination__summary {
+  color: var(--color-text-weak);
+  font-size: var(--type-size-100);
+  line-height: var(--type-line-height-100);
+  white-space: nowrap;
+}
+
+.gt-wiki-pagination__controls {
+  display: inline-flex;
+  grid-column: 2;
+  align-items: center;
+  justify-self: center;
+  gap: 8px;
+}
+
+.gt-wiki-pagination__cells {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gt-wiki-pagination-cell,
+.gt-wiki-pagination__arrow {
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+  color: var(--color-text-weak);
+  background: transparent;
+  font-size: var(--type-size-200);
+  line-height: var(--type-line-height-200);
+}
+
+.gt-wiki-pagination-cell {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--color-stroke-area);
+  border-radius: var(--radius-xl);
+}
+
+.gt-wiki-pagination__arrow {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-lg);
+}
+
+.gt-wiki-pagination-cell {
+  font-size: var(--type-size-200);
+  line-height: var(--type-line-height-200);
+}
+
+.gt-wiki-pagination-cell:hover,
+.gt-wiki-pagination-cell--hover {
+  border-color: var(--color-stroke-sub);
+  color: var(--color-text-sub);
+  background: transparent;
+}
+
+.gt-wiki-pagination__arrow:hover {
+  color: var(--color-text-sub);
+  background: var(--color-bg-alpha-weak);
+}
+
+.gt-wiki-pagination-cell--selected {
+  border-color: transparent;
+  color: var(--color-text-sub);
+  background: var(--color-bg-alpha-soft);
+}
+
+.gt-wiki-table {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--color-stroke-soft);
+  border-radius: var(--radius-lg);
+}
+
+.gt-wiki-table-header-cell,
+.gt-wiki-table-row-cell {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--color-stroke-soft);
+  color: var(--color-text-strong);
+  font-size: var(--type-size-200);
+  line-height: var(--type-line-height-200);
+}
+
+.gt-wiki-table-header-cell {
+  min-height: 34px;
+  color: var(--color-text-soft);
+  background: var(--color-bg-alpha-soft);
+}
+
+.gt-wiki-table-row-cell {
+  min-height: 48px;
+  background: var(--color-bg-soft);
+}
+
+.gt-wiki-table-row-cell--none {
+  color: var(--color-text-weak);
+}
+
+.gt-wiki-table-cell--center {
+  justify-content: center;
+  text-align: center;
+}
+
+.gt-wiki-table-cell--right {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.gt-wiki-table-row-cell__icon {
+  display: inline-flex;
+  color: var(--color-icon-soft);
+}
+
+.gt-wiki-table-row-cell__content {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gt-wiki-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  color: var(--color-text-weak);
+}
+
+.gt-wiki-breadcrumbs__part {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gt-wiki-breadcrumb-item {
+  display: inline-flex;
+  width: 94px;
+  height: 28px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 4px 6px;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-md);
+  color: var(--color-text-weak);
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--type-size-200);
+  font-weight: 400;
+  line-height: var(--type-line-height-200);
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.gt-wiki-breadcrumb-item--hover,
+.gt-wiki-breadcrumb-item:hover {
+  color: var(--color-text-weak);
+  background: var(--color-alpha-white-alpha-4);
+}
+
+.gt-wiki-breadcrumb-item--active {
+  color: var(--color-text-strong);
+  background: transparent;
+}
+
+.gt-wiki-breadcrumbs__separator {
+  color: var(--color-icon-sub);
+}
+
+.gt-wiki-describe-card,
+.gt-wiki-detail-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-stroke-soft);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-strong);
+  background: var(--color-bg-soft);
+}
+
+.gt-wiki-describe-card {
+  display: flex;
+  width: 323px;
+  height: 96px;
+  box-sizing: border-box;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.gt-wiki-describe-card--lg {
+  width: 210px;
+  height: 318px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 8px 8px 12px;
+  border-color: rgba(255, 255, 255, 0.1);
+  background: transparent;
+  box-shadow: none;
+}
+
+.gt-wiki-describe-card--hover,
+.gt-wiki-describe-card:hover {
+  border-color: #353a3d;
+  background: var(--color-alpha-white-alpha-4);
+  box-shadow: none;
+}
+
+.gt-wiki-describe-card--lg.gt-wiki-describe-card--hover,
+.gt-wiki-describe-card--lg:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: var(--color-alpha-white-alpha-4);
+  box-shadow: none;
+}
+
+.gt-wiki-describe-card > .gt-wiki-image {
+  flex: 0 0 80px;
+  width: 80px;
+  height: 80px;
+  opacity: 0.8;
+  border-radius: 6px;
+}
+
+.gt-wiki-describe-card--lg > .gt-wiki-image {
+  flex-basis: 194px;
+  width: 194px;
+  height: 194px;
+}
+
+.gt-wiki-describe-card__body {
+  display: flex;
+  width: 215px;
+  height: 80px;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.gt-wiki-describe-card--lg .gt-wiki-describe-card__body {
+  width: 194px;
+  height: 96px;
+  padding: 0 6px;
+  box-sizing: border-box;
+  gap: 8px;
+}
+
+.gt-wiki-describe-card__content {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gt-wiki-describe-card__title-row {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 12px;
+}
+
+.gt-wiki-describe-card__title-row .gt-wiki-badge {
+  min-height: 22px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  color: #eceef0;
+  background: var(--color-alpha-white-alpha-4);
+  line-height: 14px;
+}
+
+.gt-wiki-describe-card--lg.gt-wiki-describe-card--default .gt-wiki-badge {
+  color: var(--color-blue-400);
+}
+
+.gt-wiki-describe-card h3,
+.gt-wiki-detail-card h3 {
+  flex: 1 1 auto;
+  margin: 0;
+  overflow: hidden;
+  color: var(--color-text-strong);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gt-wiki-describe-card p,
+.gt-wiki-detail-card p,
+.gt-wiki-progress-label p {
+  margin: 0;
+  color: var(--color-text-soft);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.gt-wiki-describe-card p {
+  display: -webkit-box;
+  max-height: 36px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+
+.gt-wiki-describe-card--hover p,
+.gt-wiki-describe-card:hover p,
+.gt-wiki-describe-card--lg p {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.gt-wiki-describe-card__attributes {
+  display: flex;
+  height: 22px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  color: var(--color-text-weak);
+  background: var(--color-alpha-white-alpha-4);
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.gt-wiki-describe-card--lg .gt-wiki-describe-card__attributes {
+  height: 26px;
+  justify-content: flex-start;
+  gap: 4px;
+  line-height: 18px;
+}
+
+.gt-wiki-describe-card__attributes span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gt-wiki-detail-card {
+  display: flex;
+  width: 514px;
+  max-width: 100%;
+  min-height: 480px;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: var(--color-text-strong);
+  background: transparent;
+}
+
+.gt-wiki-detail-card__title,
+.gt-wiki-detail-card__description,
+.gt-wiki-detail-card__info dt,
+.gt-wiki-detail-card__info dd {
+  margin: 0;
+  letter-spacing: 0;
+}
+
+.gt-wiki-detail-card__title {
+  width: 100%;
+  color: var(--color-text-strong);
+  font-size: var(--type-size-200);
+  font-weight: var(--type-weight-regular);
+  line-height: var(--type-line-height-200);
+}
+
+.gt-wiki-detail-card__description {
+  width: 100%;
+  color: var(--color-text-weak);
+  font-size: var(--type-size-100);
+  line-height: var(--type-line-height-100);
+}
+
+.gt-wiki-detail-card__features {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.gt-wiki-detail-card__feature-card {
+  grid-template-columns: 60px minmax(0, 1fr) auto auto;
+  height: 76px;
+  min-height: 76px;
+  gap: 12px;
+  padding: 8px 12px 8px 8px;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--color-alpha-white-alpha-4);
+}
+
+.gt-wiki-detail-card__feature-card:hover {
+  border-color: transparent;
+  background: var(--color-alpha-white-alpha-4);
+}
+
+.gt-wiki-detail-card__feature-card .gt-wiki-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 4.5px;
+}
+
+.gt-wiki-detail-card__feature-card .gt-wiki-show-card__title {
+  color: var(--color-text-strong);
+  font-size: var(--type-size-200);
+  font-weight: var(--type-weight-regular);
+  line-height: var(--type-line-height-200);
+}
+
+.gt-wiki-detail-card__feature-card .gt-wiki-show-card__description {
+  color: var(--color-text-soft);
+}
+
+.gt-wiki-detail-card__feature-card .gt-wiki-badge {
+  min-height: 22px;
+  padding: 4px 6px;
+  border-radius: var(--radius-md);
+  background: var(--color-alpha-white-alpha-4);
+}
+
+.gt-wiki-detail-card__info {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 24px;
+  margin: 0;
+  padding: 8px 0;
+  box-shadow: inset 0 -1px 0 var(--color-stroke-area);
+}
+
+.gt-wiki-detail-card__info-item {
+  display: grid;
+  min-width: 0;
+  flex: 1 1 0;
+  gap: 4px;
+}
+
+.gt-wiki-detail-card__info dt {
+  overflow: hidden;
+  color: var(--color-text-strong);
+  font-size: var(--type-size-100);
+  line-height: var(--type-line-height-100);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gt-wiki-detail-card__info dd {
+  overflow: hidden;
+  color: var(--color-text-weak);
+  font-size: var(--type-size-200);
+  line-height: var(--type-line-height-200);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gt-wiki-detail-card__badges {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.gt-wiki-detail-card__badge {
+  min-height: 22px;
+  padding: 4px 6px;
+  border-radius: var(--radius-md);
+  line-height: var(--type-line-height-25);
+}
+
+.gt-wiki-detail-card__badge--info {
+  color: var(--color-status-info);
+  background: var(--color-status-info-bg);
+}
+
+.gt-wiki-detail-card__badge--error {
+  color: var(--color-status-error);
+  background: var(--color-status-error-bg);
+}
+
+.gt-wiki-detail-card__badge--neutral {
+  color: var(--color-text-sub);
+  background: var(--color-alpha-white-alpha-4);
+}
+
+.gt-wiki-detail-card__badge--warning {
+  color: var(--color-status-warning);
+  background: var(--color-status-warning-bg);
+}
+
+.gt-wiki-detail-card__table {
+  display: grid;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: inset 0 0 0 1px var(--color-alpha-white-alpha-4);
+}
+
+.gt-wiki-detail-card__table-row {
+  display: grid;
+  min-height: 48px;
+  grid-template-columns: 80px 80px 100px minmax(0, 1fr);
+}
+
+.gt-wiki-detail-card__table-row--header {
+  min-height: 34px;
+}
+
+.gt-wiki-detail-card__table-row > div {
+  display: flex;
+  min-width: 0;
+  box-sizing: border-box;
+  align-items: center;
+  padding: 12px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-alpha-white-alpha-4);
+  color: var(--color-text-soft);
+  font-size: var(--type-size-100);
+  line-height: var(--type-line-height-100);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gt-wiki-detail-card__table-row--header > div {
+  min-height: 34px;
+  padding: 8px 12px;
+  border-bottom: 0;
+  background: var(--color-alpha-white-alpha-4);
+}
+
+.gt-wiki-detail-card__table-row:last-child > div {
+  border-bottom: 0;
+}
+
+.gt-wiki-progress-bar {
+  position: relative;
+  height: 6px;
+  overflow: hidden;
+  border-radius: var(--radius-900);
+  background: var(--color-bg-alpha-soft);
+}
+
+.gt-wiki-progress-bar span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: var(--color-primary-base);
+}
+
+.gt-wiki-progress-label {
+  display: grid;
+  width: min(100%, 320px);
+  gap: 8px;
+}
+
+.gt-wiki-progress-label--onRight {
+  grid-template-columns: minmax(0, 1fr) 56px;
+  align-items: center;
+}
+
+.gt-wiki-progress-label__top {
+  display: flex;
+  min-width: 0;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--color-text-strong);
+  font-size: var(--type-size-100);
+  line-height: var(--type-line-height-100);
+}
+
+.gt-wiki-progress-label__top strong {
+  color: var(--color-primary-base);
+  font-weight: var(--gt-text-weight-bold);
+}
+
+.gt-wiki-show-card {
+  width: min(100%, 498px);
+  min-height: 76px;
+  grid-template-columns: 60px minmax(0, 1fr) auto 20px;
+  gap: 12px;
+  padding: 8px 12px 8px 8px;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--color-alpha-white-alpha-4);
+}
+
+.gt-wiki-show-card--no-image {
+  grid-template-columns: minmax(0, 1fr) auto 20px;
+}
+
+.gt-wiki-show-card .gt-wiki-image {
+  width: 60px;
+  height: 60px;
+  opacity: 0.8;
+  border-radius: 4.5px;
+}
+
+.gt-wiki-show-card:hover {
+  border-color: transparent;
+  background: var(--color-alpha-white-alpha-4);
+}
+
+.gt-wiki-show-card__content,
+.gt-wiki-show-card__progress {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.gt-wiki-show-card__content {
+  gap: 6px;
+}
+
+.gt-wiki-show-card .gt-wiki-show-card__title {
+  color: var(--color-text-strong);
+  font-size: var(--type-size-200);
+  font-weight: var(--type-weight-regular);
+  line-height: var(--type-line-height-200);
+}
+
+.gt-wiki-show-card > .gt-wiki-badge {
+  min-height: 22px;
+  padding: 4px 6px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-sub);
+  background: var(--color-alpha-white-alpha-4);
+  line-height: var(--type-line-height-25);
+}
+
+.gt-wiki-show-card .gt-wiki-show-card__arrow {
+  color: var(--color-icon-weak);
+}
+
+.gt-wiki-show-card__progress {
+  height: 60px;
+  align-self: stretch;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.gt-wiki-show-card__progress-top {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.gt-wiki-show-card__progress-top .gt-wiki-show-card__title {
+  flex: 1 1 auto;
+}
+
+.gt-wiki-show-card__progress-value {
+  flex: 0 0 auto;
+  color: var(--color-text-weak);
+  font-size: var(--type-size-100);
+  line-height: var(--type-line-height-100);
+  white-space: nowrap;
+}
+
+.gt-wiki-show-card__progress-bar {
+  width: 100%;
+  background: var(--color-bg-alpha-strong);
+}
+
+.gt-wiki-show-card__progress-bar span {
+  background: var(--color-primary-base);
+}
+
+.gt-wiki-show-card--process .gt-wiki-show-card__title {
+  color: var(--color-text-sub);
+  font-size: var(--type-size-200);
+  font-weight: var(--type-weight-regular);
+  line-height: var(--type-line-height-200);
+}
+
+.gt-wiki-show-card--process .gt-wiki-show-card__description {
+  line-height: var(--type-line-height-25);
+}
+
+.gt-wiki-command-item {
+  display: inline-flex;
+  width: 180px;
+  height: 34px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 6px 8px 6px 12px;
+  border-radius: 4px;
+  color: var(--color-text-strong);
+  background: var(--color-alpha-white-alpha-4);
+  text-align: left;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.gt-wiki-command-item--leftIcon {
+  width: 239px;
+  justify-content: space-between;
+}
+
+.gt-wiki-command-item__content {
+  display: inline-flex;
+  width: 88px;
+  min-width: 0;
+  height: 22px;
+  align-items: center;
+}
+
+.gt-wiki-command-item--leftIcon .gt-wiki-command-item__content {
+  width: auto;
+  flex: 0 0 auto;
+  gap: 4px;
+}
+
+.gt-wiki-command-item__icon {
+  display: inline-flex;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-strong);
+}
+
+.gt-wiki-command-item__label {
+  min-width: 0;
+  overflow: hidden;
+  flex: 1 1 auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gt-wiki-command-item__actions {
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 22px;
+  align-items: center;
+  gap: 4px;
+  color: #767c7f;
+}
+
+.gt-wiki-command-item__actions .gt-wiki-badge {
+  min-height: 22px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  color: #eceef0;
+  background: var(--color-alpha-white-alpha-4);
+  line-height: 14px;
+}
+
+.gt-wiki-command-item--hover,
+.gt-wiki-command-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.gt-wiki-navigate {
+  display: inline-flex;
+  width: 96px;
+  height: 166px;
+  box-sizing: border-box;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 16px 8px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+.gt-wiki-navigate__list {
+  display: flex;
+  width: 80px;
+  height: 150px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.gt-wiki-navigate-item {
+  display: inline-flex;
+  width: 60px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 4px;
+  color: #767c7f;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.gt-wiki-navigate-item--hover,
+.gt-wiki-navigate-item:hover {
+  color: #767c7f;
+  background: var(--color-alpha-white-alpha-2);
+}
+
+.gt-wiki-navigate-item--active {
+  color: var(--color-text-strong);
+  background: transparent;
 }
 
 .empty-state {
@@ -1131,10 +3016,83 @@ button:disabled {
     grid-template-columns: 1fr;
   }
 
-  .gt-describe-card {
+  .component-gallery-grid,
+  .wiki-component-board,
+  .style-gallery-grid,
+  .token-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-card--wide {
+    grid-column: auto;
+  }
+
+  .wiki-preview-page-body,
+  .wiki-preview-image-row,
+  .wiki-preview-split,
+  .gallery-control-grid,
+  .gallery-describe-variants {
+    grid-template-columns: 1fr;
+  }
+
+  .checkbox-matrix {
+    width: 100%;
+    grid-template-columns: 72px repeat(4, minmax(44px, 1fr));
+    gap: 12px 8px;
+  }
+
+  .gt-wiki-header,
+  .gt-wiki-detail-card__content {
+    flex-direction: column;
+  }
+
+  .gt-wiki-header {
+    min-width: 0;
+    height: auto;
+    align-items: stretch;
+    padding: 16px;
+  }
+
+  .gt-wiki-pagination {
+    grid-template-columns: auto;
+    justify-content: center;
+  }
+
+  .gt-wiki-detail-card__aside {
+    width: 100%;
+  }
+
+  .style-token-row {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .style-token-row span:last-child {
+    grid-column: 2;
+  }
+
+  .preview-view-switch,
+  .token-tabs {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .token-tab,
+  .preview-view-switch__item {
+    flex: 1 1 auto;
+  }
+
+  .gt-popup-describe-card {
     left: 12px;
     right: 12px;
     bottom: 12px;
     width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gt-tooltip,
+  .gt-wiki-topbar::after,
+  .gt-wiki-topbar-item {
+    transition: none;
   }
 }

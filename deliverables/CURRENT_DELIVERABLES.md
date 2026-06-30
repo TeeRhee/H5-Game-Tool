@@ -120,7 +120,7 @@ page.output.json
 | `deliverables/installable-skills/h5-map-data-normalizer/` | 数据清洗 skill 的源码目录。 |
 | `deliverables/installable-skills/h5-map-page-composer/` | 页面生成 skill 的源码目录。 |
 | `deliverables/installable-skills/h5-map-renderer-integrator/` | 工程接入 skill 的源码目录。 |
-| `deliverables/component-packages/h5-game-map-components/` | 独立维护的 React 组件库目录。 |
+| `component-packages/h5-game-map-components/` | 独立维护的 React 组件库目录。 |
 | `skill-pack/` | 仓库内的原始规范来源，包含 map 工具契约、template、schema、token 等。 |
 | `src/` | 当前 renderer demo 的源码目录。 |
 
