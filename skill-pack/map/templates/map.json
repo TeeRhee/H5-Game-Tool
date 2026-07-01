@@ -127,7 +127,7 @@
       "displayName": "地图详情浮层",
       "purpose": "展示选中点位或对象的说明信息。",
       "allowedComponents": [
-        "Layout.DescribeCard"
+        "Map.PopupDescribeCard"
       ],
       "layout": {
         "describeCard": "x=868, y=522, w=280, h=266; fixed to the lower-right of the 1160 x 800 map template"
@@ -228,7 +228,7 @@
       "displayName": "Mobile selected marker detail",
       "purpose": "Mobile selected-marker detail surface shown in MobileMapMarkerSelectedScreen. It replaces the desktop fixed lower-right detail card and hides the bottom sheet while open.",
       "allowedComponents": [
-        "Layout.DescribeCard"
+        "Map.PopupDescribeCard"
       ],
       "layout": {
         "markerSelected": "DescribeCard x=16, y=602, w=343, h=86 inside MapCollectionModal",
@@ -243,8 +243,8 @@
     "Reject arbitrary HTML or arbitrary component code in AI output.",
     "Map canvas content should support pan/drag and mouse-wheel zoom in the renderer/layout layer.",
     "Map background/content scales with zoom; Tooltip markers keep a constant visual size while their positions are recalculated from map coordinates.",
-    "Tooltip markers must render below Layout.DescribeCard when overlapping.",
-    "Layout.DescribeCard title and close button must align on the same visual row when image and description are absent.",
+    "Tooltip markers must render below Map.PopupDescribeCard when overlapping.",
+    "Map.PopupDescribeCard title and close button must align on the same visual row when image and description are absent.",
     "When the pointer is inside map.canvas, canvas drag and wheel zoom should prevent native image dragging and prevent the surrounding page from scrolling.",
     "Do not render development-only counters or status text in final generated pages. Preview-only marker count text such as shown/total markers is not part of the Figma map template.",
     "Bottom action button clears search text and all active filter selections.",
@@ -254,7 +254,7 @@
     "On mobile, share search, filter, selected map, selected marker, and clear-all state with the desktop model.",
     "Use semantic tokens from design-system-pack/tokens.css; do not hardcode colors when a token exists.",
     "Mobile selected-marker state may render the selected Tooltip marker at 40x46 while default markers remain 32x38.",
-    "Mobile selected-marker state renders Layout.DescribeCard at x=16, y=602, w=343, h=86, hides BottomSheet while open, and omits the desktop fixed detail position.",
+    "Mobile selected-marker state renders Map.PopupDescribeCard at x=16, y=602, w=343, h=86, hides BottomSheet while open, and omits the desktop fixed detail position.",
     "Mobile expanded and search-focused states move BottomSheet to x=0, y=68, w=375, h=652.",
     "Mobile search-focused state may omit the bottom footer action while the focused search state is active.",
     "Mobile is a tap-first adaptation of the PC interaction model; do not invent hover-only or unknown mobile actions.",

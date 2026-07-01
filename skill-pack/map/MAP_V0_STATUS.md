@@ -23,8 +23,8 @@ This file records the current confirmed state of the map tool preview and design
 - Mouse wheel inside `map.canvas` zooms the map content and prevents the outer preview page from scrolling.
 - Native browser image dragging is disabled for the map placeholder.
 - Tooltip marker visual size remains constant during zoom; marker screen position is recalculated from map coordinates and zoom.
-- Tooltip markers must render below `Layout.DescribeCard` when overlapping.
-- In `Layout.DescribeCard`, when there is no image and no description, the title and close button must align on the same visual row.
+- Tooltip markers must render below `Map.PopupDescribeCard` when overlapping.
+- In `Map.PopupDescribeCard`, when there is no image and no description, the title and close button must align on the same visual row.
 - The visual Scroll component reflects the left filter list scroll position. The native browser scrollbar is hidden in the preview.
 - The bottom action button clears all filters: clear search input and set every active filter selection to unchecked.
 

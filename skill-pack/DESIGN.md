@@ -84,7 +84,7 @@ Use only the approved component registry:
 - `Form.Checkbox`
 - `Layout.Scroll`
 - `Feedback.Tooltip`
-- `Layout.DescribeCard`
+- `Map.PopupDescribeCard`
 - `Base.Button`
 
 Component display names must match the current Figma naming style, including capitalization: `Base / DropdownCard / Default`, `Base / DropdownOption / Default`, `Layout / Scroll / Default`.
@@ -93,7 +93,7 @@ Component display names must match the current Figma naming style, including cap
 
 `Feedback.Tooltip` is a marker icon container, not a text bubble. Its visual size stays fixed during zoom while its screen position is recalculated from map coordinates.
 
-`Layout.DescribeCard` must collapse gracefully when media or description data is absent. When both are absent, align the title and close button on the same visual row.
+`Map.PopupDescribeCard` must collapse gracefully when media or description data is absent. When both are absent, align the title and close button on the same visual row.
 
 ## Data And State Rules
 

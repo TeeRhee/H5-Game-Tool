@@ -173,7 +173,7 @@ export function generateMapPage(packageDir, output) {
       components: [
         {
           id: "marker-detail",
-          componentId: "Layout.DescribeCard",
+          componentId: "Map.PopupDescribeCard",
           props: {
             open: false,
           },

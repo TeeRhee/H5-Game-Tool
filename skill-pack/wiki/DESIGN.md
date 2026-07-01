@@ -18,7 +18,7 @@ The H5 Game Wiki Tool is an operational reference interface for browsing structu
 The current Wiki contract covers desktop states only:
 
 - Home: header, summary text, and top-level category grid.
-- Secondary list: header, breadcrumbs, selected-category entry grid, and pagination.
+- Secondary list: header, selected-category entry grid, and pagination.
 - Detail: header, breadcrumbs, scrollable content, summary card, attributes, related cards, structured detail card, and optional extended content.
 
 Treat these as states of one Wiki tool type. Do not split them into unrelated visual systems.
@@ -48,9 +48,9 @@ The desktop Wiki viewport is `1000 x 610`.
 - `shell.background` covers `x=0, y=0, w=1000, h=610`.
 - `shell.header` is shared by home, secondary list, and detail states.
 - Home content starts with summary text, then shows top-level categories in a four-column grid.
-- Secondary list content uses breadcrumbs, a three-column card grid, and pagination.
+- Secondary list content uses a three-column card grid and pagination.
 - Detail content may exceed the visible canvas height. The renderer owns real scrolling; `Layout.Scroll` only reflects scroll state visually.
-- Breadcrumb labels and target routes must come from datasource or routing context.
+- Breadcrumbs render only on final detail pages. Labels and target routes must come from datasource or routing context, and every breadcrumb item should be clickable.
 
 Do not reinterpret the Wiki canvas as a map canvas, article page, or free-form HTML surface. The page structure is defined by `skill-pack/wiki/templates/wiki.json`.
 
@@ -100,11 +100,12 @@ The Wiki datasource is not defined yet. Do not invent field names, category stru
 
 Use `TODO_FROM_DATASOURCE` for unresolved data:
 
-- Wiki title, category count, and item count
-- top navigation items and active state
-- category labels, descriptions, icons, counts, and target routes
+- Wiki title in the fixed '<game name> Wiki' format, category count, and item count
+- global first-level top navigation items and active state
+- category labels, descriptions, first-three secondary item icons/images, total item counts, and target routes
+- global Wiki search query and result routing
 - entry titles, descriptions, images, badges, and metadata
-- pagination page and total page values
+- pagination current page and backend total page values
 - detail title, summary, image, attributes, badges, related entries, progress values, tables, and extended content
 - breadcrumb labels and target routes
 

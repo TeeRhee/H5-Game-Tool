@@ -19,61 +19,82 @@
     "Missing optional fields should collapse the related UI element instead of showing fabricated placeholder content.",
     "Breadcrumb labels and target routes must come from datasource or routing context.",
     "Pagination state must come from datasource or renderer state, not from hardcoded sample values.",
+    "Home summary title is always '<game name> Wiki' and should follow the WikiHome template position.",
+    "Nav.TopBar items are global first-level Wiki categories.",
+    "Form.SearchBar is global Wiki search across categories and entries.",
+    "For Game.CategoryCard in home.category-grid, filter out categories whose linked secondary page or category total item count is 0.",
+    "For Game.CategoryCard in home.category-grid, avatarSrcs must preview up to the first three items of the linked secondary page in display order, using item icon first or item image when no icon exists.",
+    "For Game.CategoryCard in home.category-grid, countLabel must represent the total item count for the linked secondary page or category, not the avatar preview count.",
+    "In secondary.card-list, choose Game.ShowCard when it can fully represent the original source entry; choose Layout.DescribeCard when the source entry has richer description, image, badge, or meta fields.",
+    "Breadcrumbs are only for final detail pages. Each breadcrumb label is clickable and maps to the route for that hierarchy level.",
+    "Detail hero card component family follows the card family used on the previous page for the entry that opened the detail page.",
+    "For detail.attribute-section badges, keep one stable tone for each source tag class and use different tones for different classes when source colors are unavailable.",
+    "For detail.extended-section, render content only when the original source structure matches supported rich text, media, table, or extra section blocks.",
     "Detail tables must use structured column and row data when available; do not encode table data as plain rich text."
   ],
   "fieldMappings": [
     {
-      "source": "TODO_FROM_DATASOURCE > wiki title and aggregate counts",
+      "source": "TODO_FROM_DATASOURCE > game name + fixed 'Wiki' suffix, visible first-level category count, and total item count",
       "target": "regions[home.summary].dataBinding",
       "required": true
     },
     {
-      "source": "TODO_FROM_DATASOURCE > top-level categories",
+      "source": "TODO_FROM_DATASOURCE > top-level categories with total item count greater than 0",
       "target": "regions[home.category-grid].components[Game.CategoryCard].dataBinding.categories",
       "required": true
     },
     {
-      "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT > active top navigation",
+      "source": "TODO_FROM_DATASOURCE > each visible top-level category > first three linked secondary-page items > icon or image asset URLs in display order, preferring icon when both icon and image exist",
+      "target": "regions[home.category-grid].components[Game.CategoryCard].dataBinding.categories[].avatarSrcs",
+      "required": false
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE > each visible top-level category > total item count for the linked secondary page or category",
+      "target": "regions[home.category-grid].components[Game.CategoryCard].dataBinding.categories[].countLabel",
+      "required": false
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT > each visible top-level category > linked secondary-page route",
+      "target": "regions[home.category-grid].components[Game.CategoryCard].dataBinding.categories[].targetRoute",
+      "required": true
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT > global first-level Wiki categories and active first-level category",
       "target": "regions[shell.header].components[Nav.TopBar].props.items",
       "required": true
     },
     {
-      "source": "TODO_FROM_DATASOURCE_OR_RENDERER_STATE > global search query",
+      "source": "TODO_FROM_DATASOURCE_OR_RENDERER_STATE > global Wiki search query",
       "target": "regions[shell.header].components[Form.SearchBar].props.value",
       "required": false
     },
     {
-      "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT > secondary breadcrumbs",
-      "target": "regions[secondary.breadcrumbs].components[Nav.Breadcrumbs].props.items",
+      "source": "TODO_FROM_DATASOURCE > selected category entries, choosing Game.ShowCard or Layout.DescribeCard per entry based on original source structure and display richness",
+      "target": "regions[secondary.card-list].components[Game.ShowCard or Layout.DescribeCard].dataBinding.entries",
       "required": true
     },
     {
-      "source": "TODO_FROM_DATASOURCE > selected category entries",
-      "target": "regions[secondary.card-list].components[Layout.DescribeCard].dataBinding.entries",
-      "required": true
-    },
-    {
-      "source": "TODO_FROM_DATASOURCE_OR_RENDERER_STATE > pagination",
+      "source": "TODO_FROM_DATASOURCE_OR_RENDERER_STATE > pagination current page from renderer or route, totalPages from backend",
       "target": "regions[secondary.card-list].components[Nav.Pagination].props",
       "required": false
     },
     {
-      "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT > detail breadcrumbs",
+      "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT > final detail page hierarchy labels and target routes",
       "target": "regions[detail.breadcrumbs].components[Nav.Breadcrumbs].props.items",
       "required": true
     },
     {
-      "source": "RENDERER_SCROLL_STATE",
+      "source": "RENDERER_SCROLL_STATE > real detail page scroll position, scroll height, viewport height, and source/template scrollbar placement",
       "target": "regions[detail.content-shell].components[Layout.Scroll].props",
       "required": false
     },
     {
-      "source": "TODO_FROM_DATASOURCE > selected detail summary",
+      "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT > selected detail summary and previous-page card family",
       "target": "regions[detail.hero-card].components[Layout.DescribeCard or Game.ShowCard].dataBinding.detail",
       "required": true
     },
     {
-      "source": "TODO_FROM_DATASOURCE > selected detail attributes and badges",
+      "source": "TODO_FROM_DATASOURCE > selected detail attributes, source tag classes, source colors when available, and badge labels",
       "target": "regions[detail.attribute-section].dataBinding.attributes",
       "required": false
     },
@@ -88,7 +109,7 @@
       "required": false
     },
     {
-      "source": "TODO_FROM_DATASOURCE > extended rich text, media, or additional tables",
+      "source": "TODO_FROM_DATASOURCE > extended rich text, media, additional tables, or extra sections that match supported detail blocks",
       "target": "regions[detail.extended-section].components[Layout.DetailCard/Base.Image/Data.TableHeaderCell/Data.TableRowCell].dataBinding.extendedContent",
       "required": false
     }
@@ -121,14 +142,13 @@
     },
     {
       "regionId": "secondary.breadcrumbs",
-      "components": [
-        "Nav.Breadcrumbs"
-      ]
+      "components": []
     },
     {
       "regionId": "secondary.card-list",
       "components": [
         "Layout.DescribeCard",
+        "Game.ShowCard",
         "Base.Image",
         "Base.Badge",
         "Nav.Pagination"

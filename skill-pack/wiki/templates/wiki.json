@@ -72,7 +72,7 @@
     {
       "id": "shell.header",
       "displayName": "Wiki header navigation and search",
-      "purpose": "Top navigation shell shared by home, secondary list, and detail pages. It contains category navigation and the global Wiki search entry.",
+      "purpose": "Top navigation shell shared by home, secondary list, and detail pages. Nav.TopBar is the global first-level Wiki category navigation, and Form.SearchBar is the global Wiki search entry.",
       "allowedComponents": [
         "Nav.Header",
         "Nav.TopBar",
@@ -88,7 +88,7 @@
     {
       "id": "home.summary",
       "displayName": "Wiki home summary",
-      "purpose": "Shows the Wiki title and aggregate counts before the category grid.",
+      "purpose": "Shows the fixed title format '<game name> Wiki' and aggregate counts before the category grid.",
       "allowedComponents": [],
       "layout": {
         "pageSummary": "WikiHome Content x=32, y=20, w=936; PageSummary x=0, y=0, w=190, h=56",
@@ -96,7 +96,7 @@
         "metaRow": "x=0, y=36, h=20; category count and item count"
       },
       "pendingDataBoundElements": [
-        "game title",
+        "game title used to compose '<game name> Wiki'",
         "category count",
         "total item count"
       ],
@@ -105,7 +105,7 @@
     {
       "id": "home.category-grid",
       "displayName": "Wiki category grid",
-      "purpose": "Primary Wiki home content. Displays top-level category cards in a four-column desktop grid.",
+      "purpose": "Primary Wiki home content. Displays top-level category cards in a four-column desktop grid and uses each card as the entry point to its linked secondary list page. Categories with 0 total items are hidden.",
       "allowedComponents": [
         "Game.CategoryCard",
         "Base.Badge"
@@ -116,14 +116,14 @@
         "columnGap": "12px",
         "rowGap": "12px",
         "observedRows": "4 rows visible or clipped in WikiHome",
-        "cardContent": "title, short description, icon/avatar cluster, count badge, trailing arrow"
+        "cardContent": "title, short description, icon/avatar cluster previewing up to the first three linked secondary-page item icons/images, count badge showing total category items, trailing arrow"
       },
       "pendingDataBoundElements": [
         "category id",
         "category title",
         "category description",
-        "category icon or avatar list",
-        "category item count",
+        "preview icon/image list from the first three linked secondary-page items",
+        "total category item count",
         "target route"
       ],
       "dataRequirement": "TODO_FROM_DATASOURCE"
@@ -131,26 +131,23 @@
     {
       "id": "secondary.breadcrumbs",
       "displayName": "Secondary page breadcrumbs",
-      "purpose": "Shows the path from Wiki root to the selected category/list page.",
-      "allowedComponents": [
-        "Nav.Breadcrumbs"
-      ],
+      "purpose": "Reserved from the original observed layout but not used by the current Wiki contract. Breadcrumbs are rendered only on final detail pages.",
+      "allowedComponents": [],
       "layout": {
         "breadcrumbs": "SecondaryPage Body x=20, y=16, w=216, h=28; detail pages may expand to w=338"
       },
       "pendingDataBoundElements": [
-        "breadcrumb labels",
-        "breadcrumb target routes",
-        "active breadcrumb"
+        "none"
       ],
-      "dataRequirement": "TODO_FROM_DATASOURCE"
+      "dataRequirement": "NOT_RENDERED"
     },
     {
       "id": "secondary.card-list",
       "displayName": "Secondary page card list",
-      "purpose": "Displays Wiki entries under a selected category in a three-column grid.",
+      "purpose": "Displays Wiki entries under a selected category in a three-column grid. Use Game.ShowCard when it can fully express the original site entry; use Layout.DescribeCard when the entry needs richer description, image, badge, or meta fields.",
       "allowedComponents": [
         "Layout.DescribeCard",
+        "Game.ShowCard",
         "Base.Image",
         "Base.Badge",
         "Nav.Pagination"
@@ -169,15 +166,15 @@
         "entry image",
         "entry badge",
         "entry meta values",
-        "pagination page",
-        "pagination total pages"
+        "pagination page from route or renderer state",
+        "pagination total pages from backend"
       ],
       "dataRequirement": "TODO_FROM_DATASOURCE"
     },
     {
       "id": "detail.breadcrumbs",
       "displayName": "Detail page breadcrumbs",
-      "purpose": "Shows the full navigation path from Wiki root to a selected detail entry.",
+      "purpose": "Shows the full navigation path from Wiki root to a selected final detail entry. Render one item per page hierarchy level and make every breadcrumb label clickable to its target page.",
       "allowedComponents": [
         "Nav.Breadcrumbs"
       ],
@@ -195,7 +192,7 @@
     {
       "id": "detail.content-shell",
       "displayName": "Detail content scroll shell",
-      "purpose": "Owns the long vertical Wiki detail content area and the right-side visual scrollbar.",
+      "purpose": "Owns the long vertical Wiki detail content area and the right-side visual scrollbar. Layout.Scroll keeps the same behavior model as map scroll and should be positioned according to the original source page or observed template state.",
       "allowedComponents": [
         "Layout.Scroll"
       ],
@@ -208,7 +205,7 @@
     {
       "id": "detail.hero-card",
       "displayName": "Detail hero card",
-      "purpose": "Top summary card for the selected Wiki item. Use the observed large DescribeCard state or compact ShowCard state according to content density.",
+      "purpose": "Top summary card for the selected Wiki item. Match the card family used on the previous page for the entry that opened this detail page: Game.ShowCard opens a compact ShowCard-style hero, while Layout.DescribeCard opens a richer DescribeCard-style hero.",
       "allowedComponents": [
         "Layout.DescribeCard",
         "Game.ShowCard",
@@ -231,7 +228,7 @@
     {
       "id": "detail.attribute-section",
       "displayName": "Detail attribute section",
-      "purpose": "Displays grouped base attributes, short text facts, and status badges for the selected Wiki item.",
+      "purpose": "Displays grouped base attributes, short text facts, and status badges for the selected Wiki item. Badge colors follow original source tag classes when available; otherwise keep the same color for the same tag class and assign different stable colors to different tag classes.",
       "allowedComponents": [
         "Base.Badge"
       ],
@@ -302,7 +299,7 @@
     {
       "id": "detail.extended-section",
       "displayName": "Detail extended content section",
-      "purpose": "Holds additional long Wiki content below the structured card, such as rich text, image canvas, or extra grouped detail modules.",
+      "purpose": "Holds additional long Wiki content below the structured card, such as rich text, image canvas, or extra grouped detail modules. Use this section only when original source data has a structure that can be matched to the supported content blocks.",
       "allowedComponents": [
         "Layout.DetailCard",
         "Base.Image",
@@ -333,8 +330,17 @@
     "Use semantic tokens from the Wiki or shared token source; do not hardcode colors when a token exists.",
     "Header navigation and search are shared across home, secondary list, and detail states.",
     "Home state renders a category grid after the summary block; secondary state renders a list grid plus pagination; detail state renders breadcrumbs plus vertically scrollable detail content.",
-    "In secondary list state, keep the observed 3-column card grid on desktop and bind pagination separately from card data.",
-    "In detail state, content may exceed the visible canvas height. Keep the page scroll model in the renderer layer and sync the visual Layout.Scroll component to scroll state.",
+    "Home summary title uses the fixed format '<game name> Wiki' and follows the WikiHome template position.",
+    "In home.category-grid, each Game.CategoryCard previews up to the first three items of its linked secondary page through the avatar cluster, prefers icon over image when both exist, shows the total item count for that category in the trailing count badge, and is hidden when that total count is 0.",
+    "Nav.TopBar items are global first-level Wiki categories.",
+    "Form.SearchBar is global Wiki search across categories and entries.",
+    "In secondary list state, keep the observed template pagination placement, bind pagination separately from card data, and use backend totalPages instead of preview defaults.",
+    "In secondary list state, use Game.ShowCard when it fully represents the original entry; use Layout.DescribeCard when richer original entry information needs image, badge, description, or meta fields.",
+    "In detail state, content may exceed the visible canvas height. Keep the page scroll model in the renderer layer and sync the visual Layout.Scroll component to scroll state, using the source page or template position for the visual scrollbar.",
+    "Breadcrumbs render only on final detail pages, include one clickable label per page hierarchy level, and route each label to its target page.",
+    "Detail hero card family follows the card family used to open the detail page from the previous list page.",
+    "Detail attribute badges should preserve original source tag classes when possible; otherwise assign stable different tones across different tag classes.",
+    "Detail extended content should render only when the original source data structure matches the supported Wiki detail blocks.",
     "Use the Figma frame size 1000 x 610 as the default Wiki canvas and allow vertical scrolling for content overflow.",
     "Do not invent a mobile Wiki layout until mobile Wiki design nodes or explicit implementation constraints are supplied.",
     "Preserve breadcrumb hierarchy and active state. Breadcrumb labels and target routes must come from datasource or routing context.",

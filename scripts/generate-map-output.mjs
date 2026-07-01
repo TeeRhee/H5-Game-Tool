@@ -222,7 +222,7 @@ function buildOutput({ meta, data, warnings }) {
         components: [
           {
             id: "marker-detail",
-            componentId: "Layout.DescribeCard",
+            componentId: "Map.PopupDescribeCard",
             props: {
               open: false,
               title: "TODO_FROM_DATASOURCE",

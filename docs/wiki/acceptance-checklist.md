@@ -40,7 +40,7 @@
 ## 5. 桌面页面表现
 
 - [ ] Home 状态包含 header、summary、四列 category grid。
-- [ ] Secondary list 状态包含 header、breadcrumbs、三列 card list、pagination。
+- [ ] Secondary list 状态包含 header、三列 card list、pagination，不显示 breadcrumbs。
 - [ ] Detail 状态包含 header、breadcrumbs、hero card、attribute section、related section、structured detail section。
 - [ ] Detail 长内容使用真实纵向滚动。
 - [ ] `Layout.Scroll` 只表达滚动状态，不替代页面真实滚动。

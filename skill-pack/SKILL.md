@@ -56,11 +56,11 @@ The v1 runnable target is the `map` tool type. `wiki` now has its own template f
 - `map.canvas` is the full-window background canvas (`1160 x 800`) under the Sidebar and Footer overlays. Do not treat it as only the right-side visible map area.
 - The map Sidebar is `x=12, y=12, w=264, h=776` with radius `8`.
 - The left filter list uses `Layout.Scroll` as a visual scrollbar. In the current template it is `x=252, y=102, w=12, h=586` inside Panel Content; the renderer may bind it to the real list scroll state.
-- `Layout.DescribeCard` is fixed to the lower-right of the map template at `x=868, y=522, w=280, h=266`.
+- `Map.PopupDescribeCard` is fixed to the lower-right of the map template at `x=868, y=522, w=280, h=266`.
 - Do not render development-only status text in final generated pages. The local preview may show debug counters such as "shown markers / total markers", but this is not part of the Figma map template and must not be emitted by the skill output.
 - For map canvas rendering, pan/drag and wheel zoom belong to the layout/renderer layer. Background content may scale, but Tooltip marker visual size must remain constant while marker screen positions are recalculated from map coordinates and zoom.
-- Tooltip markers must render below `Layout.DescribeCard` when overlapping, because `Layout.DescribeCard` is the active detail surface.
-- For `Layout.DescribeCard`, when there is no image and no description, align the title and close button on the same visual row.
+- Tooltip markers must render below `Map.PopupDescribeCard` when overlapping, because `Map.PopupDescribeCard` is the active detail surface.
+- For `Map.PopupDescribeCard`, when there is no image and no description, align the title and close button on the same visual row.
 - While the pointer is inside the map canvas, canvas drag and wheel zoom should capture the interaction: prevent native image dragging and prevent the surrounding preview/page from scrolling.
 - The bottom action button clears all filters: clear search input and set every active filter selection to unchecked.
 - Use the map template colors from Figma node `58:11293`: `#1F2224` for the window background, `#2C3134` for panels/detail/zoom controls, `#353A3D` for search, and `#43484B` for field strokes.

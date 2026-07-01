@@ -38,7 +38,10 @@
     {
       "id": "Layout.Scroll",
       "figmaName": "Layout / Scroll / Default",
-      "observedUse": "left-panel.controls",
+      "observedUse": [
+        "map:left-panel.controls",
+        "wiki:detail.content-shell"
+      ],
       "observedVariants": [
         "Style=Default, Size=X-Small"
       ],
@@ -69,6 +72,12 @@
           "required": false,
           "default": true,
           "rule": "Renderer may hide it when list content does not overflow."
+        },
+        "thumbHeight": {
+          "type": "number",
+          "required": false,
+          "source": "renderer state",
+          "rule": "Keep the same scroll behavior as the map component. Position and height should match the source page or observed template state for the current Wiki detail page."
         }
       }
     },
@@ -133,7 +142,8 @@
       ],
       "observedUse": [
         "desktop:left-panel.controls",
-        "mobile:search-overlay"
+        "mobile:search-overlay",
+        "wiki:shell.header"
       ],
       "typography": {
         "input": "Tokenized Body/MD; use --type-font-family-primary, --type-size-200, --type-line-height-200. Prefer mobile-specific type token when present.",
@@ -154,13 +164,14 @@
         "mobile": "343x36 mobile search overlay at x=16, y=52 inside MapCollectionModal; not a BottomSheet child and not clipped by BottomSheet height.",
         "mobileFocused": "Search-focused state keeps SearchBar overlay x=16, y=52, w=343, h=36 while BottomSheet is expanded to x=0, y=68, w=375, h=652; footer omitted in observed state.",
         "mobileCollapsed": "In the fully collapsed mobile sheet state, SearchBar remains as MapCollectionModal overlay at x=16, y=52, w=343, h=36; do not move it into the 100px BottomSheet.",
-        "mobileMarkerSelected": "When a marker is selected, SearchBar remains visible as MapCollectionModal overlay at x=16, y=52, w=343, h=36; BottomSheet is hidden and Layout.DescribeCard appears at x=16, y=602, w=343, h=86."
+        "mobileMarkerSelected": "When a marker is selected, SearchBar remains visible as MapCollectionModal overlay at x=16, y=52, w=343, h=36; BottomSheet is hidden and Map.PopupDescribeCard appears at x=16, y=602, w=343, h=86."
       },
       "props": {
         "value": {
           "type": "string",
           "required": true,
-          "source": "user input"
+          "source": "user input",
+          "rule": "In Wiki shell usage, this is the global Wiki search query across all Wiki categories and detail entries."
         },
         "placeholder": {
           "type": "string",
@@ -364,9 +375,36 @@
       "figmaName": "Base / Badge / Default",
       "observedUse": [
         "desktop:left-panel.controls",
-        "mobile:bottom-sheet.list"
+        "mobile:bottom-sheet.list",
+        "wiki:home.category-grid",
+        "wiki:secondary.card-list",
+        "wiki:detail.hero-card",
+        "wiki:detail.attribute-section",
+        "wiki:detail.related-section",
+        "wiki:detail.detail-card-section"
       ],
-      "props": "TODO_DEFINE_FROM_COMPONENT_IMPLEMENTATION",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Render only approved badge text from datasource or routing context. Do not invent placeholder labels."
+        },
+        "tone": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "neutral",
+            "info",
+            "error",
+            "warning",
+            "primary",
+            "success"
+          ],
+          "default": "neutral",
+          "rule": "Use source-provided tag type when available. For Wiki attribute tags, assign the same tone to the same tag class and a different stable tone to different tag classes when source colors are not provided."
+        }
+      },
       "observedStructure": {
         "mobile": "count badge at row end, uses --color-bg-alpha-weak and Label/MD tokens"
       }
@@ -511,7 +549,8 @@
         "items": {
           "type": "array",
           "required": false,
-          "source": "TODO_FROM_DATASOURCE"
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Global primary Wiki navigation. Items correspond to top-level Wiki categories with content and should route to the matching first-level category or section."
         },
         "activeId": {
           "type": "string",
@@ -536,6 +575,9 @@
       "observedUse": [
         "wiki:home.category-grid"
       ],
+      "observedStructure": {
+        "rule": "This card is the top-level Wiki category entry on the home page. The circular preview slots summarize up to the first three items of the linked secondary page in display order, and the trailing count shows the total number of items contained by that category. Hide the whole card when the total item count is 0."
+      },
       "props": {
         "title": {
           "type": "string",
@@ -550,17 +592,20 @@
         "imageSrc": {
           "type": "string",
           "required": false,
-          "source": "TODO_FROM_DATASOURCE"
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Compatibility fallback only. New Wiki mappings should populate avatarSrcs from linked secondary-page items; use imageSrc only when a legacy caller has one approved category-level image and no avatarSrcs."
         },
         "avatarSrcs": {
           "type": "string[]",
           "required": false,
-          "source": "TODO_FROM_DATASOURCE"
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Provide up to three preview asset URLs derived from the first three items of the linked secondary page in display order. Each item may use an icon or image; when both exist, use icon first. Render the assets at the circular preview size. Do not pad with invented assets when fewer than three items exist."
         },
         "countLabel": {
           "type": "string",
           "required": false,
-          "source": "TODO_FROM_DATASOURCE"
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Display the total item count contained by the category or linked secondary page, not the number of preview avatars currently shown. If the total count is 0, the renderer should omit this CategoryCard."
         },
         "state": {
           "type": "enum",
@@ -577,14 +622,14 @@
       "id": "Nav.Breadcrumbs",
       "figmaName": "Nav / Breadcrumbs / Default",
       "observedUse": [
-        "wiki:secondary.breadcrumbs",
         "wiki:detail.breadcrumbs"
       ],
       "props": {
         "items": {
           "type": "array",
           "required": false,
-          "source": "TODO_FROM_DATASOURCE"
+          "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT",
+          "rule": "Use only on the final detail page, where the current level has no further subcategory page. The number of items equals the page hierarchy, and every breadcrumb item is clickable to its target page."
         },
         "onItemClick": {
           "type": "interaction",
@@ -626,6 +671,81 @@
       }
     },
     {
+      "id": "Layout.DescribeCard",
+      "figmaName": "Layout / DescribeCard / Default",
+      "observedUse": [
+        "wiki:secondary.card-list",
+        "wiki:detail.hero-card"
+      ],
+      "observedVariants": [
+        "Size=SM",
+        "Size=LG",
+        "State=Default",
+        "State=Hover",
+        "ShowImage=true|false",
+        "ShowBadge=true|false",
+        "ShowAttributes=true|false"
+      ],
+      "observedStructure": {
+        "rule": "Wiki list/detail describe card. Use it when the source entry has richer title, description, image, badge, or meta/attribute content than Game.ShowCard can fully express. This is separate from the map popup detail card."
+      },
+      "props": {
+        "title": {
+          "type": "string",
+          "required": true,
+          "source": "TODO_FROM_DATASOURCE"
+        },
+        "description": {
+          "type": "string",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE"
+        },
+        "imageSrc": {
+          "type": "string",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE"
+        },
+        "size": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "sm",
+            "lg"
+          ],
+          "default": "sm"
+        },
+        "state": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "default",
+            "hover"
+          ],
+          "default": "default"
+        },
+        "badge": {
+          "type": "string",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE"
+        },
+        "badges": {
+          "type": "string[]",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE"
+        },
+        "meta": {
+          "type": "string[]",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE"
+        },
+        "attributes": {
+          "type": "array",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE"
+        }
+      }
+    },
+    {
       "id": "Nav.Pagination",
       "figmaName": "Nav / Pagination / Default",
       "observedUse": [
@@ -635,12 +755,14 @@
         "page": {
           "type": "number",
           "required": false,
-          "source": "renderer state"
+          "source": "renderer state",
+          "rule": "Current page comes from route, query state, or renderer state. Do not use preview defaults in generated output."
         },
         "totalPages": {
           "type": "number",
           "required": false,
-          "source": "TODO_FROM_DATASOURCE"
+          "source": "backend",
+          "rule": "Total page count must come from backend or standardized datasource pagination metadata."
         }
       }
     },
@@ -676,7 +798,8 @@
         "progress": {
           "type": "number",
           "required": false,
-          "source": "TODO_FROM_DATASOURCE"
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Required only for variant=process. Do not render fabricated progress defaults in final output."
         },
         "variant": {
           "type": "enum",
@@ -685,7 +808,8 @@
             "label",
             "process"
           ],
-          "default": "label"
+          "default": "label",
+          "rule": "Use label when title, description, image, and optional badge fully express the source entry. Use process only when the source entry has a real progress value."
         },
         "subscribed": {
           "type": "boolean",
@@ -714,6 +838,9 @@
       "observedUse": [
         "wiki:detail.related-section"
       ],
+      "observedStructure": {
+        "rule": "Use together with Game.ProgressBar when source data contains a real progress-like numeric value and label. Do not infer progress from unrelated text."
+      },
       "props": {
         "title": {
           "type": "string",
@@ -753,6 +880,9 @@
         "wiki:detail.detail-card-section",
         "wiki:detail.extended-section"
       ],
+      "observedStructure": {
+        "rule": "Use for structured detail content when source sections match one of the supported structures: title/description, features, infoItems, statusBadges, structured tableRows/table, or an approved media/aside block. Do not force unstructured content into this component when the source shape does not match."
+      },
       "props": {
         "title": {
           "type": "string",
@@ -860,7 +990,7 @@
         "positioning": "x/y coordinates anchor the bottom-center tail tip to the map point inside the pannable and zoomable map coordinate system.",
         "zoomRule": "Tooltip marker visual size stays constant during map zoom; the map canvas renderer recalculates screen x/y from map coordinates and zoom.",
         "rule": "This component represents a map point marker, not a visible text bubble.",
-        "layerRule": "Tooltip markers must stay below Layout.DescribeCard when they overlap; DescribeCard is the active detail surface.",
+        "layerRule": "Tooltip markers must stay below Map.PopupDescribeCard when they overlap; PopupDescribeCard is the active map detail surface.",
         "mobile": "Default marker 32x38 in default/collapsed/expanded/search states; selected marker may be 40x46 at x=163,y=315 in MobileMapMarkerSelectedScreen."
       },
       "props": {
@@ -903,8 +1033,8 @@
       ]
     },
     {
-      "id": "Layout.DescribeCard",
-      "figmaName": "Layout / DescribeCard / Default",
+      "id": "Map.PopupDescribeCard",
+      "figmaName": "Map / PopupDescribeCard / Default",
       "observedUse": [
         "desktop:map.detail",
         "mobile:mobile.map.detail"
