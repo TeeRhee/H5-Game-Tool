@@ -70,6 +70,13 @@
       "textSecondary": "var(--color-text-soft)"
     }
   },
+  "templateUsagePolicy": {
+    "rule": "Map Figma template states are layout and interaction-state references, not permission to fabricate unavailable data. Render only the regions supported by the datasource and current renderer state.",
+    "componentSelection": "Use the allowed component family declared by each map region, but keep optional regions such as selected-marker detail, mobile bottom-sheet states, filters, and search-focused states conditional on real state or datasource availability.",
+    "partialTemplateUse": "A renderer may use only the desktop map shell, only a mobile bottom-sheet state, or only selected-marker detail placement when that is the current interaction state.",
+    "noFabrication": "Do not fabricate markers, areas, groups, filters, selected marker details, search results, development counters, or mobile footer actions solely because a reference template includes them.",
+    "layoutBinding": "After a map region is selected by datasource and state, use the corresponding observed template coordinates for that region."
+  },
   "regions": [
     {
       "id": "left-panel.header",
@@ -241,6 +248,8 @@
     "Reject unknown region ids.",
     "Reject components not listed in the target region's allowedComponents.",
     "Reject arbitrary HTML or arbitrary component code in AI output.",
+    "Treat map template states as layout references for selected data/state-backed regions, not mandatory full-page data structures.",
+    "Do not render optional map regions such as PopupDescribeCard, mobile selected-marker detail, bottom-sheet expanded state, or search-focused state unless the current renderer state requires them.",
     "Map canvas content should support pan/drag and mouse-wheel zoom in the renderer/layout layer.",
     "Map background/content scales with zoom; MapTip markers keep a constant visual size while their positions are recalculated from map coordinates.",
     "MapTip markers must render below Map.PopupDescribeCard when overlapping.",

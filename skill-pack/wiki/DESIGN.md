@@ -6,6 +6,7 @@ source:
   pageNode: 167:628
   homeNode: 167:630
   secondaryListNode: 304:5972
+  secondaryLargeCardNode: 304:13409
   detailLargeCardExpandedNode: 304:17202
   detailAllStatesNode: 304:9319
 description: A desktop Wiki utility for structured game reference pages, built from the shared H5 component registry, the Wiki page template, and the shared token export.
@@ -18,7 +19,7 @@ The H5 Game Wiki Tool is an operational reference interface for browsing structu
 The current Wiki contract covers desktop states only:
 
 - Home: header, summary text, and top-level category grid.
-- Secondary list: header, selected-category entry grid, and pagination.
+- Secondary list: header and selected-category entry content, using the card family and layout variant that best matches the original source page.
 - Detail: header, breadcrumbs, scrollable content, summary card, attributes, related cards, structured detail card, and optional extended content.
 
 Treat these as states of one Wiki tool type. Do not split them into unrelated visual systems.
@@ -54,6 +55,8 @@ The desktop Wiki viewport is `1000 x 610`.
 
 Do not reinterpret the Wiki canvas as a map canvas, article page, or free-form HTML surface. The page structure is defined by `skill-pack/wiki/templates/wiki.json`.
 
+Template pages are layout references, not mandatory data structures. First inspect the original source page to decide which regions and component families are actually needed, then apply the matching Figma layout rules for those chosen components. It is valid to use only part of a template page, such as a tab row, a large-card grid, or a detail stack, without rendering unrelated template regions.
+
 ### Observed Secondary Layout
 
 The `SecondaryPage` design node is `304:5972` and uses the default `1000 x 610` viewport.
@@ -68,9 +71,24 @@ The `SecondaryPage` design node is `304:5972` and uses the default `1000 x 610` 
 - `Layout.DescribeCard` image area: `x=8, y=8, w=80, h=80`; content area: `x=100, y=8, w=198.6667, h=80`.
 - Pagination: Body-relative `x=0, y=482, w=1000, h=64`, absolute `x=0, y=546, w=1000, h=64`.
 
-Choose `Game.ShowCard` when it fully represents the source entry. Choose `Layout.DescribeCard` when the source entry needs richer description, image, badge, or meta fields. Pagination total pages must come from backend data in production output.
+Choose `Game.ShowCard` when it fully represents the source entry. Choose compact `Layout.DescribeCard` when the source entry needs richer inline description, image, badge, or meta fields. Pagination total pages must come from backend data in production output.
 
 For `Game.ShowCard`, the right arrow is a drill-down affordance, not decoration. Hide it when the source entry is terminal and has no next page or next hierarchy level. The subtitle/description area shows at most two visible lines and truncates overflow; wrap the truncated visible text with `Base.ToolTip` and pass the full description string as tooltip content. The text area should adapt to one or two visible description lines instead of staying fixed to one line.
+
+### Observed Secondary Large-Card Layout
+
+The `SecondaryPageLargeCard` design node is `304:13409` and uses the default `1000 x 610` viewport. Use this layout only when the original secondary page is image-first or gallery-like and the source entries are best represented by large `Layout.DescribeCard` cards. Do not convert ordinary compact lists into this layout just because the template exists.
+
+- Header: `x=0, y=0, w=1000, h=68`.
+- Body: `x=0, y=68, w=1000, h=542`.
+- Breadcrumb reference: Body-relative `x=20, y=16, w=216, h=28`, absolute `x=20, y=84`; keep breadcrumbs reserved for final detail pages unless routing explicitly enables secondary breadcrumbs.
+- Large-card list container: Body-relative `x=50, y=64, w=900, h=588`, absolute `x=50, y=132`.
+- Card grid: 4 columns x 2 visible design rows, card `w=210, h=284`, column gap `20`, row gap `20`.
+- Card x positions inside each row: `0`, `230`, `460`, `690`.
+- Row y positions inside the list container: `0`, `304`.
+- `Layout.DescribeCard` image-first internals: card padding top/left/right `8`, bottom `12`; media area `w=200, h=200` with image content around `194 x 194`; content starts around `x=14, y=216`, title height `22`, description starts at `y=26` with `18px` line height.
+
+Use this template as the layout for chosen large `Layout.DescribeCard` entries only. If the original page has richer text rows, compact cards, tables, filters, or tabs, keep the relevant placement reference from the matching template and choose the component family that fits the source content.
 
 ### Observed Secondary Multi-Nav Layout
 
@@ -201,6 +219,8 @@ Do not mix dark panels with light-page text tokens or light panels with dark-pag
 - Do not generate arbitrary HTML or arbitrary React code.
 - Do not add regions that are absent from `skill-pack/wiki/templates/wiki.json`.
 - Do not place unknown or disallowed components in a region.
+- Do not treat a template page name as a command to reproduce every component in that page.
+- Choose required regions and components from the original source page first; use Figma templates only to place the chosen components consistently.
 - Do not merge Wiki regions into the map template.
 - Do not reuse map coordinate, marker, tile, or area concepts in Wiki contracts.
 - Do not fabricate screenshots, icons, copy, counts, progress, categories, routes, or table rows.

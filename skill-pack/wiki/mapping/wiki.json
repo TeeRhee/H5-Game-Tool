@@ -25,8 +25,10 @@
     "For Game.CategoryCard in home.category-grid, filter out categories whose linked secondary page or category total item count is 0.",
     "For Game.CategoryCard in home.category-grid, avatarSrcs must preview up to the first three items of the linked secondary page in display order, using item icon first or item image when no icon exists.",
     "For Game.CategoryCard in home.category-grid, countLabel must represent the total item count for the linked secondary page or category, not the avatar preview count.",
-    "In secondary.card-list, choose Game.ShowCard when it can fully represent the original source entry; choose Layout.DescribeCard when the source entry has richer description, image, badge, or meta fields.",
-    "Treat template pages as placement references, not datasource shape requirements. Referencing SecondaryPageMultiNav does not require rendering every observed region in that frame.",
+    "Treat template pages as placement references, not datasource shape requirements. Referencing a template page does not require rendering every observed region or component in that frame.",
+    "Select the component family from the original source page structure and information density first, then apply the closest matching template layout for that component family.",
+    "In secondary.card-list, choose Game.ShowCard when it can fully represent the original source entry; choose compact Layout.DescribeCard when the entry needs richer inline description, image, badge, or meta fields; choose the SecondaryPageLargeCard Layout.DescribeCard grid only when the original source page is image-first or gallery-like.",
+    "Using SecondaryPageLargeCard means using its large-card placement rules for chosen Layout.DescribeCard entries, not forcing all source pages into large image cards.",
     "Use secondary.multi-level-tabs only when the original source page exposes second-level branches under the active first-level Nav.TopBar category.",
     "Use secondary.multi-level-sidebar only when the active secondary tab exposes real third-level groups or local subcategory anchors. If the source page has only second-level navigation, omit the sidebar and do not fabricate third-level items.",
     "Use secondary.multi-level-card-list only when the entries under the active second-level tab and optional active third-level group are best represented by the observed two-column Game.ShowCard list. Otherwise keep the matched navigation placement and choose the content component that best fits the original page structure.",
@@ -75,8 +77,8 @@
       "required": false
     },
     {
-      "source": "TODO_FROM_DATASOURCE > selected category entries plus routing hierarchy, choosing Game.ShowCard or Layout.DescribeCard per entry based on original source structure and display richness",
-      "target": "regions[secondary.card-list].components[Game.ShowCard or Layout.DescribeCard].dataBinding.entries",
+      "source": "TODO_FROM_DATASOURCE > selected category entries plus routing hierarchy, choosing Game.ShowCard, compact Layout.DescribeCard, or SecondaryPageLargeCard-style Layout.DescribeCard per entry based on original source structure and display richness",
+      "target": "regions[secondary.card-list].components[Game.ShowCard or Layout.DescribeCard].dataBinding.entries and selected layout variant",
       "required": true
     },
     {

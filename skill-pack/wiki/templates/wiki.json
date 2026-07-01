@@ -11,6 +11,7 @@
     "stateNodes": {
       "home": "167:630",
       "secondaryList": "304:5972",
+      "secondaryLargeCard": "304:13409",
       "secondaryMultiNav": "375:4979",
       "detailLargeCardExpanded": "304:17202",
       "detailAllStates": "304:9319"
@@ -27,7 +28,7 @@
     "observedFigmaViewport": {
       "width": 1000,
       "height": 610,
-      "rule": "Home, SecondaryPage, SecondaryPageMultiNav, and DetailPageLargeCardExpanded are 1000 x 610 snapshots. DetailPageAllStates is a 1000 x 1166 full-stack reference only. Generated output should keep the default 1000 x 610 canvas unless a host shell explicitly overrides it and should use vertical scrolling for overflow content."
+      "rule": "Home, SecondaryPage, SecondaryPageLargeCard, SecondaryPageMultiNav, and DetailPageLargeCardExpanded are 1000 x 610 snapshots. DetailPageAllStates is a 1000 x 1166 full-stack reference only. Generated output should keep the default 1000 x 610 canvas unless a host shell explicitly overrides it and should use vertical scrolling for overflow content."
     },
     "responsiveRules": {
       "desktop": {
@@ -54,6 +55,13 @@
       "textPrimary": "var(--color-text-strong)",
       "textSecondary": "var(--color-text-soft)"
     }
+  },
+  "templateUsagePolicy": {
+    "rule": "Wiki Figma template pages are placement and spacing references, not mandatory datasource shapes. A generator should choose regions and components from the original source page structure first, then apply the matching layout coordinates from the closest template reference.",
+    "componentSelection": "Choose the component family that best represents the source entry information density and hierarchy. Do not force all entries into the card family shown in the selected template page.",
+    "partialTemplateUse": "It is valid to use only a subset of a template page, such as only the secondary tab row, only the large-card grid, or only a detail section stack, when the rest of the source page does not contain matching structure.",
+    "noFabrication": "Never fabricate second-level tabs, third-level sidebars, breadcrumbs, images, badges, counts, progress, pagination, tables, or detail sections solely because a reference template includes them.",
+    "layoutBinding": "After a component family is selected, use the corresponding observed template layout for that component family: ShowCard lists use ShowCard list coordinates, DescribeCard rich lists use DescribeCard coordinates, and large image-first lists use SecondaryPageLargeCard coordinates."
   },
   "regions": [
     {
@@ -370,7 +378,7 @@
     {
       "id": "secondary.card-list",
       "displayName": "Secondary page card list",
-      "purpose": "Displays Wiki entries under a selected category in a three-column grid. Use Game.ShowCard when it can fully express the original site entry; use Layout.DescribeCard when the entry needs richer description, image, badge, or meta fields.",
+      "purpose": "Displays Wiki entries under a selected category. Treat the observed template variants as layout references for different entry densities: use Game.ShowCard when it fully expresses the original site entry, Layout.DescribeCard compact layout when the entry needs richer inline description/meta, and Layout.DescribeCard large-card layout when the source page is image-first or card-gallery-like. Do not force all secondary pages into one observed grid.",
       "allowedComponents": [
         "Layout.DescribeCard",
         "Game.ShowCard",
@@ -383,6 +391,8 @@
         "grid": "3 columns, each card w=306.6667, h=96",
         "columnGap": "8px",
         "rowGap": "8px",
+        "largeCardContainer": "SecondaryPageLargeCard Body-relative x=50, y=64, w=900; absolute x=50, y=132",
+        "largeCardGrid": "4 columns, each Layout.DescribeCard w=210, h=284; column gap=20; row gap=20; row y positions 0 and 304 in the observed frame",
         "pagination": "x=0, y=482, w=1000, h=64 inside SecondaryPage Body"
       },
       "observedSecondaryLayout": {
@@ -469,6 +479,80 @@
           "width": 1000,
           "height": 64,
           "dataBinding": "Bind currentPage from route or renderer state and totalPages from backend. Remove preview-only page values in production output."
+        }
+      },
+      "observedSecondaryLargeCardLayout": {
+        "pageNodeId": "304:13409",
+        "pageName": "SecondaryPageLargeCard",
+        "usage": "Use this layout only when the source secondary page is best represented by image-first Layout.DescribeCard cards. It is a layout reference for large visual card grids, not a requirement to convert every secondary page into large cards.",
+        "body": {
+          "sourceNodeId": "304:13412",
+          "x": 0,
+          "y": 68,
+          "width": 1000,
+          "height": 542
+        },
+        "breadcrumbs": {
+          "sourceNodeId": "304:13413",
+          "bodyRelativeX": 20,
+          "bodyRelativeY": 16,
+          "absoluteX": 20,
+          "absoluteY": 84,
+          "width": 216,
+          "height": 28,
+          "rendering": "Observed in this reference frame. Under the current Wiki rule, breadcrumbs are still reserved for final detail pages unless product routing explicitly enables secondary breadcrumbs."
+        },
+        "listContainer": {
+          "sourceNodeId": "389:3411",
+          "bodyRelativeX": 50,
+          "bodyRelativeY": 64,
+          "absoluteX": 50,
+          "absoluteY": 132,
+          "width": 900,
+          "height": 588,
+          "layoutMode": "vertical",
+          "rowGap": 20
+        },
+        "cardGrid": {
+          "component": "Layout.DescribeCard",
+          "variant": "large image-first card",
+          "columns": 4,
+          "visibleDesignRows": 2,
+          "cardWidth": 210,
+          "cardHeight": 284,
+          "columnGap": 20,
+          "rowGap": 20,
+          "cardXPositions": [
+            0,
+            230,
+            460,
+            690
+          ],
+          "rowYPositions": [
+            0,
+            304
+          ]
+        },
+        "describeCardInternals": {
+          "component": "Layout.DescribeCard",
+          "cardPadding": "top=8, left/right=8, bottom=12",
+          "image": {
+            "x": 8,
+            "y": 8,
+            "width": 194,
+            "height": 194,
+            "containerWidth": 200,
+            "containerHeight": 200,
+            "shape": "rounded rectangle image-first card media"
+          },
+          "content": {
+            "x": 14,
+            "y": 216,
+            "width": 188,
+            "titleHeight": 22,
+            "descriptionY": 26,
+            "descriptionLineHeight": 18
+          }
         }
       },
       "pendingDataBoundElements": [
@@ -1173,11 +1257,15 @@
     "Reject arbitrary HTML or arbitrary component code in AI output.",
     "Use only components listed in the target region's allowedComponents when a region declares allowed components.",
     "Do not invent datasource fields; use TODO_FROM_DATASOURCE until the Wiki mapping contract defines source fields.",
+    "Treat every Figma template page as a layout reference, not a mandatory data structure. Select regions and components based on the original source page first, then use the matching template coordinates for the selected component family.",
+    "A referenced template page may be used partially. Do not render secondary tabs, third-level sidebars, breadcrumbs, large cards, pagination, or detail sections unless the original source page or routing context actually contains that structure.",
+    "When multiple components can represent the same region, choose the component by source information density before applying layout: compact text entries may use Game.ShowCard, richer inline entries may use compact Layout.DescribeCard, and image-first gallery entries may use the SecondaryPageLargeCard Layout.DescribeCard grid.",
     "Use semantic tokens from the Wiki or shared token source; do not hardcode colors when a token exists.",
     "Header navigation and search are shared across home, secondary list, and detail states.",
     "Home state renders a category grid after the summary block; secondary state renders a list grid plus pagination; detail state renders breadcrumbs plus vertically scrollable detail content.",
     "Use DetailPageLargeCardExpanded as the default 1000 x 610 detail viewport reference. Use DetailPageAllStates only to understand optional section stacking and overflow content height.",
     "SecondaryPage layout follows Body x=0, y=64, w=1000, h=546; list container absolute x=32, y=128, w=936, h=408; three columns with card w=306.6667, h=96, 8px column gap, and 8px row gap.",
+    "SecondaryPageLargeCard layout follows Body x=0, y=68, w=1000, h=542; large-card list container Body-relative x=50, y=64, w=900; four Layout.DescribeCard columns with card w=210, h=284, column gap=20, row gap=20. Use it only for image-first or gallery-like secondary content.",
     "SecondaryPage pagination follows Body-relative x=0, y=482, w=1000, h=64 and must remain separate from card data binding.",
     "Treat SecondaryPageMultiNav as a modular placement reference, not a required full-page data structure. A generator may use only the tab row, only the sidebar, or only the content-shell coordinates when those parts match the original source page.",
     "Use the SecondaryPageMultiNav tab row when the original source page has second-level navigation. Do not require a third-level sidebar just because this template contains one.",
