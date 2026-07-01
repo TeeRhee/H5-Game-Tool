@@ -54,7 +54,7 @@ export function WikiHomeTemplatePreview() {
             <div className="wiki-home-template-content">
               <section className="wiki-home-template-summary" aria-label="Wiki home summary">
                 <div className="wiki-home-template-summary__title">
-                  <span>游戏名称の</span>
+                  <span>游戏名称</span>
                   <span>Wiki攻略</span>
                 </div>
                 <div className="wiki-home-template-summary__meta">

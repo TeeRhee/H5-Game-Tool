@@ -54,6 +54,52 @@ The desktop Wiki viewport is `1000 x 610`.
 
 Do not reinterpret the Wiki canvas as a map canvas, article page, or free-form HTML surface. The page structure is defined by `skill-pack/wiki/templates/wiki.json`.
 
+### Observed Secondary Layout
+
+The `SecondaryPage` design node is `304:5972` and uses the default `1000 x 610` viewport.
+
+- Header: `x=0, y=0, w=1000, h=68`.
+- Body: `x=0, y=64, w=1000, h=546`.
+- Breadcrumb reference: `x=20, y=80, w=216, h=28` absolute, but this is reserved only. Generated secondary pages do not render breadcrumbs under the current contract.
+- List container: `x=32, y=128, w=936, h=408` absolute.
+- Card grid: 3 columns x 4 visible design rows, card `w=306.6667, h=96`, column gap `8`, row gap `8`.
+- Card x positions inside each row: `0`, `314.6667`, `629.3334`.
+- Row y positions inside the list container: `0`, `104`, `208`, `312`.
+- `Layout.DescribeCard` image area: `x=8, y=8, w=80, h=80`; content area: `x=100, y=8, w=198.6667, h=80`.
+- Pagination: Body-relative `x=0, y=482, w=1000, h=64`, absolute `x=0, y=546, w=1000, h=64`.
+
+Choose `Game.ShowCard` when it fully represents the source entry. Choose `Layout.DescribeCard` when the source entry needs richer description, image, badge, or meta fields. Pagination total pages must come from backend data in production output.
+
+### Observed Detail Layout
+
+Detail pages use `DetailPageLargeCardExpanded` (`304:17202`) as the default `1000 x 610` viewport reference. `DetailPageAllStates` (`304:9319`) is a tall `1000 x 1166` full-stack reference and must not replace the default generated canvas size.
+
+- Shared detail header: `x=0, y=0, w=1000, h=68`.
+- Detail breadcrumbs: Body-relative `x=20, y=16, w=338, h=28`, absolute `x=20, y=80, w=338, h=28`.
+- Detail content: Body-relative `x=20, y=64, w=960`; absolute `x=20, y=128, w=960`.
+- Visual scrollbar: Body-relative `x=980, y=60, w=12`; absolute `x=980, y=124, w=12`.
+- Large-card hero: `HeroSection x=0, y=0, w=960, h=128`; `Layout.DescribeCard x=16, y=16, w=928, h=96`.
+- Compact hero: `HeroSection x=0, y=0, w=960, h=108`; `Game.ShowCard x=16, y=16, w=928, h=76`.
+- Section stack padding: `16`; vertical gap between detail sections: `20`.
+
+For `DetailPageLargeCardExpanded`, `ExpandedSections` starts at detail-content `y=128`, `w=960, h=1084`:
+
+- Attribute section: `x=16, y=16, w=928, h=154`.
+- Related section: `x=16, y=190, w=928, h=208`; related row `x=0, y=62, w=928, h=76`; two cards `w=458, h=76`, gap `12`.
+- Related detail row: `x=0, y=150, w=928, h=58`; items `w=214, h=42` at x `0`, `238`, `476`, `714`.
+- Structured detail card: `x=16, y=418, w=928, h=328`.
+- Extended section: `x=16, y=766, w=928, h=302`.
+
+For `DetailPageAllStates`, `DetailSections` starts at detail-content `y=108`, `w=960, h=914`:
+
+- Attribute section: `x=16, y=16, w=928, h=84`.
+- Related section: `x=16, y=120, w=928, h=138`; first related card may be `Game.ProgressBarLabel`, second may be `Game.ShowCard`.
+- Extra text-info section: `x=16, y=278, w=928, h=90`.
+- Structured detail card: `x=16, y=388, w=928, h=258`.
+- Extended section: `x=16, y=666, w=928, h=232`.
+
+The detail hero card family follows the previous page card family. Attribute badge colors should preserve source tag classes; if the source has no colors, use one stable tone per tag class and different tones for different classes. Extended content renders only when the source has a matching rich text, media, canvas, table, or grouped extension block.
+
 ## Mobile Layout
 
 No mobile Wiki state was captured in this contract pass.
@@ -100,7 +146,7 @@ The Wiki datasource is not defined yet. Do not invent field names, category stru
 
 Use `TODO_FROM_DATASOURCE` for unresolved data:
 
-- Wiki title in the observed two-segment '<game name>の' + 'Wiki攻略' format, category count, and item count
+- Wiki title in the two-segment '<game name>' + 'Wiki攻略' format, category count, and item count
 - global first-level top navigation items and active state
 - category labels, descriptions, first-three secondary item icons/images, total item counts, and target routes
 - global Wiki search query and result routing

@@ -12,6 +12,7 @@
     "build:map-h5": "node scripts/build-map-h5.mjs",
     "build:crimsondesert-h5": "node scripts/build-map-h5.mjs --package public/data/crimsondesert",
     "validate:skill-pack": "node scripts/validate-skill-pack.mjs",
+    "validate:wiki-template": "node scripts/validate-wiki-home-template.mjs",
     "validate:wiki-home-template": "node scripts/validate-wiki-home-template.mjs",
     "validate:map": "node scripts/validate-map-package.mjs",
     "validate:crimsondesert": "node scripts/validate-map-package.mjs --package public/data/crimsondesert",

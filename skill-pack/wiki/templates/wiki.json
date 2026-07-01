@@ -26,7 +26,7 @@
     "observedFigmaViewport": {
       "width": 1000,
       "height": 610,
-      "rule": "The referenced Figma Wiki frames are 1000 x 610 snapshots; generated output should match this default canvas and use vertical scrolling for overflow content."
+      "rule": "Home, SecondaryPage, and DetailPageLargeCardExpanded are 1000 x 610 snapshots. DetailPageAllStates is a 1000 x 1166 full-stack reference only. Generated output should keep the default 1000 x 610 canvas unless a host shell explicitly overrides it and should use vertical scrolling for overflow content."
     },
     "responsiveRules": {
       "desktop": {
@@ -129,12 +129,12 @@
     {
       "id": "home.summary",
       "displayName": "Wiki home summary",
-      "purpose": "Shows the observed WikiHome title composition '<game name>の' + 'Wiki攻略' and aggregate counts before the category grid.",
+      "purpose": "Shows the WikiHome title composition '<game name>' + 'Wiki攻略' and aggregate counts before the category grid.",
       "allowedComponents": [],
       "layout": {
         "contentFrame": "Body-relative x=32, y=20, w=936, h=568; absolute x=32, y=88",
         "pageSummary": "Content-relative x=0, y=0, w=190, h=56",
-        "titleRow": "x=0, y=0, w=190, h=28; horizontal text row, gap=4; first text '<game name>の' w=100, second text 'Wiki攻略' x=104, w=86",
+        "titleRow": "x=0, y=0, w=190, h=28; horizontal text row, gap=4; first text '<game name>' w=80, second text 'Wiki攻略' x=84, w=86",
         "metaRow": "x=0, y=36, w=132, h=20; horizontal meta row, gap=4; category count w=73, separator x=77 w=4, item count x=85 w=47"
       },
       "observedHomeLayout": {
@@ -166,13 +166,12 @@
           "textSegments": [
             {
               "binding": "gameName",
-              "suffix": "の",
               "x": 0,
-              "width": 100
+              "width": 80
             },
             {
               "literal": "Wiki攻略",
-              "x": 104,
+              "x": 84,
               "width": 86
             }
           ]
@@ -211,7 +210,7 @@
         }
       },
       "pendingDataBoundElements": [
-        "game title used to compose '<game name>の' + 'Wiki攻略'",
+        "game title used to compose '<game name>' + 'Wiki攻略'",
         "category count",
         "total item count"
       ],
@@ -343,6 +342,25 @@
       "layout": {
         "breadcrumbs": "SecondaryPage Body x=20, y=16, w=216, h=28; detail pages may expand to w=338"
       },
+      "observedSecondaryLayout": {
+        "pageNodeId": "304:5972",
+        "sourceNodeId": "304:6318",
+        "body": {
+          "x": 0,
+          "y": 64,
+          "width": 1000,
+          "height": 546
+        },
+        "frame": {
+          "bodyRelativeX": 20,
+          "bodyRelativeY": 16,
+          "absoluteX": 20,
+          "absoluteY": 80,
+          "width": 216,
+          "height": 28
+        },
+        "rendering": "Reserved from the SecondaryPage design frame only. Do not render secondary breadcrumbs in generated Wiki output unless the contract is changed."
+      },
       "pendingDataBoundElements": [
         "none"
       ],
@@ -366,6 +384,92 @@
         "rowGap": "8px",
         "pagination": "x=0, y=482, w=1000, h=64 inside SecondaryPage Body"
       },
+      "observedSecondaryLayout": {
+        "pageNodeId": "304:5972",
+        "body": {
+          "sourceNodeId": "304:6109",
+          "x": 0,
+          "y": 64,
+          "width": 1000,
+          "height": 546
+        },
+        "listContainer": {
+          "sourceNodeId": "304:7911",
+          "bodyRelativeX": 32,
+          "bodyRelativeY": 64,
+          "absoluteX": 32,
+          "absoluteY": 128,
+          "width": 936,
+          "height": 408,
+          "layoutMode": "vertical",
+          "rowGap": 8
+        },
+        "cardGrid": {
+          "columns": 3,
+          "visibleDesignRows": 4,
+          "cardWidth": 306.6667,
+          "cardHeight": 96,
+          "columnGap": 8,
+          "rowGap": 8,
+          "cardXPositions": [
+            0,
+            314.6667,
+            629.3334
+          ],
+          "rowYPositions": [
+            0,
+            104,
+            208,
+            312
+          ]
+        },
+        "describeCardInternals": {
+          "component": "Layout.DescribeCard",
+          "image": {
+            "x": 8,
+            "y": 8,
+            "width": 80,
+            "height": 80,
+            "shape": "rounded-rect from Base.Image unless the source image itself is circular"
+          },
+          "content": {
+            "x": 100,
+            "y": 8,
+            "width": 198.6667,
+            "height": 80
+          },
+          "titleRow": {
+            "x": 0,
+            "y": 0,
+            "height": 22
+          },
+          "description": {
+            "x": 0,
+            "y": 26,
+            "height": 22
+          },
+          "metaRow": {
+            "x": 0,
+            "y": 58,
+            "height": 22,
+            "itemXPositions": [
+              6,
+              71.3333,
+              136.6667
+            ]
+          }
+        },
+        "pagination": {
+          "sourceNodeId": "304:7937",
+          "bodyRelativeX": 0,
+          "bodyRelativeY": 482,
+          "absoluteX": 0,
+          "absoluteY": 546,
+          "width": 1000,
+          "height": 64,
+          "dataBinding": "Bind currentPage from route or renderer state and totalPages from backend. Remove preview-only page values in production output."
+        }
+      },
       "pendingDataBoundElements": [
         "entry id",
         "entry title",
@@ -388,6 +492,48 @@
       "layout": {
         "breadcrumbs": "x=20, y=16, w=338, h=28 in detail states"
       },
+      "observedDetailLayouts": {
+        "largeCardExpanded": {
+          "pageNodeId": "304:17202",
+          "sourceNodeId": "304:17206",
+          "body": {
+            "x": 0,
+            "y": 64,
+            "width": 1000,
+            "height": 546
+          },
+          "frame": {
+            "bodyRelativeX": 20,
+            "bodyRelativeY": 16,
+            "absoluteX": 20,
+            "absoluteY": 80,
+            "width": 338,
+            "height": 28
+          }
+        },
+        "allStates": {
+          "pageNodeId": "304:9319",
+          "sourceNodeId": "304:9323",
+          "referenceFrame": {
+            "width": 1000,
+            "height": 1166
+          },
+          "body": {
+            "x": 0,
+            "y": 64,
+            "width": 1000,
+            "height": 1102
+          },
+          "frame": {
+            "bodyRelativeX": 20,
+            "bodyRelativeY": 16,
+            "absoluteX": 20,
+            "absoluteY": 80,
+            "width": 338,
+            "height": 28
+          }
+        }
+      },
       "pendingDataBoundElements": [
         "root label",
         "category label",
@@ -407,6 +553,89 @@
         "detailContent": "x=20, y=128, w=960; observed height ranges from 1022 to 1212 depending on expanded content",
         "scroll": "x=980, y=60, w=12; height is 466 in large-card-expanded and 1015 in all-states reference"
       },
+      "observedDetailLayouts": {
+        "largeCardExpanded": {
+          "pageNodeId": "304:17202",
+          "canvas": {
+            "width": 1000,
+            "height": 610,
+            "role": "default generated detail viewport"
+          },
+          "body": {
+            "sourceNodeId": "304:17205",
+            "x": 0,
+            "y": 64,
+            "width": 1000,
+            "height": 546
+          },
+          "detailContent": {
+            "sourceNodeId": "304:17226",
+            "bodyRelativeX": 20,
+            "bodyRelativeY": 64,
+            "absoluteX": 20,
+            "absoluteY": 128,
+            "width": 960,
+            "height": 1212,
+            "overflowBeyondVisibleCanvas": 730
+          },
+          "scroll": {
+            "sourceNodeId": "304:17225",
+            "bodyRelativeX": 980,
+            "bodyRelativeY": 60,
+            "absoluteX": 980,
+            "absoluteY": 124,
+            "width": 12,
+            "height": 466
+          },
+          "sectionStack": {
+            "padding": 16,
+            "gap": 20,
+            "heroHeight": 128,
+            "expandedSectionsY": 128,
+            "expandedSectionsHeight": 1084
+          }
+        },
+        "allStates": {
+          "pageNodeId": "304:9319",
+          "canvas": {
+            "width": 1000,
+            "height": 1166,
+            "role": "full-stack Figma reference only; do not replace the default 1000 x 610 generated viewport"
+          },
+          "body": {
+            "sourceNodeId": "304:9322",
+            "x": 0,
+            "y": 64,
+            "width": 1000,
+            "height": 1102
+          },
+          "detailContent": {
+            "sourceNodeId": "304:9647",
+            "bodyRelativeX": 20,
+            "bodyRelativeY": 64,
+            "absoluteX": 20,
+            "absoluteY": 128,
+            "width": 960,
+            "height": 1022
+          },
+          "scroll": {
+            "sourceNodeId": "304:9646",
+            "bodyRelativeX": 980,
+            "bodyRelativeY": 60,
+            "absoluteX": 980,
+            "absoluteY": 124,
+            "width": 12,
+            "height": 1015
+          },
+          "sectionStack": {
+            "padding": 16,
+            "gap": 20,
+            "heroHeight": 108,
+            "detailSectionsY": 108,
+            "detailSectionsHeight": 914
+          }
+        }
+      },
       "dataRequirement": "RENDERER_SCROLL_STATE"
     },
     {
@@ -422,6 +651,49 @@
       "layout": {
         "largeDescribeCard": "DetailPageLargeCardExpanded HeroSection x=0, y=0, w=960, h=128; card x=16, y=16, w=928, h=96",
         "compactShowCard": "DetailPageAllStates HeroSection x=0, y=0, w=960, h=108; card x=16, y=16, w=928, h=76"
+      },
+      "observedDetailLayouts": {
+        "largeCardExpanded": {
+          "pageNodeId": "304:17202",
+          "heroSection": {
+            "sourceNodeId": "304:17227",
+            "detailContentRelativeX": 0,
+            "detailContentRelativeY": 0,
+            "width": 960,
+            "height": 128
+          },
+          "card": {
+            "component": "Layout.DescribeCard",
+            "sourceNodeId": "304:17228",
+            "sectionRelativeX": 16,
+            "sectionRelativeY": 16,
+            "absoluteX": 36,
+            "absoluteY": 144,
+            "width": 928,
+            "height": 96
+          }
+        },
+        "allStates": {
+          "pageNodeId": "304:9319",
+          "heroSection": {
+            "sourceNodeId": "304:9648",
+            "detailContentRelativeX": 0,
+            "detailContentRelativeY": 0,
+            "width": 960,
+            "height": 108
+          },
+          "card": {
+            "component": "Game.ShowCard",
+            "sourceNodeId": "304:9649",
+            "sectionRelativeX": 16,
+            "sectionRelativeY": 16,
+            "absoluteX": 36,
+            "absoluteY": 144,
+            "width": 928,
+            "height": 76
+          }
+        },
+        "selectionRule": "Use the same card family as the previous page item that opened the detail page."
       },
       "pendingDataBoundElements": [
         "detail title",
@@ -443,6 +715,51 @@
         "largeExpanded": "ExpandedSections item x=16, y=16, w=928, h=154",
         "allStates": "DetailSections item x=16, y=16, w=928, h=84",
         "divider": "horizontal divider spans w=928 when key-value rows are present"
+      },
+      "observedDetailLayouts": {
+        "largeCardExpanded": {
+          "pageNodeId": "304:17202",
+          "parentSection": {
+            "name": "ExpandedSections",
+            "detailContentRelativeX": 0,
+            "detailContentRelativeY": 128,
+            "width": 960,
+            "height": 1084,
+            "padding": 16,
+            "gap": 20
+          },
+          "section": {
+            "sourceNodeName": "Frame 2147230614",
+            "parentRelativeX": 16,
+            "parentRelativeY": 16,
+            "absoluteX": 36,
+            "absoluteY": 272,
+            "width": 928,
+            "height": 154
+          }
+        },
+        "allStates": {
+          "pageNodeId": "304:9319",
+          "parentSection": {
+            "name": "DetailSections",
+            "detailContentRelativeX": 0,
+            "detailContentRelativeY": 108,
+            "width": 960,
+            "height": 914,
+            "padding": 16,
+            "gap": 20
+          },
+          "section": {
+            "sourceNodeName": "Frame 2147230614",
+            "parentRelativeX": 16,
+            "parentRelativeY": 16,
+            "absoluteX": 36,
+            "absoluteY": 252,
+            "width": 928,
+            "height": 84
+          }
+        },
+        "colorRule": "Use source tag classes when available. If the source has only labels, assign one stable tone per label group and avoid changing colors between renders for the same group."
       },
       "pendingDataBoundElements": [
         "section title",
@@ -469,6 +786,101 @@
         "allStates": "section x=16, y=120, w=928, h=138; related card row x=0, y=62, w=928, h=76",
         "twoColumnCards": "two cards per row, each w=458, h=76, gap=12"
       },
+      "observedDetailLayouts": {
+        "largeCardExpanded": {
+          "pageNodeId": "304:17202",
+          "section": {
+            "sourceNodeName": "Frame 2147230615",
+            "parentSection": "ExpandedSections",
+            "parentRelativeX": 16,
+            "parentRelativeY": 190,
+            "absoluteX": 36,
+            "absoluteY": 446,
+            "width": 928,
+            "height": 208
+          },
+          "title": {
+            "x": 0,
+            "y": 0,
+            "height": 20
+          },
+          "description": {
+            "x": 0,
+            "y": 32,
+            "height": 18
+          },
+          "relatedRow": {
+            "x": 0,
+            "y": 62,
+            "width": 928,
+            "height": 76,
+            "columns": 2,
+            "cardWidth": 458,
+            "cardHeight": 76,
+            "cardXPositions": [
+              0,
+              470
+            ],
+            "columnGap": 12
+          },
+          "detailsRow": {
+            "x": 0,
+            "y": 150,
+            "width": 928,
+            "height": 58,
+            "itemWidth": 214,
+            "itemHeight": 42,
+            "itemXPositions": [
+              0,
+              238,
+              476,
+              714
+            ]
+          }
+        },
+        "allStates": {
+          "pageNodeId": "304:9319",
+          "section": {
+            "sourceNodeName": "Frame 2147230615",
+            "parentSection": "DetailSections",
+            "parentRelativeX": 16,
+            "parentRelativeY": 120,
+            "absoluteX": 36,
+            "absoluteY": 356,
+            "width": 928,
+            "height": 138
+          },
+          "title": {
+            "x": 0,
+            "y": 0,
+            "height": 20
+          },
+          "description": {
+            "x": 0,
+            "y": 32,
+            "height": 18
+          },
+          "relatedRow": {
+            "x": 0,
+            "y": 62,
+            "width": 928,
+            "height": 76,
+            "columns": 2,
+            "cardWidth": 458,
+            "cardHeight": 76,
+            "cardXPositions": [
+              0,
+              470
+            ],
+            "columnGap": 12,
+            "firstCardComponent": "Game.ProgressBarLabel",
+            "secondCardComponent": "Game.ShowCard"
+          },
+          "detailsRow": {
+            "rendering": "hidden in the all-states compact reference"
+          }
+        }
+      },
       "pendingDataBoundElements": [
         "related entry title",
         "related entry summary",
@@ -494,6 +906,31 @@
         "allStates": "Layout.DetailCard x=16, y=388, w=928, h=258",
         "table": "full-width table inside card; observed columns include level, attack, price, material"
       },
+      "observedDetailLayouts": {
+        "largeCardExpanded": {
+          "pageNodeId": "304:17202",
+          "component": "Layout.DetailCard",
+          "parentSection": "ExpandedSections",
+          "parentRelativeX": 16,
+          "parentRelativeY": 418,
+          "absoluteX": 36,
+          "absoluteY": 674,
+          "width": 928,
+          "height": 328
+        },
+        "allStates": {
+          "pageNodeId": "304:9319",
+          "component": "Layout.DetailCard",
+          "parentSection": "DetailSections",
+          "parentRelativeX": 16,
+          "parentRelativeY": 388,
+          "absoluteX": 36,
+          "absoluteY": 624,
+          "width": 928,
+          "height": 258
+        },
+        "dataShapeRule": "Use this region for structured rows, tables, key-value blocks, and grouped notes. If the source exposes table structure, map it to table columns and rows rather than rich text."
+      },
       "pendingDataBoundElements": [
         "section title",
         "section description",
@@ -518,6 +955,39 @@
         "allStates": "x=16, y=666, w=928, h=232",
         "canvasBlock": "observed large empty media/canvas block spans w=928 when present"
       },
+      "observedDetailLayouts": {
+        "largeCardExpanded": {
+          "pageNodeId": "304:17202",
+          "sourceNodeName": "Frame 2147230616",
+          "parentSection": "ExpandedSections",
+          "parentRelativeX": 16,
+          "parentRelativeY": 766,
+          "absoluteX": 36,
+          "absoluteY": 1022,
+          "width": 928,
+          "height": 302,
+          "canvasBlock": {
+            "width": 928,
+            "role": "media, rich canvas, or matched extended source block"
+          }
+        },
+        "allStates": {
+          "pageNodeId": "304:9319",
+          "sourceNodeName": "Frame 2147230616",
+          "parentSection": "DetailSections",
+          "parentRelativeX": 16,
+          "parentRelativeY": 666,
+          "absoluteX": 36,
+          "absoluteY": 902,
+          "width": 928,
+          "height": 232,
+          "canvasBlock": {
+            "width": 928,
+            "role": "media, rich canvas, or matched extended source block"
+          }
+        },
+        "matchingRule": "Render only when source data has a separable rich text, media, canvas, extra table, or grouped extension block. Do not duplicate data already rendered in detail.detail-card-section."
+      },
       "pendingDataBoundElements": [
         "rich text blocks",
         "media blocks",
@@ -537,7 +1007,12 @@
     "Use semantic tokens from the Wiki or shared token source; do not hardcode colors when a token exists.",
     "Header navigation and search are shared across home, secondary list, and detail states.",
     "Home state renders a category grid after the summary block; secondary state renders a list grid plus pagination; detail state renders breadcrumbs plus vertically scrollable detail content.",
-    "Home summary title follows the observed WikiHome two-segment title row: '<game name>の' followed by the literal 'Wiki攻略'.",
+    "Use DetailPageLargeCardExpanded as the default 1000 x 610 detail viewport reference. Use DetailPageAllStates only to understand optional section stacking and overflow content height.",
+    "SecondaryPage layout follows Body x=0, y=64, w=1000, h=546; list container absolute x=32, y=128, w=936, h=408; three columns with card w=306.6667, h=96, 8px column gap, and 8px row gap.",
+    "SecondaryPage pagination follows Body-relative x=0, y=482, w=1000, h=64 and must remain separate from card data binding.",
+    "DetailPage content follows Body-relative content x=20, y=64, w=960; breadcrumbs Body-relative x=20, y=16, w=338, h=28; visual scroll Body-relative x=980, y=60, w=12.",
+    "DetailPage section stacks use 16px internal padding and 20px vertical gaps between sections.",
+    "Home summary title follows the WikiHome two-segment title row: '<game name>' followed by the literal 'Wiki攻略'.",
     "In home.category-grid, each Game.CategoryCard previews up to the first three items of its linked secondary page through the avatar cluster, prefers icon over image when both exist, shows the total item count for that category in the trailing count badge, and is hidden when that total count is 0.",
     "Nav.TopBar items are global first-level Wiki categories.",
     "Form.SearchBar is global Wiki search across categories and entries.",
