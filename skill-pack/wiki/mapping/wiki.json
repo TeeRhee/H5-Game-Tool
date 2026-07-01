@@ -26,6 +26,9 @@
     "For Game.CategoryCard in home.category-grid, avatarSrcs must preview up to the first three items of the linked secondary page in display order, using item icon first or item image when no icon exists.",
     "For Game.CategoryCard in home.category-grid, countLabel must represent the total item count for the linked secondary page or category, not the avatar preview count.",
     "In secondary.card-list, choose Game.ShowCard when it can fully represent the original source entry; choose Layout.DescribeCard when the source entry has richer description, image, badge, or meta fields.",
+    "Use secondary.multi-level-tabs only when the original source page exposes second-level branches under the active first-level Nav.TopBar category.",
+    "Use secondary.multi-level-sidebar only when the active secondary tab exposes third-level groups or local subcategory anchors.",
+    "Use secondary.multi-level-card-list for the entries under the active second-level tab and optional active third-level side navigation; do not mix these entries with the plain secondary.card-list pagination contract unless backend pagination metadata exists for this exact structure.",
     "Breadcrumbs are only for final detail pages. Each breadcrumb label is clickable and maps to the route for that hierarchy level.",
     "Detail hero card component family follows the card family used on the previous page for the entry that opened the detail page.",
     "For detail.attribute-section badges, keep one stable tone for each source tag class and use different tones for different classes when source colors are unavailable.",
@@ -77,6 +80,21 @@
       "source": "TODO_FROM_DATASOURCE_OR_RENDERER_STATE > pagination current page from renderer or route, totalPages from backend",
       "target": "regions[secondary.card-list].components[Nav.Pagination].props",
       "required": false
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT > active first-level category > second-level navigation branches",
+      "target": "regions[secondary.multi-level-tabs].components[Nav.SecondaryTab].props",
+      "required": false
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT > active second-level branch > third-level groups or local anchors",
+      "target": "regions[secondary.multi-level-sidebar].components[Nav.Navigate].props.items",
+      "required": false
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE > entries filtered by active first-level category, active second-level tab, and optional active third-level group",
+      "target": "regions[secondary.multi-level-card-list].components[Game.ShowCard].dataBinding.entries",
+      "required": true
     },
     {
       "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT > final detail page hierarchy labels and target routes",
@@ -152,6 +170,26 @@
         "Base.Image",
         "Base.Badge",
         "Nav.Pagination"
+      ]
+    },
+    {
+      "regionId": "secondary.multi-level-tabs",
+      "components": [
+        "Nav.SecondaryTab"
+      ]
+    },
+    {
+      "regionId": "secondary.multi-level-sidebar",
+      "components": [
+        "Nav.Navigate"
+      ]
+    },
+    {
+      "regionId": "secondary.multi-level-card-list",
+      "components": [
+        "Game.ShowCard",
+        "Base.Image",
+        "Base.Badge"
       ]
     },
     {

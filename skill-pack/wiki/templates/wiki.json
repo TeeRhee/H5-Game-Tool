@@ -11,6 +11,7 @@
     "stateNodes": {
       "home": "167:630",
       "secondaryList": "304:5972",
+      "secondaryMultiNav": "375:4979",
       "detailLargeCardExpanded": "304:17202",
       "detailAllStates": "304:9319"
     },
@@ -26,7 +27,7 @@
     "observedFigmaViewport": {
       "width": 1000,
       "height": 610,
-      "rule": "Home, SecondaryPage, and DetailPageLargeCardExpanded are 1000 x 610 snapshots. DetailPageAllStates is a 1000 x 1166 full-stack reference only. Generated output should keep the default 1000 x 610 canvas unless a host shell explicitly overrides it and should use vertical scrolling for overflow content."
+      "rule": "Home, SecondaryPage, SecondaryPageMultiNav, and DetailPageLargeCardExpanded are 1000 x 610 snapshots. DetailPageAllStates is a 1000 x 1166 full-stack reference only. Generated output should keep the default 1000 x 610 canvas unless a host shell explicitly overrides it and should use vertical scrolling for overflow content."
     },
     "responsiveRules": {
       "desktop": {
@@ -479,6 +480,174 @@
         "entry meta values",
         "pagination page from route or renderer state",
         "pagination total pages from backend"
+      ],
+      "dataRequirement": "TODO_FROM_DATASOURCE"
+    },
+    {
+      "id": "secondary.multi-level-tabs",
+      "displayName": "Secondary multi-level tab navigation",
+      "purpose": "Horizontal second-level navigation for original source pages that need a secondary or tertiary navigation structure under the global first-level Nav.TopBar. Use this region only when the selected first-level category has multiple second-level branches.",
+      "allowedComponents": [
+        "Nav.SecondaryTab"
+      ],
+      "layout": {
+        "template": "SecondaryPageMultiNav",
+        "tabsContainer": "Body-relative x=32, y=16, w=390, h=26; absolute x=32, y=84",
+        "tab": "Each Nav.SecondaryTab is w=60, h=26 with x positions 0, 66, 132, 198, 264, 330 and 6px gap",
+        "states": "First observed tab is State=Active; following tabs are State=Default"
+      },
+      "observedSecondaryMultiNavLayout": {
+        "pageNodeId": "375:4979",
+        "pageName": "SecondaryPageMultiNav",
+        "body": {
+          "sourceNodeId": "375:4982",
+          "x": 0,
+          "y": 68,
+          "width": 1000,
+          "height": 542
+        },
+        "tabsContainer": {
+          "sourceNodeId": "375:5103",
+          "bodyRelativeX": 32,
+          "bodyRelativeY": 16,
+          "absoluteX": 32,
+          "absoluteY": 84,
+          "width": 390,
+          "height": 26,
+          "layoutMode": "horizontal",
+          "gap": 6
+        },
+        "tabInstances": {
+          "component": "Nav.SecondaryTab",
+          "componentSetNodeId": "375:5137",
+          "count": 6,
+          "width": 60,
+          "height": 26,
+          "xPositions": [
+            0,
+            66,
+            132,
+            198,
+            264,
+            330
+          ],
+          "activeIndex": 0,
+          "activeState": "active",
+          "defaultState": "default"
+        }
+      },
+      "pendingDataBoundElements": [
+        "second-level tab id",
+        "second-level tab label",
+        "active second-level tab id",
+        "target route or tab filter state"
+      ],
+      "dataRequirement": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT"
+    },
+    {
+      "id": "secondary.multi-level-sidebar",
+      "displayName": "Secondary multi-level sidebar navigation",
+      "purpose": "Vertical third-level navigation inside SecondaryPageMultiNav. Render only when the active secondary tab contains third-level groups or local subcategory anchors.",
+      "allowedComponents": [
+        "Nav.Navigate"
+      ],
+      "layout": {
+        "contentShell": "Body-relative x=32, y=62, w=936, h=480; absolute x=32, y=130",
+        "navigate": "Inside content shell x=0, y=0, w=96, h=480; right divider; content list w=80 with 16px right padding and 8px vertical padding",
+        "relationship": "The right card list starts at x=116, leaving a 20px gap after the 96px navigation column"
+      },
+      "observedSecondaryMultiNavLayout": {
+        "pageNodeId": "375:4979",
+        "contentShell": {
+          "sourceNodeId": "375:5369",
+          "bodyRelativeX": 32,
+          "bodyRelativeY": 62,
+          "absoluteX": 32,
+          "absoluteY": 130,
+          "width": 936,
+          "height": 480,
+          "layoutMode": "horizontal",
+          "gap": 20
+        },
+        "navigate": {
+          "sourceNodeId": "375:5356",
+          "shellRelativeX": 0,
+          "shellRelativeY": 0,
+          "absoluteX": 32,
+          "absoluteY": 130,
+          "width": 96,
+          "height": 480,
+          "paddingRight": 16,
+          "paddingY": 8,
+          "listWidth": 80,
+          "divider": "1px right border using var(--color-stroke-area)"
+        }
+      },
+      "pendingDataBoundElements": [
+        "third-level group id",
+        "third-level group label",
+        "active third-level group id",
+        "target route or local filter state"
+      ],
+      "dataRequirement": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT"
+    },
+    {
+      "id": "secondary.multi-level-card-list",
+      "displayName": "Secondary multi-level card list",
+      "purpose": "Right-side entry list for SecondaryPageMultiNav. Use it when the original source page requires a second-level tab row plus an optional third-level side navigation before showing entries.",
+      "allowedComponents": [
+        "Game.ShowCard",
+        "Base.Image",
+        "Base.Badge"
+      ],
+      "layout": {
+        "showCardList": "Inside content shell x=116, y=0, w=820, h=480",
+        "grid": "2 columns, visible rows use card w=406, h=76, column gap=8, row gap=8",
+        "overflow": "Observed sixth row starts at y=420 and extends 16px beyond the 480px shell; renderer should scroll or clip according to host scroll behavior instead of shrinking card height"
+      },
+      "observedSecondaryMultiNavLayout": {
+        "pageNodeId": "375:4979",
+        "showCardList": {
+          "sourceNodeId": "375:5154",
+          "shellRelativeX": 116,
+          "shellRelativeY": 0,
+          "absoluteX": 148,
+          "absoluteY": 130,
+          "width": 820,
+          "height": 480,
+          "layoutMode": "vertical",
+          "rowGap": 8
+        },
+        "cardGrid": {
+          "component": "Game.ShowCard",
+          "columns": 2,
+          "visibleDesignRows": 6,
+          "cardWidth": 406,
+          "cardHeight": 76,
+          "columnGap": 8,
+          "rowGap": 8,
+          "cardXPositions": [
+            0,
+            414
+          ],
+          "rowYPositions": [
+            0,
+            84,
+            168,
+            252,
+            336,
+            420
+          ],
+          "overflowBeyondShell": 16
+        }
+      },
+      "pendingDataBoundElements": [
+        "entry id",
+        "entry title",
+        "entry description",
+        "entry image",
+        "entry badge",
+        "target route"
       ],
       "dataRequirement": "TODO_FROM_DATASOURCE"
     },
@@ -1010,6 +1179,10 @@
     "Use DetailPageLargeCardExpanded as the default 1000 x 610 detail viewport reference. Use DetailPageAllStates only to understand optional section stacking and overflow content height.",
     "SecondaryPage layout follows Body x=0, y=64, w=1000, h=546; list container absolute x=32, y=128, w=936, h=408; three columns with card w=306.6667, h=96, 8px column gap, and 8px row gap.",
     "SecondaryPage pagination follows Body-relative x=0, y=482, w=1000, h=64 and must remain separate from card data binding.",
+    "Use SecondaryPageMultiNav only when the original source page has a second-level tab row or a third-level local navigation structure. Do not add SecondaryTab or Nav.Navigate to simple secondary list pages.",
+    "SecondaryPageMultiNav uses Body x=0, y=68, w=1000, h=542; secondary tabs at Body-relative x=32, y=16, w=390, h=26; content shell at Body-relative x=32, y=62, w=936, h=480.",
+    "In SecondaryPageMultiNav, Nav.SecondaryTab represents second-level navigation under the active global Nav.TopBar item; Nav.Navigate represents third-level groups or local anchors under the active SecondaryTab.",
+    "SecondaryPageMultiNav right-side card list uses Game.ShowCard in two columns: list x=116, y=0, w=820, h=480 inside the content shell; card w=406, h=76, column gap=8, row gap=8.",
     "DetailPage content follows Body-relative content x=20, y=64, w=960; breadcrumbs Body-relative x=20, y=16, w=338, h=28; visual scroll Body-relative x=980, y=60, w=12.",
     "DetailPage section stacks use 16px internal padding and 20px vertical gaps between sections.",
     "Home summary title follows the WikiHome two-segment title row: '<game name>' followed by the literal 'Wiki攻略'.",

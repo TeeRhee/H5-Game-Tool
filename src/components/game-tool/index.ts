@@ -1,5 +1,6 @@
 export * from "./Button";
 export * from "./SearchBar";
+export * from "./SecondaryTab";
 export * from "./Select";
 export * from "./Checkbox";
 export * from "./DropdownItem";

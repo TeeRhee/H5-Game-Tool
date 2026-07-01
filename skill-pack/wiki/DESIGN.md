@@ -70,6 +70,23 @@ The `SecondaryPage` design node is `304:5972` and uses the default `1000 x 610` 
 
 Choose `Game.ShowCard` when it fully represents the source entry. Choose `Layout.DescribeCard` when the source entry needs richer description, image, badge, or meta fields. Pagination total pages must come from backend data in production output.
 
+### Observed Secondary Multi-Nav Layout
+
+The `SecondaryPageMultiNav` design node is `375:4979` and uses the default `1000 x 610` viewport. It is the structural reference for original source pages that need second-level tabs or third-level local navigation under the global first-level `Nav.TopBar`.
+
+- Header: `x=0, y=0, w=1000, h=68`.
+- Body: `x=0, y=68, w=1000, h=542`.
+- Secondary tab row: Body-relative `x=32, y=16, w=390, h=26`, absolute `x=32, y=84`.
+- `Nav.SecondaryTab`: each tab is `w=60, h=26`, gap `6`, x positions `0`, `66`, `132`, `198`, `264`, `330`.
+- Active tab: `State=Active`, text uses `var(--color-primary-base)`. Default tabs use `var(--color-text-weak)`.
+- Content shell: Body-relative `x=32, y=62, w=936, h=480`, absolute `x=32, y=130`.
+- `Nav.Navigate`: shell-relative `x=0, y=0, w=96, h=480`; right divider; internal list width `80`; padding right `16`, vertical padding `8`.
+- Right card list: shell-relative `x=116, y=0, w=820, h=480`, leaving a `20px` gap after the navigation column.
+- `Game.ShowCard` grid: 2 columns, card `w=406, h=76`, column gap `8`, row gap `8`.
+- Row y positions: `0`, `84`, `168`, `252`, `336`, `420`. The sixth row overflows the 480px shell by `16px`; renderer should scroll or clip by host behavior rather than shrinking cards.
+
+Use this template only when the source page actually has multi-level navigation. For a plain selected-category entry list, continue using the normal `SecondaryPage` rules above.
+
 ### Observed Detail Layout
 
 Detail pages use `DetailPageLargeCardExpanded` (`304:17202`) as the default `1000 x 610` viewport reference. `DetailPageAllStates` (`304:9319`) is a tall `1000 x 1166` full-stack reference and must not replace the default generated canvas size.

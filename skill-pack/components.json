@@ -570,6 +570,72 @@
       }
     },
     {
+      "id": "Nav.SecondaryTab",
+      "figmaName": "Nav / SecondaryTab",
+      "observedVariants": [
+        "State=Default",
+        "State=Active"
+      ],
+      "observedUse": [
+        "wiki:secondary.multi-level-tabs"
+      ],
+      "typography": {
+        "label": "Body/SM, 12px/18px, regular; active text uses var(--color-primary-base), default text uses var(--color-text-weak)."
+      },
+      "props": {
+        "children": {
+          "type": "string|node",
+          "required": true,
+          "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT",
+          "rule": "Visible tab label for a second-level Wiki navigation branch."
+        },
+        "state": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "default",
+            "active"
+          ],
+          "default": "default",
+          "rule": "Active tab represents the selected second-level branch. Do not use Nav.SecondaryTab for the global first-level top navigation; use Nav.TopBar there."
+        },
+        "onClick": {
+          "type": "interaction",
+          "required": false,
+          "source": "renderer state"
+        }
+      }
+    },
+    {
+      "id": "Nav.Navigate",
+      "figmaName": "Nav / Navigate / Default",
+      "observedUse": [
+        "wiki:secondary.multi-level-sidebar",
+        "wiki:detail.content-shell"
+      ],
+      "observedStructure": {
+        "rule": "Vertical local navigation used when a selected second-level tab contains third-level groups or when a long detail page needs section anchors. In the multi-level secondary template it sits left of the card list and has a right divider."
+      },
+      "props": {
+        "items": {
+          "type": "array",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT",
+          "rule": "For secondary multi-level pages, items are third-level groups under the active SecondaryTab. For detail pages, items are section anchors."
+        },
+        "state": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "default",
+            "hover",
+            "active"
+          ],
+          "default": "default"
+        }
+      }
+    },
+    {
       "id": "Game.CategoryCard",
       "figmaName": "Game / CategoryCard / Default",
       "observedUse": [

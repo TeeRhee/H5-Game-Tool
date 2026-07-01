@@ -2064,6 +2064,7 @@ button:disabled {
 }
 
 .gt-wiki-topbar-item,
+.gt-wiki-secondary-tab,
 .gt-wiki-breadcrumb-item,
 .gt-wiki-navigate-item,
 .gt-wiki-pagination-cell,
@@ -2114,6 +2115,33 @@ button:disabled {
 .gt-wiki-topbar-item--active:hover {
   color: var(--color-text-sub);
   background: linear-gradient(180deg, rgba(254, 235, 132, 0.016) 0%, rgba(255, 215, 50, 0.08) 100%);
+}
+
+.gt-wiki-secondary-tab {
+  display: inline-flex;
+  min-width: 60px;
+  min-height: 26px;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 6px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-weak);
+  background: transparent;
+  font-size: var(--type-size-100);
+  font-weight: var(--type-weight-regular);
+  line-height: var(--type-line-height-100);
+  text-align: center;
+  white-space: nowrap;
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+.gt-wiki-secondary-tab:hover {
+  color: var(--color-text-soft);
+}
+
+.gt-wiki-secondary-tab--active,
+.gt-wiki-secondary-tab--active:hover {
+  color: var(--color-primary-base);
 }
 
 .gt-wiki-category-card,

@@ -31,6 +31,9 @@ const summary = region("home.summary").observedHomeLayout;
 const grid = region("home.category-grid").observedHomeLayout;
 const secondaryBreadcrumbs = region("secondary.breadcrumbs").observedSecondaryLayout;
 const secondaryList = region("secondary.card-list").observedSecondaryLayout;
+const secondaryMultiTabs = region("secondary.multi-level-tabs").observedSecondaryMultiNavLayout;
+const secondaryMultiSidebar = region("secondary.multi-level-sidebar").observedSecondaryMultiNavLayout;
+const secondaryMultiList = region("secondary.multi-level-card-list").observedSecondaryMultiNavLayout;
 const detailBreadcrumbs = region("detail.breadcrumbs").observedDetailLayouts;
 const detailShell = region("detail.content-shell").observedDetailLayouts;
 const detailHero = region("detail.hero-card").observedDetailLayouts;
@@ -69,6 +72,14 @@ const checks = [
   { label: "Secondary DescribeCard image area", actual: secondaryList.describeCardInternals.image, expected: { x: 8, y: 8, width: 80, height: 80 } },
   { label: "Secondary DescribeCard content area", actual: secondaryList.describeCardInternals.content, expected: { x: 100, y: 8, width: 198.6667, height: 80 } },
   { label: "Secondary pagination frame", actual: secondaryList.pagination, expected: { bodyRelativeX: 0, bodyRelativeY: 482, absoluteX: 0, absoluteY: 546, width: 1000, height: 64 } },
+  { label: "Secondary multi-nav state node", actual: template.source.stateNodes.secondaryMultiNav, expected: "375:4979" },
+  { label: "Secondary multi-nav body", actual: secondaryMultiTabs.body, expected: { x: 0, y: 68, width: 1000, height: 542 } },
+  { label: "Secondary multi-nav tabs container", actual: secondaryMultiTabs.tabsContainer, expected: { bodyRelativeX: 32, bodyRelativeY: 16, absoluteX: 32, absoluteY: 84, width: 390, height: 26, gap: 6 } },
+  { label: "Secondary multi-nav tab instances", actual: secondaryMultiTabs.tabInstances, expected: { component: "Nav.SecondaryTab", count: 6, width: 60, height: 26, xPositions: [0, 66, 132, 198, 264, 330], activeIndex: 0 } },
+  { label: "Secondary multi-nav content shell", actual: secondaryMultiSidebar.contentShell, expected: { bodyRelativeX: 32, bodyRelativeY: 62, absoluteX: 32, absoluteY: 130, width: 936, height: 480, gap: 20 } },
+  { label: "Secondary multi-nav sidebar", actual: secondaryMultiSidebar.navigate, expected: { shellRelativeX: 0, shellRelativeY: 0, absoluteX: 32, absoluteY: 130, width: 96, height: 480, paddingRight: 16, paddingY: 8, listWidth: 80 } },
+  { label: "Secondary multi-nav show card list", actual: secondaryMultiList.showCardList, expected: { shellRelativeX: 116, shellRelativeY: 0, absoluteX: 148, absoluteY: 130, width: 820, height: 480, rowGap: 8 } },
+  { label: "Secondary multi-nav card grid", actual: secondaryMultiList.cardGrid, expected: { component: "Game.ShowCard", columns: 2, visibleDesignRows: 6, cardWidth: 406, cardHeight: 76, columnGap: 8, rowGap: 8, cardXPositions: [0, 414], rowYPositions: [0, 84, 168, 252, 336, 420], overflowBeyondShell: 16 } },
   { label: "Detail large breadcrumbs", actual: detailBreadcrumbs.largeCardExpanded.frame, expected: { bodyRelativeX: 20, bodyRelativeY: 16, absoluteX: 20, absoluteY: 80, width: 338, height: 28 } },
   { label: "Detail all-states breadcrumbs", actual: detailBreadcrumbs.allStates.frame, expected: { bodyRelativeX: 20, bodyRelativeY: 16, absoluteX: 20, absoluteY: 80, width: 338, height: 28 } },
   { label: "Detail large content shell", actual: detailShell.largeCardExpanded.detailContent, expected: { bodyRelativeX: 20, bodyRelativeY: 64, absoluteX: 20, absoluteY: 128, width: 960, height: 1212 } },

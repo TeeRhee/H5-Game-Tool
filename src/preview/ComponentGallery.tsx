@@ -23,6 +23,7 @@ import {
   ProgressBarLabel,
   RemixIcon,
   SearchBar,
+  SecondaryTab,
   Select,
   ShowCard,
   TableHeaderCell,
@@ -439,6 +440,14 @@ export function ComponentGallery() {
               <TopBarItem state="default">顶部导航</TopBarItem>
               <TopBarItem state="hover">顶部导航</TopBarItem>
               <TopBarItem state="active">顶部导航</TopBarItem>
+            </div>
+          </ComponentCard>
+
+          <ComponentCard title="Nav / SecondaryTab" description="二级 tab 导航项，覆盖 State=Default / Active。" wide>
+            <div className="inline-row">
+              <SecondaryTab state="active">二级导航</SecondaryTab>
+              <SecondaryTab>二级导航</SecondaryTab>
+              <SecondaryTab>二级导航</SecondaryTab>
             </div>
           </ComponentCard>
 
