@@ -80,23 +80,138 @@
       ],
       "layout": {
         "header": "x=0, y=0, w=1000, h=68",
-        "topBar": "x=32, y=32, observed tab row inside Nav.Header",
-        "search": "right aligned inside header, observed x=748, y=32, w=220, h=36"
+        "topBar": "x=32, y=32, w=696, h=36; 8 first-level tabs, each w=80, h=36, gap=8",
+        "search": "x=748, y=32, w=220, h=36; right edge aligned to x=968 with 32px right inset"
+      },
+      "observedHomeLayout": {
+        "sourceNodeId": "173:7278",
+        "absoluteFrame": {
+          "x": 0,
+          "y": 0,
+          "width": 1000,
+          "height": 68
+        },
+        "padding": {
+          "top": 32,
+          "right": 32,
+          "bottom": 0,
+          "left": 32
+        },
+        "innerContent": {
+          "x": 32,
+          "y": 32,
+          "width": 936,
+          "height": 36
+        },
+        "topBar": {
+          "x": 32,
+          "y": 32,
+          "width": 696,
+          "height": 36,
+          "itemCount": 8,
+          "itemWidth": 80,
+          "itemHeight": 36,
+          "itemGap": 8,
+          "activeIndicatorWidth": 80,
+          "activeIndicatorHeight": 1,
+          "activeIndicatorBottom": 0
+        },
+        "gapBetweenTopBarAndSearch": 20,
+        "search": {
+          "x": 748,
+          "y": 32,
+          "width": 220,
+          "height": 36
+        }
       },
       "dataRequirement": "TODO_FROM_DATASOURCE"
     },
     {
       "id": "home.summary",
       "displayName": "Wiki home summary",
-      "purpose": "Shows the fixed title format '<game name> Wiki' and aggregate counts before the category grid.",
+      "purpose": "Shows the observed WikiHome title composition '<game name>の' + 'Wiki攻略' and aggregate counts before the category grid.",
       "allowedComponents": [],
       "layout": {
-        "pageSummary": "WikiHome Content x=32, y=20, w=936; PageSummary x=0, y=0, w=190, h=56",
-        "titleRow": "x=0, y=0, h=28; game name prefix plus Wiki suffix",
-        "metaRow": "x=0, y=36, h=20; category count and item count"
+        "contentFrame": "Body-relative x=32, y=20, w=936, h=568; absolute x=32, y=88",
+        "pageSummary": "Content-relative x=0, y=0, w=190, h=56",
+        "titleRow": "x=0, y=0, w=190, h=28; horizontal text row, gap=4; first text '<game name>の' w=100, second text 'Wiki攻略' x=104, w=86",
+        "metaRow": "x=0, y=36, w=132, h=20; horizontal meta row, gap=4; category count w=73, separator x=77 w=4, item count x=85 w=47"
+      },
+      "observedHomeLayout": {
+        "sourceNodeId": "303:16791",
+        "parentContentNodeId": "175:5807",
+        "bodyRelativeFrame": {
+          "x": 32,
+          "y": 20,
+          "width": 190,
+          "height": 56
+        },
+        "absoluteFrame": {
+          "x": 32,
+          "y": 88,
+          "width": 190,
+          "height": 56
+        },
+        "titleRow": {
+          "sourceNodeId": "175:5806",
+          "x": 0,
+          "y": 0,
+          "width": 190,
+          "height": 28,
+          "gap": 4,
+          "typography": "Title/H2",
+          "fontSize": 20,
+          "lineHeight": 28,
+          "fontWeight": 700,
+          "textSegments": [
+            {
+              "binding": "gameName",
+              "suffix": "の",
+              "x": 0,
+              "width": 100
+            },
+            {
+              "literal": "Wiki攻略",
+              "x": 104,
+              "width": 86
+            }
+          ]
+        },
+        "metaRow": {
+          "sourceNodeId": "303:16794",
+          "x": 0,
+          "y": 36,
+          "width": 132,
+          "height": 20,
+          "gap": 4,
+          "typography": "Body/MD",
+          "fontSize": 14,
+          "lineHeight": 20,
+          "fontWeight": 400,
+          "textColorToken": "var(--color-text-weak)",
+          "items": [
+            {
+              "binding": "categoryCount",
+              "format": "共{categoryCount}个分类",
+              "x": 0,
+              "width": 73
+            },
+            {
+              "literal": "·",
+              "x": 77,
+              "width": 4
+            },
+            {
+              "binding": "totalItemCount",
+              "format": "{totalItemCount}项",
+              "x": 85,
+              "width": 47
+            }
+          ]
+        }
       },
       "pendingDataBoundElements": [
-        "game title used to compose '<game name> Wiki'",
+        "game title used to compose '<game name>の' + 'Wiki攻略'",
         "category count",
         "total item count"
       ],
@@ -111,12 +226,104 @@
         "Base.Badge"
       ],
       "layout": {
-        "grid": "x=32, y=164, w=936, h=492 inside the 1000 x 610 frame; continue vertical scrolling after visible rows",
-        "columns": "4 columns, each card w=225, h=114",
+        "grid": "Content-relative x=0, y=76, w=936, h=492; absolute x=32, y=164; content overflows the 542px Body viewport by 46px",
+        "columns": "4 columns, each card w=225, h=114; card x positions are 0, 237, 474, 711 within each row",
         "columnGap": "12px",
         "rowGap": "12px",
-        "observedRows": "4 rows visible or clipped in WikiHome",
+        "observedRows": "4 rows in the design; row y positions are 0, 126, 252, 378; the last row is clipped by the Body viewport until scrolled",
         "cardContent": "title, short description, icon/avatar cluster previewing up to the first three linked secondary-page item icons/images, count badge showing total category items, trailing arrow"
+      },
+      "observedHomeLayout": {
+        "sourceNodeId": "175:5745",
+        "bodyNodeId": "175:5810",
+        "contentNodeId": "175:5807",
+        "body": {
+          "x": 0,
+          "y": 68,
+          "width": 1000,
+          "height": 542,
+          "overflow": "clip"
+        },
+        "contentFrame": {
+          "bodyRelativeX": 32,
+          "bodyRelativeY": 20,
+          "absoluteX": 32,
+          "absoluteY": 88,
+          "width": 936,
+          "height": 568,
+          "layoutMode": "vertical",
+          "gap": 20,
+          "overflowBeyondBody": 46
+        },
+        "gridFrame": {
+          "contentRelativeX": 0,
+          "contentRelativeY": 76,
+          "absoluteX": 32,
+          "absoluteY": 164,
+          "width": 936,
+          "height": 492,
+          "layoutMode": "vertical",
+          "rowGap": 12
+        },
+        "rows": [
+          {
+            "name": "CategoryRow01",
+            "sourceNodeId": "175:5423",
+            "x": 0,
+            "y": 0,
+            "width": 936,
+            "height": 114
+          },
+          {
+            "name": "CategoryRow02",
+            "sourceNodeId": "175:5466",
+            "x": 0,
+            "y": 126,
+            "width": 936,
+            "height": 114
+          },
+          {
+            "name": "CategoryRow03",
+            "sourceNodeId": "175:5551",
+            "x": 0,
+            "y": 252,
+            "width": 936,
+            "height": 114
+          },
+          {
+            "name": "CategoryRow04",
+            "sourceNodeId": "175:5636",
+            "x": 0,
+            "y": 378,
+            "width": 936,
+            "height": 114
+          }
+        ],
+        "cardGrid": {
+          "columns": 4,
+          "visibleDesignRows": 4,
+          "cardWidth": 225,
+          "cardHeight": 114,
+          "columnGap": 12,
+          "rowGap": 12,
+          "cardXPositions": [
+            0,
+            237,
+            474,
+            711
+          ]
+        },
+        "scrollbar": {
+          "sourceNodeId": "175:5982",
+          "absoluteX": 988,
+          "absoluteY": 68,
+          "width": 12,
+          "height": 542,
+          "thumbWidth": 4,
+          "thumbHeight": 80,
+          "thumbX": 4,
+          "thumbY": 119
+        }
       },
       "pendingDataBoundElements": [
         "category id",
@@ -330,7 +537,7 @@
     "Use semantic tokens from the Wiki or shared token source; do not hardcode colors when a token exists.",
     "Header navigation and search are shared across home, secondary list, and detail states.",
     "Home state renders a category grid after the summary block; secondary state renders a list grid plus pagination; detail state renders breadcrumbs plus vertically scrollable detail content.",
-    "Home summary title uses the fixed format '<game name> Wiki' and follows the WikiHome template position.",
+    "Home summary title follows the observed WikiHome two-segment title row: '<game name>の' followed by the literal 'Wiki攻略'.",
     "In home.category-grid, each Game.CategoryCard previews up to the first three items of its linked secondary page through the avatar cluster, prefers icon over image when both exist, shows the total item count for that category in the trailing count badge, and is hidden when that total count is 0.",
     "Nav.TopBar items are global first-level Wiki categories.",
     "Form.SearchBar is global Wiki search across categories and entries.",

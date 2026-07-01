@@ -7,6 +7,7 @@ import {
   type PointerEvent,
 } from "react";
 import { ComponentGallery } from "./ComponentGallery";
+import { WikiHomeTemplatePreview } from "./WikiHomeTemplatePreview";
 import {
   Button,
   type CheckboxState,
@@ -721,7 +722,7 @@ function MapDemoPreview() {
 }
 
 export function ComponentPreview() {
-  const [activeView, setActiveView] = useState<"components" | "map">("components");
+  const [activeView, setActiveView] = useState<"components" | "wiki-home" | "map">("components");
 
   return (
     <main className="preview-shell preview-shell--workbench">
@@ -746,6 +747,15 @@ export function ComponentPreview() {
           <button
             type="button"
             role="tab"
+            aria-selected={activeView === "wiki-home"}
+            className={activeView === "wiki-home" ? "preview-view-switch__item preview-view-switch__item--active" : "preview-view-switch__item"}
+            onClick={() => setActiveView("wiki-home")}
+          >
+            Wiki Home
+          </button>
+          <button
+            type="button"
+            role="tab"
             aria-selected={activeView === "map"}
             className={activeView === "map" ? "preview-view-switch__item preview-view-switch__item--active" : "preview-view-switch__item"}
             onClick={() => setActiveView("map")}
@@ -755,7 +765,7 @@ export function ComponentPreview() {
         </div>
       </section>
 
-      {activeView === "components" ? <ComponentGallery /> : <MapDemoPreview />}
+      {activeView === "components" ? <ComponentGallery /> : activeView === "wiki-home" ? <WikiHomeTemplatePreview /> : <MapDemoPreview />}
     </main>
   );
 }

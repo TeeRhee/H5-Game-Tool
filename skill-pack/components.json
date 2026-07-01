@@ -614,7 +614,8 @@
             "default",
             "hover"
           ],
-          "default": "default"
+          "default": "default",
+          "rule": "When state=hover or the user pointer hovers the card, render the card with the hover background and a visible 1px stroke using the category-card hover stroke token. The default state reserves the border space with a transparent stroke so the card size does not shift."
         }
       }
     },

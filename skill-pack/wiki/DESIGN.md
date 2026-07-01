@@ -100,7 +100,7 @@ The Wiki datasource is not defined yet. Do not invent field names, category stru
 
 Use `TODO_FROM_DATASOURCE` for unresolved data:
 
-- Wiki title in the fixed '<game name> Wiki' format, category count, and item count
+- Wiki title in the observed two-segment '<game name>の' + 'Wiki攻略' format, category count, and item count
 - global first-level top navigation items and active state
 - category labels, descriptions, first-three secondary item icons/images, total item counts, and target routes
 - global Wiki search query and result routing

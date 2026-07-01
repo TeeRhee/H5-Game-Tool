@@ -19,7 +19,7 @@
     "Missing optional fields should collapse the related UI element instead of showing fabricated placeholder content.",
     "Breadcrumb labels and target routes must come from datasource or routing context.",
     "Pagination state must come from datasource or renderer state, not from hardcoded sample values.",
-    "Home summary title is always '<game name> Wiki' and should follow the WikiHome template position.",
+    "Home summary title follows the observed WikiHome two-segment title row: '<game name>の' followed by the literal 'Wiki攻略'.",
     "Nav.TopBar items are global first-level Wiki categories.",
     "Form.SearchBar is global Wiki search across categories and entries.",
     "For Game.CategoryCard in home.category-grid, filter out categories whose linked secondary page or category total item count is 0.",
@@ -34,7 +34,7 @@
   ],
   "fieldMappings": [
     {
-      "source": "TODO_FROM_DATASOURCE > game name + fixed 'Wiki' suffix, visible first-level category count, and total item count",
+      "source": "TODO_FROM_DATASOURCE > game name composed as '<game name>の' + fixed 'Wiki攻略' suffix, visible first-level category count, and total item count",
       "target": "regions[home.summary].dataBinding",
       "required": true
     },
