@@ -614,14 +614,32 @@
         "wiki:detail.content-shell"
       ],
       "observedStructure": {
-        "rule": "Vertical local navigation used when a selected second-level tab contains third-level groups or when a long detail page needs section anchors. In the multi-level secondary template it sits left of the card list and has a right divider."
+        "rule": "Vertical local navigation used when a selected second-level tab contains real third-level groups or when a long detail page needs section anchors. In the multi-level secondary template it sits left of the card list and has a right divider, but it remains optional when the source page has only second-level navigation."
       },
       "props": {
         "items": {
           "type": "array",
           "required": false,
           "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT",
-          "rule": "For secondary multi-level pages, items are third-level groups under the active SecondaryTab. For detail pages, items are section anchors."
+          "rule": "For secondary multi-level pages, items are third-level groups under the active SecondaryTab only when those groups exist in the source page. For detail pages, items are section anchors. Exactly one item should resolve to active at render time."
+        },
+        "activeId": {
+          "type": "string",
+          "required": false,
+          "source": "renderer state",
+          "rule": "Controlled selected item id. When provided, renderer owns the active state and Nav.Navigate only emits onActiveChange."
+        },
+        "defaultActiveId": {
+          "type": "string",
+          "required": false,
+          "source": "renderer state",
+          "rule": "Initial selected item id for uncontrolled usage. If omitted, use the first item marked state=active, otherwise the first item."
+        },
+        "onActiveChange": {
+          "type": "interaction",
+          "required": false,
+          "source": "renderer state",
+          "rule": "Called with the clicked item id. In uncontrolled usage, clicking updates the internal active item and clears active styling from all other items."
         },
         "state": {
           "type": "enum",
@@ -631,7 +649,8 @@
             "hover",
             "active"
           ],
-          "default": "default"
+          "default": "default",
+          "rule": "Item-level visual state. If an item id matches activeId or internal selected id, active wins. Other items with state=active are normalized to default so multiple active items cannot render at once."
         }
       }
     },
@@ -858,6 +877,9 @@
         "wiki:detail.hero-card",
         "wiki:detail.related-section"
       ],
+      "observedStructure": {
+        "rule": "ShowCard is a compact list/detail summary card. Use the right arrow only when the represented item has a next page, next hierarchy level, target route, or explicit clickable drill-down. The subtitle/description region is height-adaptive and clamps to two visible lines; full text must be exposed through Base.ToolTip on text hover when truncation is possible."
+      },
       "props": {
         "title": {
           "type": "string",
@@ -867,7 +889,11 @@
         "description": {
           "type": "string",
           "required": false,
-          "source": "TODO_FROM_DATASOURCE"
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Render as subtitle/body text. Show at most two visible lines and truncate overflow. Preserve the full string and wrap the truncated visible text with Base.ToolTip so hover shows the complete description.",
+          "uses": [
+            "Base.ToolTip"
+          ]
         },
         "imageSrc": {
           "type": "string",
@@ -899,6 +925,24 @@
           "type": "boolean",
           "required": false,
           "default": false
+        },
+        "targetRoute": {
+          "type": "string",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT",
+          "rule": "Route to the next page or detail level. Presence of a real targetRoute implies the right arrow should be shown unless showRightIcon is explicitly false."
+        },
+        "hasNextLevel": {
+          "type": "boolean",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT",
+          "rule": "Set false when the represented item is terminal and cannot drill down. When false, hide the right arrow even if the card remains selectable for local state."
+        },
+        "showRightIcon": {
+          "type": "boolean",
+          "required": false,
+          "source": "renderer state",
+          "rule": "Explicit visual override for the right arrow. Default compatibility behavior shows the arrow when neither targetRoute nor hasNextLevel is supplied; final Wiki mappings should set hasNextLevel or targetRoute to avoid ambiguity."
         }
       }
     },
@@ -1060,8 +1104,53 @@
       }
     },
     {
-      "id": "Feedback.Tooltip",
-      "figmaName": "Feedback / Tooltip / Default",
+      "id": "Base.ToolTip",
+      "figmaName": "Base / ToolTip / Default",
+      "observedUse": [
+        "wiki:Game.ShowCard.description truncated hover text",
+        "any component text that is intentionally truncated and needs hover full-text disclosure"
+      ],
+      "observedStructure": {
+        "rule": "Text hover disclosure bubble for truncated content only. Do not use this component for map markers; Map.MapTip remains the map point marker.",
+        "trigger": "Wrap the visible truncated text node. The trigger keeps its original layout and text clamp rules.",
+        "bubble": "Background color/bg/weak, radius lg, horizontal padding 12px, vertical padding 4px, Body/MD 14px/20px text in color/text/strong, regular-small white drop shadow.",
+        "tail": "12x6 triangle tail attached to the bubble edge. Supported directions place the tail at TopLeft, TopCenter, TopRight, BottomLeft, BottomCenter, BottomRight, Left, or Right.",
+        "behavior": "Hidden by default. Show on mouse hover over the wrapped text and on keyboard focus of the parent interactive card when applicable. The bubble is non-interactive and must not affect layout size."
+      },
+      "props": {
+        "content": {
+          "type": "string|ReactNode",
+          "required": true,
+          "source": "full untruncated text from datasource",
+          "rule": "Must contain the complete text, not the visually truncated string."
+        },
+        "children": {
+          "type": "ReactNode",
+          "required": true,
+          "source": "visible truncated text node",
+          "rule": "Keep the original text component and clamp/ellipsis styles inside ToolTip."
+        },
+        "placement": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "TopLeft",
+            "TopCenter",
+            "TopRight",
+            "BottomLeft",
+            "BottomCenter",
+            "BottomRight",
+            "Left",
+            "Right"
+          ],
+          "default": "TopLeft",
+          "rule": "Choose a direction that keeps the bubble inside the current page/card viewport. ShowCard descriptions use TopLeft by default."
+        }
+      }
+    },
+    {
+      "id": "Map.MapTip",
+      "figmaName": "Map / MapTip / Default",
       "observedUse": [
         "desktop:map.canvas",
         "mobile:map.canvas"
@@ -1072,9 +1161,9 @@
         "icon": "24x24 point/category icon inside body",
         "tail": "bottom-center white tail",
         "positioning": "x/y coordinates anchor the bottom-center tail tip to the map point inside the pannable and zoomable map coordinate system.",
-        "zoomRule": "Tooltip marker visual size stays constant during map zoom; the map canvas renderer recalculates screen x/y from map coordinates and zoom.",
-        "rule": "This component represents a map point marker, not a visible text bubble.",
-        "layerRule": "Tooltip markers must stay below Map.PopupDescribeCard when they overlap; PopupDescribeCard is the active map detail surface.",
+        "zoomRule": "MapTip marker visual size stays constant during map zoom; the map canvas renderer recalculates screen x/y from map coordinates and zoom.",
+        "rule": "This component represents a map point marker, not a visible text bubble. Use Base.ToolTip for truncated text hover disclosure.",
+        "layerRule": "MapTip markers must stay below Map.PopupDescribeCard when they overlap; PopupDescribeCard is the active map detail surface.",
         "mobile": "Default marker 32x38 in default/collapsed/expanded/search states; selected marker may be 40x46 at x=163,y=315 in MobileMapMarkerSelectedScreen."
       },
       "props": {
@@ -1082,7 +1171,7 @@
           "type": "string",
           "required": true,
           "source": "TODO_FROM_DATASOURCE",
-          "rule": "Used as point label/accessibility text and short point info; not rendered as visible text inside Tooltip."
+          "rule": "Used as point label/accessibility text and short point info; not rendered as visible text inside MapTip."
         },
         "icon": {
           "type": "component|image",
@@ -1132,7 +1221,7 @@
         "layoutRule": "When imageSrc is absent, card height must adapt to title and description content instead of keeping the full image-card height.",
         "closeButton": "Top-right close button default state has transparent background; hover/focus state shows the white alpha background.",
         "noMediaTitleRow": "When imageSrc and description are both absent, title and close button must align on the same visual row; close top offset is adjusted only for the no-image state.",
-        "layerRule": "DescribeCard must render above Tooltip markers in map.canvas.",
+        "layerRule": "DescribeCard must render above MapTip markers in map.canvas.",
         "mobileRule": "Do not use the desktop fixed lower-right 280x266 position on mobile. Use mobile.map.detail when specified.",
         "mobileSelected": "343x86 at x=16, y=602 in MobileMapMarkerSelectedScreen; render only for selected marker detail and hide BottomSheet while open.",
         "mobileCloseRule": "When the mobile detail card close action fires, clear selectedMarkerId and restore the previous BottomSheet state instead of staying in markerSelected."

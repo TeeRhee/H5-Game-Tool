@@ -70,9 +70,11 @@ The `SecondaryPage` design node is `304:5972` and uses the default `1000 x 610` 
 
 Choose `Game.ShowCard` when it fully represents the source entry. Choose `Layout.DescribeCard` when the source entry needs richer description, image, badge, or meta fields. Pagination total pages must come from backend data in production output.
 
+For `Game.ShowCard`, the right arrow is a drill-down affordance, not decoration. Hide it when the source entry is terminal and has no next page or next hierarchy level. The subtitle/description area shows at most two visible lines and truncates overflow; wrap the truncated visible text with `Base.ToolTip` and pass the full description string as tooltip content. The text area should adapt to one or two visible description lines instead of staying fixed to one line.
+
 ### Observed Secondary Multi-Nav Layout
 
-The `SecondaryPageMultiNav` design node is `375:4979` and uses the default `1000 x 610` viewport. It is the structural reference for original source pages that need second-level tabs or third-level local navigation under the global first-level `Nav.TopBar`.
+The `SecondaryPageMultiNav` design node is `375:4979` and uses the default `1000 x 610` viewport. It is a modular placement reference for original source pages that need second-level tabs or third-level local navigation under the global first-level `Nav.TopBar`; it is not a required full-page data structure.
 
 - Header: `x=0, y=0, w=1000, h=68`.
 - Body: `x=0, y=68, w=1000, h=542`.
@@ -85,7 +87,15 @@ The `SecondaryPageMultiNav` design node is `375:4979` and uses the default `1000
 - `Game.ShowCard` grid: 2 columns, card `w=406, h=76`, column gap `8`, row gap `8`.
 - Row y positions: `0`, `84`, `168`, `252`, `336`, `420`. The sixth row overflows the 480px shell by `16px`; renderer should scroll or clip by host behavior rather than shrinking cards.
 
-Use this template only when the source page actually has multi-level navigation. For a plain selected-category entry list, continue using the normal `SecondaryPage` rules above.
+Use this template in parts:
+
+- If the source page has second-level navigation only, use the `Nav.SecondaryTab` row placement and omit the `Nav.Navigate` sidebar.
+- If the source page has second-level navigation plus real third-level groups or local anchors, use both the tab row and sidebar placement.
+- If the source page content is best represented by the observed two-column `Game.ShowCard` list, use the right card-list coordinates.
+- If the source page content is richer or structurally different, keep the matched navigation placement but choose the most suitable existing component family, such as `Layout.DescribeCard` or `Game.ShowCard`, according to the source page information density.
+- Never fabricate third-level navigation, cards, badges, counts, or pagination just because they appear in the reference frame.
+
+For a plain selected-category entry list with no second-level navigation, continue using the normal `SecondaryPage` rules above.
 
 ### Observed Detail Layout
 

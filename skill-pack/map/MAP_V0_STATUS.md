@@ -13,7 +13,7 @@ This file records the current confirmed state of the map tool preview and design
 - Footer is `x=12, y=728, w=264, h=60`.
 - The left filter list uses `Layout.Scroll / Default` as a visual scrollbar: `x=252, y=102, w=12, h=586` inside Panel Content.
 - Current observed map-image placeholder is `x=421, y=46, w=529, h=708`.
-- Current observed Tooltip instance is `x=658, y=386, w=32, h=38`; renderer anchoring uses the bottom-center tail point.
+- Current observed MapTip instance is `x=658, y=386, w=32, h=38`; renderer anchoring uses the bottom-center tail point.
 - Zoom controls are `x=1112, y=12, w=36, h=64`.
 - Detail card is `x=868, y=522, w=280, h=266`, fixed to the lower-right of the template.
 
@@ -22,8 +22,8 @@ This file records the current confirmed state of the map tool preview and design
 - Dragging inside `map.canvas` pans the map content.
 - Mouse wheel inside `map.canvas` zooms the map content and prevents the outer preview page from scrolling.
 - Native browser image dragging is disabled for the map placeholder.
-- Tooltip marker visual size remains constant during zoom; marker screen position is recalculated from map coordinates and zoom.
-- Tooltip markers must render below `Map.PopupDescribeCard` when overlapping.
+- MapTip marker visual size remains constant during zoom; marker screen position is recalculated from map coordinates and zoom.
+- MapTip markers must render below `Map.PopupDescribeCard` when overlapping.
 - In `Map.PopupDescribeCard`, when there is no image and no description, the title and close button must align on the same visual row.
 - The visual Scroll component reflects the left filter list scroll position. The native browser scrollbar is hidden in the preview.
 - The bottom action button clears all filters: clear search input and set every active filter selection to unchecked.

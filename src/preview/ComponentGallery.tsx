@@ -28,7 +28,8 @@ import {
   ShowCard,
   TableHeaderCell,
   TableRowCell,
-  Tooltip,
+  MapTip,
+  ToolTip,
   TopBar,
   TopBarItem,
   WikiDescribeCard,
@@ -164,7 +165,7 @@ export function ComponentGallery() {
   const [searchValue, setSearchValue] = useState("深渊");
   const [selectValue, setSelectValue] = useState("loot");
   const [describeOpen, setDescribeOpen] = useState(true);
-  const [tooltipActive, setTooltipActive] = useState(false);
+  const [mapTipActive, setMapTipActive] = useState(false);
   const [breadcrumbCount, setBreadcrumbCount] = useState(3);
   const [tokenQuery, setTokenQuery] = useState("");
   const [activeTokenGroup, setActiveTokenGroup] = useState("color");
@@ -366,9 +367,19 @@ export function ComponentGallery() {
             </DropdownCard>
           </ComponentCard>
 
-          <ComponentCard title="Tooltip" description="地图标记按钮，点击切换 active 状态。">
-            <div className="gallery-tooltip-preview gallery-tooltip-preview--single">
-              <Tooltip visible selected={tooltipActive} content="宝箱标记" x={0} y={0} icon={<RemixIcon name="map-pin-line" size={20} />} onClick={() => setTooltipActive((active) => !active)} />
+          <ComponentCard title="Map / MapTip / Default" description="地图标记按钮，点击切换 active 状态。">
+            <div className="gallery-map-tip-preview gallery-map-tip-preview--single">
+              <MapTip visible selected={mapTipActive} content="宝箱标记" x={0} y={0} icon={<RemixIcon name="map-pin-line" size={20} />} onClick={() => setMapTipActive((active) => !active)} />
+            </div>
+          </ComponentCard>
+
+          <ComponentCard title="Base / ToolTip / Default" description="截断文本 hover 展示完整内容，支持 8 个方向。">
+            <div className="wiki-preview-tooltip-grid">
+              {(["TopLeft", "TopCenter", "TopRight", "Left", "Right", "BottomLeft", "BottomCenter", "BottomRight"] as const).map((placement) => (
+                <ToolTip key={placement} content={`完整提示内容：${placement}`} placement={placement}>
+                  <span className="wiki-preview-tooltip-trigger">{placement}</span>
+                </ToolTip>
+              ))}
             </div>
           </ComponentCard>
 
@@ -561,6 +572,13 @@ export function ComponentGallery() {
           <ComponentCard title="Game / ShowCard / Default" description="展示型列表卡片，支持标签和进度两种形态。" wide>
             <div className="wiki-preview-stack">
               <ShowCard title="详情名称" description="详情介绍介绍" label="标签" imageSrc="/assets/preview/map-placeholder.png" />
+              <ShowCard
+                title="终止项详情"
+                description="这是一段较长的副标题说明，用来验证最多显示两行文字，超过两行以后截断，完整文案后续交给 Pop 组件展示。"
+                label="标签"
+                imageSrc="/assets/preview/map-placeholder.png"
+                hasNextLevel={false}
+              />
               <ShowCard title="数据存储" description="辅助信息解释信息重点" variant="process" progress={80} label="标签" imageSrc="/assets/preview/map-placeholder.png" />
             </div>
           </ComponentCard>

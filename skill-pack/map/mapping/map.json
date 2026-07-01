@@ -24,7 +24,7 @@
     "On mobile, clear-all action binds to mobile.bottom-sheet.footer.",
     "Theme mode is selected from the host/original website background: dark source uses dark tokens; light source uses light tokens when provided by the token export.",
     "Mobile selected-marker detail binds selected marker detail to mobile.map.detail using Map.PopupDescribeCard and hides the bottom sheet while the detail card is open.",
-    "Mobile selected Tooltip marker may use a selected visual state, but marker coordinates still come from map.normalized.json > markers[].position.",
+    "Mobile selected MapTip marker may use a selected visual state, but marker coordinates still come from map.normalized.json > markers[].position.",
     "Mobile search-focused state may temporarily omit the footer action; this does not change the clear-all action contract.",
     "Mobile bottomSheetCollapsed state keeps the sheet handle and map select visible at x=0,y=620,w=375,h=100, clips list content, and hides footer actions without changing data bindings.",
     "Mobile selected-marker detail hides the bottom sheet while Map.PopupDescribeCard is open; closing the detail card restores the previous bottomSheetState."
@@ -57,7 +57,7 @@
     },
     {
       "source": "map.normalized.json > markers[]",
-      "target": "regions[map.canvas].components[Feedback.Tooltip].dataBinding.markers",
+      "target": "regions[map.canvas].components[Map.MapTip].dataBinding.markers",
       "required": true
     },
     {
@@ -102,7 +102,7 @@
     },
     {
       "source": "map.normalized.json > markers[]",
-      "target": "regions[mobile.map.canvas or map.canvas].components[Feedback.Tooltip].dataBinding.markers",
+      "target": "regions[mobile.map.canvas or map.canvas].components[Map.MapTip].dataBinding.markers",
       "required": true
     },
     {
@@ -117,7 +117,7 @@
     },
     {
       "source": "runtime state > selectedMarkerId",
-      "target": "regions[map.canvas].components[Feedback.Tooltip].props.selected",
+      "target": "regions[map.canvas].components[Map.MapTip].props.selected",
       "required": false
     },
     {
@@ -151,7 +151,7 @@
     {
       "regionId": "map.canvas",
       "components": [
-        "Feedback.Tooltip",
+        "Map.MapTip",
         "Base.Button"
       ]
     },

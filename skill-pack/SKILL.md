@@ -58,8 +58,8 @@ The v1 runnable target is the `map` tool type. `wiki` now has its own template f
 - The left filter list uses `Layout.Scroll` as a visual scrollbar. In the current template it is `x=252, y=102, w=12, h=586` inside Panel Content; the renderer may bind it to the real list scroll state.
 - `Map.PopupDescribeCard` is fixed to the lower-right of the map template at `x=868, y=522, w=280, h=266`.
 - Do not render development-only status text in final generated pages. The local preview may show debug counters such as "shown markers / total markers", but this is not part of the Figma map template and must not be emitted by the skill output.
-- For map canvas rendering, pan/drag and wheel zoom belong to the layout/renderer layer. Background content may scale, but Tooltip marker visual size must remain constant while marker screen positions are recalculated from map coordinates and zoom.
-- Tooltip markers must render below `Map.PopupDescribeCard` when overlapping, because `Map.PopupDescribeCard` is the active detail surface.
+- For map canvas rendering, pan/drag and wheel zoom belong to the layout/renderer layer. Background content may scale, but MapTip marker visual size must remain constant while marker screen positions are recalculated from map coordinates and zoom.
+- MapTip markers must render below `Map.PopupDescribeCard` when overlapping, because `Map.PopupDescribeCard` is the active detail surface.
 - For `Map.PopupDescribeCard`, when there is no image and no description, align the title and close button on the same visual row.
 - While the pointer is inside the map canvas, canvas drag and wheel zoom should capture the interaction: prevent native image dragging and prevent the surrounding preview/page from scrolling.
 - The bottom action button clears all filters: clear search input and set every active filter selection to unchecked.

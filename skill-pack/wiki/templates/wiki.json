@@ -486,7 +486,7 @@
     {
       "id": "secondary.multi-level-tabs",
       "displayName": "Secondary multi-level tab navigation",
-      "purpose": "Horizontal second-level navigation for original source pages that need a secondary or tertiary navigation structure under the global first-level Nav.TopBar. Use this region only when the selected first-level category has multiple second-level branches.",
+      "purpose": "Horizontal second-level navigation reference from SecondaryPageMultiNav. This region may be used independently when the original source page has second-level branches under the global first-level Nav.TopBar. It does not require rendering the sidebar or the observed right-side card list.",
       "allowedComponents": [
         "Nav.SecondaryTab"
       ],
@@ -547,7 +547,7 @@
     {
       "id": "secondary.multi-level-sidebar",
       "displayName": "Secondary multi-level sidebar navigation",
-      "purpose": "Vertical third-level navigation inside SecondaryPageMultiNav. Render only when the active secondary tab contains third-level groups or local subcategory anchors.",
+      "purpose": "Optional vertical third-level navigation reference from SecondaryPageMultiNav. Render only when the active secondary tab contains real third-level groups or local subcategory anchors. If the original page has only second-level navigation, omit this region entirely.",
       "allowedComponents": [
         "Nav.Navigate"
       ],
@@ -594,7 +594,7 @@
     {
       "id": "secondary.multi-level-card-list",
       "displayName": "Secondary multi-level card list",
-      "purpose": "Right-side entry list for SecondaryPageMultiNav. Use it when the original source page requires a second-level tab row plus an optional third-level side navigation before showing entries.",
+      "purpose": "Right-side content placement reference from SecondaryPageMultiNav. Use these coordinates only when the original source content is best represented by the observed two-column Game.ShowCard list; otherwise keep the tab/sidebar placement from this template and choose the most suitable allowed component family from the original page structure.",
       "allowedComponents": [
         "Game.ShowCard",
         "Base.Image",
@@ -1179,10 +1179,14 @@
     "Use DetailPageLargeCardExpanded as the default 1000 x 610 detail viewport reference. Use DetailPageAllStates only to understand optional section stacking and overflow content height.",
     "SecondaryPage layout follows Body x=0, y=64, w=1000, h=546; list container absolute x=32, y=128, w=936, h=408; three columns with card w=306.6667, h=96, 8px column gap, and 8px row gap.",
     "SecondaryPage pagination follows Body-relative x=0, y=482, w=1000, h=64 and must remain separate from card data binding.",
-    "Use SecondaryPageMultiNav only when the original source page has a second-level tab row or a third-level local navigation structure. Do not add SecondaryTab or Nav.Navigate to simple secondary list pages.",
+    "Treat SecondaryPageMultiNav as a modular placement reference, not a required full-page data structure. A generator may use only the tab row, only the sidebar, or only the content-shell coordinates when those parts match the original source page.",
+    "Use the SecondaryPageMultiNav tab row when the original source page has second-level navigation. Do not require a third-level sidebar just because this template contains one.",
+    "Use the SecondaryPageMultiNav sidebar only when the original source page has real third-level groups or local anchors. Never fabricate Nav.Navigate items to fill the observed sidebar.",
     "SecondaryPageMultiNav uses Body x=0, y=68, w=1000, h=542; secondary tabs at Body-relative x=32, y=16, w=390, h=26; content shell at Body-relative x=32, y=62, w=936, h=480.",
-    "In SecondaryPageMultiNav, Nav.SecondaryTab represents second-level navigation under the active global Nav.TopBar item; Nav.Navigate represents third-level groups or local anchors under the active SecondaryTab.",
-    "SecondaryPageMultiNav right-side card list uses Game.ShowCard in two columns: list x=116, y=0, w=820, h=480 inside the content shell; card w=406, h=76, column gap=8, row gap=8.",
+    "In SecondaryPageMultiNav, Nav.SecondaryTab represents second-level navigation under the active global Nav.TopBar item. Nav.Navigate is optional and represents only real third-level groups or local anchors under the active SecondaryTab.",
+    "SecondaryPageMultiNav observes a right-side Game.ShowCard list in two columns: list x=116, y=0, w=820, h=480 inside the content shell; card w=406, h=76, column gap=8, row gap=8. Use this list structure only when it fits the original page content; otherwise choose the most suitable existing component while preserving the matched placement reference.",
+    "In Game.ShowCard, the right arrow means the represented entry can drill down or route to a next page. Hide the arrow when the entry is terminal and has no next hierarchy level.",
+    "Game.ShowCard descriptions are visibly clamped to two lines, and the full description string must be exposed with Base.ToolTip on text hover. The text/content area height adapts to one or two visible subtitle lines.",
     "DetailPage content follows Body-relative content x=20, y=64, w=960; breadcrumbs Body-relative x=20, y=16, w=338, h=28; visual scroll Body-relative x=980, y=60, w=12.",
     "DetailPage section stacks use 16px internal padding and 20px vertical gaps between sections.",
     "Home summary title follows the WikiHome two-segment title row: '<game name>' followed by the literal 'Wiki攻略'.",

@@ -83,7 +83,7 @@ Use only the approved component registry:
 - `Base.Badge`
 - `Form.Checkbox`
 - `Layout.Scroll`
-- `Feedback.Tooltip`
+- `Map.MapTip`
 - `Map.PopupDescribeCard`
 - `Base.Button`
 
@@ -91,7 +91,7 @@ Component display names must match the current Figma naming style, including cap
 
 `Layout.PictureTitle` is a reserved game-logo image area. It may use title text for alt/accessibility data, but it must not render a normal visible text title in the map header.
 
-`Feedback.Tooltip` is a marker icon container, not a text bubble. Its visual size stays fixed during zoom while its screen position is recalculated from map coordinates.
+`Map.MapTip` is a marker icon container, not a text bubble. Its visual size stays fixed during zoom while its screen position is recalculated from map coordinates.
 
 `Map.PopupDescribeCard` must collapse gracefully when media or description data is absent. When both are absent, align the title and close button on the same visual row.
 

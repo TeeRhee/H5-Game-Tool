@@ -157,7 +157,7 @@
         "components": [
           {
             "id": "marker-layer",
-            "componentId": "Feedback.Tooltip",
+            "componentId": "Map.MapTip",
             "props": {
               "visible": true,
               "content": "TODO_FROM_DATASOURCE"

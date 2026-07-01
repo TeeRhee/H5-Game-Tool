@@ -26,9 +26,12 @@
     "For Game.CategoryCard in home.category-grid, avatarSrcs must preview up to the first three items of the linked secondary page in display order, using item icon first or item image when no icon exists.",
     "For Game.CategoryCard in home.category-grid, countLabel must represent the total item count for the linked secondary page or category, not the avatar preview count.",
     "In secondary.card-list, choose Game.ShowCard when it can fully represent the original source entry; choose Layout.DescribeCard when the source entry has richer description, image, badge, or meta fields.",
+    "Treat template pages as placement references, not datasource shape requirements. Referencing SecondaryPageMultiNav does not require rendering every observed region in that frame.",
     "Use secondary.multi-level-tabs only when the original source page exposes second-level branches under the active first-level Nav.TopBar category.",
-    "Use secondary.multi-level-sidebar only when the active secondary tab exposes third-level groups or local subcategory anchors.",
-    "Use secondary.multi-level-card-list for the entries under the active second-level tab and optional active third-level side navigation; do not mix these entries with the plain secondary.card-list pagination contract unless backend pagination metadata exists for this exact structure.",
+    "Use secondary.multi-level-sidebar only when the active secondary tab exposes real third-level groups or local subcategory anchors. If the source page has only second-level navigation, omit the sidebar and do not fabricate third-level items.",
+    "Use secondary.multi-level-card-list only when the entries under the active second-level tab and optional active third-level group are best represented by the observed two-column Game.ShowCard list. Otherwise keep the matched navigation placement and choose the content component that best fits the original page structure.",
+    "For Game.ShowCard, derive targetRoute or hasNextLevel from the source hierarchy. If the represented entry is terminal and has no next page, set hasNextLevel=false or showRightIcon=false so the right arrow is hidden.",
+    "For Game.ShowCard descriptions, pass the full subtitle/body text even though the component visibly clamps to two lines; the full text must be exposed through Base.ToolTip on text hover.",
     "Breadcrumbs are only for final detail pages. Each breadcrumb label is clickable and maps to the route for that hierarchy level.",
     "Detail hero card component family follows the card family used on the previous page for the entry that opened the detail page.",
     "For detail.attribute-section badges, keep one stable tone for each source tag class and use different tones for different classes when source colors are unavailable.",
@@ -72,7 +75,7 @@
       "required": false
     },
     {
-      "source": "TODO_FROM_DATASOURCE > selected category entries, choosing Game.ShowCard or Layout.DescribeCard per entry based on original source structure and display richness",
+      "source": "TODO_FROM_DATASOURCE > selected category entries plus routing hierarchy, choosing Game.ShowCard or Layout.DescribeCard per entry based on original source structure and display richness",
       "target": "regions[secondary.card-list].components[Game.ShowCard or Layout.DescribeCard].dataBinding.entries",
       "required": true
     },
@@ -87,14 +90,14 @@
       "required": false
     },
     {
-      "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT > active second-level branch > third-level groups or local anchors",
-      "target": "regions[secondary.multi-level-sidebar].components[Nav.Navigate].props.items",
+      "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT > active second-level branch > third-level groups or local anchors plus active third-level id",
+      "target": "regions[secondary.multi-level-sidebar].components[Nav.Navigate].props",
       "required": false
     },
     {
-      "source": "TODO_FROM_DATASOURCE > entries filtered by active first-level category, active second-level tab, and optional active third-level group",
+      "source": "TODO_FROM_DATASOURCE > entries filtered by active first-level category, active second-level tab, optional active third-level group, and per-entry next-level route availability",
       "target": "regions[secondary.multi-level-card-list].components[Game.ShowCard].dataBinding.entries",
-      "required": true
+      "required": false
     },
     {
       "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT > final detail page hierarchy labels and target routes",

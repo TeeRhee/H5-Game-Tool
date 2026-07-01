@@ -106,7 +106,7 @@
       "displayName": "地图主区域",
       "purpose": "作为贯穿整个弹窗的底层地图画布，展示地图底图、点位和地图交互层；Sidebar 与 Footer 叠在其上方。",
       "allowedComponents": [
-        "Feedback.Tooltip",
+        "Map.MapTip",
         "Base.Button"
       ],
       "pendingDataBoundElements": [
@@ -117,7 +117,7 @@
       "layout": {
         "canvas": "desktop: x=0, y=0, w=1160, h=800; mobile modal canvas starts at x=0, y=92 inside the 375x812 screen",
         "observedMapImage": "desktop: x=421, y=46, w=529, h=708; mobile: x=37, y=88, w=307, h=410 inside MapCollectionModal",
-        "observedTooltipInstance": "desktop: x=658, y=386, w=32, h=38; mobile examples stay 32x38 and anchor by bottom-center tail point",
+        "observedMapTipInstance": "desktop: x=658, y=386, w=32, h=38; mobile examples stay 32x38 and anchor by bottom-center tail point",
         "zoomControls": "desktop: x=1112, y=12, w=36, h=64; mobile zoom controls omitted unless host renderer has a compact control pattern"
       },
       "dataRequirement": "TODO_FROM_DATASOURCE"
@@ -242,8 +242,8 @@
     "Reject components not listed in the target region's allowedComponents.",
     "Reject arbitrary HTML or arbitrary component code in AI output.",
     "Map canvas content should support pan/drag and mouse-wheel zoom in the renderer/layout layer.",
-    "Map background/content scales with zoom; Tooltip markers keep a constant visual size while their positions are recalculated from map coordinates.",
-    "Tooltip markers must render below Map.PopupDescribeCard when overlapping.",
+    "Map background/content scales with zoom; MapTip markers keep a constant visual size while their positions are recalculated from map coordinates.",
+    "MapTip markers must render below Map.PopupDescribeCard when overlapping.",
     "Map.PopupDescribeCard title and close button must align on the same visual row when image and description are absent.",
     "When the pointer is inside map.canvas, canvas drag and wheel zoom should prevent native image dragging and prevent the surrounding page from scrolling.",
     "Do not render development-only counters or status text in final generated pages. Preview-only marker count text such as shown/total markers is not part of the Figma map template.",
@@ -253,7 +253,7 @@
     "On mobile, keep BottomSheet list scrolling independent from map pan/zoom gestures.",
     "On mobile, share search, filter, selected map, selected marker, and clear-all state with the desktop model.",
     "Use semantic tokens from design-system-pack/tokens.css; do not hardcode colors when a token exists.",
-    "Mobile selected-marker state may render the selected Tooltip marker at 40x46 while default markers remain 32x38.",
+    "Mobile selected-marker state may render the selected MapTip marker at 40x46 while default markers remain 32x38.",
     "Mobile selected-marker state renders Map.PopupDescribeCard at x=16, y=602, w=343, h=86, hides BottomSheet while open, and omits the desktop fixed detail position.",
     "Mobile expanded and search-focused states move BottomSheet to x=0, y=68, w=375, h=652.",
     "Mobile search-focused state may omit the bottom footer action while the focused search state is active.",

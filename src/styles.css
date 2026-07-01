@@ -253,7 +253,7 @@ button:disabled {
   pointer-events: none;
 }
 
-.map-canvas__markers .gt-tooltip {
+.map-canvas__markers .gt-map-tip {
   pointer-events: auto;
 }
 
@@ -844,7 +844,7 @@ button:disabled {
   background: var(--gt-panel-bg);
 }
 
-.gallery-tooltip-preview {
+.gallery-map-tip-preview {
   position: relative;
   min-height: 140px;
   border-radius: var(--radius-lg);
@@ -855,16 +855,40 @@ button:disabled {
   background-size: 24px 24px;
 }
 
-.gallery-tooltip-preview--single {
+.gallery-map-tip-preview--single {
   display: grid;
   place-items: center;
 }
 
-.gallery-tooltip-preview--single .gt-tooltip {
+.gallery-map-tip-preview--single .gt-map-tip {
   position: relative;
   left: auto !important;
   top: auto !important;
-  transform: translateY(19px) scale(var(--gt-tooltip-scale));
+  transform: translateY(19px) scale(var(--gt-map-tip-scale));
+}
+
+.wiki-preview-tooltip-grid {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  gap: 34px 26px;
+  justify-content: start;
+  padding: 36px 28px;
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-black);
+}
+
+.wiki-preview-tooltip-trigger {
+  display: inline-flex;
+  min-width: 104px;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-strong);
+  background: var(--color-bg-weak);
+  font-size: var(--type-size-100);
+  line-height: var(--type-line-height-100);
 }
 
 .gallery-describe-preview {
@@ -1813,8 +1837,8 @@ button:disabled {
   object-fit: contain;
 }
 
-.gt-tooltip {
-  --gt-tooltip-scale: 1;
+.gt-map-tip {
+  --gt-map-tip-scale: 1;
   position: absolute;
   z-index: 8;
   width: 32px;
@@ -1823,13 +1847,13 @@ button:disabled {
   border: 0;
   color: var(--color-static-black);
   background: transparent;
-  transform: translate(-50%, -100%) scale(var(--gt-tooltip-scale));
+  transform: translate(-50%, -100%) scale(var(--gt-map-tip-scale));
   transform-origin: 50% 100%;
   transition: transform 180ms cubic-bezier(0.645, 0.045, 0.355, 1);
   will-change: transform;
 }
 
-.gt-tooltip__body {
+.gt-map-tip__body {
   display: grid;
   width: 32px;
   height: 32px;
@@ -1840,7 +1864,7 @@ button:disabled {
   box-shadow: 0 1px 2px rgba(14, 18, 27, 0.03), 0 12px 24px rgba(14, 18, 27, 0.06);
 }
 
-.gt-tooltip::after {
+.gt-map-tip::after {
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -1852,14 +1876,192 @@ button:disabled {
   transform: translateX(-50%);
 }
 
-.gt-tooltip:hover .gt-tooltip__body,
-.gt-tooltip:focus-visible .gt-tooltip__body,
-.gt-tooltip--selected .gt-tooltip__body {
+.gt-map-tip:hover .gt-map-tip__body,
+.gt-map-tip:focus-visible .gt-map-tip__body,
+.gt-map-tip--selected .gt-map-tip__body {
   box-shadow: 0 2px 4px rgba(14, 18, 27, 0.08), 0 14px 28px rgba(14, 18, 27, 0.12);
 }
 
-.gt-tooltip--selected {
-  --gt-tooltip-scale: 1.25;
+.gt-map-tip--selected {
+  --gt-map-tip-scale: 1.25;
+}
+
+.gt-tool-tip {
+  position: relative;
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.gt-tool-tip__bubble {
+  position: absolute;
+  z-index: 60;
+  display: block;
+  width: max-content;
+  max-width: min(320px, calc(100vw - 32px));
+  padding: var(--space-element-padding-mid, 4px) var(--space-element-padding-lg, 12px);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-strong);
+  background: var(--color-bg-weak);
+  box-shadow: 0 1px 2px rgba(255, 255, 255, 0.03);
+  font-family: var(--gt-font-family-ui);
+  font-size: var(--type-size-200);
+  font-weight: var(--type-weight-regular);
+  line-height: var(--type-line-height-200);
+  letter-spacing: var(--type-letter-spacing-0, 0);
+  overflow-wrap: anywhere;
+  text-align: left;
+  white-space: normal;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 120ms ease, visibility 120ms ease, transform 120ms ease;
+}
+
+.gt-tool-tip__bubble::before {
+  position: absolute;
+  width: 12px;
+  height: 6px;
+  content: "";
+  background: var(--color-bg-weak);
+}
+
+.gt-tool-tip:hover .gt-tool-tip__bubble,
+.gt-tool-tip:focus-within .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip__bubble {
+  opacity: 1;
+  visibility: visible;
+}
+
+.gt-tool-tip--TopLeft .gt-tool-tip__bubble,
+.gt-tool-tip--TopCenter .gt-tool-tip__bubble,
+.gt-tool-tip--TopRight .gt-tool-tip__bubble {
+  top: calc(100% + 6px);
+  transform: translateY(-2px);
+}
+
+.gt-tool-tip--TopLeft:hover .gt-tool-tip__bubble,
+.gt-tool-tip--TopCenter:hover .gt-tool-tip__bubble,
+.gt-tool-tip--TopRight:hover .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--TopLeft .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--TopCenter .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--TopRight .gt-tool-tip__bubble {
+  transform: translateY(0);
+}
+
+.gt-tool-tip--BottomLeft .gt-tool-tip__bubble,
+.gt-tool-tip--BottomCenter .gt-tool-tip__bubble,
+.gt-tool-tip--BottomRight .gt-tool-tip__bubble {
+  bottom: calc(100% + 6px);
+  transform: translateY(2px);
+}
+
+.gt-tool-tip--BottomLeft:hover .gt-tool-tip__bubble,
+.gt-tool-tip--BottomCenter:hover .gt-tool-tip__bubble,
+.gt-tool-tip--BottomRight:hover .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--BottomLeft .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--BottomCenter .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--BottomRight .gt-tool-tip__bubble {
+  transform: translateY(0);
+}
+
+.gt-tool-tip--TopLeft .gt-tool-tip__bubble,
+.gt-tool-tip--BottomLeft .gt-tool-tip__bubble {
+  left: 0;
+}
+
+.gt-tool-tip--TopCenter .gt-tool-tip__bubble,
+.gt-tool-tip--BottomCenter .gt-tool-tip__bubble {
+  left: 50%;
+}
+
+.gt-tool-tip--TopRight .gt-tool-tip__bubble,
+.gt-tool-tip--BottomRight .gt-tool-tip__bubble {
+  right: 0;
+}
+
+.gt-tool-tip--TopCenter .gt-tool-tip__bubble {
+  transform: translate(-50%, -2px);
+}
+
+.gt-tool-tip--TopCenter:hover .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--TopCenter .gt-tool-tip__bubble {
+  transform: translate(-50%, 0);
+}
+
+.gt-tool-tip--BottomCenter .gt-tool-tip__bubble {
+  transform: translate(-50%, 2px);
+}
+
+.gt-tool-tip--BottomCenter:hover .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--BottomCenter .gt-tool-tip__bubble {
+  transform: translate(-50%, 0);
+}
+
+.gt-tool-tip--TopLeft .gt-tool-tip__bubble::before,
+.gt-tool-tip--TopCenter .gt-tool-tip__bubble::before,
+.gt-tool-tip--TopRight .gt-tool-tip__bubble::before {
+  top: -6px;
+  clip-path: polygon(50% 0, 0 100%, 100% 100%);
+}
+
+.gt-tool-tip--BottomLeft .gt-tool-tip__bubble::before,
+.gt-tool-tip--BottomCenter .gt-tool-tip__bubble::before,
+.gt-tool-tip--BottomRight .gt-tool-tip__bubble::before {
+  bottom: -6px;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.gt-tool-tip--TopLeft .gt-tool-tip__bubble::before,
+.gt-tool-tip--BottomLeft .gt-tool-tip__bubble::before {
+  left: 12px;
+}
+
+.gt-tool-tip--TopCenter .gt-tool-tip__bubble::before,
+.gt-tool-tip--BottomCenter .gt-tool-tip__bubble::before {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.gt-tool-tip--TopRight .gt-tool-tip__bubble::before,
+.gt-tool-tip--BottomRight .gt-tool-tip__bubble::before {
+  right: 12px;
+}
+
+.gt-tool-tip--Left .gt-tool-tip__bubble {
+  top: 50%;
+  left: calc(100% + 6px);
+  transform: translate(-2px, -50%);
+}
+
+.gt-tool-tip--Left:hover .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--Left .gt-tool-tip__bubble {
+  transform: translate(0, -50%);
+}
+
+.gt-tool-tip--Left .gt-tool-tip__bubble::before {
+  top: 50%;
+  left: -9px;
+  transform: translateY(-50%) rotate(90deg);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.gt-tool-tip--Right .gt-tool-tip__bubble {
+  top: 50%;
+  right: calc(100% + 6px);
+  transform: translate(2px, -50%);
+}
+
+.gt-tool-tip--Right:hover .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--Right .gt-tool-tip__bubble {
+  transform: translate(0, -50%);
+}
+
+.gt-tool-tip--Right .gt-tool-tip__bubble::before {
+  top: 50%;
+  right: -9px;
+  transform: translateY(-50%) rotate(-90deg);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 
 .gt-popup-describe-card {
@@ -2235,6 +2437,13 @@ button:disabled {
   line-height: var(--type-line-height-100);
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.gt-wiki-show-card__description {
+  display: -webkit-box;
+  white-space: normal;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .gt-wiki-category-card__arrow,
@@ -2966,6 +3175,14 @@ button:disabled {
   grid-template-columns: minmax(0, 1fr) auto 20px;
 }
 
+.gt-wiki-show-card--no-arrow {
+  grid-template-columns: 60px minmax(0, 1fr) auto;
+}
+
+.gt-wiki-show-card--no-image.gt-wiki-show-card--no-arrow {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
 .gt-wiki-show-card .gt-wiki-image {
   width: 60px;
   height: 60px;
@@ -2989,6 +3206,16 @@ button:disabled {
   gap: 6px;
 }
 
+.gt-wiki-show-card__content > .gt-tool-tip,
+.gt-wiki-show-card__progress > .gt-tool-tip {
+  width: 100%;
+}
+
+.gt-wiki-show-card__content > .gt-tool-tip > .gt-wiki-show-card__description,
+.gt-wiki-show-card__progress > .gt-tool-tip > .gt-wiki-show-card__description {
+  width: 100%;
+}
+
 .gt-wiki-show-card .gt-wiki-show-card__title {
   color: var(--color-text-strong);
   font-size: var(--type-size-200);
@@ -3010,7 +3237,7 @@ button:disabled {
 }
 
 .gt-wiki-show-card__progress {
-  height: 60px;
+  min-height: 60px;
   align-self: stretch;
   justify-content: space-between;
   gap: 4px;
@@ -3329,7 +3556,7 @@ button:disabled {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gt-tooltip,
+  .gt-map-tip,
   .gt-wiki-topbar::after,
   .gt-wiki-topbar-item {
     transition: none;

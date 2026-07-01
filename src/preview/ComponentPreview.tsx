@@ -19,7 +19,7 @@ import {
   SearchBar,
   Select,
   Scroll,
-  Tooltip,
+  MapTip,
 } from "../components/game-tool";
 
 const DEFAULT_DATA_BASE = "/data/crimsondesert/";
@@ -665,7 +665,7 @@ function MapDemoPreview() {
 
             <div className="map-canvas__markers">
               {visibleMarkers.map((marker) => (
-                <Tooltip
+                <MapTip
                   key={marker.id}
                   content={marker.title}
                   visible
