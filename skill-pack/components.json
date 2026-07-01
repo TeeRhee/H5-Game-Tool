@@ -687,7 +687,8 @@
         "ShowAttributes=true|false"
       ],
       "observedStructure": {
-        "rule": "Wiki list/detail describe card. Use it when the source entry has richer title, description, image, badge, or meta/attribute content than Game.ShowCard can fully express. This is separate from the map popup detail card."
+        "rule": "Wiki list/detail describe card. Use it when the source entry has richer title, description, image, badge, or meta/attribute content than Game.ShowCard can fully express. This is separate from the map popup detail card.",
+        "lgNoAttributesRule": "For size=lg with showAttributes=false, the card height must adapt to rendered content instead of keeping the full LG fixed height reserved for the attributes row."
       },
       "props": {
         "title": {
@@ -704,6 +705,22 @@
           "type": "string",
           "required": false,
           "source": "TODO_FROM_DATASOURCE"
+        },
+        "showImage": {
+          "type": "boolean",
+          "required": false,
+          "default": true
+        },
+        "showBadge": {
+          "type": "boolean",
+          "required": false,
+          "default": true
+        },
+        "showAttributes": {
+          "type": "boolean",
+          "required": false,
+          "default": true,
+          "rule": "When false, do not render the attribute/meta row. For size=lg, the overall card height should adapt to title, description, badge, and image content."
         },
         "size": {
           "type": "enum",

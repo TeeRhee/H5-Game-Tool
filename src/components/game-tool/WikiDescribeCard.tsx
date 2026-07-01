@@ -36,9 +36,19 @@ export function WikiDescribeCard({
 }: WikiDescribeCardProps) {
   const badgeText = badge ?? badges[0];
   const metaItems = meta ?? attributes.map((item) => item.value || item.label).filter(Boolean);
+  const hasAttributes = showAttributes && metaItems.length > 0;
 
   return (
-    <article className={cx("gt-wiki-describe-card", `gt-wiki-describe-card--${size}`, `gt-wiki-describe-card--${state}`, className)} {...props}>
+    <article
+      className={cx(
+        "gt-wiki-describe-card",
+        `gt-wiki-describe-card--${size}`,
+        `gt-wiki-describe-card--${state}`,
+        hasAttributes ? "" : "gt-wiki-describe-card--no-attributes",
+        className,
+      )}
+      {...props}
+    >
       {showImage ? <ImageFrame ratio="1:1" src={imageSrc} alt="" /> : null}
       <div className="gt-wiki-describe-card__body">
         <div className="gt-wiki-describe-card__content">
@@ -48,7 +58,7 @@ export function WikiDescribeCard({
           </div>
           {description ? <p>{description}</p> : null}
         </div>
-        {showAttributes && metaItems.length > 0 ? (
+        {hasAttributes ? (
           <div className="gt-wiki-describe-card__attributes">
             {metaItems.slice(0, size === "sm" ? 3 : 1).map((item) => (
               <span key={item}>{item}</span>

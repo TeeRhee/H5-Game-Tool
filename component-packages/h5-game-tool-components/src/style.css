@@ -2332,6 +2332,10 @@ button:disabled {
   box-shadow: none;
 }
 
+.gt-wiki-describe-card--lg.gt-wiki-describe-card--no-attributes {
+  height: auto;
+}
+
 .gt-wiki-describe-card--hover,
 .gt-wiki-describe-card:hover {
   border-color: #353a3d;
@@ -2376,6 +2380,11 @@ button:disabled {
   padding: 0 6px;
   box-sizing: border-box;
   gap: 8px;
+}
+
+.gt-wiki-describe-card--lg.gt-wiki-describe-card--no-attributes .gt-wiki-describe-card__body {
+  height: auto;
+  justify-content: flex-start;
 }
 
 .gt-wiki-describe-card__content {
