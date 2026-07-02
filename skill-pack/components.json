@@ -1324,6 +1324,136 @@
       }
     },
     {
+      "id": "Base.Modal",
+      "figmaName": "Modal",
+      "recommendedFigmaName": "Base / Modal / Default",
+      "sourceNodeId": "438:3663",
+      "observedVariantNodes": {
+        "detail": "436:5415",
+        "video": "438:3662",
+        "figmaVideoName": "Property=Vedio"
+      },
+      "observedUse": [
+        "wiki:modal.item-explanation",
+        "source pages that explain a single item through a modal overlay"
+      ],
+      "observedStructure": {
+        "rule": "Centered modal for item explanation content only. Use this component when the original source data/page represents the selected item explanation as a modal, not as a normal detail page, tooltip, card expansion, or map popup.",
+        "overlay": "Place over the current page with a #000000 overlay at 50% opacity. The page underneath remains visible only through the dim layer.",
+        "dialog": "Base / Modal / Default component set: Property=Detail node 436:5415 is 381 x 460; Property=Vedio node 438:3662 is 381 x 290. Center the panel above the overlay, using the selected variant height.",
+        "close": "Close icon button at the top-right of the panel. It closes the modal and returns to the underlying page state.",
+        "detailVariant": "Property=Detail: optional 100x100 centered image, centered title, optional subtitle/brief summary, and lower 357 x 232 description box. Omit unavailable optional fields and collapse their spacing.",
+        "videoVariant": "Property=Vedio in Figma, exposed as variant=video in code: panel 381 x 290 with a 357 x 238 video area at x=12, y=40 and a centered play icon. Use for video source material only.",
+        "description": "Detail variant lower description box is the max-visible text area. It grows with content until its max height, then only this description area scrolls vertically; the panel height itself remains capped."
+      },
+      "props": {
+        "open": {
+          "type": "boolean",
+          "required": false,
+          "default": true,
+          "source": "renderer state"
+        },
+        "variant": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "detail",
+            "video"
+          ],
+          "default": "detail",
+          "rule": "Use detail for item text/image explanation modals. Use video only when the modal source is video media. The Figma variant is named Property=Vedio, but code uses the corrected value video."
+        },
+        "title": {
+          "type": "string",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Required for variant=detail unless the source modal intentionally omits a title. Not required for variant=video."
+        },
+        "subtitle": {
+          "type": "string",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Bind the item's brief summary when present; omit the row when absent."
+        },
+        "description": {
+          "type": "string|ReactNode",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Bind the full explanatory text. Do not truncate the source string; if it exceeds the description box max height, scroll inside the description area."
+        },
+        "imageSrc": {
+          "type": "string",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Bind the modal item's icon/image when present. The observed state uses a 100x100 centered square image."
+        },
+        "imageAlt": {
+          "type": "string",
+          "required": false,
+          "default": "",
+          "source": "TODO_FROM_DATASOURCE"
+        },
+        "videoSrc": {
+          "type": "string",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Used only for variant=video. Bind the video source URL or playable media asset. Provide videoSrc or posterSrc when rendering the video variant."
+        },
+        "posterSrc": {
+          "type": "string",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Used only for variant=video. Bind the video poster/thumbnail when available; it may be shown before playback or as a fallback when videoSrc is unavailable."
+        },
+        "videoTitle": {
+          "type": "string",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Accessible title for the video source material."
+        },
+        "videoControls": {
+          "type": "boolean",
+          "required": false,
+          "default": true,
+          "rule": "Enable native controls for playable video unless the host renderer supplies a separate player control layer."
+        },
+        "onClose": {
+          "type": "function",
+          "required": false,
+          "source": "renderer state",
+          "rule": "Close the modal and restore the underlying page state."
+        },
+        "maxHeight": {
+          "type": "number|string",
+          "required": false,
+          "default": "variant-dependent",
+          "rule": "Defaults to 460 for variant=detail and 290 for variant=video. Height remains content-adaptive below the active variant cap when applicable."
+        },
+        "descriptionMaxHeight": {
+          "type": "number|string",
+          "required": false,
+          "default": 232,
+          "rule": "Maximum height of the lower explanation area. When text exceeds this area, show the internal vertical scrollbar."
+        },
+        "mode": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "fixed",
+            "inline"
+          ],
+          "default": "fixed",
+          "rule": "Use fixed in production pages. Inline is only for component gallery or isolated template previews."
+        },
+        "showOverlay": {
+          "type": "boolean",
+          "required": false,
+          "default": true,
+          "rule": "Keep true for source-page modal usage so the 50% black dim layer is rendered."
+        }
+      }
+    },
+    {
       "id": "Map.MapTip",
       "figmaName": "Map / MapTip / Default",
       "observedUse": [

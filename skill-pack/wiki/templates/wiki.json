@@ -17,9 +17,27 @@
       "detailAllStates": "304:9319",
       "guideDetailWithNavAndInfo": "304:18296",
       "guideDetailWithInfo": "306:4332",
-      "guideDetailWithNav": "306:4716"
+      "guideDetailWithNav": "306:4716",
+      "modal": "438:3663",
+      "modalDetail": "436:5415",
+      "modalVideo": "438:3662"
     },
     "quickLocate": {
+      "itemExplanationModal": {
+        "type": "modal-item-explanation",
+        "aliases": [
+          "Modal",
+          "Base.Modal",
+          "Property=Detail",
+          "Property=Vedio",
+          "video modal",
+          "弹窗说明",
+          "项目解释弹窗",
+          "modal.item-explanation"
+        ],
+        "primaryRegion": "modal.item-explanation",
+        "rule": "Use this to locate the modal overlay pattern. It is only for source pages where an item explanation is actually shown in a modal."
+      },
       "documentGuideDetail": {
         "type": "document-guide-detail",
         "aliases": [
@@ -84,7 +102,8 @@
     "breadcrumbPlacement": "When Nav.Breadcrumbs is rendered, place it in the first row of the Body at bodyRelativeX=32, bodyRelativeY=16, height=26. Structured detail pages use width=294 and content starts at bodyRelativeY=62. Document guide detail pages use width=188 and ArticleLayout starts at bodyRelativeY=62. Breadcrumbs are not rendered on secondary pages unless a future routing contract explicitly enables them.",
     "cardLikeNoThirdLevelGrid": "For card-like large Layout.DescribeCard grids without third-level navigation, use repeat(4, 210px) by default. If the available content width cannot fit four 210px columns plus gaps, downgrade to repeat(3, 210px). A single rendered row is vertically centered after the column count is chosen; item count or single-row alignment must not reduce the column count by itself.",
     "pageScopedCardSetConsistency": "Card family, image frame ratio, and similar card-set consistency rules are scoped to the current rendered page/list only: the active secondary tab plus optional active third-level group. Do not inherit a component family or imageRatio from sibling second-level tabs, sibling secondary pages, or the whole active first-level Nav.TopBar category.",
-    "documentGuideDetail": "Use guide.document-detail for article-like guide pages with long prose, one main media block, article metadata, optional section anchors, and optional related-info links. Choose among GuideDetailWithNavAndInfo, GuideDetailWithInfo, and GuideDetailWithNav based on the source data; do not force nav or related info when the source lacks those structures."
+    "documentGuideDetail": "Use guide.document-detail for article-like guide pages with long prose, one main media block, article metadata, optional section anchors, and optional related-info links. Choose among GuideDetailWithNavAndInfo, GuideDetailWithInfo, and GuideDetailWithNav based on the source data; do not force nav or related info when the source lacks those structures.",
+    "itemExplanationModal": "Use modal.item-explanation only as an overlay state above the current page when the original source page opens a modal to explain a single item. Do not replace normal detail pages, tooltips, card descriptions, or map popups with Modal just because the item has explanatory text."
   },
   "regions": [
     {
@@ -100,6 +119,34 @@
         "detail": "x=0, y=0, w=1000, h=610"
       },
       "dataRequirement": "STATIC_TEMPLATE_CHROME"
+    },
+    {
+      "id": "modal.item-explanation",
+      "displayName": "Modal item explanation overlay",
+      "purpose": "Overlay state for source pages that explain a selected item through a modal dialog.",
+      "allowedComponents": [
+        "Base.Modal"
+      ],
+      "layout": {
+        "sourceNodeId": "438:3663",
+        "detailNodeId": "436:5415",
+        "videoNodeId": "438:3662",
+        "overlay": "Cover the current 1000 x 610 page with #000000 at 50% opacity.",
+        "dialog": "Center Base.Modal above the overlay. Property=Detail panel is w=381, max-height=460. Property=Vedio panel is w=381, h=290.",
+        "description": "For variant=detail, the lower description box has max-height=232. If the full explanation exceeds that area, only the description box scrolls vertically with a right-side scrollbar.",
+        "video": "For variant=video, use the Figma Property=Vedio state: panel w=381 h=290 with a 357 x 238 video area at x=12, y=40 and centered play icon. Do not render title, subtitle, or description unless the source video modal explicitly has separate text outside the video.",
+        "usage": "Render this region only as a modal state on top of the underlying page. The underlying page keeps its own selected template and component choices."
+      },
+      "dataBinding": {
+        "title": "TODO_FROM_DATASOURCE modal item title",
+        "subtitle": "TODO_FROM_DATASOURCE optional brief summary",
+        "description": "TODO_FROM_DATASOURCE full modal explanation",
+        "imageSrc": "TODO_FROM_DATASOURCE optional modal item image or icon",
+        "videoSrc": "TODO_FROM_DATASOURCE optional modal video source when variant=video",
+        "posterSrc": "TODO_FROM_DATASOURCE optional modal video poster/thumbnail when variant=video",
+        "open": "renderer state"
+      },
+      "dataRequirement": "TODO_FROM_DATASOURCE"
     },
     {
       "id": "shell.header",
@@ -1586,6 +1633,7 @@
     "Do not invent datasource fields; use TODO_FROM_DATASOURCE until the Wiki mapping contract defines source fields.",
     "Treat every Figma template page as a layout reference, not a mandatory data structure. Select regions and components based on the original source page first, then use the matching template coordinates for the selected component family.",
     "A referenced template page may be used partially. Do not render secondary tabs, third-level sidebars, breadcrumbs, large cards, pagination, or detail sections unless the original source page or routing context actually contains that structure.",
+    "Render modal.item-explanation only when the original source page uses a modal overlay to explain a single item or video source material. Place Base.Modal centered over the current page with a #000000 50% opacity overlay. Use variant=detail for Property=Detail node 436:5415: 381px wide, max-height 460px, content-adaptive height, and a lower description area capped at 232px that scrolls internally when the full explanation is longer. Use variant=video for Figma Property=Vedio node 438:3662: 381px wide, 290px high, with a 357 x 238 video area and centered play icon.",
     "When multiple components can represent the same region, choose the component by source information density before applying layout. The phrase same page/list means the currently rendered list only: active secondary tab plus optional active third-level group. Compact text entries may use Game.ShowCard only when every visible card subtitle/body in that current list fits within one visible line, richer inline entries may use compact Layout.DescribeCard, and image-first gallery entries may use the SecondaryPageLargeCard Layout.DescribeCard grid.",
     "For Layout.DescribeCard, bind ShowImage, ShowTitle, ShowDescription, ShowBadge, and ShowAttributes from actual source fields and the chosen presentation. When one is false, the renderer must omit that region and collapse its spacing rather than rendering empty placeholders. If showTitle=false and showBadge=false, omit the whole title row.",
     "For every rendered card set that uses imageSrc, choose Base.Image ratio from the source image dimensions or visual type of the current page/list before applying the card layout. Use 1:1 for square icons and near-square art; use 4:5 for vertical portraits, character/card art, posters, and portrait-like assets around width/height 0.8; use 3:2 or 16:9 for weapons, equipment thumbnails, maps, screenshots, landscapes, banners, and other wide assets to avoid square-frame cropping. Do not reuse an imageRatio selected for one second-level tab or sibling secondary page on another tab under the same first-level category.",

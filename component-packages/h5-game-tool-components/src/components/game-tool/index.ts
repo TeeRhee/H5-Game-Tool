@@ -9,6 +9,7 @@ export * from "./DropdownCard";
 export * from "./Divider";
 export * from "./PictureTitle";
 export * from "./MapTip";
+export * from "./Modal";
 export * from "./ToolTip";
 export * from "./PopupDescribeCard";
 export * from "./Badge";

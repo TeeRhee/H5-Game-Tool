@@ -84,6 +84,16 @@ For any Wiki card set that renders `imageSrc`, inspect the source asset dimensio
 
 For `Game.ShowCard`, the right arrow is a drill-down affordance, not decoration. Hide it when the source entry is terminal and has no next page or next hierarchy level. The `voice` state uses the Figma node `434:3632`, size `498 x 58`, and renders a left play/pause icon, title, right time label, and bottom playback progress bar; bind `audioSrc` and `durationLabel` from source/audio metadata and bind `currentTimeLabel`, `progress`, and `isPlaying` from renderer playback state. The subtitle/description area shows at most one visible line and truncates overflow; wrap the text with `Base.ToolTip` and pass the full description string as tooltip content, but show the tooltip only when the visible text is actually truncated or hidden. Tooltip display should have a short delay around `120ms` and use auto placement to stay inside the viewport and nearest scroll/clipping container.
 
+### Observed Modal Overlay
+
+Use `Base.Modal` only when the original source page uses a modal overlay to explain a single selected item or to present video source material. Do not use it to replace normal detail pages, card descriptions, tooltip disclosure, or map popups.
+
+- Figma component frame: `438:3663`, design name `Base / Modal / Default`; repo contract name `Base.Modal`.
+- Overlay: cover the current Wiki page with `#000000` at `50%` opacity.
+- Detail variant: Figma `Property=Detail` node `436:5415`, panel `w=381`, `max-height=460`. Header content is optional centered `100 x 100` image/icon, title, and optional subtitle. Missing optional fields collapse their spacing. The lower explanation box is the max-visible text area, default `max-height=232`; bind the full explanation text and scroll only this description area if text exceeds the max height.
+- Video variant: Figma `Property=Vedio` node `438:3662`, panel `w=381, h=290`. Use code `variant="video"` for this state. It contains a `357 x 238` video area at `x=12, y=40` with a centered play icon. Bind `videoSrc`, optional `posterSrc`, and `videoTitle`; do not render title, subtitle, or description unless the source video modal explicitly has separate text outside the video.
+- Template usage: `modal.item-explanation` is an overlay state above the current page. The underlying page keeps its own chosen template and component layout.
+
 If any related card on the current generated page/list requires more than one visible line of secondary/rich text, switch the entire card set for that page/list to `Layout.DescribeCard` with `Size=SM`. Do not mix `Game.ShowCard` and `Layout.DescribeCard` in that current card set only because one item is longer, but do not carry this choice into sibling second-level tabs or sibling secondary pages.
 
 ### Observed Secondary Large-Card Layout
@@ -232,6 +242,7 @@ Current Wiki template components include:
 - `Game.ProgressBarLabel`
 - `Game.ProgressBar`
 - `Base.Image`
+- `Base.Modal`
 - `Base.Badge`
 - `Nav.Pagination`
 - `Data.TableHeaderCell`

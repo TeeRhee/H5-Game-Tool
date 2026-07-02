@@ -46,7 +46,9 @@ const detailCard = region("detail.detail-card-section").observedDetailLayouts;
 const detailExtended = region("detail.extended-section").observedDetailLayouts;
 const guideDocument = region("guide.document-detail");
 const guideDocumentLayouts = guideDocument.observedGuideDetailLayouts;
+const modalRegion = region("modal.item-explanation");
 const baseImageComponent = components.components.find((component) => component.id === "Base.Image");
+const modalComponent = components.components.find((component) => component.id === "Base.Modal");
 const describeCardComponent = components.components.find((component) => component.id === "Layout.DescribeCard");
 const detailCardComponent = components.components.find((component) => component.id === "Layout.DetailCard");
 const showCardComponent = components.components.find((component) => component.id === "Game.ShowCard");
@@ -60,6 +62,18 @@ const checks = [
   { label: "Guide detail with nav and info state node", actual: template.source.stateNodes.guideDetailWithNavAndInfo, expected: "304:18296" },
   { label: "Guide detail with info state node", actual: template.source.stateNodes.guideDetailWithInfo, expected: "306:4332" },
   { label: "Guide detail with nav state node", actual: template.source.stateNodes.guideDetailWithNav, expected: "306:4716" },
+  { label: "Modal state node", actual: template.source.stateNodes.modal, expected: "438:3663" },
+  { label: "Modal detail state node", actual: template.source.stateNodes.modalDetail, expected: "436:5415" },
+  { label: "Modal video state node", actual: template.source.stateNodes.modalVideo, expected: "438:3662" },
+  { label: "Modal component node", actual: modalComponent?.sourceNodeId, expected: "438:3663" },
+  { label: "Modal video variant prop", actual: modalComponent?.props?.variant?.values?.includes("video"), expected: true },
+  { label: "Modal video variant node", actual: modalComponent?.observedVariantNodes?.video, expected: "438:3662" },
+  { label: "Modal quick locate", actual: template.source.quickLocate.itemExplanationModal.aliases.includes("Base.Modal"), expected: true },
+  { label: "Modal usage policy", actual: template.templateUsagePolicy.itemExplanationModal.includes("original source page opens a modal"), expected: true },
+  { label: "Modal region component", actual: modalRegion.allowedComponents.includes("Base.Modal"), expected: true },
+  { label: "Modal overlay layout", actual: modalRegion.layout.overlay.includes("50% opacity") && modalRegion.layout.dialog.includes("Property=Vedio") && modalRegion.layout.video.includes("357 x 238"), expected: true },
+  { label: "Modal mapping rule", actual: mapping.rules.some((rule) => rule.includes("Base.Modal") && rule.includes("variant=video") && rule.includes("normal detail pages")), expected: true },
+  { label: "Modal renderer rule", actual: template.requiredRendererBehavior.some((rule) => rule.includes("modal.item-explanation") && rule.includes("variant=video") && rule.includes("438:3662")), expected: true },
   { label: "Guide document quick locate", actual: template.source.quickLocate.documentGuideDetail.aliases.includes("GuideDetailWithInfo"), expected: true },
   { label: "Guide document usage policy", actual: template.templateUsagePolicy.documentGuideDetail.includes("GuideDetailWithNavAndInfo"), expected: true },
   { label: "Breadcrumb placement policy", actual: template.templateUsagePolicy.breadcrumbPlacement.includes("bodyRelativeX=32") && template.templateUsagePolicy.breadcrumbPlacement.includes("bodyRelativeY=16") && template.templateUsagePolicy.breadcrumbPlacement.includes("height=26"), expected: true },

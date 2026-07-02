@@ -29,6 +29,7 @@ import {
   TableHeaderCell,
   TableRowCell,
   MapTip,
+  Modal,
   ToolTip,
   TopBar,
   TopBarItem,
@@ -381,6 +382,24 @@ export function ComponentGallery() {
                 </ToolTip>
               ))}
             </div>
+          </ComponentCard>
+
+          <ComponentCard title="Base / Modal / Default" description="源数据以弹窗承接项目解释说明时使用，50% 黑色蒙层上居中展示。" wide>
+            <Modal
+              mode="inline"
+              title="物品名称"
+              subtitle="物品简要说明"
+              imageSrc="/assets/preview/map-placeholder.png"
+              onClose={() => undefined}
+              description="物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明物品简要说明"
+            />
+            <Modal
+              mode="inline"
+              variant="video"
+              videoTitle="视频素材"
+              posterSrc="/assets/preview/map-placeholder.png"
+              onClose={() => undefined}
+            />
           </ComponentCard>
 
           <ComponentCard title="Map / PopupDescribeCard / Default" description="地图浮动详情面板，覆盖有图、无图、仅标题三种内容结构。" wide>
