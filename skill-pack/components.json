@@ -721,6 +721,9 @@
       "observedUse": [
         "wiki:detail.breadcrumbs"
       ],
+      "observedStructure": {
+        "itemSizing": "Each breadcrumb item hugs its label text width. Do not use the old fixed 94px item width; keep h=28, padding 4px 6px, and separator gap from the component style."
+      },
       "props": {
         "items": {
           "type": "array",
@@ -785,7 +788,7 @@
         "ShowAttributes=true|false"
       ],
       "observedStructure": {
-        "rule": "Wiki list/detail describe card. Use it when the source entry has richer title, description, image, badge, meta/attribute content, or secondary rich text that needs more than one visible line. For page/list card consistency, if any card in the same rendered page/list needs more than one visible subtitle/body line, use Layout.DescribeCard with size=sm for all related cards on that page/list instead of Game.ShowCard. This is separate from the map popup detail card.",
+        "rule": "Wiki list/detail describe card. Use it when the source entry has richer title, description, image, badge, meta/attribute content, or secondary rich text that needs more than one visible line. For page/list card consistency, if any card in the same rendered page/list needs more than one visible subtitle/body line, use Layout.DescribeCard with size=sm for all related cards on that current page/list instead of Game.ShowCard. Here same rendered page/list means the active secondary tab plus optional active third-level group; do not inherit this decision across sibling second-level tabs or the whole active first-level category. This is separate from the map popup detail card.",
         "smDefaultNode": "Figma node 177:1104, Size=SM State=Default: root w=328 h=106, horizontal auto-layout, padding 8, gap 12, 1px white 10% stroke, radius 6. Base.Image instance is x=8 y=8 w=90 h=90 opacity 80%. Right body is x=110 y=8 w=210 h=90 vertical, gap 6. Title/description group is w=210 h=62, gap 4; title row is h=22; subtitle text is w=210 h=36 with Body/SM 12px/18px and two visible lines. Attribute row is y=68 w=210 h=22, padding 4px 6px, gap 2.",
         "smDescriptionRule": "For size=sm, render description/subtitle as its own text node under the title row, not as a one-line ShowCard subtitle. It occupies a two-line 36px-high region using 12px text with 18px line-height. Clamp visible text to two lines; preserve the full string and expose Base.ToolTip only when the subtitle text is actually truncated or hidden.",
         "lgNoAttributesRule": "For size=lg with showAttributes=false, the card height must adapt to rendered content instead of keeping the full LG fixed height reserved for the attributes row.",
@@ -818,7 +821,7 @@
           ],
           "default": "1:1",
           "source": "TODO_FROM_DATASOURCE_OR_ASSET_METADATA",
-          "rule": "Bind to the nearest supported ratio for imageSrc. If source dimensions are available, use width/height: near 1.0 -> 1:1, around 1.5 -> 3:2, around or above 1.7 -> 16:9. If dimensions are unavailable, infer from content type: icons/portraits -> 1:1; weapons, landscape screenshots, map thumbnails, and wide item art -> 16:9 or 3:2."
+          "rule": "Bind to the nearest supported ratio for the current rendered page/list. If source dimensions are available, use width/height: near 1.0 -> 1:1, around 1.5 -> 3:2, around or above 1.7 -> 16:9. If dimensions are unavailable, infer from content type: icons/portraits -> 1:1; weapons, landscape screenshots, map thumbnails, and wide item art -> 16:9 or 3:2. Do not inherit an imageRatio chosen for a sibling second-level tab or another secondary page under the same first-level category."
         },
         "showImage": {
           "type": "boolean",
@@ -844,7 +847,7 @@
             "lg"
           ],
           "default": "sm",
-          "rule": "Use size=sm when replacing Game.ShowCard because any source card in the same page/list needs more than one visible subtitle/body line."
+          "rule": "Use size=sm when replacing Game.ShowCard because any source card in the current rendered page/list needs more than one visible subtitle/body line. This consistency scope is the current page/list only, not the whole first-level category."
         },
         "state": {
           "type": "enum",
@@ -907,7 +910,7 @@
         "wiki:detail.related-section"
       ],
       "observedStructure": {
-        "rule": "ShowCard is a compact list/detail summary card for entries whose subtitle/body text fits within one visible line. Use the right arrow only when the represented item has a next page, next hierarchy level, target route, or explicit clickable drill-down. The subtitle/description region clamps to one visible line; full text must be exposed through Base.ToolTip on text hover when truncation is possible. Do not use ShowCard for a page/list whose source card text requires more than one visible subtitle/body line; use Layout.DescribeCard size=sm for the whole page/list instead."
+        "rule": "ShowCard is a compact list/detail summary card for entries whose subtitle/body text fits within one visible line. Use the right arrow only when the represented item has a next page, next hierarchy level, target route, or explicit clickable drill-down. The subtitle/description region clamps to one visible line; full text must be exposed through Base.ToolTip on text hover when truncation is possible. Do not use ShowCard for the current rendered page/list when its visible source card text requires more than one visible subtitle/body line; use Layout.DescribeCard size=sm for that current page/list instead. Do not apply this decision across sibling second-level tabs or the whole first-level category."
       },
       "props": {
         "title": {
@@ -939,7 +942,7 @@
           ],
           "default": "1:1",
           "source": "TODO_FROM_DATASOURCE_OR_ASSET_METADATA",
-          "rule": "Bind to the nearest supported ratio for imageSrc. Use 1:1 only for square icons, portraits, and near-square item art; use 3:2 or 16:9 for wide source assets such as weapons, equipment thumbnails, landscapes, maps, screenshots, and banners so the image is not unnecessarily cropped."
+          "rule": "Bind to the nearest supported ratio for the current rendered page/list. Use 1:1 for square icons, portraits, and near-square item art; use 3:2 or 16:9 for wide source assets such as weapons, equipment thumbnails, landscapes, maps, screenshots, and banners so the image is not unnecessarily cropped. Do not inherit an imageRatio chosen for a sibling second-level tab or another secondary page under the same first-level category."
         },
         "label": {
           "type": "string",
@@ -1050,12 +1053,16 @@
         "wiki:detail.extended-section"
       ],
       "observedStructure": {
-        "rule": "Use for structured detail content when source sections match one of the supported structures: title/description, features, infoItems, statusBadges, structured tableRows/table, or an approved media/aside block. Do not force unstructured content into this component when the source shape does not match."
+        "rule": "Use for structured detail content when source sections match one of the supported structures: title/description, features, infoItems, statusBadges, structured tableRows/table, or an approved media/aside block. Do not force unstructured content into this component when the source shape does not match.",
+        "compositionRule": "A detail page may be assembled from multiple Layout.DetailCard modules. Each module represents one source detail section, and the renderer chooses which optional internal blocks to render from that section's actual data. The only required content for each module is title plus at least one optional content block from description, features, infoItems, statusBadges, tableRows/table, aside, media, or approved child content.",
+        "orderingRule": "Within a Layout.DetailCard module, keep title first, then render only the optional blocks that exist in the source data, preserving the source section order where possible. Do not force every DetailCard to include all internal parts just because the Figma component demonstrates them.",
+        "titleRow": "Title renders inside an internal H1 row: horizontal auto layout, h=20, gap=6, vertically centered.",
+        "titleDecoration": "Always render the internal title decoration before the title text. Figma node Rectangle 1 is a primary-color vertical cut marker, visual size 1.5 x 14, using var(--color-primary-base). This decoration is component chrome and must not be mapped from datasource."
       },
       "props": {
         "title": {
           "type": "string",
-          "required": false,
+          "required": true,
           "source": "TODO_FROM_DATASOURCE"
         },
         "description": {

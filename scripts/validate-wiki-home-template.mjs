@@ -6,6 +6,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
 const templatePath = path.join(repoRoot, "skill-pack/wiki/templates/wiki.json");
 const template = JSON.parse(fs.readFileSync(templatePath, "utf8"));
+const mapping = JSON.parse(fs.readFileSync(path.join(repoRoot, "skill-pack/wiki/mapping/wiki.json"), "utf8"));
+const components = JSON.parse(fs.readFileSync(path.join(repoRoot, "skill-pack/components.json"), "utf8"));
 
 function region(id) {
   const match = template.regions.find((item) => item.id === id);
@@ -31,6 +33,7 @@ const summary = region("home.summary").observedHomeLayout;
 const grid = region("home.category-grid").observedHomeLayout;
 const secondaryBreadcrumbs = region("secondary.breadcrumbs").observedSecondaryLayout;
 const secondaryList = region("secondary.card-list").observedSecondaryLayout;
+const secondaryLargeCard = region("secondary.card-list").observedSecondaryLargeCardLayout;
 const secondaryMultiTabs = region("secondary.multi-level-tabs").observedSecondaryMultiNavLayout;
 const secondaryMultiSidebar = region("secondary.multi-level-sidebar").observedSecondaryMultiNavLayout;
 const secondaryMultiList = region("secondary.multi-level-card-list").observedSecondaryMultiNavLayout;
@@ -41,11 +44,16 @@ const detailAttributes = region("detail.attribute-section").observedDetailLayout
 const detailRelated = region("detail.related-section").observedDetailLayouts;
 const detailCard = region("detail.detail-card-section").observedDetailLayouts;
 const detailExtended = region("detail.extended-section").observedDetailLayouts;
+const detailCardComponent = components.components.find((component) => component.id === "Layout.DetailCard");
+const breadcrumbsComponent = components.components.find((component) => component.id === "Nav.Breadcrumbs");
 
 const checks = [
   { label: "Canvas width", actual: template.viewport.defaultCanvas.width, expected: 1000 },
   { label: "Canvas height", actual: template.viewport.defaultCanvas.height, expected: 610 },
   { label: "Observed all-states reference documented", actual: template.viewport.observedFigmaViewport.rule.includes("DetailPageAllStates"), expected: true },
+  { label: "Page-scoped card-set consistency policy", actual: template.templateUsagePolicy.pageScopedCardSetConsistency.includes("current rendered page/list only"), expected: true },
+  { label: "Image ratio does not inherit across second-level tabs", actual: template.requiredRendererBehavior.some((rule) => rule.includes("Do not reuse an imageRatio selected for one second-level tab")), expected: true },
+  { label: "Mapping image ratio scoped to current page list", actual: mapping.rules.some((rule) => rule.includes("current rendered page/list") && rule.includes("re-evaluate imageRatio independently")), expected: true },
   { label: "Header frame", actual: header.absoluteFrame, expected: { x: 0, y: 0, width: 1000, height: 84 } },
   { label: "Header padding", actual: header.padding, expected: { top: 32, right: 32, bottom: 16, left: 32 } },
   { label: "Header topbar", actual: header.topBar, expected: { x: 32, y: 32, width: 696, height: 36 } },
@@ -74,6 +82,9 @@ const checks = [
   { label: "Secondary DescribeCard content area", actual: secondaryList.describeCardInternals.content, expected: { x: 110, y: 8, width: 210, height: 90, gap: 6 } },
   { label: "Secondary DescribeCard subtitle", actual: secondaryList.describeCardInternals.description, expected: { x: 0, y: 26, width: 210, height: 36, lineHeight: 18, visibleLines: 2, tooltip: "Wrap with Base.ToolTip only when the rendered subtitle is actually truncated or hidden." } },
   { label: "Secondary pagination frame", actual: secondaryList.pagination, expected: { bodyRelativeX: 0, bodyRelativeY: 482, absoluteX: 0, absoluteY: 562, width: 1000, height: 64 } },
+  { label: "Secondary large-card default columns", actual: secondaryLargeCard.cardGrid, expected: { defaultGridTemplateColumns: "repeat(4, 210px)", fallbackGridTemplateColumns: "repeat(3, 210px)" } },
+  { label: "Secondary large-card column rule", actual: secondaryLargeCard.cardGrid.columnSelectionRule.includes("Do not reduce columns because itemCount is less than 4"), expected: true },
+  { label: "Secondary large-card single-row column independence", actual: secondaryLargeCard.cardGrid.singleRowRule.includes("Single-row alignment must not change the column count"), expected: true },
   { label: "Secondary multi-nav state node", actual: template.source.stateNodes.secondaryMultiNav, expected: "375:4979" },
   { label: "Secondary multi-nav body", actual: secondaryMultiTabs.body, expected: { x: 0, y: 84, width: 1000, height: 526 } },
   { label: "Secondary multi-nav tabs container", actual: secondaryMultiTabs.tabsContainer, expected: { bodyRelativeX: 32, bodyRelativeY: 16, absoluteX: 32, absoluteY: 100, width: 390, height: 26, gap: 6 } },
@@ -84,6 +95,8 @@ const checks = [
   { label: "Secondary multi-nav card grid", actual: secondaryMultiList.cardGrid, expected: { component: "Game.ShowCard", columns: 2, visibleDesignRows: 6, cardWidth: 406, cardHeight: 76, columnGap: 8, rowGap: 8, cardXPositions: [0, 414], rowYPositions: [0, 84, 168, 252, 336, 420], overflowBeyondShell: 16 } },
   { label: "Detail large breadcrumbs", actual: detailBreadcrumbs.largeCardExpanded.frame, expected: { bodyRelativeX: 20, bodyRelativeY: 16, absoluteX: 20, absoluteY: 96, width: 338, height: 28 } },
   { label: "Detail all-states breadcrumbs", actual: detailBreadcrumbs.allStates.frame, expected: { bodyRelativeX: 20, bodyRelativeY: 16, absoluteX: 20, absoluteY: 96, width: 338, height: 28 } },
+  { label: "Breadcrumb item hug sizing", actual: breadcrumbsComponent?.observedStructure?.itemSizing?.includes("hugs its label text width"), expected: true },
+  { label: "Breadcrumb template item sizing", actual: region("detail.breadcrumbs").layout?.itemSizing?.includes("width:auto"), expected: true },
   { label: "Detail large content shell", actual: detailShell.largeCardExpanded.detailContent, expected: { bodyRelativeX: 20, bodyRelativeY: 64, absoluteX: 20, absoluteY: 144, width: 960, height: 1212 } },
   { label: "Detail large scroll", actual: detailShell.largeCardExpanded.scroll, expected: { bodyRelativeX: 980, bodyRelativeY: 60, absoluteX: 980, absoluteY: 140, width: 12, height: 466 } },
   { label: "Detail large section stack", actual: detailShell.largeCardExpanded.sectionStack, expected: { padding: 16, gap: 20, heroHeight: 128, expandedSectionsY: 128, expandedSectionsHeight: 1084 } },
@@ -100,6 +113,12 @@ const checks = [
   { label: "Detail all-states related section", actual: detailRelated.allStates.section, expected: { parentRelativeX: 16, parentRelativeY: 120, absoluteX: 36, absoluteY: 356, width: 928, height: 138 } },
   { label: "Detail large structured card", actual: detailCard.largeCardExpanded, expected: { component: "Layout.DetailCard", parentRelativeX: 16, parentRelativeY: 418, absoluteX: 36, absoluteY: 674, width: 928, height: 328 } },
   { label: "Detail all-states structured card", actual: detailCard.allStates, expected: { component: "Layout.DetailCard", parentRelativeX: 16, parentRelativeY: 388, absoluteX: 36, absoluteY: 624, width: 928, height: 258 } },
+  { label: "DetailCard title decoration", actual: detailCard.titleRow, expected: { componentInternal: true, height: 20, gap: 6, decoration: { visualWidth: 1.5, visualHeight: 14, colorToken: "var(--color-primary-base)" } } },
+  { label: "Mapping DetailCard title decoration is chrome", actual: mapping.rules.some((rule) => rule.includes("Layout.DetailCard title decoration") && rule.includes("do not require or bind any datasource field")), expected: true },
+  { label: "DetailCard title is required", actual: detailCardComponent?.props?.title?.required, expected: true },
+  { label: "DetailCard component composition rule", actual: detailCardComponent?.observedStructure?.compositionRule?.includes("title plus at least one optional content block"), expected: true },
+  { label: "DetailCard template module composition rule", actual: detailCard.moduleCompositionRule?.includes("title plus at least one optional content block"), expected: true },
+  { label: "DetailCard mapping module rule", actual: mapping.rules.some((rule) => rule.includes("Each rendered module must bind title and at least one real optional block")), expected: true },
   { label: "Detail large extended section", actual: detailExtended.largeCardExpanded, expected: { parentRelativeX: 16, parentRelativeY: 766, absoluteX: 36, absoluteY: 1022, width: 928, height: 302 } },
   { label: "Detail all-states extended section", actual: detailExtended.allStates, expected: { parentRelativeX: 16, parentRelativeY: 666, absoluteX: 36, absoluteY: 902, width: 928, height: 232 } },
 ].map((check) => ({ ...check, pass: matchesExpected(check.actual, check.expected) }));

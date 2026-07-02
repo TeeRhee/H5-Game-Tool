@@ -73,13 +73,13 @@ The `SecondaryPage` design node is `304:5972` and uses the default `1000 x 610` 
 - `Layout.DescribeCard` SM subtitle structure: title/description group `w=210, h=62`, title row `h=22`, subtitle text `x=0, y=26, w=210, h=36`, Body/SM `12px/18px`, two visible lines. Clamp overflow to two lines and expose the full text through `Base.ToolTip` only when the rendered subtitle is actually truncated or hidden.
 - Pagination: Body-relative `x=0, y=482, w=1000, h=64`, absolute `x=0, y=562, w=1000, h=64`.
 
-Choose `Game.ShowCard` only when it fully represents the source entry and every entry subtitle/body in the same card set fits within one visible line. Choose compact `Layout.DescribeCard` when the source entry needs richer inline description, image, badge, or meta fields. Pagination total pages must come from backend data in production output.
+Choose `Game.ShowCard` only when it fully represents the source entry and every entry subtitle/body in the current rendered card set fits within one visible line. The current card set is scoped to the active secondary tab plus optional active third-level group, not the whole first-level category. Choose compact `Layout.DescribeCard` when the source entry needs richer inline description, image, badge, or meta fields. Pagination total pages must come from backend data in production output.
 
-For any Wiki component that renders `imageSrc`, inspect the source asset dimensions or the visible content type before choosing the image frame. Use `Base.Image` ratio `1:1` only for square icons, portraits, or near-square art. Use `3:2` or `16:9` for wide source assets such as weapons, equipment thumbnails, maps, screenshots, landscapes, and banners; do not force these into square frames because it crops important content.
+For any Wiki card set that renders `imageSrc`, inspect the source asset dimensions or the visible content type in the current rendered page/list before choosing the image frame. Use `Base.Image` ratio `1:1` for square icons, portraits, or near-square art. Use `3:2` or `16:9` for wide source assets such as weapons, equipment thumbnails, maps, screenshots, landscapes, and banners. Keep one ratio within the current page/list when visual consistency is needed, but re-evaluate the ratio for each sibling second-level tab or secondary page; do not reuse a wider ratio from one tab on another tab whose assets are better represented as `1:1`.
 
 For `Game.ShowCard`, the right arrow is a drill-down affordance, not decoration. Hide it when the source entry is terminal and has no next page or next hierarchy level. The subtitle/description area shows at most one visible line and truncates overflow; wrap the text with `Base.ToolTip` and pass the full description string as tooltip content, but show the tooltip only when the visible text is actually truncated or hidden. Tooltip display should have a short delay around `120ms` and use auto placement to stay inside the viewport and nearest scroll/clipping container.
 
-If any related card on the same generated page/list requires more than one visible line of secondary/rich text, switch the entire card set for that page/list to `Layout.DescribeCard` with `Size=SM`. Do not mix `Game.ShowCard` and `Layout.DescribeCard` in the same card set only because one item is longer.
+If any related card on the current generated page/list requires more than one visible line of secondary/rich text, switch the entire card set for that page/list to `Layout.DescribeCard` with `Size=SM`. Do not mix `Game.ShowCard` and `Layout.DescribeCard` in that current card set only because one item is longer, but do not carry this choice into sibling second-level tabs or sibling secondary pages.
 
 ### Observed Secondary Large-Card Layout
 
@@ -90,10 +90,10 @@ The `SecondaryPageLargeCard` design node is `304:13409` and uses the default `10
 - Breadcrumb reference: Body-relative `x=20, y=16, w=216, h=28`, absolute `x=20, y=100`; keep breadcrumbs reserved for final detail pages unless routing explicitly enables secondary breadcrumbs.
 - Large-card list container: Body-relative `x=50, y=64, w=900, h=588`, absolute `x=50, y=148`.
 - Plain large-card list with no secondary navigation and no breadcrumbs: use Body-relative `x=50, y=20, w=900` for the list region. Do not keep the `y=64` offset unless a breadcrumb row, secondary tab row, or other real top structure is rendered above it.
-- Card grid: 4 columns x 2 visible design rows, card `w=210, h=284`, column gap `20`, row gap `20`.
+- Card grid without third-level navigation: default `grid-template-columns: repeat(4, 210px)`, card `w=210, h=284`, column gap `20`, row gap `20`. If the available content width cannot fit four 210px columns plus three 20px gaps, downgrade to `repeat(3, 210px)`. Do not reduce to three columns just because there are fewer than four items.
 - Card x positions inside each row: `0`, `230`, `460`, `690`.
 - Row y positions inside the list container: `0`, `304`.
-- Single-row large-card alignment: when the selected `Layout.DescribeCard` LG/image-first card set renders only one row, including `itemCount <= 4` or fewer than four cards, vertically center the row inside the `h=588` list container. Use row `y=(588 - 284) / 2 = 152` instead of `y=0`; keep the observed column x positions.
+- Single-row large-card alignment: when the selected `Layout.DescribeCard` LG/image-first card set renders only one row, vertically center the row inside the `h=588` list container. Use row `y=(588 - 284) / 2 = 152` instead of `y=0`; this alignment happens after column count selection and must not change the chosen `repeat(4, 210px)` or `repeat(3, 210px)` column template.
 - `Layout.DescribeCard` image-first internals: card padding top/left/right `8`, bottom `12`; media area `w=200, h=200` with image content around `194 x 194`; content starts around `x=14, y=216`, title height `22`, description starts at `y=26` with `18px` line height.
 
 Use this template as the layout for chosen large `Layout.DescribeCard` entries only. If the original page has richer text rows, compact cards, tables, filters, or tabs, keep the relevant placement reference from the matching template and choose the component family that fits the source content.
@@ -128,7 +128,7 @@ For a plain selected-category entry list with no second-level navigation, contin
 Detail pages use `DetailPageLargeCardExpanded` (`304:17202`) as the default `1000 x 610` viewport reference. `DetailPageAllStates` (`304:9319`) is a tall `1000 x 1166` full-stack reference and must not replace the default generated canvas size.
 
 - Shared detail header: `x=0, y=0, w=1000, h=84`; desktop padding is `32px 32px 16px`.
-- Detail breadcrumbs: Body-relative `x=20, y=16, w=338, h=28`, absolute `x=20, y=96, w=338, h=28`.
+- Detail breadcrumbs: Body-relative `x=20, y=16, w=338, h=28`, absolute `x=20, y=96, w=338, h=28`. Each breadcrumb item hugs its rendered label text width; do not keep a fixed sample width for every item.
 - Detail content: Body-relative `x=20, y=64, w=960`; absolute `x=20, y=144, w=960`.
 - Visual scrollbar: Body-relative `x=980, y=60, w=12`; absolute `x=980, y=140, w=12`.
 - Large-card hero: `HeroSection x=0, y=0, w=960, h=128`; `Layout.DescribeCard x=16, y=16, w=928, h=96`.
@@ -190,6 +190,10 @@ Current Wiki template components include:
 - `Nav.Pagination`
 - `Data.TableHeaderCell`
 - `Data.TableRowCell`
+
+`Layout.DetailCard` title rows include a fixed internal decoration from Figma: a `var(--color-primary-base)` marker before the title text, visual size 1.5 x 14, inside a 20px-high horizontal title row with 6px gap. Treat it as component chrome; data mapping only supplies the title string.
+
+Detail pages can be assembled from multiple `Layout.DetailCard` modules. Each module must contain a title plus at least one real optional content block. The optional internal blocks are data-driven: render description, feature cards, key-value info, status badges, table rows, media/aside, or approved child content only when the source section contains that shape. Preserve the source detail section order when stacking modules, but keep the page layout, card width, section gaps, vertical spacing, and scroll behavior aligned to the Figma detail templates.
 
 Text-only blocks such as `home.summary` may remain region data until a confirmed shared component exists. Do not register a new component only to fill one text block unless it is confirmed in design and code.
 

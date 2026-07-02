@@ -2695,7 +2695,8 @@ button:disabled {
 
 .gt-wiki-breadcrumb-item {
   display: inline-flex;
-  width: 94px;
+  width: auto;
+  max-width: 100%;
   height: 28px;
   box-sizing: border-box;
   align-items: center;
@@ -2992,8 +2993,25 @@ button:disabled {
   letter-spacing: 0;
 }
 
-.gt-wiki-detail-card__title {
+.gt-wiki-detail-card__title-row {
+  display: flex;
   width: 100%;
+  height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.gt-wiki-detail-card__title-mark {
+  width: 1.5px;
+  height: 14px;
+  flex: 0 0 1.5px;
+  background: var(--color-primary-base);
+  clip-path: polygon(0 4%, 100% 0, 100% 100%, 0 96%);
+}
+
+.gt-wiki-detail-card__title {
+  min-width: 0;
+  flex: 1 1 auto;
   color: var(--color-text-strong);
   font-size: var(--type-size-200);
   font-weight: var(--type-weight-regular);

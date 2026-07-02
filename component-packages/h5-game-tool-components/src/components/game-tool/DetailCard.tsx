@@ -97,7 +97,10 @@ export function DetailCard({
 
   return (
     <article className={cx("gt-wiki-detail-card", className)} {...props}>
-      <h3 className="gt-wiki-detail-card__title">{title}</h3>
+      <div className="gt-wiki-detail-card__title-row">
+        <span className="gt-wiki-detail-card__title-mark" aria-hidden="true" />
+        <h3 className="gt-wiki-detail-card__title">{title}</h3>
+      </div>
       {description ? <p className="gt-wiki-detail-card__description">{description}</p> : null}
       {children}
 

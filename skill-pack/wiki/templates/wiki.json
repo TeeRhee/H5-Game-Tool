@@ -62,7 +62,9 @@
     "partialTemplateUse": "It is valid to use only a subset of a template page, such as only the secondary tab row, only the large-card grid, or only a detail section stack, when the rest of the source page does not contain matching structure.",
     "noFabrication": "Never fabricate second-level tabs, third-level sidebars, breadcrumbs, images, badges, counts, progress, pagination, tables, or detail sections solely because a reference template includes them.",
     "layoutBinding": "After a component family is selected, use the corresponding observed template layout for that component family: ShowCard lists use ShowCard list coordinates, DescribeCard rich lists use DescribeCard coordinates, and large image-first lists use SecondaryPageLargeCard coordinates.",
-    "plainSecondaryListTopOffset": "When a secondary page has no second-level navigation row, no third-level sidebar/navigation, and no breadcrumbs above the list, place the list region 20px from the Body top. Do not reuse the lower y position reserved for pages that include breadcrumbs or secondary navigation."
+    "plainSecondaryListTopOffset": "When a secondary page has no second-level navigation row, no third-level sidebar/navigation, and no breadcrumbs above the list, place the list region 20px from the Body top. Do not reuse the lower y position reserved for pages that include breadcrumbs or secondary navigation.",
+    "cardLikeNoThirdLevelGrid": "For card-like large Layout.DescribeCard grids without third-level navigation, use repeat(4, 210px) by default. If the available content width cannot fit four 210px columns plus gaps, downgrade to repeat(3, 210px). A single rendered row is vertically centered after the column count is chosen; item count or single-row alignment must not reduce the column count by itself.",
+    "pageScopedCardSetConsistency": "Card family, image frame ratio, and similar card-set consistency rules are scoped to the current rendered page/list only: the active secondary tab plus optional active third-level group. Do not inherit a component family or imageRatio from sibling second-level tabs, sibling secondary pages, or the whole active first-level Nav.TopBar category."
   },
   "regions": [
     {
@@ -390,12 +392,13 @@
       "layout": {
         "listContainer": "x=32, y=128, w=936, h=408 in SecondaryPage",
         "plainListContainer": "When there is no secondary navigation and no breadcrumbs above the list, use Body-relative x=32, y=20, w=936; absolute y is Body.y + 20.",
+        "consistencyScope": "The selected card family and image ratio for this list apply only to the currently rendered secondary page/list. Sibling second-level tabs under the same first-level category must re-evaluate card family and image ratio from their own visible entries.",
         "grid": "3 columns, each card w=306.6667, h=96",
         "columnGap": "8px",
         "rowGap": "8px",
         "largeCardContainer": "SecondaryPageLargeCard Body-relative x=50, y=64, w=900; absolute x=50, y=148",
         "plainLargeCardContainer": "When there is no secondary navigation and no breadcrumbs above a SecondaryPageLargeCard list, use Body-relative x=50, y=20, w=900; absolute y is Body.y + 20.",
-        "largeCardGrid": "4 columns, each Layout.DescribeCard w=210, h=284; column gap=20; row gap=20; row y positions 0 and 304 in the observed frame. When the selected large-card set renders only one row, vertically center that row inside the large-card container.",
+        "largeCardGrid": "Default grid-template-columns: repeat(4, 210px). If the available content width cannot fit four 210px columns plus gaps, use repeat(3, 210px). Column count is determined by available width, not by item count. Column gap=20; row gap=20; row y positions 0 and 304 in the observed frame. When the selected large-card set renders only one row, vertically center that row inside the large-card container without changing the chosen column count.",
         "pagination": "x=0, y=482, w=1000, h=64 inside SecondaryPage Body"
       },
       "observedSecondaryLayout": {
@@ -546,6 +549,9 @@
           "component": "Layout.DescribeCard",
           "variant": "large image-first card",
           "columns": 4,
+          "defaultGridTemplateColumns": "repeat(4, 210px)",
+          "fallbackGridTemplateColumns": "repeat(3, 210px)",
+          "columnSelectionRule": "For card-like large Layout.DescribeCard grids without third-level navigation, use the default 4-column template when available width fits 4 * 210px plus 3 * 20px gaps. Use the 3-column fallback only when that width cannot fit. Do not reduce columns because itemCount is less than 4 or because the result is a single row.",
           "visibleDesignRows": 2,
           "cardWidth": 210,
           "cardHeight": 284,
@@ -561,7 +567,7 @@
             0,
             304
           ],
-          "singleRowRule": "If the source entries render as a single row in this large-card grid, including itemCount <= 4 or fewer than four cards, keep the 4-column x positions and vertically center the row within the 588px list container.",
+          "singleRowRule": "If the source entries render as a single row, vertically center the row within the 588px list container after choosing the column template from available width. Single-row alignment must not change the column count; keep repeat(4, 210px) when width fits, even when itemCount is less than 4.",
           "singleRowY": 152,
           "singleRowYCalculation": "(listContainer.height 588 - cardHeight 284) / 2"
         },
@@ -776,7 +782,8 @@
         "Nav.Breadcrumbs"
       ],
       "layout": {
-        "breadcrumbs": "x=20, y=16, w=338, h=28 in detail states"
+        "breadcrumbs": "x=20, y=16, w=338, h=28 in detail states",
+        "itemSizing": "Each Nav.Breadcrumbs item is width:auto / hug text content, with h=28 and padding 4px 6px. The overall breadcrumb row may occupy the template frame, but individual item widths must not be fixed to the observed sample label width."
       },
       "observedDetailLayouts": {
         "largeCardExpanded": {
@@ -1215,6 +1222,20 @@
           "width": 928,
           "height": 258
         },
+        "titleRow": {
+          "componentInternal": true,
+          "height": 20,
+          "gap": 6,
+          "decoration": {
+            "figmaNodeName": "Rectangle 1",
+            "visualWidth": 1.5,
+            "visualHeight": 14,
+            "colorToken": "var(--color-primary-base)",
+            "rule": "Render before the title text as fixed component chrome; do not bind it to datasource fields."
+          }
+        },
+        "moduleCompositionRule": "Detail templates can be assembled from multiple Layout.DetailCard modules stacked in the template detail section positions. Each module must have a title plus at least one optional content block. Choose the optional blocks and their order from the source section data; do not force description, feature cards, info rows, badges, tables, or media to appear when that source section does not contain them.",
+        "templateLayoutRule": "The DetailCard internal content selection is data-driven, but page structure, section stack spacing, DetailCard width, vertical gaps, scroll behavior, and placement still follow the observed detail template frames.",
         "dataShapeRule": "Use this region for structured rows, tables, key-value blocks, and grouped notes. If the source exposes table structure, map it to table columns and rows rather than rich text."
       },
       "pendingDataBoundElements": [
@@ -1292,15 +1313,15 @@
     "Do not invent datasource fields; use TODO_FROM_DATASOURCE until the Wiki mapping contract defines source fields.",
     "Treat every Figma template page as a layout reference, not a mandatory data structure. Select regions and components based on the original source page first, then use the matching template coordinates for the selected component family.",
     "A referenced template page may be used partially. Do not render secondary tabs, third-level sidebars, breadcrumbs, large cards, pagination, or detail sections unless the original source page or routing context actually contains that structure.",
-    "When multiple components can represent the same region, choose the component by source information density before applying layout: compact text entries may use Game.ShowCard only when every card subtitle/body in the same page/list fits within one visible line, richer inline entries may use compact Layout.DescribeCard, and image-first gallery entries may use the SecondaryPageLargeCard Layout.DescribeCard grid.",
-    "For every component that renders an imageSrc, choose Base.Image ratio from the source image dimensions or visual type before applying the card layout. Use 1:1 for square icons, portraits, and near-square art; use 3:2 or 16:9 for weapons, equipment thumbnails, maps, screenshots, landscapes, banners, and other wide assets to avoid square-frame cropping.",
+    "When multiple components can represent the same region, choose the component by source information density before applying layout. The phrase same page/list means the currently rendered list only: active secondary tab plus optional active third-level group. Compact text entries may use Game.ShowCard only when every visible card subtitle/body in that current list fits within one visible line, richer inline entries may use compact Layout.DescribeCard, and image-first gallery entries may use the SecondaryPageLargeCard Layout.DescribeCard grid.",
+    "For every rendered card set that uses imageSrc, choose Base.Image ratio from the source image dimensions or visual type of the current page/list before applying the card layout. Use 1:1 for square icons, portraits, and near-square art; use 3:2 or 16:9 for weapons, equipment thumbnails, maps, screenshots, landscapes, banners, and other wide assets to avoid square-frame cropping. Do not reuse an imageRatio selected for one second-level tab or sibling secondary page on another tab under the same first-level category.",
     "Use semantic tokens from the Wiki or shared token source; do not hardcode colors when a token exists.",
     "Header navigation and search are shared across home, secondary list, and detail states.",
     "Home state renders a category grid after the summary block; secondary state renders a list grid plus pagination; detail state renders breadcrumbs plus vertically scrollable detail content.",
     "Use DetailPageLargeCardExpanded as the default 1000 x 610 detail viewport reference. Use DetailPageAllStates only to understand optional section stacking and overflow content height.",
     "SecondaryPage layout follows Body x=0, y=80, w=1000, h=530 after the 84px Header update; list container absolute x=32, y=144, w=936, h=408; three columns with card w=306.6667, h=96, 8px column gap, and 8px row gap.",
     "If a secondary page has no second-level navigation row, no third-level sidebar/navigation, and no breadcrumbs above the list, place the list region 20px from the Body top. For SecondaryPage use Body-relative y=20 instead of the observed y=64 reserved for pages with an upper reference region.",
-    "SecondaryPageLargeCard layout follows Body x=0, y=84, w=1000, h=526 after the 84px Header update; large-card list container Body-relative x=50, y=64, w=900, h=588; four Layout.DescribeCard columns with card w=210, h=284, column gap=20, row gap=20. If there is no secondary navigation and no breadcrumbs above the large-card list, use Body-relative y=20 instead of y=64. If the selected large-card set renders only one row, including itemCount <= 4 or fewer than four cards, vertically center that row in the list container at y=152 instead of pinning it to y=0. Use it only for image-first or gallery-like secondary content.",
+    "SecondaryPageLargeCard layout follows Body x=0, y=84, w=1000, h=526 after the 84px Header update; large-card list container Body-relative x=50, y=64, w=900, h=588. For card-like large Layout.DescribeCard grids without third-level navigation, default to grid-template-columns repeat(4, 210px), column gap=20, row gap=20; if the available content width cannot fit four columns plus gaps, downgrade to repeat(3, 210px). If there is no secondary navigation and no breadcrumbs above the large-card list, use Body-relative y=20 instead of y=64. If the selected large-card set renders only one row, vertically center that row in the list container at y=152 instead of pinning it to y=0; single-row centering must not change the chosen column count. Use it only for image-first or gallery-like secondary content.",
     "SecondaryPage pagination follows Body-relative x=0, y=482, w=1000, h=64 and must remain separate from card data binding.",
     "Treat SecondaryPageMultiNav as a modular placement reference, not a required full-page data structure. A generator may use only the tab row, only the sidebar, or only the content-shell coordinates when those parts match the original source page.",
     "Use the SecondaryPageMultiNav tab row when the original source page has second-level navigation. Do not require a third-level sidebar just because this template contains one.",
@@ -1310,16 +1331,17 @@
     "SecondaryPageMultiNav observes a right-side Game.ShowCard list in two columns: list x=116, y=0, w=820, h=480 inside the content shell; card w=406, h=76, column gap=8, row gap=8. Use this list structure only when it fits the original page content and every card subtitle/body fits within one visible line; otherwise choose the most suitable existing component while preserving the matched placement reference.",
     "In Game.ShowCard, the right arrow means the represented entry can drill down or route to a next page. Hide the arrow when the entry is terminal and has no next hierarchy level.",
     "Game.ShowCard descriptions are visibly clamped to one line, and the full description string must be exposed with Base.ToolTip on text hover only when the visible text is actually truncated or hidden. Tooltip display should use a short delay of about 120ms and auto placement so the bubble stays inside the viewport and nearest scroll/clipping container.",
-    "If any source card in the same secondary, multi-level, or related card page/list needs more than one visible subtitle/body line, render all related cards in that page/list as Layout.DescribeCard size=SM instead of Game.ShowCard. Do not mix ShowCard and DescribeCard in the same card set only because some descriptions are longer.",
+    "If any source card in the current secondary, multi-level, or related rendered page/list needs more than one visible subtitle/body line, render all related cards in that current page/list as Layout.DescribeCard size=SM instead of Game.ShowCard. This consistency does not cross sibling second-level tabs or sibling secondary pages under the same first-level category.",
     "DetailPage content follows Body-relative content x=20, y=64, w=960 after the 84px Header update; breadcrumbs Body-relative x=20, y=16, w=338, h=28; visual scroll Body-relative x=980, y=60, w=12.",
     "DetailPage section stacks use 16px internal padding and 20px vertical gaps between sections.",
+    "Detail pages may stack multiple Layout.DetailCard modules. For each DetailCard, require a title plus at least one real optional content block from the source section, then render only the internal blocks supported by that source data. The module order should follow the source detail section order, while template spacing, card widths, section gaps, and scroll behavior follow the Figma detail templates.",
     "Home summary title follows the WikiHome two-segment title row: '<game name>' followed by the literal 'Wiki攻略'.",
     "In home.category-grid, each Game.CategoryCard previews up to the first three items of its linked secondary page through the avatar cluster, prefers icon over image when both exist, shows the total item count for that category in the trailing count badge, and is hidden when that total count is 0.",
     "Nav.TopBar items are global first-level Wiki categories.",
     "Form.SearchBar is global Wiki search across categories and entries.",
     "In secondary list state, keep the observed template pagination placement, bind pagination separately from card data, and use backend totalPages instead of preview defaults.",
-    "In secondary list state, use Game.ShowCard when it fully represents the original entry and every card subtitle/body fits within one visible line; use Layout.DescribeCard size=SM for the whole card set when any entry needs more than one visible line or richer original entry information needs image, badge, description, or meta fields.",
-    "In secondary list state, imageRatio is part of the entry binding. A generator must not leave wide item images in a default 1:1 frame when the source image is closer to 3:2 or 16:9.",
+    "In secondary list state, use Game.ShowCard when it fully represents the original entry and every visible card subtitle/body in the current page/list fits within one visible line; use Layout.DescribeCard size=SM for the whole current card set when any visible entry needs more than one visible line or richer original entry information needs image, badge, description, or meta fields.",
+    "In secondary list state, imageRatio is scoped to the current rendered page/list. Use one consistent ratio for a card set when visual consistency is needed, but choose it from that page/list's own source images. Do not apply a 3:2 or 4:3-like decision from one second-level tab to another tab whose source images are square and should use 1:1.",
     "In detail state, content may exceed the visible canvas height. Keep the page scroll model in the renderer layer and sync the visual Layout.Scroll component to scroll state, using the source page or template position for the visual scrollbar.",
     "Breadcrumbs render only on final detail pages, include one clickable label per page hierarchy level, and route each label to its target page.",
     "Detail hero card family follows the card family used to open the detail page from the previous list page.",
