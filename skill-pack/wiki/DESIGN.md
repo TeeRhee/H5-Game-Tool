@@ -61,18 +61,21 @@ Template pages are layout references, not mandatory data structures. First inspe
 
 The `SecondaryPage` design node is `304:5972` and uses the default `1000 x 610` viewport.
 
-- Header: `x=0, y=0, w=1000, h=68`.
-- Body: `x=0, y=64, w=1000, h=546`.
-- Breadcrumb reference: `x=20, y=80, w=216, h=28` absolute, but this is reserved only. Generated secondary pages do not render breadcrumbs under the current contract.
-- List container: `x=32, y=128, w=936, h=408` absolute.
+- Header: `x=0, y=0, w=1000, h=84`; desktop padding is `32px 32px 16px`.
+- Body: `x=0, y=80, w=1000, h=530`.
+- Breadcrumb reference: `x=20, y=96, w=216, h=28` absolute, but this is reserved only. Generated secondary pages do not render breadcrumbs under the current contract.
+- List container: `x=32, y=144, w=936, h=408` absolute.
 - Plain list with no secondary navigation and no breadcrumbs: use Body-relative `x=32, y=20, w=936` for the list region. This applies when the source page has no second-level tab row, no third-level navigation, and no breadcrumb row above the list.
 - Card grid: 3 columns x 4 visible design rows, card `w=306.6667, h=96`, column gap `8`, row gap `8`.
 - Card x positions inside each row: `0`, `314.6667`, `629.3334`.
 - Row y positions inside the list container: `0`, `104`, `208`, `312`.
-- `Layout.DescribeCard` image area: `x=8, y=8, w=80, h=80`; content area: `x=100, y=8, w=198.6667, h=80`.
-- Pagination: Body-relative `x=0, y=482, w=1000, h=64`, absolute `x=0, y=546, w=1000, h=64`.
+- `Layout.DescribeCard` SM default component node `177:1104`: root `w=328, h=106`, padding `8`, horizontal gap `12`, image `x=8, y=8, w=90, h=90`, content `x=110, y=8, w=210, h=90`, content vertical gap `6`.
+- `Layout.DescribeCard` SM subtitle structure: title/description group `w=210, h=62`, title row `h=22`, subtitle text `x=0, y=26, w=210, h=36`, Body/SM `12px/18px`, two visible lines. Clamp overflow to two lines and expose the full text through `Base.ToolTip` only when the rendered subtitle is actually truncated or hidden.
+- Pagination: Body-relative `x=0, y=482, w=1000, h=64`, absolute `x=0, y=562, w=1000, h=64`.
 
 Choose `Game.ShowCard` only when it fully represents the source entry and every entry subtitle/body in the same card set fits within one visible line. Choose compact `Layout.DescribeCard` when the source entry needs richer inline description, image, badge, or meta fields. Pagination total pages must come from backend data in production output.
+
+For any Wiki component that renders `imageSrc`, inspect the source asset dimensions or the visible content type before choosing the image frame. Use `Base.Image` ratio `1:1` only for square icons, portraits, or near-square art. Use `3:2` or `16:9` for wide source assets such as weapons, equipment thumbnails, maps, screenshots, landscapes, and banners; do not force these into square frames because it crops important content.
 
 For `Game.ShowCard`, the right arrow is a drill-down affordance, not decoration. Hide it when the source entry is terminal and has no next page or next hierarchy level. The subtitle/description area shows at most one visible line and truncates overflow; wrap the text with `Base.ToolTip` and pass the full description string as tooltip content, but show the tooltip only when the visible text is actually truncated or hidden. Tooltip display should have a short delay around `120ms` and use auto placement to stay inside the viewport and nearest scroll/clipping container.
 
@@ -82,10 +85,10 @@ If any related card on the same generated page/list requires more than one visib
 
 The `SecondaryPageLargeCard` design node is `304:13409` and uses the default `1000 x 610` viewport. Use this layout only when the original secondary page is image-first or gallery-like and the source entries are best represented by large `Layout.DescribeCard` cards. Do not convert ordinary compact lists into this layout just because the template exists.
 
-- Header: `x=0, y=0, w=1000, h=68`.
-- Body: `x=0, y=68, w=1000, h=542`.
-- Breadcrumb reference: Body-relative `x=20, y=16, w=216, h=28`, absolute `x=20, y=84`; keep breadcrumbs reserved for final detail pages unless routing explicitly enables secondary breadcrumbs.
-- Large-card list container: Body-relative `x=50, y=64, w=900, h=588`, absolute `x=50, y=132`.
+- Header: `x=0, y=0, w=1000, h=84`; desktop padding is `32px 32px 16px`.
+- Body: `x=0, y=84, w=1000, h=526`.
+- Breadcrumb reference: Body-relative `x=20, y=16, w=216, h=28`, absolute `x=20, y=100`; keep breadcrumbs reserved for final detail pages unless routing explicitly enables secondary breadcrumbs.
+- Large-card list container: Body-relative `x=50, y=64, w=900, h=588`, absolute `x=50, y=148`.
 - Plain large-card list with no secondary navigation and no breadcrumbs: use Body-relative `x=50, y=20, w=900` for the list region. Do not keep the `y=64` offset unless a breadcrumb row, secondary tab row, or other real top structure is rendered above it.
 - Card grid: 4 columns x 2 visible design rows, card `w=210, h=284`, column gap `20`, row gap `20`.
 - Card x positions inside each row: `0`, `230`, `460`, `690`.
@@ -99,12 +102,12 @@ Use this template as the layout for chosen large `Layout.DescribeCard` entries o
 
 The `SecondaryPageMultiNav` design node is `375:4979` and uses the default `1000 x 610` viewport. It is a modular placement reference for original source pages that need second-level tabs or third-level local navigation under the global first-level `Nav.TopBar`; it is not a required full-page data structure.
 
-- Header: `x=0, y=0, w=1000, h=68`.
-- Body: `x=0, y=68, w=1000, h=542`.
-- Secondary tab row: Body-relative `x=32, y=16, w=390, h=26`, absolute `x=32, y=84`.
+- Header: `x=0, y=0, w=1000, h=84`; desktop padding is `32px 32px 16px`.
+- Body: `x=0, y=84, w=1000, h=526`.
+- Secondary tab row: Body-relative `x=32, y=16, w=390, h=26`, absolute `x=32, y=100`.
 - `Nav.SecondaryTab`: each tab is `w=60, h=26`, gap `6`, x positions `0`, `66`, `132`, `198`, `264`, `330`.
 - Active tab: `State=Active`, text uses `var(--color-primary-base)`. Default tabs use `var(--color-text-weak)`.
-- Content shell: Body-relative `x=32, y=62, w=936, h=480`, absolute `x=32, y=130`.
+- Content shell: Body-relative `x=32, y=62, w=936, h=480`, absolute `x=32, y=146`.
 - `Nav.Navigate`: shell-relative `x=0, y=0, w=96, h=480`; right divider; internal list width `80`; padding right `16`, vertical padding `8`.
 - Right card list: shell-relative `x=116, y=0, w=820, h=480`, leaving a `20px` gap after the navigation column.
 - `Game.ShowCard` grid: 2 columns, card `w=406, h=76`, column gap `8`, row gap `8`.
@@ -124,10 +127,10 @@ For a plain selected-category entry list with no second-level navigation, contin
 
 Detail pages use `DetailPageLargeCardExpanded` (`304:17202`) as the default `1000 x 610` viewport reference. `DetailPageAllStates` (`304:9319`) is a tall `1000 x 1166` full-stack reference and must not replace the default generated canvas size.
 
-- Shared detail header: `x=0, y=0, w=1000, h=68`.
-- Detail breadcrumbs: Body-relative `x=20, y=16, w=338, h=28`, absolute `x=20, y=80, w=338, h=28`.
-- Detail content: Body-relative `x=20, y=64, w=960`; absolute `x=20, y=128, w=960`.
-- Visual scrollbar: Body-relative `x=980, y=60, w=12`; absolute `x=980, y=124, w=12`.
+- Shared detail header: `x=0, y=0, w=1000, h=84`; desktop padding is `32px 32px 16px`.
+- Detail breadcrumbs: Body-relative `x=20, y=16, w=338, h=28`, absolute `x=20, y=96, w=338, h=28`.
+- Detail content: Body-relative `x=20, y=64, w=960`; absolute `x=20, y=144, w=960`.
+- Visual scrollbar: Body-relative `x=980, y=60, w=12`; absolute `x=980, y=140, w=12`.
 - Large-card hero: `HeroSection x=0, y=0, w=960, h=128`; `Layout.DescribeCard x=16, y=16, w=928, h=96`.
 - Compact hero: `HeroSection x=0, y=0, w=960, h=108`; `Game.ShowCard x=16, y=16, w=928, h=76`.
 - Section stack padding: `16`; vertical gap between detail sections: `20`.

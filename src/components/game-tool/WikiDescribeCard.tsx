@@ -1,12 +1,14 @@
 import type { HTMLAttributes } from "react";
 import { Badge } from "./Badge";
-import { ImageFrame } from "./ImageFrame";
+import { ImageFrame, type ImageRatio } from "./ImageFrame";
+import { ToolTip } from "./ToolTip";
 import { cx } from "./wikiUtils";
 
 export interface WikiDescribeCardProps extends HTMLAttributes<HTMLElement> {
   title: string;
   description?: string;
   imageSrc?: string;
+  imageRatio?: ImageRatio;
   size?: "sm" | "lg";
   state?: "default" | "hover";
   showImage?: boolean;
@@ -22,6 +24,7 @@ export function WikiDescribeCard({
   title,
   description,
   imageSrc,
+  imageRatio = "1:1",
   size = "sm",
   state = "default",
   showImage = true,
@@ -45,20 +48,25 @@ export function WikiDescribeCard({
         "gt-wiki-describe-card",
         `gt-wiki-describe-card--${size}`,
         `gt-wiki-describe-card--${state}`,
+        showImage && `gt-wiki-describe-card--image-${imageRatio.replace(":", "-")}`,
         hasAttributes ? "" : "gt-wiki-describe-card--no-attributes",
         hasDescription ? "" : "gt-wiki-describe-card--no-description",
         className,
       )}
       {...props}
     >
-      {showImage ? <ImageFrame ratio="1:1" src={imageSrc} alt="" /> : null}
+      {showImage ? <ImageFrame ratio={imageRatio} src={imageSrc} alt="" /> : null}
       <div className="gt-wiki-describe-card__body">
         <div className="gt-wiki-describe-card__content">
           <div className="gt-wiki-describe-card__title-row">
             <h3>{title}</h3>
             {showBadge && badgeText ? <Badge>{badgeText}</Badge> : null}
           </div>
-          {description ? <p>{description}</p> : null}
+          {description ? (
+            <ToolTip content={description}>
+              <span className="gt-wiki-describe-card__description">{description}</span>
+            </ToolTip>
+          ) : null}
         </div>
         {hasAttributes ? (
           <div className="gt-wiki-describe-card__attributes">

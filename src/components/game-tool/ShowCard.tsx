@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes } from "react";
 import { Badge } from "./Badge";
-import { ImageFrame } from "./ImageFrame";
+import { ImageFrame, type ImageRatio } from "./ImageFrame";
 import { ProgressBar } from "./ProgressBar";
 import { RemixIcon } from "./RemixIcon";
 import { ToolTip } from "./ToolTip";
@@ -10,6 +10,7 @@ export interface ShowCardProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   description?: string;
   imageSrc?: string;
+  imageRatio?: ImageRatio;
   label?: string;
   progress?: number;
   variant?: "label" | "process";
@@ -23,6 +24,7 @@ export function ShowCard({
   title,
   description,
   imageSrc,
+  imageRatio = "1:1",
   label,
   progress,
   variant = "label",
@@ -43,13 +45,14 @@ export function ShowCard({
       className={cx(
         "gt-wiki-show-card",
         `gt-wiki-show-card--${variant}`,
+        hasImage && `gt-wiki-show-card--image-${imageRatio.replace(":", "-")}`,
         hasImage ? "" : "gt-wiki-show-card--no-image",
         shouldShowRightIcon ? "" : "gt-wiki-show-card--no-arrow",
         className,
       )}
       {...props}
     >
-      {hasImage ? <ImageFrame ratio="1:1" src={imageSrc} alt="" /> : null}
+      {hasImage ? <ImageFrame ratio={imageRatio} src={imageSrc} alt="" /> : null}
       {variant === "process" ? (
         <span className="gt-wiki-show-card__progress">
           <span className="gt-wiki-show-card__progress-top">

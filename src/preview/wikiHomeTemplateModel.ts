@@ -39,12 +39,12 @@ export const wikiHomeTemplateLayout = {
 const expectedChecks: Array<{ label: string; actual: unknown; expected: unknown }> = [
   { label: "Canvas width", actual: wikiHomeTemplateLayout.canvas.width, expected: 1000 },
   { label: "Canvas height", actual: wikiHomeTemplateLayout.canvas.height, expected: 610 },
-  { label: "Header frame", actual: wikiHomeTemplateLayout.header.absoluteFrame, expected: { x: 0, y: 0, width: 1000, height: 68 } },
-  { label: "Header padding", actual: wikiHomeTemplateLayout.header.padding, expected: { top: 32, right: 32, bottom: 0, left: 32 } },
+  { label: "Header frame", actual: wikiHomeTemplateLayout.header.absoluteFrame, expected: { x: 0, y: 0, width: 1000, height: 84 } },
+  { label: "Header padding", actual: wikiHomeTemplateLayout.header.padding, expected: { top: 32, right: 32, bottom: 16, left: 32 } },
   { label: "Header topbar", actual: wikiHomeTemplateLayout.header.topBar, expected: { x: 32, y: 32, width: 696, height: 36 } },
   { label: "Header search", actual: wikiHomeTemplateLayout.header.search, expected: { x: 748, y: 32, width: 220, height: 36 } },
   { label: "Header topbar/search gap", actual: wikiHomeTemplateLayout.header.gapBetweenTopBarAndSearch, expected: 20 },
-  { label: "Body frame", actual: wikiHomeTemplateLayout.body, expected: { x: 0, y: 68, width: 1000, height: 542 } },
+  { label: "Body frame", actual: wikiHomeTemplateLayout.body, expected: { x: 0, y: 84, width: 1000, height: 526 } },
   { label: "Content frame", actual: wikiHomeTemplateLayout.content, expected: { bodyRelativeX: 32, bodyRelativeY: 20, width: 936, height: 568, gap: 20 } },
   { label: "Summary frame", actual: wikiHomeTemplateLayout.summary.bodyRelativeFrame, expected: { x: 32, y: 20, width: 190, height: 56 } },
   { label: "Summary title row", actual: wikiHomeTemplateLayout.summary.titleRow, expected: { x: 0, y: 0, width: 190, height: 28, gap: 4 } },
@@ -53,7 +53,7 @@ const expectedChecks: Array<{ label: string; actual: unknown; expected: unknown 
   { label: "Category card grid", actual: wikiHomeTemplateLayout.cardGrid, expected: { columns: 4, cardWidth: 225, cardHeight: 114, columnGap: 12, rowGap: 12 } },
   { label: "Category row y positions", actual: gridLayout.rows.map((row: AnyRecord) => row.y), expected: [0, 126, 252, 378] },
   { label: "Category card x positions", actual: wikiHomeTemplateLayout.cardGrid.cardXPositions, expected: [0, 237, 474, 711] },
-  { label: "Home scrollbar", actual: wikiHomeTemplateLayout.scrollbar, expected: { absoluteX: 988, absoluteY: 68, width: 12, height: 542, thumbWidth: 4, thumbHeight: 80, thumbY: 119 } },
+  { label: "Home scrollbar", actual: wikiHomeTemplateLayout.scrollbar, expected: { absoluteX: 988, absoluteY: 84, width: 12, height: 526, thumbWidth: 4, thumbHeight: 80, thumbY: 119 } },
 ];
 
 function matchesExpected(actual: unknown, expected: unknown): boolean {

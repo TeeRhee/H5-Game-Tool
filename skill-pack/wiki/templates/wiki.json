@@ -34,8 +34,8 @@
       "desktop": {
         "breakpoint": "min-width: 768px",
         "canvas": "x=0, y=0, w=1000, h=610",
-        "header": "x=0, y=0, w=1000, h=68",
-        "body": "x=0, y=64 or 68, w=1000, h=542 or 546 depending on state",
+        "header": "x=0, y=0, w=1000, h=84",
+        "body": "x=0, y=80 or 84, w=1000, h=526 or 530 depending on state",
         "contentInset": "home uses x=32, list/detail use x=20 or x=32 according to observed state",
         "scrollbar": "right edge visual scroll component; home x=988, list/detail x=980 or x=988 depending on content state"
       },
@@ -89,7 +89,7 @@
         "Form.SearchBar"
       ],
       "layout": {
-        "header": "x=0, y=0, w=1000, h=68",
+        "header": "x=0, y=0, w=1000, h=84",
         "topBar": "x=32, y=32, w=696, h=36; 8 first-level tabs, each w=80, h=36, gap=8",
         "search": "x=748, y=32, w=220, h=36; right edge aligned to x=968 with 32px right inset"
       },
@@ -99,12 +99,12 @@
           "x": 0,
           "y": 0,
           "width": 1000,
-          "height": 68
+          "height": 84
         },
         "padding": {
           "top": 32,
           "right": 32,
-          "bottom": 0,
+          "bottom": 16,
           "left": 32
         },
         "innerContent": {
@@ -142,7 +142,7 @@
       "purpose": "Shows the WikiHome title composition '<game name>' + 'Wiki攻略' and aggregate counts before the category grid.",
       "allowedComponents": [],
       "layout": {
-        "contentFrame": "Body-relative x=32, y=20, w=936, h=568; absolute x=32, y=88",
+        "contentFrame": "Body-relative x=32, y=20, w=936, h=568; absolute x=32, y=104",
         "pageSummary": "Content-relative x=0, y=0, w=190, h=56",
         "titleRow": "x=0, y=0, w=190, h=28; horizontal text row, gap=4; first text '<game name>' w=80, second text 'Wiki攻略' x=84, w=86",
         "metaRow": "x=0, y=36, w=132, h=20; horizontal meta row, gap=4; category count w=73, separator x=77 w=4, item count x=85 w=47"
@@ -158,7 +158,7 @@
         },
         "absoluteFrame": {
           "x": 32,
-          "y": 88,
+          "y": 104,
           "width": 190,
           "height": 56
         },
@@ -235,7 +235,7 @@
         "Base.Badge"
       ],
       "layout": {
-        "grid": "Content-relative x=0, y=76, w=936, h=492; absolute x=32, y=164; content overflows the 542px Body viewport by 46px",
+        "grid": "Content-relative x=0, y=76, w=936, h=492; absolute x=32, y=180; content overflows the 526px Body viewport by 62px",
         "columns": "4 columns, each card w=225, h=114; card x positions are 0, 237, 474, 711 within each row",
         "columnGap": "12px",
         "rowGap": "12px",
@@ -248,27 +248,27 @@
         "contentNodeId": "175:5807",
         "body": {
           "x": 0,
-          "y": 68,
+          "y": 84,
           "width": 1000,
-          "height": 542,
+          "height": 526,
           "overflow": "clip"
         },
         "contentFrame": {
           "bodyRelativeX": 32,
           "bodyRelativeY": 20,
           "absoluteX": 32,
-          "absoluteY": 88,
+          "absoluteY": 104,
           "width": 936,
           "height": 568,
           "layoutMode": "vertical",
           "gap": 20,
-          "overflowBeyondBody": 46
+          "overflowBeyondBody": 62
         },
         "gridFrame": {
           "contentRelativeX": 0,
           "contentRelativeY": 76,
           "absoluteX": 32,
-          "absoluteY": 164,
+          "absoluteY": 180,
           "width": 936,
           "height": 492,
           "layoutMode": "vertical",
@@ -325,9 +325,9 @@
         "scrollbar": {
           "sourceNodeId": "175:5982",
           "absoluteX": 988,
-          "absoluteY": 68,
+          "absoluteY": 84,
           "width": 12,
-          "height": 542,
+          "height": 526,
           "thumbWidth": 4,
           "thumbHeight": 80,
           "thumbX": 4,
@@ -357,15 +357,15 @@
         "sourceNodeId": "304:6318",
         "body": {
           "x": 0,
-          "y": 64,
+          "y": 80,
           "width": 1000,
-          "height": 546
+          "height": 530
         },
         "frame": {
           "bodyRelativeX": 20,
           "bodyRelativeY": 16,
           "absoluteX": 20,
-          "absoluteY": 80,
+          "absoluteY": 96,
           "width": 216,
           "height": 28
         },
@@ -393,7 +393,7 @@
         "grid": "3 columns, each card w=306.6667, h=96",
         "columnGap": "8px",
         "rowGap": "8px",
-        "largeCardContainer": "SecondaryPageLargeCard Body-relative x=50, y=64, w=900; absolute x=50, y=132",
+        "largeCardContainer": "SecondaryPageLargeCard Body-relative x=50, y=64, w=900; absolute x=50, y=148",
         "plainLargeCardContainer": "When there is no secondary navigation and no breadcrumbs above a SecondaryPageLargeCard list, use Body-relative x=50, y=20, w=900; absolute y is Body.y + 20.",
         "largeCardGrid": "4 columns, each Layout.DescribeCard w=210, h=284; column gap=20; row gap=20; row y positions 0 and 304 in the observed frame. When the selected large-card set renders only one row, vertically center that row inside the large-card container.",
         "pagination": "x=0, y=482, w=1000, h=64 inside SecondaryPage Body"
@@ -403,16 +403,16 @@
         "body": {
           "sourceNodeId": "304:6109",
           "x": 0,
-          "y": 64,
+          "y": 80,
           "width": 1000,
-          "height": 546
+          "height": 530
         },
         "listContainer": {
           "sourceNodeId": "304:7911",
           "bodyRelativeX": 32,
           "bodyRelativeY": 64,
           "absoluteX": 32,
-          "absoluteY": 128,
+          "absoluteY": 144,
           "width": 936,
           "height": 408,
           "layoutMode": "vertical",
@@ -441,37 +441,58 @@
         },
         "describeCardInternals": {
           "component": "Layout.DescribeCard",
+          "sourceComponentNodeId": "177:1104",
+          "sizeSmDefault": {
+            "width": 328,
+            "height": 106,
+            "padding": 8,
+            "gap": 12
+          },
           "image": {
             "x": 8,
             "y": 8,
-            "width": 80,
-            "height": 80,
+            "width": 90,
+            "height": 90,
             "shape": "rounded-rect from Base.Image unless the source image itself is circular"
           },
           "content": {
-            "x": 100,
+            "x": 110,
             "y": 8,
-            "width": 198.6667,
-            "height": 80
+            "width": 210,
+            "height": 90,
+            "gap": 6
+          },
+          "titleDescriptionGroup": {
+            "x": 0,
+            "y": 0,
+            "width": 210,
+            "height": 62,
+            "gap": 4
           },
           "titleRow": {
             "x": 0,
             "y": 0,
+            "width": 210,
             "height": 22
           },
           "description": {
             "x": 0,
             "y": 26,
-            "height": 22
+            "width": 210,
+            "height": 36,
+            "lineHeight": 18,
+            "visibleLines": 2,
+            "tooltip": "Wrap with Base.ToolTip only when the rendered subtitle is actually truncated or hidden."
           },
           "metaRow": {
             "x": 0,
-            "y": 58,
+            "y": 68,
+            "width": 210,
             "height": 22,
             "itemXPositions": [
               6,
-              71.3333,
-              136.6667
+              77,
+              148
             ]
           }
         },
@@ -480,7 +501,7 @@
           "bodyRelativeX": 0,
           "bodyRelativeY": 482,
           "absoluteX": 0,
-          "absoluteY": 546,
+          "absoluteY": 562,
           "width": 1000,
           "height": 64,
           "dataBinding": "Bind currentPage from route or renderer state and totalPages from backend. Remove preview-only page values in production output."
@@ -493,16 +514,16 @@
         "body": {
           "sourceNodeId": "304:13412",
           "x": 0,
-          "y": 68,
+          "y": 84,
           "width": 1000,
-          "height": 542
+          "height": 526
         },
         "breadcrumbs": {
           "sourceNodeId": "304:13413",
           "bodyRelativeX": 20,
           "bodyRelativeY": 16,
           "absoluteX": 20,
-          "absoluteY": 84,
+          "absoluteY": 100,
           "width": 216,
           "height": 28,
           "rendering": "Observed in this reference frame. Under the current Wiki rule, breadcrumbs are still reserved for final detail pages unless product routing explicitly enables secondary breadcrumbs."
@@ -512,7 +533,7 @@
           "bodyRelativeX": 50,
           "bodyRelativeY": 64,
           "absoluteX": 50,
-          "absoluteY": 132,
+          "absoluteY": 148,
           "width": 900,
           "height": 588,
           "layoutMode": "vertical",
@@ -587,7 +608,7 @@
       ],
       "layout": {
         "template": "SecondaryPageMultiNav",
-        "tabsContainer": "Body-relative x=32, y=16, w=390, h=26; absolute x=32, y=84",
+        "tabsContainer": "Body-relative x=32, y=16, w=390, h=26; absolute x=32, y=100",
         "tab": "Each Nav.SecondaryTab is w=60, h=26 with x positions 0, 66, 132, 198, 264, 330 and 6px gap",
         "states": "First observed tab is State=Active; following tabs are State=Default"
       },
@@ -597,16 +618,16 @@
         "body": {
           "sourceNodeId": "375:4982",
           "x": 0,
-          "y": 68,
+          "y": 84,
           "width": 1000,
-          "height": 542
+          "height": 526
         },
         "tabsContainer": {
           "sourceNodeId": "375:5103",
           "bodyRelativeX": 32,
           "bodyRelativeY": 16,
           "absoluteX": 32,
-          "absoluteY": 84,
+          "absoluteY": 100,
           "width": 390,
           "height": 26,
           "layoutMode": "horizontal",
@@ -647,7 +668,7 @@
         "Nav.Navigate"
       ],
       "layout": {
-        "contentShell": "Body-relative x=32, y=62, w=936, h=480; absolute x=32, y=130",
+        "contentShell": "Body-relative x=32, y=62, w=936, h=480; absolute x=32, y=146",
         "navigate": "Inside content shell x=0, y=0, w=96, h=480; right divider; content list w=80 with 16px right padding and 8px vertical padding",
         "relationship": "The right card list starts at x=116, leaving a 20px gap after the 96px navigation column"
       },
@@ -658,7 +679,7 @@
           "bodyRelativeX": 32,
           "bodyRelativeY": 62,
           "absoluteX": 32,
-          "absoluteY": 130,
+          "absoluteY": 146,
           "width": 936,
           "height": 480,
           "layoutMode": "horizontal",
@@ -669,7 +690,7 @@
           "shellRelativeX": 0,
           "shellRelativeY": 0,
           "absoluteX": 32,
-          "absoluteY": 130,
+          "absoluteY": 146,
           "width": 96,
           "height": 480,
           "paddingRight": 16,
@@ -763,15 +784,15 @@
           "sourceNodeId": "304:17206",
           "body": {
             "x": 0,
-            "y": 64,
+            "y": 80,
             "width": 1000,
-            "height": 546
+            "height": 530
           },
           "frame": {
             "bodyRelativeX": 20,
             "bodyRelativeY": 16,
             "absoluteX": 20,
-            "absoluteY": 80,
+            "absoluteY": 96,
             "width": 338,
             "height": 28
           }
@@ -785,15 +806,15 @@
           },
           "body": {
             "x": 0,
-            "y": 64,
+            "y": 80,
             "width": 1000,
-            "height": 1102
+            "height": 1086
           },
           "frame": {
             "bodyRelativeX": 20,
             "bodyRelativeY": 16,
             "absoluteX": 20,
-            "absoluteY": 80,
+            "absoluteY": 96,
             "width": 338,
             "height": 28
           }
@@ -815,7 +836,7 @@
         "Layout.Scroll"
       ],
       "layout": {
-        "detailContent": "x=20, y=128, w=960; observed height ranges from 1022 to 1212 depending on expanded content",
+        "detailContent": "x=20, y=144, w=960; observed height ranges from 1022 to 1212 depending on expanded content",
         "scroll": "x=980, y=60, w=12; height is 466 in large-card-expanded and 1015 in all-states reference"
       },
       "observedDetailLayouts": {
@@ -829,16 +850,16 @@
           "body": {
             "sourceNodeId": "304:17205",
             "x": 0,
-            "y": 64,
+            "y": 80,
             "width": 1000,
-            "height": 546
+            "height": 530
           },
           "detailContent": {
             "sourceNodeId": "304:17226",
             "bodyRelativeX": 20,
             "bodyRelativeY": 64,
             "absoluteX": 20,
-            "absoluteY": 128,
+            "absoluteY": 144,
             "width": 960,
             "height": 1212,
             "overflowBeyondVisibleCanvas": 730
@@ -848,7 +869,7 @@
             "bodyRelativeX": 980,
             "bodyRelativeY": 60,
             "absoluteX": 980,
-            "absoluteY": 124,
+            "absoluteY": 140,
             "width": 12,
             "height": 466
           },
@@ -870,16 +891,16 @@
           "body": {
             "sourceNodeId": "304:9322",
             "x": 0,
-            "y": 64,
+            "y": 80,
             "width": 1000,
-            "height": 1102
+            "height": 1086
           },
           "detailContent": {
             "sourceNodeId": "304:9647",
             "bodyRelativeX": 20,
             "bodyRelativeY": 64,
             "absoluteX": 20,
-            "absoluteY": 128,
+            "absoluteY": 144,
             "width": 960,
             "height": 1022
           },
@@ -888,7 +909,7 @@
             "bodyRelativeX": 980,
             "bodyRelativeY": 60,
             "absoluteX": 980,
-            "absoluteY": 124,
+            "absoluteY": 140,
             "width": 12,
             "height": 1015
           },
@@ -1272,24 +1293,25 @@
     "Treat every Figma template page as a layout reference, not a mandatory data structure. Select regions and components based on the original source page first, then use the matching template coordinates for the selected component family.",
     "A referenced template page may be used partially. Do not render secondary tabs, third-level sidebars, breadcrumbs, large cards, pagination, or detail sections unless the original source page or routing context actually contains that structure.",
     "When multiple components can represent the same region, choose the component by source information density before applying layout: compact text entries may use Game.ShowCard only when every card subtitle/body in the same page/list fits within one visible line, richer inline entries may use compact Layout.DescribeCard, and image-first gallery entries may use the SecondaryPageLargeCard Layout.DescribeCard grid.",
+    "For every component that renders an imageSrc, choose Base.Image ratio from the source image dimensions or visual type before applying the card layout. Use 1:1 for square icons, portraits, and near-square art; use 3:2 or 16:9 for weapons, equipment thumbnails, maps, screenshots, landscapes, banners, and other wide assets to avoid square-frame cropping.",
     "Use semantic tokens from the Wiki or shared token source; do not hardcode colors when a token exists.",
     "Header navigation and search are shared across home, secondary list, and detail states.",
     "Home state renders a category grid after the summary block; secondary state renders a list grid plus pagination; detail state renders breadcrumbs plus vertically scrollable detail content.",
     "Use DetailPageLargeCardExpanded as the default 1000 x 610 detail viewport reference. Use DetailPageAllStates only to understand optional section stacking and overflow content height.",
-    "SecondaryPage layout follows Body x=0, y=64, w=1000, h=546; list container absolute x=32, y=128, w=936, h=408; three columns with card w=306.6667, h=96, 8px column gap, and 8px row gap.",
+    "SecondaryPage layout follows Body x=0, y=80, w=1000, h=530 after the 84px Header update; list container absolute x=32, y=144, w=936, h=408; three columns with card w=306.6667, h=96, 8px column gap, and 8px row gap.",
     "If a secondary page has no second-level navigation row, no third-level sidebar/navigation, and no breadcrumbs above the list, place the list region 20px from the Body top. For SecondaryPage use Body-relative y=20 instead of the observed y=64 reserved for pages with an upper reference region.",
-    "SecondaryPageLargeCard layout follows Body x=0, y=68, w=1000, h=542; large-card list container Body-relative x=50, y=64, w=900, h=588; four Layout.DescribeCard columns with card w=210, h=284, column gap=20, row gap=20. If there is no secondary navigation and no breadcrumbs above the large-card list, use Body-relative y=20 instead of y=64. If the selected large-card set renders only one row, including itemCount <= 4 or fewer than four cards, vertically center that row in the list container at y=152 instead of pinning it to y=0. Use it only for image-first or gallery-like secondary content.",
+    "SecondaryPageLargeCard layout follows Body x=0, y=84, w=1000, h=526 after the 84px Header update; large-card list container Body-relative x=50, y=64, w=900, h=588; four Layout.DescribeCard columns with card w=210, h=284, column gap=20, row gap=20. If there is no secondary navigation and no breadcrumbs above the large-card list, use Body-relative y=20 instead of y=64. If the selected large-card set renders only one row, including itemCount <= 4 or fewer than four cards, vertically center that row in the list container at y=152 instead of pinning it to y=0. Use it only for image-first or gallery-like secondary content.",
     "SecondaryPage pagination follows Body-relative x=0, y=482, w=1000, h=64 and must remain separate from card data binding.",
     "Treat SecondaryPageMultiNav as a modular placement reference, not a required full-page data structure. A generator may use only the tab row, only the sidebar, or only the content-shell coordinates when those parts match the original source page.",
     "Use the SecondaryPageMultiNav tab row when the original source page has second-level navigation. Do not require a third-level sidebar just because this template contains one.",
     "Use the SecondaryPageMultiNav sidebar only when the original source page has real third-level groups or local anchors. Never fabricate Nav.Navigate items to fill the observed sidebar.",
-    "SecondaryPageMultiNav uses Body x=0, y=68, w=1000, h=542; secondary tabs at Body-relative x=32, y=16, w=390, h=26; content shell at Body-relative x=32, y=62, w=936, h=480.",
+    "SecondaryPageMultiNav uses Body x=0, y=84, w=1000, h=526 after the 84px Header update; secondary tabs at Body-relative x=32, y=16, w=390, h=26; content shell at Body-relative x=32, y=62, w=936, h=480.",
     "In SecondaryPageMultiNav, Nav.SecondaryTab represents second-level navigation under the active global Nav.TopBar item. Nav.Navigate is optional and represents only real third-level groups or local anchors under the active SecondaryTab.",
     "SecondaryPageMultiNav observes a right-side Game.ShowCard list in two columns: list x=116, y=0, w=820, h=480 inside the content shell; card w=406, h=76, column gap=8, row gap=8. Use this list structure only when it fits the original page content and every card subtitle/body fits within one visible line; otherwise choose the most suitable existing component while preserving the matched placement reference.",
     "In Game.ShowCard, the right arrow means the represented entry can drill down or route to a next page. Hide the arrow when the entry is terminal and has no next hierarchy level.",
     "Game.ShowCard descriptions are visibly clamped to one line, and the full description string must be exposed with Base.ToolTip on text hover only when the visible text is actually truncated or hidden. Tooltip display should use a short delay of about 120ms and auto placement so the bubble stays inside the viewport and nearest scroll/clipping container.",
     "If any source card in the same secondary, multi-level, or related card page/list needs more than one visible subtitle/body line, render all related cards in that page/list as Layout.DescribeCard size=SM instead of Game.ShowCard. Do not mix ShowCard and DescribeCard in the same card set only because some descriptions are longer.",
-    "DetailPage content follows Body-relative content x=20, y=64, w=960; breadcrumbs Body-relative x=20, y=16, w=338, h=28; visual scroll Body-relative x=980, y=60, w=12.",
+    "DetailPage content follows Body-relative content x=20, y=64, w=960 after the 84px Header update; breadcrumbs Body-relative x=20, y=16, w=338, h=28; visual scroll Body-relative x=980, y=60, w=12.",
     "DetailPage section stacks use 16px internal padding and 20px vertical gaps between sections.",
     "Home summary title follows the WikiHome two-segment title row: '<game name>' followed by the literal 'Wiki攻略'.",
     "In home.category-grid, each Game.CategoryCard previews up to the first three items of its linked secondary page through the avatar cluster, prefers icon over image when both exist, shows the total item count for that category in the trailing count badge, and is hidden when that total count is 0.",
@@ -1297,6 +1319,7 @@
     "Form.SearchBar is global Wiki search across categories and entries.",
     "In secondary list state, keep the observed template pagination placement, bind pagination separately from card data, and use backend totalPages instead of preview defaults.",
     "In secondary list state, use Game.ShowCard when it fully represents the original entry and every card subtitle/body fits within one visible line; use Layout.DescribeCard size=SM for the whole card set when any entry needs more than one visible line or richer original entry information needs image, badge, description, or meta fields.",
+    "In secondary list state, imageRatio is part of the entry binding. A generator must not leave wide item images in a default 1:1 frame when the source image is closer to 3:2 or 16:9.",
     "In detail state, content may exceed the visible canvas height. Keep the page scroll model in the renderer layer and sync the visual Layout.Scroll component to scroll state, using the source page or template position for the visual scrollbar.",
     "Breadcrumbs render only on final detail pages, include one clickable label per page hierarchy level, and route each label to its target page.",
     "Detail hero card family follows the card family used to open the detail page from the previous list page.",

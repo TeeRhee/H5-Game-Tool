@@ -27,9 +27,10 @@
     "For Game.CategoryCard in home.category-grid, countLabel must represent the total item count for the linked secondary page or category, not the avatar preview count.",
     "Treat template pages as placement references, not datasource shape requirements. Referencing a template page does not require rendering every observed region or component in that frame.",
     "Select the component family from the original source page structure and information density first, then apply the closest matching template layout for that component family.",
+    "For any Wiki component that renders imageSrc, inspect source asset dimensions or visual content and bind imageRatio to the closest supported Base.Image ratio before rendering. Do not blindly use 1:1 for wide images; weapons, equipment thumbnails, maps, screenshots, landscapes, and banners should usually use 3:2 or 16:9.",
     "When a secondary page renders no second-level navigation, no third-level navigation/sidebar, and no breadcrumbs above its list, place the list region 20px from the Body top. Do not inherit the lower list y offset from templates that reserve space for breadcrumbs or secondary navigation.",
     "In secondary.card-list, choose Game.ShowCard only when every entry's subtitle/body text fits within one visible line and the card can fully represent the original source entry; choose compact Layout.DescribeCard when the entry needs richer inline description, image, badge, or meta fields; choose the SecondaryPageLargeCard Layout.DescribeCard grid only when the original source page is image-first or gallery-like.",
-    "If any source card in the same secondary, multi-level, or related card page/list needs more than one visible line of secondary/rich text, use Layout.DescribeCard with size=SM for all related cards in that page/list instead of mixing Game.ShowCard with DescribeCard.",
+    "If any source card in the same secondary, multi-level, or related card page/list needs more than one visible line of secondary/rich text, use Layout.DescribeCard with size=SM for all related cards in that page/list instead of mixing Game.ShowCard with DescribeCard. Bind the subtitle/body text to the SM description node as a two-line region; expose the full string through Base.ToolTip only when the rendered text is actually truncated or hidden.",
     "Using SecondaryPageLargeCard means using its large-card placement rules for chosen Layout.DescribeCard entries, not forcing all source pages into large image cards. When the chosen large-card entries render only one row, including itemCount <= 4 or fewer than four cards, vertically center that row inside the large-card list container.",
     "Use secondary.multi-level-tabs only when the original source page exposes second-level branches under the active first-level Nav.TopBar category.",
     "Use secondary.multi-level-sidebar only when the active secondary tab exposes real third-level groups or local subcategory anchors. If the source page has only second-level navigation, omit the sidebar and do not fabricate third-level items.",
@@ -79,8 +80,8 @@
       "required": false
     },
     {
-      "source": "TODO_FROM_DATASOURCE > selected category entries plus routing hierarchy, choosing one card family for the page/list: Game.ShowCard only when all entry subtitle/body text fits one visible line, compact Layout.DescribeCard size=SM when any entry needs more than one visible line or richer inline fields, or SecondaryPageLargeCard-style Layout.DescribeCard when the original source structure is image-first",
-      "target": "regions[secondary.card-list].components[Game.ShowCard or Layout.DescribeCard].dataBinding.entries, selected card family, selected layout variant, and Layout.DescribeCard size=SM when replacing ShowCard for richer text",
+      "source": "TODO_FROM_DATASOURCE > selected category entries plus routing hierarchy plus per-entry image asset dimensions/content type, choosing one card family for the page/list: Game.ShowCard only when all entry subtitle/body text fits one visible line, compact Layout.DescribeCard size=SM when any entry needs more than one visible line or richer inline fields, or SecondaryPageLargeCard-style Layout.DescribeCard when the original source structure is image-first",
+      "target": "regions[secondary.card-list].components[Game.ShowCard or Layout.DescribeCard].dataBinding.entries, entries[].imageRatio, selected card family, selected layout variant, and Layout.DescribeCard size=SM when replacing ShowCard for richer text",
       "required": true
     },
     {

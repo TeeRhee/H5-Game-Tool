@@ -2,8 +2,10 @@ import type { HTMLAttributes } from "react";
 import { RemixIcon } from "./RemixIcon";
 import { cx } from "./wikiUtils";
 
+export type ImageRatio = "1:1" | "3:2" | "16:9";
+
 export interface ImageFrameProps extends HTMLAttributes<HTMLDivElement> {
-  ratio?: "1:1" | "3:2" | "16:9";
+  ratio?: ImageRatio;
   src?: string;
   alt?: string;
 }

@@ -517,9 +517,10 @@
         "wiki:shell.header"
       ],
       "observedStructure": {
-        "container": "Global first-level Wiki navigation container. Background uses color/bg/alpha-bg equivalent alpha surface and a 6px background blur/backdrop-filter from Figma node 312:3809.",
-        "layout": "Horizontal flex row, 8px item gap, radius md, 8 items observed at w=80, h=36.",
-        "rule": "Keep the blur on the TopBar container only. Do not add blur to individual TopBarItem states."
+        "container": "Shared Wiki header shell at x=0, y=0, w=1000, h=84. It contains the global TopBar and global SearchBar.",
+        "padding": "Desktop header padding is top=32, right=32, bottom=16, left=32. The bottom 16px is part of the header mask/scroll cutoff area.",
+        "layout": "TopBar and SearchBar stay aligned at y=32 with height 36. Other page content starts after the 84px header region and should disappear under the header from its bottom padding boundary while scrolling.",
+        "rule": "Do not place page body content inside the header padding. Template body/content absolute positions should shift down with the 84px header."
       },
       "props": {
         "searchValue": {
@@ -550,6 +551,11 @@
       "observedUse": [
         "wiki:shell.header"
       ],
+      "observedStructure": {
+        "container": "Global first-level Wiki navigation container. Background uses color/bg/alpha-bg equivalent alpha surface and a 6px background blur/backdrop-filter from Figma node 312:3809.",
+        "layout": "Horizontal flex row, 8px item gap, radius md, 8 items observed at w=80, h=36.",
+        "rule": "Keep the blur on the TopBar container only. Do not add blur to individual TopBarItem states."
+      },
       "props": {
         "items": {
           "type": "array",
@@ -747,7 +753,8 @@
             "3:2",
             "16:9"
           ],
-          "default": "1:1"
+          "default": "1:1",
+          "rule": "Choose the closest supported ratio from the source asset dimensions or visual content before rendering. Use 1:1 for square icons, portraits, and near-square assets; use 3:2 for moderately wide images; use 16:9 for wide landscape assets, banners, weapon/item renders, maps, screenshots, and other assets that would be noticeably cropped in a square frame. Do not default to 1:1 when source width/height or visual content clearly indicates a wider image."
         },
         "src": {
           "type": "string",
@@ -779,6 +786,8 @@
       ],
       "observedStructure": {
         "rule": "Wiki list/detail describe card. Use it when the source entry has richer title, description, image, badge, meta/attribute content, or secondary rich text that needs more than one visible line. For page/list card consistency, if any card in the same rendered page/list needs more than one visible subtitle/body line, use Layout.DescribeCard with size=sm for all related cards on that page/list instead of Game.ShowCard. This is separate from the map popup detail card.",
+        "smDefaultNode": "Figma node 177:1104, Size=SM State=Default: root w=328 h=106, horizontal auto-layout, padding 8, gap 12, 1px white 10% stroke, radius 6. Base.Image instance is x=8 y=8 w=90 h=90 opacity 80%. Right body is x=110 y=8 w=210 h=90 vertical, gap 6. Title/description group is w=210 h=62, gap 4; title row is h=22; subtitle text is w=210 h=36 with Body/SM 12px/18px and two visible lines. Attribute row is y=68 w=210 h=22, padding 4px 6px, gap 2.",
+        "smDescriptionRule": "For size=sm, render description/subtitle as its own text node under the title row, not as a one-line ShowCard subtitle. It occupies a two-line 36px-high region using 12px text with 18px line-height. Clamp visible text to two lines; preserve the full string and expose Base.ToolTip only when the subtitle text is actually truncated or hidden.",
         "lgNoAttributesRule": "For size=lg with showAttributes=false, the card height must adapt to rendered content instead of keeping the full LG fixed height reserved for the attributes row.",
         "lgNoDescriptionRule": "For size=lg when description/subtitle is absent, render the image-first structure as image plus title and any explicitly bound badge/meta only. Do not render an empty subtitle row or reserve subtitle spacing, and let the card height adapt to image, title, and padding."
       },
@@ -792,12 +801,24 @@
           "type": "string",
           "required": false,
           "source": "TODO_FROM_DATASOURCE",
-          "rule": "When absent on size=lg, do not render an empty subtitle row or preserve subtitle spacing."
+          "rule": "For size=sm, render as the two-line subtitle node observed in Figma node 177:1104: width follows the 210px content column, 12px/18px typography, max visible height 36px. Wrap with Base.ToolTip for the full text only when truncation or hidden text is detected. When absent on size=lg, do not render an empty subtitle row or preserve subtitle spacing."
         },
         "imageSrc": {
           "type": "string",
           "required": false,
           "source": "TODO_FROM_DATASOURCE"
+        },
+        "imageRatio": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "1:1",
+            "3:2",
+            "16:9"
+          ],
+          "default": "1:1",
+          "source": "TODO_FROM_DATASOURCE_OR_ASSET_METADATA",
+          "rule": "Bind to the nearest supported ratio for imageSrc. If source dimensions are available, use width/height: near 1.0 -> 1:1, around 1.5 -> 3:2, around or above 1.7 -> 16:9. If dimensions are unavailable, infer from content type: icons/portraits -> 1:1; weapons, landscape screenshots, map thumbnails, and wide item art -> 16:9 or 3:2."
         },
         "showImage": {
           "type": "boolean",
@@ -907,6 +928,18 @@
           "type": "string",
           "required": false,
           "source": "TODO_FROM_DATASOURCE"
+        },
+        "imageRatio": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "1:1",
+            "3:2",
+            "16:9"
+          ],
+          "default": "1:1",
+          "source": "TODO_FROM_DATASOURCE_OR_ASSET_METADATA",
+          "rule": "Bind to the nearest supported ratio for imageSrc. Use 1:1 only for square icons, portraits, and near-square item art; use 3:2 or 16:9 for wide source assets such as weapons, equipment thumbnails, landscapes, maps, screenshots, and banners so the image is not unnecessarily cropped."
         },
         "label": {
           "type": "string",
