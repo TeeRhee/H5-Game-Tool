@@ -27,13 +27,15 @@
     "For Game.CategoryCard in home.category-grid, countLabel must represent the total item count for the linked secondary page or category, not the avatar preview count.",
     "Treat template pages as placement references, not datasource shape requirements. Referencing a template page does not require rendering every observed region or component in that frame.",
     "Select the component family from the original source page structure and information density first, then apply the closest matching template layout for that component family.",
-    "In secondary.card-list, choose Game.ShowCard when it can fully represent the original source entry; choose compact Layout.DescribeCard when the entry needs richer inline description, image, badge, or meta fields; choose the SecondaryPageLargeCard Layout.DescribeCard grid only when the original source page is image-first or gallery-like.",
-    "Using SecondaryPageLargeCard means using its large-card placement rules for chosen Layout.DescribeCard entries, not forcing all source pages into large image cards.",
+    "When a secondary page renders no second-level navigation, no third-level navigation/sidebar, and no breadcrumbs above its list, place the list region 20px from the Body top. Do not inherit the lower list y offset from templates that reserve space for breadcrumbs or secondary navigation.",
+    "In secondary.card-list, choose Game.ShowCard only when every entry's subtitle/body text fits within one visible line and the card can fully represent the original source entry; choose compact Layout.DescribeCard when the entry needs richer inline description, image, badge, or meta fields; choose the SecondaryPageLargeCard Layout.DescribeCard grid only when the original source page is image-first or gallery-like.",
+    "If any source card in the same secondary, multi-level, or related card page/list needs more than one visible line of secondary/rich text, use Layout.DescribeCard with size=SM for all related cards in that page/list instead of mixing Game.ShowCard with DescribeCard.",
+    "Using SecondaryPageLargeCard means using its large-card placement rules for chosen Layout.DescribeCard entries, not forcing all source pages into large image cards. When the chosen large-card entries render only one row, including itemCount <= 4 or fewer than four cards, vertically center that row inside the large-card list container.",
     "Use secondary.multi-level-tabs only when the original source page exposes second-level branches under the active first-level Nav.TopBar category.",
     "Use secondary.multi-level-sidebar only when the active secondary tab exposes real third-level groups or local subcategory anchors. If the source page has only second-level navigation, omit the sidebar and do not fabricate third-level items.",
-    "Use secondary.multi-level-card-list only when the entries under the active second-level tab and optional active third-level group are best represented by the observed two-column Game.ShowCard list. Otherwise keep the matched navigation placement and choose the content component that best fits the original page structure.",
+    "Use secondary.multi-level-card-list only when the entries under the active second-level tab and optional active third-level group are best represented by the observed two-column Game.ShowCard list and every entry subtitle/body fits within one visible line. Otherwise keep the matched navigation placement and choose the content component that best fits the original page structure.",
     "For Game.ShowCard, derive targetRoute or hasNextLevel from the source hierarchy. If the represented entry is terminal and has no next page, set hasNextLevel=false or showRightIcon=false so the right arrow is hidden.",
-    "For Game.ShowCard descriptions, pass the full subtitle/body text even though the component visibly clamps to two lines; the full text must be exposed through Base.ToolTip on text hover.",
+    "For Game.ShowCard descriptions, pass the full subtitle/body text even though the component visibly clamps to one line; the full text must be exposed through Base.ToolTip only when the visible text is actually truncated or hidden, with a short hover delay and auto placement that avoids viewport or scroll-container clipping.",
     "Breadcrumbs are only for final detail pages. Each breadcrumb label is clickable and maps to the route for that hierarchy level.",
     "Detail hero card component family follows the card family used on the previous page for the entry that opened the detail page.",
     "For detail.attribute-section badges, keep one stable tone for each source tag class and use different tones for different classes when source colors are unavailable.",
@@ -77,8 +79,8 @@
       "required": false
     },
     {
-      "source": "TODO_FROM_DATASOURCE > selected category entries plus routing hierarchy, choosing Game.ShowCard, compact Layout.DescribeCard, or SecondaryPageLargeCard-style Layout.DescribeCard per entry based on original source structure and display richness",
-      "target": "regions[secondary.card-list].components[Game.ShowCard or Layout.DescribeCard].dataBinding.entries and selected layout variant",
+      "source": "TODO_FROM_DATASOURCE > selected category entries plus routing hierarchy, choosing one card family for the page/list: Game.ShowCard only when all entry subtitle/body text fits one visible line, compact Layout.DescribeCard size=SM when any entry needs more than one visible line or richer inline fields, or SecondaryPageLargeCard-style Layout.DescribeCard when the original source structure is image-first",
+      "target": "regions[secondary.card-list].components[Game.ShowCard or Layout.DescribeCard].dataBinding.entries, selected card family, selected layout variant, and Layout.DescribeCard size=SM when replacing ShowCard for richer text",
       "required": true
     },
     {
@@ -97,8 +99,8 @@
       "required": false
     },
     {
-      "source": "TODO_FROM_DATASOURCE > entries filtered by active first-level category, active second-level tab, optional active third-level group, and per-entry next-level route availability",
-      "target": "regions[secondary.multi-level-card-list].components[Game.ShowCard].dataBinding.entries",
+      "source": "TODO_FROM_DATASOURCE > entries filtered by active first-level category, active second-level tab, optional active third-level group, per-entry next-level route availability, and page/list-level check that every entry subtitle/body fits one visible line before using Game.ShowCard",
+      "target": "regions[secondary.multi-level-card-list].components[Game.ShowCard or Layout.DescribeCard].dataBinding.entries and selected card family",
       "required": false
     },
     {
@@ -192,6 +194,7 @@
     {
       "regionId": "secondary.multi-level-card-list",
       "components": [
+        "Layout.DescribeCard",
         "Game.ShowCard",
         "Base.Image",
         "Base.Badge"

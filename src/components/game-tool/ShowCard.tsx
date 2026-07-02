@@ -58,7 +58,7 @@ export function ShowCard({
           </span>
           <ProgressBar value={progressValue} className="gt-wiki-show-card__progress-bar" />
           {description ? (
-            <ToolTip content={description} placement="TopLeft">
+            <ToolTip content={description}>
               <span className="gt-wiki-show-card__description">{description}</span>
             </ToolTip>
           ) : null}
@@ -67,7 +67,7 @@ export function ShowCard({
         <span className="gt-wiki-show-card__content">
           <span className="gt-wiki-show-card__title">{title}</span>
           {description ? (
-            <ToolTip content={description} placement="TopLeft">
+            <ToolTip content={description}>
               <span className="gt-wiki-show-card__description">{description}</span>
             </ToolTip>
           ) : null}

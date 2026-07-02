@@ -1892,6 +1892,7 @@ button:disabled {
   pointer-events: none;
   visibility: hidden;
   transition: opacity 120ms ease, visibility 120ms ease, transform 120ms ease;
+  transition-delay: 0ms;
 }
 
 .gt-tool-tip__bubble::before {
@@ -1902,11 +1903,12 @@ button:disabled {
   background: var(--color-bg-weak);
 }
 
-.gt-tool-tip:hover .gt-tool-tip__bubble,
-.gt-tool-tip:focus-within .gt-tool-tip__bubble,
-.gt-wiki-show-card:focus-visible .gt-tool-tip__bubble {
+.gt-tool-tip--enabled:hover .gt-tool-tip__bubble,
+.gt-tool-tip--enabled:focus-within .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--enabled .gt-tool-tip__bubble {
   opacity: 1;
   visibility: visible;
+  transition-delay: var(--gt-tool-tip-show-delay, 120ms);
 }
 
 .gt-tool-tip--TopLeft .gt-tool-tip__bubble,
@@ -1916,12 +1918,12 @@ button:disabled {
   transform: translateY(-2px);
 }
 
-.gt-tool-tip--TopLeft:hover .gt-tool-tip__bubble,
-.gt-tool-tip--TopCenter:hover .gt-tool-tip__bubble,
-.gt-tool-tip--TopRight:hover .gt-tool-tip__bubble,
-.gt-wiki-show-card:focus-visible .gt-tool-tip--TopLeft .gt-tool-tip__bubble,
-.gt-wiki-show-card:focus-visible .gt-tool-tip--TopCenter .gt-tool-tip__bubble,
-.gt-wiki-show-card:focus-visible .gt-tool-tip--TopRight .gt-tool-tip__bubble {
+.gt-tool-tip--enabled.gt-tool-tip--TopLeft:hover .gt-tool-tip__bubble,
+.gt-tool-tip--enabled.gt-tool-tip--TopCenter:hover .gt-tool-tip__bubble,
+.gt-tool-tip--enabled.gt-tool-tip--TopRight:hover .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--enabled.gt-tool-tip--TopLeft .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--enabled.gt-tool-tip--TopCenter .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--enabled.gt-tool-tip--TopRight .gt-tool-tip__bubble {
   transform: translateY(0);
 }
 
@@ -1932,12 +1934,12 @@ button:disabled {
   transform: translateY(2px);
 }
 
-.gt-tool-tip--BottomLeft:hover .gt-tool-tip__bubble,
-.gt-tool-tip--BottomCenter:hover .gt-tool-tip__bubble,
-.gt-tool-tip--BottomRight:hover .gt-tool-tip__bubble,
-.gt-wiki-show-card:focus-visible .gt-tool-tip--BottomLeft .gt-tool-tip__bubble,
-.gt-wiki-show-card:focus-visible .gt-tool-tip--BottomCenter .gt-tool-tip__bubble,
-.gt-wiki-show-card:focus-visible .gt-tool-tip--BottomRight .gt-tool-tip__bubble {
+.gt-tool-tip--enabled.gt-tool-tip--BottomLeft:hover .gt-tool-tip__bubble,
+.gt-tool-tip--enabled.gt-tool-tip--BottomCenter:hover .gt-tool-tip__bubble,
+.gt-tool-tip--enabled.gt-tool-tip--BottomRight:hover .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--enabled.gt-tool-tip--BottomLeft .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--enabled.gt-tool-tip--BottomCenter .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--enabled.gt-tool-tip--BottomRight .gt-tool-tip__bubble {
   transform: translateY(0);
 }
 
@@ -1960,8 +1962,8 @@ button:disabled {
   transform: translate(-50%, -2px);
 }
 
-.gt-tool-tip--TopCenter:hover .gt-tool-tip__bubble,
-.gt-wiki-show-card:focus-visible .gt-tool-tip--TopCenter .gt-tool-tip__bubble {
+.gt-tool-tip--enabled.gt-tool-tip--TopCenter:hover .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--enabled.gt-tool-tip--TopCenter .gt-tool-tip__bubble {
   transform: translate(-50%, 0);
 }
 
@@ -1969,8 +1971,8 @@ button:disabled {
   transform: translate(-50%, 2px);
 }
 
-.gt-tool-tip--BottomCenter:hover .gt-tool-tip__bubble,
-.gt-wiki-show-card:focus-visible .gt-tool-tip--BottomCenter .gt-tool-tip__bubble {
+.gt-tool-tip--enabled.gt-tool-tip--BottomCenter:hover .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--enabled.gt-tool-tip--BottomCenter .gt-tool-tip__bubble {
   transform: translate(-50%, 0);
 }
 
@@ -2010,8 +2012,8 @@ button:disabled {
   transform: translate(-2px, -50%);
 }
 
-.gt-tool-tip--Left:hover .gt-tool-tip__bubble,
-.gt-wiki-show-card:focus-visible .gt-tool-tip--Left .gt-tool-tip__bubble {
+.gt-tool-tip--enabled.gt-tool-tip--Left:hover .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--enabled.gt-tool-tip--Left .gt-tool-tip__bubble {
   transform: translate(0, -50%);
 }
 
@@ -2028,8 +2030,8 @@ button:disabled {
   transform: translate(2px, -50%);
 }
 
-.gt-tool-tip--Right:hover .gt-tool-tip__bubble,
-.gt-wiki-show-card:focus-visible .gt-tool-tip--Right .gt-tool-tip__bubble {
+.gt-tool-tip--enabled.gt-tool-tip--Right:hover .gt-tool-tip__bubble,
+.gt-wiki-show-card:focus-visible .gt-tool-tip--enabled.gt-tool-tip--Right .gt-tool-tip__bubble {
   transform: translate(0, -50%);
 }
 
@@ -2224,6 +2226,8 @@ button:disabled {
   gap: 8px;
   border-radius: var(--radius-md);
   background: var(--color-alpha-white-alpha-2);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   isolation: isolate;
 }
 
@@ -2419,7 +2423,8 @@ button:disabled {
   display: -webkit-box;
   white-space: normal;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
 }
 
 .gt-wiki-category-card__arrow,
@@ -2800,6 +2805,15 @@ button:disabled {
 .gt-wiki-describe-card--lg.gt-wiki-describe-card--no-attributes .gt-wiki-describe-card__body {
   height: auto;
   justify-content: flex-start;
+}
+
+.gt-wiki-describe-card--lg.gt-wiki-describe-card--no-description .gt-wiki-describe-card__body {
+  height: auto;
+  justify-content: flex-start;
+}
+
+.gt-wiki-describe-card--lg.gt-wiki-describe-card--no-description .gt-wiki-describe-card__content {
+  gap: 0;
 }
 
 .gt-wiki-describe-card__content {

@@ -37,6 +37,7 @@ export function WikiDescribeCard({
   const badgeText = badge ?? badges[0];
   const metaItems = meta ?? attributes.map((item) => item.value || item.label).filter(Boolean);
   const hasAttributes = showAttributes && metaItems.length > 0;
+  const hasDescription = Boolean(description);
 
   return (
     <article
@@ -45,6 +46,7 @@ export function WikiDescribeCard({
         `gt-wiki-describe-card--${size}`,
         `gt-wiki-describe-card--${state}`,
         hasAttributes ? "" : "gt-wiki-describe-card--no-attributes",
+        hasDescription ? "" : "gt-wiki-describe-card--no-description",
         className,
       )}
       {...props}

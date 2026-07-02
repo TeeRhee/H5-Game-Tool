@@ -574,7 +574,7 @@ export function ComponentGallery() {
               <ShowCard title="详情名称" description="详情介绍介绍" label="标签" imageSrc="/assets/preview/map-placeholder.png" />
               <ShowCard
                 title="终止项详情"
-                description="这是一段较长的副标题说明，用来验证最多显示两行文字，超过两行以后截断，完整文案后续交给 Pop 组件展示。"
+                description="这是一段较长的副标题说明，用来验证最多显示一行文字，超过一行以后截断，完整文案交给 ToolTip 组件展示。"
                 label="标签"
                 imageSrc="/assets/preview/map-placeholder.png"
                 hasNextLevel={false}

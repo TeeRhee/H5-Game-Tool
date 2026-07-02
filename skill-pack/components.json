@@ -516,6 +516,11 @@
       "observedUse": [
         "wiki:shell.header"
       ],
+      "observedStructure": {
+        "container": "Global first-level Wiki navigation container. Background uses color/bg/alpha-bg equivalent alpha surface and a 6px background blur/backdrop-filter from Figma node 312:3809.",
+        "layout": "Horizontal flex row, 8px item gap, radius md, 8 items observed at w=80, h=36.",
+        "rule": "Keep the blur on the TopBar container only. Do not add blur to individual TopBarItem states."
+      },
       "props": {
         "searchValue": {
           "type": "string",
@@ -773,8 +778,9 @@
         "ShowAttributes=true|false"
       ],
       "observedStructure": {
-        "rule": "Wiki list/detail describe card. Use it when the source entry has richer title, description, image, badge, or meta/attribute content than Game.ShowCard can fully express. This is separate from the map popup detail card.",
-        "lgNoAttributesRule": "For size=lg with showAttributes=false, the card height must adapt to rendered content instead of keeping the full LG fixed height reserved for the attributes row."
+        "rule": "Wiki list/detail describe card. Use it when the source entry has richer title, description, image, badge, meta/attribute content, or secondary rich text that needs more than one visible line. For page/list card consistency, if any card in the same rendered page/list needs more than one visible subtitle/body line, use Layout.DescribeCard with size=sm for all related cards on that page/list instead of Game.ShowCard. This is separate from the map popup detail card.",
+        "lgNoAttributesRule": "For size=lg with showAttributes=false, the card height must adapt to rendered content instead of keeping the full LG fixed height reserved for the attributes row.",
+        "lgNoDescriptionRule": "For size=lg when description/subtitle is absent, render the image-first structure as image plus title and any explicitly bound badge/meta only. Do not render an empty subtitle row or reserve subtitle spacing, and let the card height adapt to image, title, and padding."
       },
       "props": {
         "title": {
@@ -785,7 +791,8 @@
         "description": {
           "type": "string",
           "required": false,
-          "source": "TODO_FROM_DATASOURCE"
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "When absent on size=lg, do not render an empty subtitle row or preserve subtitle spacing."
         },
         "imageSrc": {
           "type": "string",
@@ -815,7 +822,8 @@
             "sm",
             "lg"
           ],
-          "default": "sm"
+          "default": "sm",
+          "rule": "Use size=sm when replacing Game.ShowCard because any source card in the same page/list needs more than one visible subtitle/body line."
         },
         "state": {
           "type": "enum",
@@ -878,7 +886,7 @@
         "wiki:detail.related-section"
       ],
       "observedStructure": {
-        "rule": "ShowCard is a compact list/detail summary card. Use the right arrow only when the represented item has a next page, next hierarchy level, target route, or explicit clickable drill-down. The subtitle/description region is height-adaptive and clamps to two visible lines; full text must be exposed through Base.ToolTip on text hover when truncation is possible."
+        "rule": "ShowCard is a compact list/detail summary card for entries whose subtitle/body text fits within one visible line. Use the right arrow only when the represented item has a next page, next hierarchy level, target route, or explicit clickable drill-down. The subtitle/description region clamps to one visible line; full text must be exposed through Base.ToolTip on text hover when truncation is possible. Do not use ShowCard for a page/list whose source card text requires more than one visible subtitle/body line; use Layout.DescribeCard size=sm for the whole page/list instead."
       },
       "props": {
         "title": {
@@ -890,7 +898,7 @@
           "type": "string",
           "required": false,
           "source": "TODO_FROM_DATASOURCE",
-          "rule": "Render as subtitle/body text. Show at most two visible lines and truncate overflow. Preserve the full string and wrap the truncated visible text with Base.ToolTip so hover shows the complete description.",
+          "rule": "Render as subtitle/body text. Show at most one visible line and truncate overflow. Preserve the full string and wrap the truncated visible text with Base.ToolTip so hover shows the complete description. If any source description/rich text in the same page/list requires more than one visible line, this is not a ShowCard case; select Layout.DescribeCard size=sm for all related cards in that page/list.",
           "uses": [
             "Base.ToolTip"
           ]
@@ -1111,11 +1119,11 @@
         "any component text that is intentionally truncated and needs hover full-text disclosure"
       ],
       "observedStructure": {
-        "rule": "Text hover disclosure bubble for truncated content only. Do not use this component for map markers; Map.MapTip remains the map point marker.",
-        "trigger": "Wrap the visible truncated text node. The trigger keeps its original layout and text clamp rules.",
+        "rule": "Text hover disclosure bubble for truncated or visually hidden text only. Do not show a tooltip when the wrapped text is fully visible and not clipped. Do not use this component for map markers; Map.MapTip remains the map point marker.",
+        "trigger": "Wrap the visible text node that owns the clamp/ellipsis/hidden styling. The trigger keeps its original layout and text clamp rules.",
         "bubble": "Background color/bg/weak, radius lg, horizontal padding 12px, vertical padding 4px, Body/MD 14px/20px text in color/text/strong, regular-small white drop shadow.",
         "tail": "12x6 triangle tail attached to the bubble edge. Supported directions place the tail at TopLeft, TopCenter, TopRight, BottomLeft, BottomCenter, BottomRight, Left, or Right.",
-        "behavior": "Hidden by default. Show on mouse hover over the wrapped text and on keyboard focus of the parent interactive card when applicable. The bubble is non-interactive and must not affect layout size."
+        "behavior": "Hidden by default. Enable display only when the wrapped text is actually truncated, overflow-clipped, or visually hidden while the full text exists. Show on mouse hover over the wrapped text and on keyboard focus of the parent interactive card when applicable, after a short delay of about 120ms. The bubble is non-interactive and must not affect layout size."
       },
       "props": {
         "content": {
@@ -1128,12 +1136,13 @@
           "type": "ReactNode",
           "required": true,
           "source": "visible truncated text node",
-          "rule": "Keep the original text component and clamp/ellipsis styles inside ToolTip."
+          "rule": "Keep the original text component and clamp/ellipsis/hidden styles inside ToolTip so the component can detect whether the visible text is clipped before showing the bubble."
         },
         "placement": {
           "type": "enum",
           "required": false,
           "values": [
+            "auto",
             "TopLeft",
             "TopCenter",
             "TopRight",
@@ -1143,8 +1152,20 @@
             "Left",
             "Right"
           ],
-          "default": "TopLeft",
-          "rule": "Choose a direction that keeps the bubble inside the current page/card viewport. ShowCard descriptions use TopLeft by default."
+          "default": "auto",
+          "rule": "Use auto for production text disclosure so the component chooses the direction that best fits the current viewport and nearest scroll/clipping container. Use a fixed direction only for intentional component demos or when the caller has already resolved placement."
+        },
+        "active": {
+          "type": "boolean|auto",
+          "required": false,
+          "default": "auto",
+          "rule": "Use auto by default so ToolTip only appears when the wrapped text is actually truncated or hidden. Use true only when the renderer already knows the text is hidden/clipped and auto measurement cannot detect it."
+        },
+        "showDelayMs": {
+          "type": "number",
+          "required": false,
+          "default": 120,
+          "rule": "Short hover delay before showing the bubble. Keep around 120ms unless a design update specifies another timing."
         }
       }
     },

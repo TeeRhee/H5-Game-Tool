@@ -65,15 +65,18 @@ The `SecondaryPage` design node is `304:5972` and uses the default `1000 x 610` 
 - Body: `x=0, y=64, w=1000, h=546`.
 - Breadcrumb reference: `x=20, y=80, w=216, h=28` absolute, but this is reserved only. Generated secondary pages do not render breadcrumbs under the current contract.
 - List container: `x=32, y=128, w=936, h=408` absolute.
+- Plain list with no secondary navigation and no breadcrumbs: use Body-relative `x=32, y=20, w=936` for the list region. This applies when the source page has no second-level tab row, no third-level navigation, and no breadcrumb row above the list.
 - Card grid: 3 columns x 4 visible design rows, card `w=306.6667, h=96`, column gap `8`, row gap `8`.
 - Card x positions inside each row: `0`, `314.6667`, `629.3334`.
 - Row y positions inside the list container: `0`, `104`, `208`, `312`.
 - `Layout.DescribeCard` image area: `x=8, y=8, w=80, h=80`; content area: `x=100, y=8, w=198.6667, h=80`.
 - Pagination: Body-relative `x=0, y=482, w=1000, h=64`, absolute `x=0, y=546, w=1000, h=64`.
 
-Choose `Game.ShowCard` when it fully represents the source entry. Choose compact `Layout.DescribeCard` when the source entry needs richer inline description, image, badge, or meta fields. Pagination total pages must come from backend data in production output.
+Choose `Game.ShowCard` only when it fully represents the source entry and every entry subtitle/body in the same card set fits within one visible line. Choose compact `Layout.DescribeCard` when the source entry needs richer inline description, image, badge, or meta fields. Pagination total pages must come from backend data in production output.
 
-For `Game.ShowCard`, the right arrow is a drill-down affordance, not decoration. Hide it when the source entry is terminal and has no next page or next hierarchy level. The subtitle/description area shows at most two visible lines and truncates overflow; wrap the truncated visible text with `Base.ToolTip` and pass the full description string as tooltip content. The text area should adapt to one or two visible description lines instead of staying fixed to one line.
+For `Game.ShowCard`, the right arrow is a drill-down affordance, not decoration. Hide it when the source entry is terminal and has no next page or next hierarchy level. The subtitle/description area shows at most one visible line and truncates overflow; wrap the text with `Base.ToolTip` and pass the full description string as tooltip content, but show the tooltip only when the visible text is actually truncated or hidden. Tooltip display should have a short delay around `120ms` and use auto placement to stay inside the viewport and nearest scroll/clipping container.
+
+If any related card on the same generated page/list requires more than one visible line of secondary/rich text, switch the entire card set for that page/list to `Layout.DescribeCard` with `Size=SM`. Do not mix `Game.ShowCard` and `Layout.DescribeCard` in the same card set only because one item is longer.
 
 ### Observed Secondary Large-Card Layout
 
@@ -83,9 +86,11 @@ The `SecondaryPageLargeCard` design node is `304:13409` and uses the default `10
 - Body: `x=0, y=68, w=1000, h=542`.
 - Breadcrumb reference: Body-relative `x=20, y=16, w=216, h=28`, absolute `x=20, y=84`; keep breadcrumbs reserved for final detail pages unless routing explicitly enables secondary breadcrumbs.
 - Large-card list container: Body-relative `x=50, y=64, w=900, h=588`, absolute `x=50, y=132`.
+- Plain large-card list with no secondary navigation and no breadcrumbs: use Body-relative `x=50, y=20, w=900` for the list region. Do not keep the `y=64` offset unless a breadcrumb row, secondary tab row, or other real top structure is rendered above it.
 - Card grid: 4 columns x 2 visible design rows, card `w=210, h=284`, column gap `20`, row gap `20`.
 - Card x positions inside each row: `0`, `230`, `460`, `690`.
 - Row y positions inside the list container: `0`, `304`.
+- Single-row large-card alignment: when the selected `Layout.DescribeCard` LG/image-first card set renders only one row, including `itemCount <= 4` or fewer than four cards, vertically center the row inside the `h=588` list container. Use row `y=(588 - 284) / 2 = 152` instead of `y=0`; keep the observed column x positions.
 - `Layout.DescribeCard` image-first internals: card padding top/left/right `8`, bottom `12`; media area `w=200, h=200` with image content around `194 x 194`; content starts around `x=14, y=216`, title height `22`, description starts at `y=26` with `18px` line height.
 
 Use this template as the layout for chosen large `Layout.DescribeCard` entries only. If the original page has richer text rows, compact cards, tables, filters, or tabs, keep the relevant placement reference from the matching template and choose the component family that fits the source content.
@@ -109,7 +114,7 @@ Use this template in parts:
 
 - If the source page has second-level navigation only, use the `Nav.SecondaryTab` row placement and omit the `Nav.Navigate` sidebar.
 - If the source page has second-level navigation plus real third-level groups or local anchors, use both the tab row and sidebar placement.
-- If the source page content is best represented by the observed two-column `Game.ShowCard` list, use the right card-list coordinates.
+- If the source page content is best represented by the observed two-column `Game.ShowCard` list and every card subtitle/body fits within one visible line, use the right card-list coordinates.
 - If the source page content is richer or structurally different, keep the matched navigation placement but choose the most suitable existing component family, such as `Layout.DescribeCard` or `Game.ShowCard`, according to the source page information density.
 - Never fabricate third-level navigation, cards, badges, counts, or pagination just because they appear in the reference frame.
 
