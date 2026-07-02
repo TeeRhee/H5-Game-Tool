@@ -9,6 +9,9 @@ source:
   secondaryLargeCardNode: 304:13409
   detailLargeCardExpandedNode: 304:17202
   detailAllStatesNode: 304:9319
+  guideDetailWithNavAndInfoNode: 304:18296
+  guideDetailWithInfoNode: 306:4332
+  guideDetailWithNavNode: 306:4716
 description: A desktop Wiki utility for structured game reference pages, built from the shared H5 component registry, the Wiki page template, and the shared token export.
 ---
 
@@ -21,6 +24,7 @@ The current Wiki contract covers desktop states only:
 - Home: header, summary text, and top-level category grid.
 - Secondary list: header and selected-category entry content, using the card family and layout variant that best matches the original source page.
 - Detail: header, breadcrumbs, scrollable content, summary card, attributes, related cards, structured detail card, and optional extended content.
+- Document guide detail: article-like guide pages with prose, media, metadata, optional left section anchors, and optional right related-info links.
 
 Treat these as states of one Wiki tool type. Do not split them into unrelated visual systems.
 
@@ -51,9 +55,9 @@ The desktop Wiki viewport is `1000 x 610`.
 - Home content starts with summary text, then shows top-level categories in a four-column grid.
 - Secondary list content uses a three-column card grid and pagination.
 - Detail content may exceed the visible canvas height. The renderer owns real scrolling; `Layout.Scroll` only reflects scroll state visually.
-- Breadcrumbs render only on final detail pages. Labels and target routes must come from datasource or routing context, and every breadcrumb item should be clickable.
+- Breadcrumbs render only on final detail pages unless a future routing contract explicitly enables secondary breadcrumbs. When rendered, `Nav.Breadcrumbs` sits in the first Body row at Body-relative `x=32, y=16, h=26`; text uses `12px/18px`; structured detail pages use `w=294`, document guide detail pages use `w=188`, and the content below starts at Body-relative `y=62`.
 
-Do not reinterpret the Wiki canvas as a map canvas, article page, or free-form HTML surface. The page structure is defined by `skill-pack/wiki/templates/wiki.json`.
+Do not reinterpret the Wiki canvas as a map canvas, marketing article page, or free-form HTML surface. Document guide article pages are allowed only through the `guide.document-detail` contract in `skill-pack/wiki/templates/wiki.json`.
 
 Template pages are layout references, not mandatory data structures. First inspect the original source page to decide which regions and component families are actually needed, then apply the matching Figma layout rules for those chosen components. It is valid to use only part of a template page, such as a tab row, a large-card grid, or a detail stack, without rendering unrelated template regions.
 
@@ -63,7 +67,7 @@ The `SecondaryPage` design node is `304:5972` and uses the default `1000 x 610` 
 
 - Header: `x=0, y=0, w=1000, h=84`; desktop padding is `32px 32px 16px`.
 - Body: `x=0, y=80, w=1000, h=530`.
-- Breadcrumb reference: `x=20, y=96, w=216, h=28` absolute, but this is reserved only. Generated secondary pages do not render breadcrumbs under the current contract.
+- Breadcrumb reference: `x=32, y=100, w=188, h=26` absolute, but this is reserved only. Generated secondary pages do not render breadcrumbs under the current contract.
 - List container: `x=32, y=144, w=936, h=408` absolute.
 - Plain list with no secondary navigation and no breadcrumbs: use Body-relative `x=32, y=20, w=936` for the list region. This applies when the source page has no second-level tab row, no third-level navigation, and no breadcrumb row above the list.
 - Card grid: 3 columns x 4 visible design rows, card `w=306.6667, h=96`, column gap `8`, row gap `8`.
@@ -71,13 +75,14 @@ The `SecondaryPage` design node is `304:5972` and uses the default `1000 x 610` 
 - Row y positions inside the list container: `0`, `104`, `208`, `312`.
 - `Layout.DescribeCard` SM default component node `177:1104`: root `w=328, h=106`, padding `8`, horizontal gap `12`, image `x=8, y=8, w=90, h=90`, content `x=110, y=8, w=210, h=90`, content vertical gap `6`.
 - `Layout.DescribeCard` SM subtitle structure: title/description group `w=210, h=62`, title row `h=22`, subtitle text `x=0, y=26, w=210, h=36`, Body/SM `12px/18px`, two visible lines. Clamp overflow to two lines and expose the full text through `Base.ToolTip` only when the rendered subtitle is actually truncated or hidden.
+- `Layout.DescribeCard` optional regions are controlled by `showImage`, `showTitle`, `showDescription`, `showBadge`, and `showAttributes`. Derive these flags from actual source fields and the selected presentation. When a flag is false, omit that region and collapse its spacing; if both `showTitle=false` and `showBadge=false`, omit the whole title row.
 - Pagination: Body-relative `x=0, y=482, w=1000, h=64`, absolute `x=0, y=562, w=1000, h=64`.
 
-Choose `Game.ShowCard` only when it fully represents the source entry and every entry subtitle/body in the current rendered card set fits within one visible line. The current card set is scoped to the active secondary tab plus optional active third-level group, not the whole first-level category. Choose compact `Layout.DescribeCard` when the source entry needs richer inline description, image, badge, or meta fields. Pagination total pages must come from backend data in production output.
+Choose `Game.ShowCard` only when it fully represents the source entry and every entry subtitle/body in the current rendered card set fits within one visible line. The current card set is scoped to the active secondary tab plus optional active third-level group, not the whole first-level category. Choose `Game.ShowCard variant=voice` when the source entry's primary content is playable audio, such as character voice lines, pronunciation, narration, or sound clips. Choose compact `Layout.DescribeCard` when the source entry needs richer inline description, image, badge, or meta fields. Pagination total pages must come from backend data in production output.
 
-For any Wiki card set that renders `imageSrc`, inspect the source asset dimensions or the visible content type in the current rendered page/list before choosing the image frame. Use `Base.Image` ratio `1:1` for square icons, portraits, or near-square art. Use `3:2` or `16:9` for wide source assets such as weapons, equipment thumbnails, maps, screenshots, landscapes, and banners. Keep one ratio within the current page/list when visual consistency is needed, but re-evaluate the ratio for each sibling second-level tab or secondary page; do not reuse a wider ratio from one tab on another tab whose assets are better represented as `1:1`.
+For any Wiki card set that renders `imageSrc`, inspect the source asset dimensions or the visible content type in the current rendered page/list before choosing the image frame. Use `Base.Image` ratio `1:1` for square icons or near-square art. Use `4:5` for vertical portraits, character/card art, posters, and other portrait-like assets around width/height `0.8`. Use `3:2` or `16:9` for wide source assets such as weapons, equipment thumbnails, maps, screenshots, landscapes, and banners. Keep one ratio within the current page/list when visual consistency is needed, but re-evaluate the ratio for each sibling second-level tab or secondary page; do not reuse a wider or vertical ratio from one tab on another tab whose assets are better represented as `1:1`.
 
-For `Game.ShowCard`, the right arrow is a drill-down affordance, not decoration. Hide it when the source entry is terminal and has no next page or next hierarchy level. The subtitle/description area shows at most one visible line and truncates overflow; wrap the text with `Base.ToolTip` and pass the full description string as tooltip content, but show the tooltip only when the visible text is actually truncated or hidden. Tooltip display should have a short delay around `120ms` and use auto placement to stay inside the viewport and nearest scroll/clipping container.
+For `Game.ShowCard`, the right arrow is a drill-down affordance, not decoration. Hide it when the source entry is terminal and has no next page or next hierarchy level. The `voice` state uses the Figma node `434:3632`, size `498 x 58`, and renders a left play/pause icon, title, right time label, and bottom playback progress bar; bind `audioSrc` and `durationLabel` from source/audio metadata and bind `currentTimeLabel`, `progress`, and `isPlaying` from renderer playback state. The subtitle/description area shows at most one visible line and truncates overflow; wrap the text with `Base.ToolTip` and pass the full description string as tooltip content, but show the tooltip only when the visible text is actually truncated or hidden. Tooltip display should have a short delay around `120ms` and use auto placement to stay inside the viewport and nearest scroll/clipping container.
 
 If any related card on the current generated page/list requires more than one visible line of secondary/rich text, switch the entire card set for that page/list to `Layout.DescribeCard` with `Size=SM`. Do not mix `Game.ShowCard` and `Layout.DescribeCard` in that current card set only because one item is longer, but do not carry this choice into sibling second-level tabs or sibling secondary pages.
 
@@ -87,7 +92,7 @@ The `SecondaryPageLargeCard` design node is `304:13409` and uses the default `10
 
 - Header: `x=0, y=0, w=1000, h=84`; desktop padding is `32px 32px 16px`.
 - Body: `x=0, y=84, w=1000, h=526`.
-- Breadcrumb reference: Body-relative `x=20, y=16, w=216, h=28`, absolute `x=20, y=100`; keep breadcrumbs reserved for final detail pages unless routing explicitly enables secondary breadcrumbs.
+- Breadcrumb reference: Body-relative `x=32, y=16, w=188, h=26`, absolute `x=32, y=100`; keep breadcrumbs reserved for final detail pages unless routing explicitly enables secondary breadcrumbs.
 - Large-card list container: Body-relative `x=50, y=64, w=900, h=588`, absolute `x=50, y=148`.
 - Plain large-card list with no secondary navigation and no breadcrumbs: use Body-relative `x=50, y=20, w=900` for the list region. Do not keep the `y=64` offset unless a breadcrumb row, secondary tab row, or other real top structure is rendered above it.
 - Card grid without third-level navigation: default `grid-template-columns: repeat(4, 210px)`, card `w=210, h=284`, column gap `20`, row gap `20`. If the available content width cannot fit four 210px columns plus three 20px gaps, downgrade to `repeat(3, 210px)`. Do not reduce to three columns just because there are fewer than four items.
@@ -123,33 +128,73 @@ Use this template in parts:
 
 For a plain selected-category entry list with no second-level navigation, continue using the normal `SecondaryPage` rules above.
 
+### Observed Document Guide Detail Layout
+
+The document guide detail templates are a special Wiki detail family for article-like guides, walkthroughs, and prose documents. They are not normal structured item detail pages. Ask AI to locate them with: `document-guide-detail`, `guide.document-detail`, `文档攻略类`, `图文攻略`, `GuideDetailWithNavAndInfo`, `GuideDetailWithInfo`, or `GuideDetailWithNav`.
+
+Choose the layout from source data:
+
+- `GuideDetailWithNavAndInfo` (`304:18296`): use when the source has both local article section anchors and right-side related information links.
+- `GuideDetailWithInfo` (`306:4332`): use when the source has related information links but no local section anchors.
+- `GuideDetailWithNav` (`306:4716`): use when the source has local article section anchors but no related information links.
+- If the source has neither anchors nor related links, keep the article content structure and omit both side modules rather than fabricating them.
+
+Shared layout:
+
+- Header: `x=0, y=0, w=1000, h=84`; uses the shared `Nav.Header`, `Nav.TopBar`, and `Form.SearchBar`.
+- Body: `x=0, y=84, w=1000, h=526`.
+- Breadcrumbs: Body-relative `x=32, y=16, w=188, h=26`; absolute `x=32, y=100` when Body.y is `84`; labels are clickable, item width hugs text, and text uses `12px/18px`.
+- `ArticleLayout`: Body-relative `x=32, y=62, w=936`, horizontal layout `gap=20`.
+- `ArticleContent`: vertical layout, `gap=12`, no padding. It contains `TitleRow`, `MetaRow`, `ArticleBody`, and optional `RelatedContentSection`.
+
+Variant layout:
+
+- With nav and info: `Nav.Navigate x=0, y=0, w=96, h=607.9389`; `ArticleContent x=116, y=0, w=540, h=607.9389`; `RelatedInfoSidebar x=676, y=0, w=260, h=204`.
+- With info only: `ArticleContent x=0, y=0, w=656, h=607.9389`; `RelatedInfoSidebar x=676, y=0, w=260, h=204`.
+- With nav only: `Nav.Navigate x=0, y=0, w=96, h=576`; `ArticleContent x=116, y=0, w=820, h=576`.
+
+Article content:
+
+- `TitleRow`: `x=0, y=0, h=20`, horizontal `gap=4`. Use the source guide title; the sample split of game name plus `图文攻略` is only a template example.
+- `MetaRow`: `x=0, y=32, h=20`, horizontal `gap=4`. Bind source metadata such as category count, item count, date, author, or update time only when present.
+- `ArticleBody`: starts at `x=0, y=64`, vertical `gap=8`. Article images keep the datasource image aspect ratio; only constrain rendered image height with `max-height: 230px`. The Figma `402 x 226` image is a sample, not a forced `16:9` rendering rule. Paragraph text spans the current `ArticleContent` width with `12px/18px` text.
+- `RelatedContentSection`: optional article extension at `x=0, y=382, h=226`, background `var(--color-alpha-white-alpha-2)`. Render only when source has related prose, embedded media, or an extra article block.
+
+Side modules:
+
+- Left `Nav.Navigate` is for real article anchors only. It uses width `96`, vertical padding `8`, right padding `16`, and a right divider. Do not use it for related links.
+- Right `RelatedInfoSidebar` has title frame `h=36` with text inset `8`; list starts at `y=44`, `w=260, h=160`, item `h=34`, list gap `8`.
+- Related info list items use `Nav.CommandMenuItem`, `w=260, h=34`, optional badge, and right arrow. They must be bound to real related-info links.
+
 ### Observed Detail Layout
 
 Detail pages use `DetailPageLargeCardExpanded` (`304:17202`) as the default `1000 x 610` viewport reference. `DetailPageAllStates` (`304:9319`) is a tall `1000 x 1166` full-stack reference and must not replace the default generated canvas size.
 
 - Shared detail header: `x=0, y=0, w=1000, h=84`; desktop padding is `32px 32px 16px`.
-- Detail breadcrumbs: Body-relative `x=20, y=16, w=338, h=28`, absolute `x=20, y=96, w=338, h=28`. Each breadcrumb item hugs its rendered label text width; do not keep a fixed sample width for every item.
-- Detail content: Body-relative `x=20, y=64, w=960`; absolute `x=20, y=144, w=960`.
-- Visual scrollbar: Body-relative `x=980, y=60, w=12`; absolute `x=980, y=140, w=12`.
-- Large-card hero: `HeroSection x=0, y=0, w=960, h=128`; `Layout.DescribeCard x=16, y=16, w=928, h=96`.
+- Detail breadcrumbs: Body-relative `x=32, y=16, w=294, h=26`, absolute `x=32, y=100, w=294, h=26`. Each breadcrumb item hugs its rendered label text width and uses `12px/18px`; do not keep a fixed sample width for every item.
+- Detail content: Body-relative `x=20, y=62, w=960`; absolute `x=20, y=146, w=960`.
+- DetailContent chrome is special and must be preserved: background `var(--color-bg-black)` / `#000306`, 1px inside stroke `var(--color-stroke-area)` / `rgba(255,255,255,0.10)`, radius `8`, and `clipsContent=true`.
+- DetailContent itself has vertical layout with `padding=0` and `gap=0`. `HeroSection` uses `padding=16` and `gap=10`; `DetailSections` / `ExpandedSections` use `padding=16` and vertical `gap=12`.
+- Visual scrollbar: Body-relative `x=980, y=60, w=12`; absolute `x=980, y=144, w=12`.
+- Large-card hero: `HeroSection x=0, y=0, w=960, h=120`; `Layout.DescribeCard x=16, y=16, w=928, h=88`.
 - Compact hero: `HeroSection x=0, y=0, w=960, h=108`; `Game.ShowCard x=16, y=16, w=928, h=76`.
-- Section stack padding: `16`; vertical gap between detail sections: `20`.
+- Section stack padding: `16`; vertical gap between detail sections: `12`. These section offsets are inside the clipped DetailContent shell and should not replace the shell's own border/radius rules.
 
-For `DetailPageLargeCardExpanded`, `ExpandedSections` starts at detail-content `y=128`, `w=960, h=1084`:
+For `DetailPageLargeCardExpanded`, `ExpandedSections` starts at detail-content `y=120`, `w=960, h=1084`:
 
 - Attribute section: `x=16, y=16, w=928, h=154`.
-- Related section: `x=16, y=190, w=928, h=208`; related row `x=0, y=62, w=928, h=76`; two cards `w=458, h=76`, gap `12`.
+- Related section: `x=16, y=182, w=928, h=208`; related row `x=0, y=62, w=928, h=76`; two cards `w=458, h=76`, gap `12`.
 - Related detail row: `x=0, y=150, w=928, h=58`; items `w=214, h=42` at x `0`, `238`, `476`, `714`.
-- Structured detail card: `x=16, y=418, w=928, h=328`.
-- Extended section: `x=16, y=766, w=928, h=302`.
+- Structured detail card: `x=16, y=402, w=928, h=328`.
+- Extended section: `x=16, y=742, w=928, h=302`.
 
 For `DetailPageAllStates`, `DetailSections` starts at detail-content `y=108`, `w=960, h=914`:
 
 - Attribute section: `x=16, y=16, w=928, h=84`.
-- Related section: `x=16, y=120, w=928, h=138`; first related card may be `Game.ProgressBarLabel`, second may be `Game.ShowCard`.
+- Related section: `x=16, y=112, w=928, h=138`; first related card may be `Game.ProgressBarLabel`, second may be `Game.ShowCard`.
 - Extra text-info section: `x=16, y=278, w=928, h=90`.
-- Structured detail card: `x=16, y=388, w=928, h=258`.
-- Extended section: `x=16, y=666, w=928, h=232`.
+- Structured detail card: `x=16, y=364, w=928, h=258`.
+- Extended section: `x=16, y=634, w=928, h=232`.
 
 The detail hero card family follows the previous page card family. Attribute badge colors should preserve source tag classes; if the source has no colors, use one stable tone per tag class and different tones for different classes. Extended content renders only when the source has a matching rich text, media, canvas, table, or grouped extension block.
 
@@ -179,6 +224,7 @@ Current Wiki template components include:
 - `Form.SearchBar`
 - `Game.CategoryCard`
 - `Nav.Breadcrumbs`
+- `Nav.CommandMenuItem`
 - `Layout.DescribeCard`
 - `Game.ShowCard`
 - `Layout.Scroll`
@@ -210,6 +256,7 @@ Use `TODO_FROM_DATASOURCE` for unresolved data:
 - entry titles, descriptions, images, badges, and metadata
 - pagination current page and backend total page values
 - detail title, summary, image, attributes, badges, related entries, progress values, tables, and extended content
+- document guide article title, metadata, main media, paragraphs, local anchors, and related-info links
 - breadcrumb labels and target routes
 
 Missing optional fields should collapse the related UI element instead of showing fabricated placeholder content in final output.

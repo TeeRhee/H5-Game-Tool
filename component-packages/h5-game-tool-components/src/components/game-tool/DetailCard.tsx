@@ -104,52 +104,60 @@ export function DetailCard({
       {description ? <p className="gt-wiki-detail-card__description">{description}</p> : null}
       {children}
 
-      <div className="gt-wiki-detail-card__features">
-        {features.map((feature, index) => (
-          <ShowCard
-            key={`${feature.title}-${index}`}
-            className="gt-wiki-detail-card__feature-card"
-            title={feature.title}
-            description={feature.description}
-            label={feature.label}
-            imageSrc={feature.imageSrc}
-          />
-        ))}
-      </div>
-
-      <dl className="gt-wiki-detail-card__info">
-        {infoItems.map((item) => (
-          <div key={item.label} className="gt-wiki-detail-card__info-item">
-            <dt>{item.label}</dt>
-            <dd>{item.value}</dd>
-          </div>
-        ))}
-      </dl>
-
-      <div className="gt-wiki-detail-card__badges">
-        {resolvedStatusBadges.map((badge, index) => (
-          <Badge key={`${badge.label}-${badge.tone ?? "neutral"}-${index}`} className={`gt-wiki-detail-card__badge gt-wiki-detail-card__badge--${badge.tone ?? "neutral"}`}>
-            {badge.label}
-          </Badge>
-        ))}
-      </div>
-
-      <div className="gt-wiki-detail-card__table" role="table" aria-label="详情数据">
-        <div className="gt-wiki-detail-card__table-row gt-wiki-detail-card__table-row--header" role="row">
-          <div role="columnheader">等级</div>
-          <div role="columnheader">攻击</div>
-          <div role="columnheader">价格</div>
-          <div role="columnheader">材料</div>
+      {features.length > 0 ? (
+        <div className="gt-wiki-detail-card__features">
+          {features.map((feature, index) => (
+            <ShowCard
+              key={`${feature.title}-${index}`}
+              className="gt-wiki-detail-card__feature-card"
+              title={feature.title}
+              description={feature.description}
+              label={feature.label}
+              imageSrc={feature.imageSrc}
+            />
+          ))}
         </div>
-        {resolvedTableRows.map((row) => (
-          <div key={`${row.level}-${row.attack}-${row.price}-${row.material}`} className="gt-wiki-detail-card__table-row" role="row">
-            <div role="cell">{row.level}</div>
-            <div role="cell">{row.attack}</div>
-            <div role="cell">{row.price}</div>
-            <div role="cell">{row.material}</div>
+      ) : null}
+
+      {infoItems.length > 0 ? (
+        <dl className="gt-wiki-detail-card__info">
+          {infoItems.map((item) => (
+            <div key={item.label} className="gt-wiki-detail-card__info-item">
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+      ) : null}
+
+      {resolvedStatusBadges.length > 0 ? (
+        <div className="gt-wiki-detail-card__badges">
+          {resolvedStatusBadges.map((badge, index) => (
+            <Badge key={`${badge.label}-${badge.tone ?? "neutral"}-${index}`} className={`gt-wiki-detail-card__badge gt-wiki-detail-card__badge--${badge.tone ?? "neutral"}`}>
+              {badge.label}
+            </Badge>
+          ))}
+        </div>
+      ) : null}
+
+      {resolvedTableRows.length > 0 ? (
+        <div className="gt-wiki-detail-card__table" role="table" aria-label="详情数据">
+          <div className="gt-wiki-detail-card__table-row gt-wiki-detail-card__table-row--header" role="row">
+            <div role="columnheader">等级</div>
+            <div role="columnheader">攻击</div>
+            <div role="columnheader">价格</div>
+            <div role="columnheader">材料</div>
           </div>
-        ))}
-      </div>
+          {resolvedTableRows.map((row) => (
+            <div key={`${row.level}-${row.attack}-${row.price}-${row.material}`} className="gt-wiki-detail-card__table-row" role="row">
+              <div role="cell">{row.level}</div>
+              <div role="cell">{row.attack}</div>
+              <div role="cell">{row.price}</div>
+              <div role="cell">{row.material}</div>
+            </div>
+          ))}
+        </div>
+      ) : null}
     </article>
   );
 }

@@ -27,18 +27,23 @@
     "For Game.CategoryCard in home.category-grid, countLabel must represent the total item count for the linked secondary page or category, not the avatar preview count.",
     "Treat template pages as placement references, not datasource shape requirements. Referencing a template page does not require rendering every observed region or component in that frame.",
     "Select the component family from the original source page structure and information density first, then apply the closest matching template layout for that component family.",
-    "For any Wiki card set that renders imageSrc, inspect source asset dimensions or visual content for the current rendered page/list and bind imageRatio to the closest supported Base.Image ratio before rendering. Keep one ratio within a current page/list when visual consistency is needed, but re-evaluate imageRatio independently for each sibling second-level tab or secondary page. Do not reuse a 3:2 or 16:9 decision from one tab on another tab whose source images are square or near-square.",
+    "For any Wiki card set that renders imageSrc, inspect source asset dimensions or visual content for the current rendered page/list and bind imageRatio to the closest supported Base.Image ratio before rendering. Use 1:1 for square or near-square assets, 4:5 for vertical portraits/card art/posters around width/height 0.8, 3:2 for moderately wide assets, and 16:9 for wide landscape/banners/maps/screenshots/weapons. Keep one ratio within a current page/list when visual consistency is needed, but re-evaluate imageRatio independently for each sibling second-level tab or secondary page. Do not reuse a 3:2, 4:5, or 16:9 decision from one tab on another tab whose source images are square or near-square.",
     "When a secondary page renders no second-level navigation, no third-level navigation/sidebar, and no breadcrumbs above its list, place the list region 20px from the Body top. Do not inherit the lower list y offset from templates that reserve space for breadcrumbs or secondary navigation.",
     "In secondary.card-list, choose Game.ShowCard only when every visible entry's subtitle/body text in the current rendered page/list fits within one visible line and the card can fully represent the original source entry; choose compact Layout.DescribeCard when the current page/list needs richer inline description, image, badge, or meta fields; choose the SecondaryPageLargeCard Layout.DescribeCard grid only when the current source page is image-first or gallery-like.",
     "If any source card in the current secondary, multi-level, or related rendered page/list needs more than one visible line of secondary/rich text, use Layout.DescribeCard with size=SM for all related cards in that current page/list instead of mixing Game.ShowCard with DescribeCard. Bind the subtitle/body text to the SM description node as a two-line region; expose the full string through Base.ToolTip only when the rendered text is actually truncated or hidden. Do not carry this decision across sibling second-level tabs or the whole first-level category.",
+    "For Layout.DescribeCard, derive showImage, showTitle, showDescription, showBadge, and showAttributes from the actual source fields and presentation requirement. Set a show flag false when the source lacks that field or the selected template intentionally omits that region; false means the region is not rendered and does not keep placeholder spacing.",
     "Using SecondaryPageLargeCard means using its large-card placement rules for chosen Layout.DescribeCard entries, not forcing all source pages into large image cards. For card-like large grids without third-level navigation, use repeat(4, 210px) by default and downgrade to repeat(3, 210px) only when the available width cannot fit four columns plus gaps. When the chosen large-card entries render only one row, vertically center that row inside the large-card list container after choosing the column template; item count or single-row state must not change the column count by itself.",
     "Use secondary.multi-level-tabs only when the original source page exposes second-level branches under the active first-level Nav.TopBar category.",
     "Use secondary.multi-level-sidebar only when the active secondary tab exposes real third-level groups or local subcategory anchors. If the source page has only second-level navigation, omit the sidebar and do not fabricate third-level items.",
     "Use secondary.multi-level-card-list only when the entries under the active second-level tab and optional active third-level group are best represented by the observed two-column Game.ShowCard list and every entry subtitle/body fits within one visible line. Otherwise keep the matched navigation placement and choose the content component that best fits the original page structure.",
     "For Game.ShowCard, derive targetRoute or hasNextLevel from the source hierarchy. If the represented entry is terminal and has no next page, set hasNextLevel=false or showRightIcon=false so the right arrow is hidden.",
+    "For playable audio entries, use Game.ShowCard with variant=voice. Bind audioSrc from the audio asset URL/id, durationLabel from source metadata or probed audio duration, currentTimeLabel/progress/isPlaying from renderer playback state, and keep showRightIcon=false unless the audio entry also has a separate real detail route.",
     "For Game.ShowCard descriptions, pass the full subtitle/body text even though the component visibly clamps to one line; the full text must be exposed through Base.ToolTip only when the visible text is actually truncated or hidden, with a short hover delay and auto placement that avoids viewport or scroll-container clipping.",
-    "Breadcrumbs are only for final detail pages. Each breadcrumb label is clickable and maps to the route for that hierarchy level. Each Nav.Breadcrumbs item must hug its rendered label text width rather than using a fixed sample width.",
+    "Breadcrumbs are only for final detail pages. Each breadcrumb label is clickable and maps to the route for that hierarchy level. Each Nav.Breadcrumbs item must hug its rendered label text width rather than using a fixed sample width; current breadcrumb component frame height is 26px and text uses 12px/18px.",
     "Detail hero card component family follows the card family used on the previous page for the entry that opened the detail page.",
+    "DetailContent is a fixed template shell, not data content: preserve its background #000306 / var(--color-bg-black), 1px inside rgba(255,255,255,0.10) / var(--color-stroke-area) stroke, radius 8, clipsContent=true, padding=0, and gap=0. HeroSection uses padding=16 and gap=10; DetailSections/ExpandedSections use padding=16 and vertical gap=12.",
+    "Use guide.document-detail for document/guide article pages with long prose, one or more article media blocks, article metadata, optional local anchors, and optional related-info links. Choose GuideDetailWithNavAndInfo when both local anchors and related-info links exist, GuideDetailWithInfo when only related-info links exist, and GuideDetailWithNav when only local anchors exist. Do not fabricate either side module when the source lacks it.",
+    "For guide.document-detail article images, keep each datasource image's original aspect ratio and constrain only max rendered height to 230px. Do not apply card imageRatio rules or force the Figma sample 16:9 ratio to article images.",
     "For detail.attribute-section badges, keep one stable tone for each source tag class and use different tones for different classes when source colors are unavailable.",
     "For detail.extended-section, render content only when the original source structure matches supported rich text, media, table, or extra section blocks.",
     "Detail tables must use structured column and row data when available; do not encode table data as plain rich text.",
@@ -83,7 +88,7 @@
     },
     {
       "source": "TODO_FROM_DATASOURCE > entries for the current rendered secondary page/list only, plus routing hierarchy and image asset dimensions/content type from those visible entries. Choose card family and imageRatio for this current page/list: Game.ShowCard only when all visible entry subtitle/body text fits one visible line, compact Layout.DescribeCard size=SM when any visible entry needs more than one line or richer inline fields, or SecondaryPageLargeCard-style Layout.DescribeCard when the current source page structure is image-first. Do not include sibling second-level tabs when deriving these choices.",
-      "target": "regions[secondary.card-list].components[Game.ShowCard or Layout.DescribeCard].dataBinding.entries, currentPageList.imageRatio or entries[].imageRatio derived only from the current page/list, selected card family, selected layout variant, and Layout.DescribeCard size=SM when replacing ShowCard for richer text",
+      "target": "regions[secondary.card-list].components[Game.ShowCard or Layout.DescribeCard].dataBinding.entries, currentPageList.imageRatio or entries[].imageRatio derived only from the current page/list, selected card family, selected layout variant including Game.ShowCard variant=voice for playable audio entries, and Layout.DescribeCard size=SM plus showImage/showTitle/showDescription/showBadge/showAttributes when replacing ShowCard for richer text",
       "required": true
     },
     {
@@ -139,6 +144,11 @@
     {
       "source": "TODO_FROM_DATASOURCE > extended rich text, media, additional tables, or extra sections that match supported detail blocks",
       "target": "regions[detail.extended-section].components[Layout.DetailCard/Base.Image/Data.TableHeaderCell/Data.TableRowCell].dataBinding.extendedContent",
+      "required": false
+    },
+    {
+      "source": "TODO_FROM_DATASOURCE > article-like guide detail page: breadcrumb path, article title, article metadata, main media, paragraphs/rich blocks, optional local section anchors, and optional related-info links",
+      "target": "regions[guide.document-detail].dataBinding.article, components[Nav.Breadcrumbs/Nav.Navigate/Nav.CommandMenuItem/Base.Image].props",
       "required": false
     }
   ],
@@ -256,6 +266,16 @@
         "Base.Image",
         "Data.TableHeaderCell",
         "Data.TableRowCell"
+      ]
+    },
+    {
+      "regionId": "guide.document-detail",
+      "components": [
+        "Nav.Breadcrumbs",
+        "Nav.Navigate",
+        "Nav.CommandMenuItem",
+        "Base.Image",
+        "Base.Badge"
       ]
     }
   ]

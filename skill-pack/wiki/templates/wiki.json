@@ -14,7 +14,25 @@
       "secondaryLargeCard": "304:13409",
       "secondaryMultiNav": "375:4979",
       "detailLargeCardExpanded": "304:17202",
-      "detailAllStates": "304:9319"
+      "detailAllStates": "304:9319",
+      "guideDetailWithNavAndInfo": "304:18296",
+      "guideDetailWithInfo": "306:4332",
+      "guideDetailWithNav": "306:4716"
+    },
+    "quickLocate": {
+      "documentGuideDetail": {
+        "type": "document-guide-detail",
+        "aliases": [
+          "文档攻略类",
+          "图文攻略",
+          "GuideDetailWithNavAndInfo",
+          "GuideDetailWithInfo",
+          "GuideDetailWithNav",
+          "guide.document-detail"
+        ],
+        "primaryRegion": "guide.document-detail",
+        "rule": "Use these aliases to quickly locate the document/guide article template family. These pages are article-like guide details, not normal structured item detail pages."
+      }
     },
     "notes": "Template contract derived from the Wiki design-system page. Keep this file separate from the map template contract."
   },
@@ -63,8 +81,10 @@
     "noFabrication": "Never fabricate second-level tabs, third-level sidebars, breadcrumbs, images, badges, counts, progress, pagination, tables, or detail sections solely because a reference template includes them.",
     "layoutBinding": "After a component family is selected, use the corresponding observed template layout for that component family: ShowCard lists use ShowCard list coordinates, DescribeCard rich lists use DescribeCard coordinates, and large image-first lists use SecondaryPageLargeCard coordinates.",
     "plainSecondaryListTopOffset": "When a secondary page has no second-level navigation row, no third-level sidebar/navigation, and no breadcrumbs above the list, place the list region 20px from the Body top. Do not reuse the lower y position reserved for pages that include breadcrumbs or secondary navigation.",
+    "breadcrumbPlacement": "When Nav.Breadcrumbs is rendered, place it in the first row of the Body at bodyRelativeX=32, bodyRelativeY=16, height=26. Structured detail pages use width=294 and content starts at bodyRelativeY=62. Document guide detail pages use width=188 and ArticleLayout starts at bodyRelativeY=62. Breadcrumbs are not rendered on secondary pages unless a future routing contract explicitly enables them.",
     "cardLikeNoThirdLevelGrid": "For card-like large Layout.DescribeCard grids without third-level navigation, use repeat(4, 210px) by default. If the available content width cannot fit four 210px columns plus gaps, downgrade to repeat(3, 210px). A single rendered row is vertically centered after the column count is chosen; item count or single-row alignment must not reduce the column count by itself.",
-    "pageScopedCardSetConsistency": "Card family, image frame ratio, and similar card-set consistency rules are scoped to the current rendered page/list only: the active secondary tab plus optional active third-level group. Do not inherit a component family or imageRatio from sibling second-level tabs, sibling secondary pages, or the whole active first-level Nav.TopBar category."
+    "pageScopedCardSetConsistency": "Card family, image frame ratio, and similar card-set consistency rules are scoped to the current rendered page/list only: the active secondary tab plus optional active third-level group. Do not inherit a component family or imageRatio from sibling second-level tabs, sibling secondary pages, or the whole active first-level Nav.TopBar category.",
+    "documentGuideDetail": "Use guide.document-detail for article-like guide pages with long prose, one main media block, article metadata, optional section anchors, and optional related-info links. Choose among GuideDetailWithNavAndInfo, GuideDetailWithInfo, and GuideDetailWithNav based on the source data; do not force nav or related info when the source lacks those structures."
   },
   "regions": [
     {
@@ -352,7 +372,7 @@
       "purpose": "Reserved from the original observed layout but not used by the current Wiki contract. Breadcrumbs are rendered only on final detail pages.",
       "allowedComponents": [],
       "layout": {
-        "breadcrumbs": "SecondaryPage Body x=20, y=16, w=216, h=28; detail pages may expand to w=338"
+        "breadcrumbs": "SecondaryPage Body x=32, y=16, w=188, h=26 when routing explicitly enables secondary breadcrumbs; structured detail pages use w=294"
       },
       "observedSecondaryLayout": {
         "pageNodeId": "304:5972",
@@ -782,8 +802,8 @@
         "Nav.Breadcrumbs"
       ],
       "layout": {
-        "breadcrumbs": "x=20, y=16, w=338, h=28 in detail states",
-        "itemSizing": "Each Nav.Breadcrumbs item is width:auto / hug text content, with h=28 and padding 4px 6px. The overall breadcrumb row may occupy the template frame, but individual item widths must not be fixed to the observed sample label width."
+        "breadcrumbs": "Body-relative x=32, y=16, w=294, h=26 in detail states; absolute x=32, y=100 when Body.y=84.",
+        "itemSizing": "Each Nav.Breadcrumbs item is width:auto / hug text content, h=26, text 12px/18px. The overall breadcrumb row may occupy the template frame, but individual item widths must not be fixed to the observed sample label width."
       },
       "observedDetailLayouts": {
         "largeCardExpanded": {
@@ -791,17 +811,17 @@
           "sourceNodeId": "304:17206",
           "body": {
             "x": 0,
-            "y": 80,
+            "y": 84,
             "width": 1000,
-            "height": 530
+            "height": 526
           },
           "frame": {
-            "bodyRelativeX": 20,
+            "bodyRelativeX": 32,
             "bodyRelativeY": 16,
-            "absoluteX": 20,
-            "absoluteY": 96,
-            "width": 338,
-            "height": 28
+            "absoluteX": 32,
+            "absoluteY": 100,
+            "width": 294,
+            "height": 26
           }
         },
         "allStates": {
@@ -813,17 +833,17 @@
           },
           "body": {
             "x": 0,
-            "y": 80,
+            "y": 84,
             "width": 1000,
-            "height": 1086
+            "height": 1082
           },
           "frame": {
-            "bodyRelativeX": 20,
+            "bodyRelativeX": 32,
             "bodyRelativeY": 16,
-            "absoluteX": 20,
-            "absoluteY": 96,
-            "width": 338,
-            "height": 28
+            "absoluteX": 32,
+            "absoluteY": 100,
+            "width": 294,
+            "height": 26
           }
         }
       },
@@ -843,8 +863,10 @@
         "Layout.Scroll"
       ],
       "layout": {
-        "detailContent": "x=20, y=144, w=960; observed height ranges from 1022 to 1212 depending on expanded content",
-        "scroll": "x=980, y=60, w=12; height is 466 in large-card-expanded and 1015 in all-states reference"
+        "detailContent": "Body-relative x=20, y=62, w=960; absolute x=20, y=146 when Body.y=84; observed height ranges from 1022 to 1204 depending on expanded content",
+        "detailContentChrome": "DetailContent is a special clipped shell: background var(--color-bg-black) / #000306, 1px inside stroke using var(--color-stroke-area) / rgba(255,255,255,0.10), radius 8, clipsContent=true. Do not omit this border even though inner cards also have their own strokes.",
+        "internalSpacing": "DetailContent itself has vertical layout with padding=0 and gap=0. HeroSection uses padding=16 and gap=10. DetailSections/ExpandedSections use padding=16 and vertical gap=12.",
+        "scroll": "Body-relative x=980, y=60, w=12; height is 446 in large-card-expanded and 995 in all-states reference"
       },
       "observedDetailLayouts": {
         "largeCardExpanded": {
@@ -857,34 +879,47 @@
           "body": {
             "sourceNodeId": "304:17205",
             "x": 0,
-            "y": 80,
+            "y": 84,
             "width": 1000,
-            "height": 530
+            "height": 526
           },
           "detailContent": {
-            "sourceNodeId": "304:17226",
+            "sourceNodeId": "304:17522",
             "bodyRelativeX": 20,
-            "bodyRelativeY": 64,
+            "bodyRelativeY": 62,
             "absoluteX": 20,
-            "absoluteY": 144,
+            "absoluteY": 146,
             "width": 960,
-            "height": 1212,
-            "overflowBeyondVisibleCanvas": 730
+            "height": 1204,
+            "overflowBeyondVisibleCanvas": 740
+          },
+          "detailContentChrome": {
+            "backgroundToken": "var(--color-bg-black)",
+            "backgroundHex": "#000306",
+            "stroke": "1px inside var(--color-stroke-area)",
+            "strokeColor": "rgba(255,255,255,0.10)",
+            "cornerRadius": 8,
+            "clipsContent": true,
+            "layoutMode": "VERTICAL",
+            "padding": 0,
+            "gap": 0
           },
           "scroll": {
             "sourceNodeId": "304:17225",
             "bodyRelativeX": 980,
             "bodyRelativeY": 60,
             "absoluteX": 980,
-            "absoluteY": 140,
+            "absoluteY": 144,
             "width": 12,
-            "height": 466
+            "height": 446
           },
           "sectionStack": {
             "padding": 16,
-            "gap": 20,
-            "heroHeight": 128,
-            "expandedSectionsY": 128,
+            "gap": 12,
+            "heroHeight": 120,
+            "heroPadding": 16,
+            "heroGap": 10,
+            "expandedSectionsY": 120,
             "expandedSectionsHeight": 1084
           }
         },
@@ -898,32 +933,45 @@
           "body": {
             "sourceNodeId": "304:9322",
             "x": 0,
-            "y": 80,
+            "y": 84,
             "width": 1000,
-            "height": 1086
+            "height": 1082
           },
           "detailContent": {
-            "sourceNodeId": "304:9647",
+            "sourceNodeId": "304:16592",
             "bodyRelativeX": 20,
-            "bodyRelativeY": 64,
+            "bodyRelativeY": 62,
             "absoluteX": 20,
-            "absoluteY": 144,
+            "absoluteY": 146,
             "width": 960,
             "height": 1022
+          },
+          "detailContentChrome": {
+            "backgroundToken": "var(--color-bg-black)",
+            "backgroundHex": "#000306",
+            "stroke": "1px inside var(--color-stroke-area)",
+            "strokeColor": "rgba(255,255,255,0.10)",
+            "cornerRadius": 8,
+            "clipsContent": true,
+            "layoutMode": "VERTICAL",
+            "padding": 0,
+            "gap": 0
           },
           "scroll": {
             "sourceNodeId": "304:9646",
             "bodyRelativeX": 980,
             "bodyRelativeY": 60,
             "absoluteX": 980,
-            "absoluteY": 140,
+            "absoluteY": 144,
             "width": 12,
-            "height": 1015
+            "height": 995
           },
           "sectionStack": {
             "padding": 16,
-            "gap": 20,
+            "gap": 12,
             "heroHeight": 108,
+            "heroPadding": 16,
+            "heroGap": 10,
             "detailSectionsY": 108,
             "detailSectionsHeight": 914
           }
@@ -942,28 +990,30 @@
         "Base.Badge"
       ],
       "layout": {
-        "largeDescribeCard": "DetailPageLargeCardExpanded HeroSection x=0, y=0, w=960, h=128; card x=16, y=16, w=928, h=96",
-        "compactShowCard": "DetailPageAllStates HeroSection x=0, y=0, w=960, h=108; card x=16, y=16, w=928, h=76"
+        "largeDescribeCard": "DetailPageLargeCardExpanded HeroSection x=0, y=0, w=960, h=120, padding=16, gap=10; card x=16, y=16, w=928, h=88",
+        "compactShowCard": "DetailPageAllStates HeroSection x=0, y=0, w=960, h=108, padding=16, gap=10; card x=16, y=16, w=928, h=76"
       },
       "observedDetailLayouts": {
         "largeCardExpanded": {
           "pageNodeId": "304:17202",
           "heroSection": {
-            "sourceNodeId": "304:17227",
+            "sourceNodeId": "304:17523",
             "detailContentRelativeX": 0,
             "detailContentRelativeY": 0,
             "width": 960,
-            "height": 128
+            "height": 120,
+            "padding": 16,
+            "gap": 10
           },
           "card": {
             "component": "Layout.DescribeCard",
-            "sourceNodeId": "304:17228",
+            "sourceNodeId": "304:17524",
             "sectionRelativeX": 16,
             "sectionRelativeY": 16,
             "absoluteX": 36,
-            "absoluteY": 144,
+            "absoluteY": 162,
             "width": 928,
-            "height": 96
+            "height": 88
           }
         },
         "allStates": {
@@ -973,7 +1023,9 @@
             "detailContentRelativeX": 0,
             "detailContentRelativeY": 0,
             "width": 960,
-            "height": 108
+            "height": 108,
+            "padding": 16,
+            "gap": 10
           },
           "card": {
             "component": "Game.ShowCard",
@@ -981,7 +1033,7 @@
             "sectionRelativeX": 16,
             "sectionRelativeY": 16,
             "absoluteX": 36,
-            "absoluteY": 144,
+            "absoluteY": 162,
             "width": 928,
             "height": 76
           }
@@ -1015,18 +1067,18 @@
           "parentSection": {
             "name": "ExpandedSections",
             "detailContentRelativeX": 0,
-            "detailContentRelativeY": 128,
+            "detailContentRelativeY": 120,
             "width": 960,
             "height": 1084,
             "padding": 16,
-            "gap": 20
+            "gap": 12
           },
           "section": {
             "sourceNodeName": "Frame 2147230614",
             "parentRelativeX": 16,
             "parentRelativeY": 16,
             "absoluteX": 36,
-            "absoluteY": 272,
+            "absoluteY": 282,
             "width": 928,
             "height": 154
           }
@@ -1040,14 +1092,14 @@
             "width": 960,
             "height": 914,
             "padding": 16,
-            "gap": 20
+            "gap": 12
           },
           "section": {
             "sourceNodeName": "Frame 2147230614",
             "parentRelativeX": 16,
             "parentRelativeY": 16,
             "absoluteX": 36,
-            "absoluteY": 252,
+            "absoluteY": 270,
             "width": 928,
             "height": 84
           }
@@ -1075,8 +1127,8 @@
         "Base.Badge"
       ],
       "layout": {
-        "largeExpanded": "section x=16, y=190, w=928, h=208; related card row x=0, y=62, w=928, h=76",
-        "allStates": "section x=16, y=120, w=928, h=138; related card row x=0, y=62, w=928, h=76",
+        "largeExpanded": "section x=16, y=182, w=928, h=208; related card row x=0, y=62, w=928, h=76",
+        "allStates": "section x=16, y=112, w=928, h=138; related card row x=0, y=62, w=928, h=76",
         "twoColumnCards": "two cards per row, each w=458, h=76, gap=12"
       },
       "observedDetailLayouts": {
@@ -1086,9 +1138,9 @@
             "sourceNodeName": "Frame 2147230615",
             "parentSection": "ExpandedSections",
             "parentRelativeX": 16,
-            "parentRelativeY": 190,
+            "parentRelativeY": 182,
             "absoluteX": 36,
-            "absoluteY": 446,
+            "absoluteY": 448,
             "width": 928,
             "height": 208
           },
@@ -1137,9 +1189,9 @@
             "sourceNodeName": "Frame 2147230615",
             "parentSection": "DetailSections",
             "parentRelativeX": 16,
-            "parentRelativeY": 120,
+            "parentRelativeY": 112,
             "absoluteX": 36,
-            "absoluteY": 356,
+            "absoluteY": 366,
             "width": 928,
             "height": 138
           },
@@ -1195,8 +1247,8 @@
         "Base.Badge"
       ],
       "layout": {
-        "largeExpanded": "Layout.DetailCard x=16, y=418, w=928, h=328",
-        "allStates": "Layout.DetailCard x=16, y=388, w=928, h=258",
+        "largeExpanded": "Layout.DetailCard x=16, y=402, w=928, h=328",
+        "allStates": "Layout.DetailCard x=16, y=364, w=928, h=258",
         "table": "full-width table inside card; observed columns include level, attack, price, material"
       },
       "observedDetailLayouts": {
@@ -1205,9 +1257,9 @@
           "component": "Layout.DetailCard",
           "parentSection": "ExpandedSections",
           "parentRelativeX": 16,
-          "parentRelativeY": 418,
+          "parentRelativeY": 402,
           "absoluteX": 36,
-          "absoluteY": 674,
+          "absoluteY": 668,
           "width": 928,
           "height": 328
         },
@@ -1216,9 +1268,9 @@
           "component": "Layout.DetailCard",
           "parentSection": "DetailSections",
           "parentRelativeX": 16,
-          "parentRelativeY": 388,
+          "parentRelativeY": 364,
           "absoluteX": 36,
-          "absoluteY": 624,
+          "absoluteY": 618,
           "width": 928,
           "height": 258
         },
@@ -1258,8 +1310,8 @@
         "Data.TableRowCell"
       ],
       "layout": {
-        "largeExpanded": "x=16, y=766, w=928, h=302",
-        "allStates": "x=16, y=666, w=928, h=232",
+        "largeExpanded": "x=16, y=742, w=928, h=302",
+        "allStates": "x=16, y=634, w=928, h=232",
         "canvasBlock": "observed large empty media/canvas block spans w=928 when present"
       },
       "observedDetailLayouts": {
@@ -1268,9 +1320,9 @@
           "sourceNodeName": "Frame 2147230616",
           "parentSection": "ExpandedSections",
           "parentRelativeX": 16,
-          "parentRelativeY": 766,
+          "parentRelativeY": 742,
           "absoluteX": 36,
-          "absoluteY": 1022,
+          "absoluteY": 1008,
           "width": 928,
           "height": 302,
           "canvasBlock": {
@@ -1283,9 +1335,9 @@
           "sourceNodeName": "Frame 2147230616",
           "parentSection": "DetailSections",
           "parentRelativeX": 16,
-          "parentRelativeY": 666,
+          "parentRelativeY": 634,
           "absoluteX": 36,
-          "absoluteY": 902,
+          "absoluteY": 888,
           "width": 928,
           "height": 232,
           "canvasBlock": {
@@ -1303,6 +1355,227 @@
       ],
       "dataRequirement": "TODO_FROM_DATASOURCE"
     }
+    ,
+    {
+      "id": "guide.document-detail",
+      "displayName": "Document guide detail page",
+      "purpose": "Special article-like guide/detail template family for long-form walkthrough or document pages. Use it when the source page is a prose guide with title, metadata, main media, paragraphs, optional section anchors, and optional related information links. Do not use it for structured item details, category grids, or encyclopedia-style attributes.",
+      "templateType": "document-guide-detail",
+      "figmaNames": [
+        "GuideDetailWithNavAndInfo",
+        "GuideDetailWithInfo",
+        "GuideDetailWithNav"
+      ],
+      "quickLocate": {
+        "keywords": [
+          "document-guide-detail",
+          "guide.document-detail",
+          "文档攻略类",
+          "图文攻略",
+          "GuideDetailWithNavAndInfo",
+          "GuideDetailWithInfo",
+          "GuideDetailWithNav"
+        ],
+        "rule": "Ask AI to search these keywords in skill-pack/wiki/templates/wiki.json or skill-pack/wiki/DESIGN.md to find this template family quickly."
+      },
+      "allowedComponents": [
+        "Nav.Breadcrumbs",
+        "Nav.Navigate",
+        "Nav.CommandMenuItem",
+        "Base.Image",
+        "Base.Badge"
+      ],
+      "layoutSelectionRule": "Choose the variant from source structure: GuideDetailWithNavAndInfo when the source has both local article anchors and related-info links; GuideDetailWithInfo when it has related-info links but no local anchors; GuideDetailWithNav when it has local anchors but no related-info links. If neither exists, use the article content rules and omit both side modules rather than fabricating them.",
+      "layout": {
+        "sharedHeader": "Nav.Header x=0, y=0, w=1000, h=84; same global Nav.TopBar and Form.SearchBar rules as other Wiki pages.",
+        "breadcrumbs": "Body-relative x=32, y=16, w=188, h=26; absolute x=32, y=100 when Body.y=84. Every item is clickable, width hugs text, and text uses 12px/18px.",
+        "articleLayout": "Body-relative x=32, y=62, w=936; horizontal layout gap=20.",
+        "leftNav": "Optional Nav.Navigate at ArticleLayout x=0, y=0, w=96; h=607.9389 in GuideDetailWithNavAndInfo, h=576 in GuideDetailWithNav; padding top/bottom=8, padding right=16, right divider 1px var(--color-stroke-area).",
+        "articleContent": "Vertical ArticleContent with gap=12 and no padding. Width is 540 with nav+info, 656 with info only, and 820 with nav only.",
+        "rightInfo": "Optional RelatedInfoSidebar at ArticleLayout x=676, y=0, w=260, h=204; vertical gap=8. Title frame h=36 with 8px inset text, list y=44, w=260, h=160, item h=34, list gap=8.",
+        "articleBody": "ArticleBody starts at ArticleContent y=64, uses vertical gap=8. All article images keep the source image aspect ratio; constrain image rendering by max-height=230 only and do not force the Figma sample 16:9 ratio. Text is full ArticleContent width, Body/SM 12px/18px. RelatedContentSection is optional and starts at y=382 when present."
+      },
+      "observedGuideDetailLayouts": {
+        "withNavAndInfo": {
+          "pageNodeId": "304:18296",
+          "figmaName": "GuideDetailWithNavAndInfo",
+          "body": {
+            "x": 0,
+            "y": 84,
+            "width": 1000,
+            "height": 526
+          },
+          "breadcrumbs": {
+            "bodyRelativeX": 32,
+            "bodyRelativeY": 16,
+            "width": 188,
+            "height": 26
+          },
+          "articleLayout": {
+            "bodyRelativeX": 32,
+            "bodyRelativeY": 62,
+            "width": 936,
+            "height": 607.9389,
+            "gap": 20
+          },
+          "leftNav": {
+            "component": "Nav.Navigate",
+            "layoutRelativeX": 0,
+            "layoutRelativeY": 0,
+            "width": 96,
+            "height": 607.9389
+          },
+          "articleContent": {
+            "layoutRelativeX": 116,
+            "layoutRelativeY": 0,
+            "width": 540,
+            "height": 607.9389,
+            "gap": 12
+          },
+          "rightInfo": {
+            "component": "Nav.CommandMenuItem",
+            "layoutRelativeX": 676,
+            "layoutRelativeY": 0,
+            "width": 260,
+            "height": 204,
+            "titleHeight": 36,
+            "listY": 44,
+            "listHeight": 160,
+            "listItemHeight": 34,
+            "listGap": 8
+          }
+        },
+        "withInfo": {
+          "pageNodeId": "306:4332",
+          "figmaName": "GuideDetailWithInfo",
+          "body": {
+            "x": 0,
+            "y": 84,
+            "width": 1000,
+            "height": 526
+          },
+          "breadcrumbs": {
+            "bodyRelativeX": 32,
+            "bodyRelativeY": 16,
+            "width": 188,
+            "height": 26
+          },
+          "articleLayout": {
+            "bodyRelativeX": 32,
+            "bodyRelativeY": 62,
+            "width": 936,
+            "height": 607.9389,
+            "gap": 20
+          },
+          "articleContent": {
+            "layoutRelativeX": 0,
+            "layoutRelativeY": 0,
+            "width": 656,
+            "height": 607.9389,
+            "gap": 12
+          },
+          "rightInfo": {
+            "component": "Nav.CommandMenuItem",
+            "layoutRelativeX": 676,
+            "layoutRelativeY": 0,
+            "width": 260,
+            "height": 204,
+            "titleHeight": 36,
+            "listY": 44,
+            "listHeight": 160,
+            "listItemHeight": 34,
+            "listGap": 8
+          }
+        },
+        "withNav": {
+          "pageNodeId": "306:4716",
+          "figmaName": "GuideDetailWithNav",
+          "body": {
+            "x": 0,
+            "y": 84,
+            "width": 1000,
+            "height": 526
+          },
+          "breadcrumbs": {
+            "bodyRelativeX": 32,
+            "bodyRelativeY": 16,
+            "width": 188,
+            "height": 26
+          },
+          "articleLayout": {
+            "bodyRelativeX": 32,
+            "bodyRelativeY": 62,
+            "width": 936,
+            "height": 576,
+            "gap": 20
+          },
+          "leftNav": {
+            "component": "Nav.Navigate",
+            "layoutRelativeX": 0,
+            "layoutRelativeY": 0,
+            "width": 96,
+            "height": 576
+          },
+          "articleContent": {
+            "layoutRelativeX": 116,
+            "layoutRelativeY": 0,
+            "width": 820,
+            "height": 576,
+            "gap": 12
+          }
+        },
+        "articleContentInternals": {
+          "titleRow": {
+            "x": 0,
+            "y": 0,
+            "height": 20,
+            "gap": 4,
+            "rule": "Use source guide title. The Figma sample splits game name and the fixed text '图文攻略', but production should not force that exact copy if the source title differs."
+          },
+          "metaRow": {
+            "x": 0,
+            "y": 32,
+            "height": 20,
+            "gap": 4,
+            "rule": "Bind source metadata such as category count, item count, date, author, or update time when present; omit unavailable metadata rather than fabricating counts."
+          },
+          "articleBody": {
+            "x": 0,
+            "y": 64,
+            "gap": 8,
+            "mainImage": {
+              "sampleWidth": 402,
+              "sampleHeight": 226,
+              "maxHeight": 230,
+              "aspectRatioRule": "preserve-source-image-ratio",
+              "rule": "Figma sample is 402 x 226, but document guide images must keep the datasource image ratio and only cap rendered height at 230."
+            },
+            "paragraphText": {
+              "fontSize": 12,
+              "lineHeight": 18,
+              "colorToken": "var(--color-text-weak)"
+            }
+          },
+          "relatedContentSection": {
+            "x": 0,
+            "y": 382,
+            "height": 226,
+            "background": "var(--color-alpha-white-alpha-2)",
+            "rule": "Optional article body extension. Render only when source has related prose, embedded content, or an extra document block."
+          }
+        }
+      },
+      "pendingDataBoundElements": [
+        "breadcrumb labels and routes",
+        "article title",
+        "article metadata",
+        "main article image",
+        "article paragraphs and rich content blocks",
+        "optional local section anchors",
+        "optional related information links"
+      ],
+      "dataRequirement": "TODO_FROM_DATASOURCE"
+    }
   ],
   "requiredRendererBehavior": [
     "Render Wiki output in a 1000 x 610 default canvas unless a host shell explicitly overrides the size.",
@@ -1314,7 +1587,8 @@
     "Treat every Figma template page as a layout reference, not a mandatory data structure. Select regions and components based on the original source page first, then use the matching template coordinates for the selected component family.",
     "A referenced template page may be used partially. Do not render secondary tabs, third-level sidebars, breadcrumbs, large cards, pagination, or detail sections unless the original source page or routing context actually contains that structure.",
     "When multiple components can represent the same region, choose the component by source information density before applying layout. The phrase same page/list means the currently rendered list only: active secondary tab plus optional active third-level group. Compact text entries may use Game.ShowCard only when every visible card subtitle/body in that current list fits within one visible line, richer inline entries may use compact Layout.DescribeCard, and image-first gallery entries may use the SecondaryPageLargeCard Layout.DescribeCard grid.",
-    "For every rendered card set that uses imageSrc, choose Base.Image ratio from the source image dimensions or visual type of the current page/list before applying the card layout. Use 1:1 for square icons, portraits, and near-square art; use 3:2 or 16:9 for weapons, equipment thumbnails, maps, screenshots, landscapes, banners, and other wide assets to avoid square-frame cropping. Do not reuse an imageRatio selected for one second-level tab or sibling secondary page on another tab under the same first-level category.",
+    "For Layout.DescribeCard, bind ShowImage, ShowTitle, ShowDescription, ShowBadge, and ShowAttributes from actual source fields and the chosen presentation. When one is false, the renderer must omit that region and collapse its spacing rather than rendering empty placeholders. If showTitle=false and showBadge=false, omit the whole title row.",
+    "For every rendered card set that uses imageSrc, choose Base.Image ratio from the source image dimensions or visual type of the current page/list before applying the card layout. Use 1:1 for square icons and near-square art; use 4:5 for vertical portraits, character/card art, posters, and portrait-like assets around width/height 0.8; use 3:2 or 16:9 for weapons, equipment thumbnails, maps, screenshots, landscapes, banners, and other wide assets to avoid square-frame cropping. Do not reuse an imageRatio selected for one second-level tab or sibling secondary page on another tab under the same first-level category.",
     "Use semantic tokens from the Wiki or shared token source; do not hardcode colors when a token exists.",
     "Header navigation and search are shared across home, secondary list, and detail states.",
     "Home state renders a category grid after the summary block; secondary state renders a list grid plus pagination; detail state renders breadcrumbs plus vertically scrollable detail content.",
@@ -1330,10 +1604,12 @@
     "In SecondaryPageMultiNav, Nav.SecondaryTab represents second-level navigation under the active global Nav.TopBar item. Nav.Navigate is optional and represents only real third-level groups or local anchors under the active SecondaryTab.",
     "SecondaryPageMultiNav observes a right-side Game.ShowCard list in two columns: list x=116, y=0, w=820, h=480 inside the content shell; card w=406, h=76, column gap=8, row gap=8. Use this list structure only when it fits the original page content and every card subtitle/body fits within one visible line; otherwise choose the most suitable existing component while preserving the matched placement reference.",
     "In Game.ShowCard, the right arrow means the represented entry can drill down or route to a next page. Hide the arrow when the entry is terminal and has no next hierarchy level.",
+    "Use Game.ShowCard variant=voice when the source entry's primary content is playable audio, such as character voice lines, pronunciation, narration, or sound clips. Voice cards use the 498 x 58 Figma state, bind audioSrc and durationLabel from source/audio metadata, bind currentTimeLabel/progress/isPlaying from renderer state, and do not show the drill-down arrow unless the audio entry also has a real separate detail route.",
     "Game.ShowCard descriptions are visibly clamped to one line, and the full description string must be exposed with Base.ToolTip on text hover only when the visible text is actually truncated or hidden. Tooltip display should use a short delay of about 120ms and auto placement so the bubble stays inside the viewport and nearest scroll/clipping container.",
     "If any source card in the current secondary, multi-level, or related rendered page/list needs more than one visible subtitle/body line, render all related cards in that current page/list as Layout.DescribeCard size=SM instead of Game.ShowCard. This consistency does not cross sibling second-level tabs or sibling secondary pages under the same first-level category.",
-    "DetailPage content follows Body-relative content x=20, y=64, w=960 after the 84px Header update; breadcrumbs Body-relative x=20, y=16, w=338, h=28; visual scroll Body-relative x=980, y=60, w=12.",
-    "DetailPage section stacks use 16px internal padding and 20px vertical gaps between sections.",
+    "DetailPage content follows Body-relative content x=20, y=62, w=960 after the 84px Header update; breadcrumbs Body-relative x=32, y=16, w=294, h=26; visual scroll Body-relative x=980, y=60, w=12.",
+    "DetailContent is a special clipped shell and must keep its own chrome: background var(--color-bg-black) / #000306, 1px inside var(--color-stroke-area) / rgba(255,255,255,0.10), radius 8, and clipsContent=true.",
+    "DetailContent itself has padding=0 and gap=0. HeroSection uses 16px internal padding and 10px gap; DetailSections and ExpandedSections use 16px internal padding and 12px vertical gaps between sections.",
     "Detail pages may stack multiple Layout.DetailCard modules. For each DetailCard, require a title plus at least one real optional content block from the source section, then render only the internal blocks supported by that source data. The module order should follow the source detail section order, while template spacing, card widths, section gaps, and scroll behavior follow the Figma detail templates.",
     "Home summary title follows the WikiHome two-segment title row: '<game name>' followed by the literal 'Wiki攻略'.",
     "In home.category-grid, each Game.CategoryCard previews up to the first three items of its linked secondary page through the avatar cluster, prefers icon over image when both exist, shows the total item count for that category in the trailing count badge, and is hidden when that total count is 0.",
@@ -1341,7 +1617,7 @@
     "Form.SearchBar is global Wiki search across categories and entries.",
     "In secondary list state, keep the observed template pagination placement, bind pagination separately from card data, and use backend totalPages instead of preview defaults.",
     "In secondary list state, use Game.ShowCard when it fully represents the original entry and every visible card subtitle/body in the current page/list fits within one visible line; use Layout.DescribeCard size=SM for the whole current card set when any visible entry needs more than one visible line or richer original entry information needs image, badge, description, or meta fields.",
-    "In secondary list state, imageRatio is scoped to the current rendered page/list. Use one consistent ratio for a card set when visual consistency is needed, but choose it from that page/list's own source images. Do not apply a 3:2 or 4:3-like decision from one second-level tab to another tab whose source images are square and should use 1:1.",
+    "In secondary list state, imageRatio is scoped to the current rendered page/list. Use one consistent ratio for a card set when visual consistency is needed, but choose it from that page/list's own source images. Do not apply a 3:2, 4:5, or 4:3-like decision from one second-level tab to another tab whose source images are square and should use 1:1.",
     "In detail state, content may exceed the visible canvas height. Keep the page scroll model in the renderer layer and sync the visual Layout.Scroll component to scroll state, using the source page or template position for the visual scrollbar.",
     "Breadcrumbs render only on final detail pages, include one clickable label per page hierarchy level, and route each label to its target page.",
     "Detail hero card family follows the card family used to open the detail page from the previous list page.",

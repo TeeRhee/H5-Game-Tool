@@ -469,10 +469,11 @@ export function ComponentGallery() {
             </div>
           </ComponentCard>
 
-          <ComponentCard title="Base / Image / Default" description="资料图片占位，支持 1:1、3:2、16:9。" wide>
+          <ComponentCard title="Base / Image / Default" description="资料图片占位，支持 1:1、3:2、4:5、16:9。" wide>
             <div className="wiki-preview-image-row">
               <ImageFrame ratio="1:1" src="/assets/preview/map-placeholder.png" />
               <ImageFrame ratio="3:2" src="/assets/preview/map-placeholder.png" />
+              <ImageFrame ratio="4:5" src="/assets/preview/map-placeholder.png" />
               <ImageFrame ratio="16:9" src="/assets/preview/map-placeholder.png" />
             </div>
           </ComponentCard>
@@ -509,7 +510,7 @@ export function ComponentGallery() {
             </div>
           </ComponentCard>
 
-          <ComponentCard title="Layout / DescribeCard / Default" description="Figma 属性：Size=SM/LG、State=Default/Hover、ShowImage、ShowBadge、ShowAttributes。" wide>
+          <ComponentCard title="Layout / DescribeCard / Default" description="Figma 属性：Size=SM/LG、State=Default/Hover、ShowImage、ShowTitle、ShowDescription、ShowBadge、ShowAttributes。" wide>
             <div className="wiki-describe-preview">
               <div className="wiki-describe-preview__group">
                 <span>SM / 默认</span>
@@ -555,6 +556,16 @@ export function ComponentGallery() {
                   imageSrc="/assets/preview/map-placeholder.png"
                 />
               </div>
+              <div className="wiki-describe-preview__group">
+                <span>SM / 按需隐藏</span>
+                <WikiDescribeCard
+                  description="只展示正文和补充信息，不展示图片、标题和标签。"
+                  meta={["补充信息1", "补充信息2"]}
+                  showImage={false}
+                  showTitle={false}
+                  showBadge={false}
+                />
+              </div>
             </div>
           </ComponentCard>
 
@@ -569,7 +580,7 @@ export function ComponentGallery() {
             </div>
           </ComponentCard>
 
-          <ComponentCard title="Game / ShowCard / Default" description="展示型列表卡片，支持标签和进度两种形态。" wide>
+          <ComponentCard title="Game / ShowCard / Default" description="展示型列表卡片，支持标签、进度和语音三种形态。" wide>
             <div className="wiki-preview-stack">
               <ShowCard title="详情名称" description="详情介绍介绍" label="标签" imageSrc="/assets/preview/map-placeholder.png" />
               <ShowCard
@@ -580,6 +591,7 @@ export function ComponentGallery() {
                 hasNextLevel={false}
               />
               <ShowCard title="数据存储" description="辅助信息解释信息重点" variant="process" progress={80} label="标签" imageSrc="/assets/preview/map-placeholder.png" />
+              <ShowCard title="数据存储" variant="voice" currentTimeLabel="0:00" durationLabel="0:04" progress={52} audioSrc="/assets/preview/sample-voice.mp3" />
             </div>
           </ComponentCard>
 

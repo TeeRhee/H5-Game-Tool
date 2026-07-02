@@ -13,7 +13,11 @@ export interface ShowCardProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   imageRatio?: ImageRatio;
   label?: string;
   progress?: number;
-  variant?: "label" | "process";
+  variant?: "label" | "process" | "voice";
+  audioSrc?: string;
+  currentTimeLabel?: string;
+  durationLabel?: string;
+  isPlaying?: boolean;
   subscribed?: boolean;
   targetRoute?: string;
   hasNextLevel?: boolean;
@@ -28,6 +32,10 @@ export function ShowCard({
   label,
   progress,
   variant = "label",
+  audioSrc,
+  currentTimeLabel = "0:00",
+  durationLabel,
+  isPlaying = false,
   subscribed = false,
   targetRoute,
   hasNextLevel,
@@ -36,18 +44,49 @@ export function ShowCard({
   ...props
 }: ShowCardProps) {
   const progressValue = typeof progress === "number" ? progress : 80;
-  const hasImage = Boolean(imageSrc);
-  const shouldShowRightIcon = showRightIcon ?? hasNextLevel ?? (targetRoute === undefined ? true : Boolean(targetRoute));
+  const isVoice = variant === "voice";
+  const hasImage = !isVoice && Boolean(imageSrc);
+  const shouldShowRightIcon = isVoice ? false : (showRightIcon ?? hasNextLevel ?? (targetRoute === undefined ? true : Boolean(targetRoute)));
+  const shouldReserveActionColumn = isVoice || shouldShowRightIcon;
+  const voiceProgressValue = Math.max(0, Math.min(100, typeof progress === "number" ? progress : 0));
+  const voiceTimeLabel = `${currentTimeLabel}/${durationLabel ?? "0:00"}`;
+
+  if (isVoice) {
+    return (
+      <button
+        type="button"
+        data-audio-src={audioSrc}
+        className={cx("gt-wiki-show-card", "gt-wiki-show-card--voice", className)}
+        {...props}
+      >
+        <RemixIcon
+          name={isPlaying ? "pause-fill" : "play-fill"}
+          size={24}
+          className="gt-wiki-show-card__voice-icon"
+        />
+        <span className="gt-wiki-show-card__voice-content">
+          <span className="gt-wiki-show-card__voice-top">
+            <span className="gt-wiki-show-card__title">{title}</span>
+            <span className="gt-wiki-show-card__voice-time">{voiceTimeLabel}</span>
+          </span>
+          <span className="gt-wiki-show-card__voice-track" aria-hidden="true">
+            <span style={{ width: `${voiceProgressValue}%` }} />
+          </span>
+        </span>
+      </button>
+    );
+  }
 
   return (
     <button
       type="button"
+      data-audio-src={audioSrc}
       className={cx(
         "gt-wiki-show-card",
         `gt-wiki-show-card--${variant}`,
         hasImage && `gt-wiki-show-card--image-${imageRatio.replace(":", "-")}`,
         hasImage ? "" : "gt-wiki-show-card--no-image",
-        shouldShowRightIcon ? "" : "gt-wiki-show-card--no-arrow",
+        shouldReserveActionColumn ? "" : "gt-wiki-show-card--no-arrow",
         className,
       )}
       {...props}
@@ -77,6 +116,13 @@ export function ShowCard({
         </span>
       )}
       {label ? <Badge tone={subscribed ? "success" : "neutral"}>{label}</Badge> : null}
+      {isVoice ? (
+        <RemixIcon
+          name={isPlaying ? "pause-circle-line" : "play-circle-line"}
+          size={20}
+          className="gt-wiki-show-card__voice-icon"
+        />
+      ) : null}
       {shouldShowRightIcon ? <RemixIcon name="arrow-right-s-line" size={20} className="gt-wiki-show-card__arrow" /> : null}
     </button>
   );
