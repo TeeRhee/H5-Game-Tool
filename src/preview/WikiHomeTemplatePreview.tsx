@@ -79,6 +79,7 @@ export function WikiHomeTemplatePreview() {
                     avatarSrcs={avatarSrcs}
                     countLabel="+999"
                     state={category.state}
+                    interactive
                   />
                 ))}
               </section>

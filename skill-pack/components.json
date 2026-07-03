@@ -730,7 +730,8 @@
         "wiki:home.category-grid"
       ],
       "observedStructure": {
-        "rule": "This card is the top-level Wiki category entry on the home page. The circular preview slots summarize up to the first three items of the linked secondary page in display order, and the trailing count shows the total number of items contained by that category. Hide the whole card when the total item count is 0."
+        "rule": "This card is the top-level Wiki category entry on the home page. The circular preview slots summarize up to the first three items of the linked secondary page in display order, and the trailing count shows the total number of items contained by that category. Hide the whole card when the total item count is 0.",
+        "hoverRule": "Render hover state only when the card can click through to a real secondary page or otherwise trigger new information. If it cannot navigate or trigger a real information change, keep the default state even on pointer hover."
       },
       "props": {
         "title": {
@@ -769,7 +770,13 @@
             "hover"
           ],
           "default": "default",
-          "rule": "When state=hover or the user pointer hovers the card, render the card with the hover background and a visible 1px stroke using the category-card hover stroke token. The default state reserves the border space with a transparent stroke so the card size does not shift."
+          "rule": "Use state=hover only for interactive category cards that can click through to a real secondary page or trigger new information. Non-interactive category cards must not display hover styling."
+        },
+        "interactive": {
+          "type": "boolean",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT",
+          "rule": "Set true only when the card has a real target route or action that reveals new information."
         }
       }
     },
@@ -855,7 +862,8 @@
         "nestedImageComponent": "The image/media region is a nested Base.Image component, not a DescribeCard-owned raw image layer. Render it through ImageFrame/Base.Image and pass imageSrc/imageRatio to that nested component. When showImage=false, remove the nested Base.Image instance and collapse its spacing.",
         "smDescriptionRule": "For size=sm, render description/subtitle as its own text node under the title row, not as a one-line ShowCard subtitle. It occupies a two-line 36px-high region using 12px text with 18px line-height. Clamp visible text to two lines; preserve the full string and expose Base.ToolTip only when the subtitle text is actually truncated or hidden.",
         "lgNoAttributesRule": "For size=lg with showAttributes=false, the card height must adapt to rendered content instead of keeping the full LG fixed height reserved for the attributes row.",
-        "lgNoDescriptionRule": "For size=lg when description/subtitle is absent, render the image-first structure as image plus title and any explicitly bound badge/meta only. Do not render an empty subtitle row or reserve subtitle spacing, and let the card height adapt to image, title, and padding."
+        "lgNoDescriptionRule": "For size=lg when description/subtitle is absent, render the image-first structure as image plus title and any explicitly bound badge/meta only. Do not render an empty subtitle row or reserve subtitle spacing, and let the card height adapt to image, title, and padding.",
+        "hoverRule": "Render hover state only when the card can click through, open a detail/modal, expand, play, or otherwise trigger new information. If it is display-only, do not show hover styling."
       },
       "props": {
         "title": {
@@ -936,7 +944,14 @@
             "default",
             "hover"
           ],
-          "default": "default"
+          "default": "default",
+          "rule": "Use state=hover only when interactive=true or a real click/action target exists. Display-only cards must remain visually default on pointer hover."
+        },
+        "interactive": {
+          "type": "boolean",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT",
+          "rule": "Set true only when the card has a real target route or action that reveals new information."
         },
         "badge": {
           "type": "string",
@@ -991,6 +1006,7 @@
       ],
       "observedStructure": {
         "rule": "ShowCard is a compact list/detail summary card for entries whose subtitle/body text fits within one visible line. Use the right arrow only when the represented item has a next page, next hierarchy level, target route, or explicit clickable drill-down. The subtitle/description region clamps to one visible line; full text must be exposed through Base.ToolTip on text hover when truncation is possible. Use variant=voice for source entries whose primary action is playing an audio clip. Do not use ShowCard for the current rendered page/list when its visible source card text requires more than one visible subtitle/body line; use Layout.DescribeCard size=sm for that current page/list instead. Do not apply this decision across sibling second-level tabs or the whole first-level category.",
+        "hoverRule": "Render hover state only when the card can click through, play audio, open a detail/modal, or otherwise trigger new information. If it only displays static information, do not show hover styling.",
         "voiceVariant": {
           "figmaNodeId": "434:3632",
           "figmaName": "Variant=Voice",
@@ -998,7 +1014,7 @@
             "width": 498,
             "height": 58
           },
-          "rule": "Voice state is an audio playback row: left play/pause icon, title, right time label, and bottom playback progress bar. It represents playable audio content, not drill-down navigation."
+          "rule": "Voice state is an audio playback row: left play/pause icon, title, right time label, and bottom playback progress bar. The play/pause icon uses var(--color-icon-strong); the playback progress fill uses var(--color-primary-base). It represents playable audio content, not drill-down navigation."
         }
       },
       "props": {
@@ -1103,6 +1119,12 @@
           "required": false,
           "source": "renderer state",
           "rule": "Explicit visual override for the right arrow. Default compatibility behavior shows the arrow when neither targetRoute nor hasNextLevel is supplied; final Wiki mappings should set hasNextLevel or targetRoute to avoid ambiguity."
+        },
+        "interactive": {
+          "type": "boolean",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE_OR_ROUTING_CONTEXT",
+          "rule": "Set true only when the card has a real target route, drill-down, playable audio action, modal/detail opener, or another action that reveals new information. Non-interactive cards must not display hover styling."
         }
       }
     },

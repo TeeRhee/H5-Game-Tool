@@ -22,6 +22,7 @@ export interface ShowCardProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   targetRoute?: string;
   hasNextLevel?: boolean;
   showRightIcon?: boolean;
+  interactive?: boolean;
 }
 
 export function ShowCard({
@@ -40,13 +41,17 @@ export function ShowCard({
   targetRoute,
   hasNextLevel,
   showRightIcon,
+  interactive,
   className = "",
+  disabled,
+  onClick,
   ...props
 }: ShowCardProps) {
   const progressValue = typeof progress === "number" ? progress : 80;
   const isVoice = variant === "voice";
   const hasImage = !isVoice && Boolean(imageSrc);
   const shouldShowRightIcon = isVoice ? false : (showRightIcon ?? hasNextLevel ?? (targetRoute === undefined ? true : Boolean(targetRoute)));
+  const isInteractive = !disabled && (interactive ?? Boolean(onClick || targetRoute || hasNextLevel || (isVoice && audioSrc)));
   const shouldReserveActionColumn = isVoice || shouldShowRightIcon;
   const voiceProgressValue = Math.max(0, Math.min(100, typeof progress === "number" ? progress : 0));
   const voiceTimeLabel = `${currentTimeLabel}/${durationLabel ?? "0:00"}`;
@@ -56,7 +61,9 @@ export function ShowCard({
       <button
         type="button"
         data-audio-src={audioSrc}
-        className={cx("gt-wiki-show-card", "gt-wiki-show-card--voice", className)}
+        className={cx("gt-wiki-show-card", "gt-wiki-show-card--voice", isInteractive && "gt-wiki-show-card--interactive", className)}
+        disabled={disabled}
+        onClick={onClick}
         {...props}
       >
         <RemixIcon
@@ -84,11 +91,14 @@ export function ShowCard({
       className={cx(
         "gt-wiki-show-card",
         `gt-wiki-show-card--${variant}`,
+        isInteractive && "gt-wiki-show-card--interactive",
         hasImage && `gt-wiki-show-card--image-${imageRatio.replace(":", "-")}`,
         hasImage ? "" : "gt-wiki-show-card--no-image",
         shouldReserveActionColumn ? "" : "gt-wiki-show-card--no-arrow",
         className,
       )}
+      disabled={disabled}
+      onClick={onClick}
       {...props}
     >
       {hasImage ? <ImageFrame ratio={imageRatio} src={imageSrc} alt="" /> : null}

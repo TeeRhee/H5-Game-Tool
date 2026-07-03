@@ -61,6 +61,8 @@ Do not reinterpret the Wiki canvas as a map canvas, marketing article page, or f
 
 Template pages are layout references, not mandatory data structures. First inspect the original source page to decide which regions and component families are actually needed, then apply the matching Figma layout rules for those chosen components. It is valid to use only part of a template page, such as a tab row, a large-card grid, or a detail stack, without rendering unrelated template regions.
 
+Card hover is an interaction affordance, not decoration. Use hover styling only when a card can navigate, drill down, open a detail or modal, play media, expand, or otherwise reveal new information. If a card is display-only and cannot trigger anything, keep it in the default visual state even on pointer hover.
+
 ### Observed Secondary Layout
 
 The `SecondaryPage` design node is `304:5972` and uses the default `1000 x 610` viewport.

@@ -10,6 +10,7 @@ export interface CategoryCardProps extends ButtonHTMLAttributes<HTMLButtonElemen
   countLabel?: string;
   state?: "default" | "hover";
   meta?: string;
+  interactive?: boolean;
 }
 
 export function CategoryCard({
@@ -20,7 +21,10 @@ export function CategoryCard({
   countLabel,
   state = "default",
   meta,
+  interactive,
   className = "",
+  disabled,
+  onClick,
   ...props
 }: CategoryCardProps) {
   const resolvedAvatarSrcs = (avatarSrcs && avatarSrcs.length > 0 ? avatarSrcs : imageSrc ? [imageSrc] : []).filter(Boolean).slice(0, 3);
@@ -29,9 +33,21 @@ export function CategoryCard({
   const numericCount = Number(normalizedCountLabel.replace(/[^\d.-]/g, ""));
 
   if (normalizedCountLabel && Number.isFinite(numericCount) && numericCount === 0) return null;
+  const isInteractive = !disabled && (interactive ?? Boolean(onClick));
 
   return (
-    <button type="button" className={cx("gt-wiki-category-card", `gt-wiki-category-card--${state}`, className)} {...props}>
+    <button
+      type="button"
+      className={cx(
+        "gt-wiki-category-card",
+        isInteractive && "gt-wiki-category-card--interactive",
+        isInteractive && state === "hover" && "gt-wiki-category-card--hover",
+        className,
+      )}
+      disabled={disabled}
+      onClick={onClick}
+      {...props}
+    >
       <span className="gt-wiki-category-card__content">
         <span className="gt-wiki-category-card__header">
           <span className="gt-wiki-category-card__title">{title}</span>

@@ -20,6 +20,7 @@ export interface WikiDescribeCardProps extends HTMLAttributes<HTMLElement> {
   badges?: string[];
   meta?: string[];
   attributes?: Array<{ label: string; value: string }>;
+  interactive?: boolean;
 }
 
 export function WikiDescribeCard({
@@ -38,6 +39,7 @@ export function WikiDescribeCard({
   badges = [],
   meta,
   attributes = [],
+  interactive,
   className = "",
   ...props
 }: WikiDescribeCardProps) {
@@ -49,13 +51,15 @@ export function WikiDescribeCard({
   const hasDescription = showDescription && Boolean(description);
   const hasContent = hasTitle || hasBadge || hasDescription;
   const hasBody = hasContent || hasAttributes;
+  const isInteractive = interactive ?? Boolean(props.onClick || props.role === "button" || props.tabIndex != null);
 
   return (
     <article
       className={cx(
         "gt-wiki-describe-card",
         `gt-wiki-describe-card--${size}`,
-        `gt-wiki-describe-card--${state}`,
+        isInteractive && "gt-wiki-describe-card--interactive",
+        isInteractive && state === "hover" && "gt-wiki-describe-card--hover",
         showImage && `gt-wiki-describe-card--image-${imageRatio.replace(":", "-")}`,
         hasAttributes ? "" : "gt-wiki-describe-card--no-attributes",
         hasDescription ? "" : "gt-wiki-describe-card--no-description",

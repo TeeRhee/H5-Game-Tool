@@ -484,7 +484,7 @@ export function ComponentGallery() {
           <ComponentCard title="Game / CategoryCard / Default" description="Wiki 首页分类入口卡片。" wide>
             <div className="wiki-preview-stack">
               <CategoryCard title="类型名称" description="介绍信息" countLabel="+999" />
-              <CategoryCard title="类型名称" description="介绍信息" countLabel="+999" state="hover" />
+              <CategoryCard title="类型名称" description="介绍信息" countLabel="+999" state="hover" interactive />
             </div>
           </ComponentCard>
 
@@ -564,6 +564,7 @@ export function ComponentGallery() {
                   meta={["补充信息1", "补充信息2", "补充信息3"]}
                   imageSrc="/assets/preview/map-placeholder.png"
                   state="hover"
+                  interactive
                 />
               </div>
               <div className="wiki-describe-preview__group">
@@ -587,6 +588,7 @@ export function ComponentGallery() {
                   badge="核心标签"
                   meta={["辅助信息"]}
                   imageSrc="/assets/preview/map-placeholder.png"
+                  interactive
                 />
               </div>
               <div className="wiki-describe-preview__group">

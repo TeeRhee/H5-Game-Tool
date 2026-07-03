@@ -2392,14 +2392,14 @@ button:disabled {
   box-shadow: 0 1px 2px rgba(255, 255, 255, 0.03);
 }
 
-.gt-wiki-category-card:hover,
+.gt-wiki-category-card--interactive:hover,
 .gt-wiki-category-card--hover {
   border-color: var(--color-stroke-soft);
   background: var(--color-alpha-white-alpha-4);
   box-shadow: 0 1px 2px rgba(255, 255, 255, 0.03);
 }
 
-.gt-wiki-show-card:hover {
+.gt-wiki-show-card--interactive:hover {
   border-color: var(--color-stroke-sub);
   background: var(--color-bg-hover);
 }
@@ -2991,14 +2991,14 @@ button:disabled {
 }
 
 .gt-wiki-describe-card--hover,
-.gt-wiki-describe-card:hover {
+.gt-wiki-describe-card--interactive:hover {
   border-color: #353a3d;
   background: var(--color-alpha-white-alpha-4);
   box-shadow: none;
 }
 
 .gt-wiki-describe-card--lg.gt-wiki-describe-card--hover,
-.gt-wiki-describe-card--lg:hover {
+.gt-wiki-describe-card--lg.gt-wiki-describe-card--interactive:hover {
   border-color: rgba(255, 255, 255, 0.1);
   background: var(--color-alpha-white-alpha-4);
   box-shadow: none;
@@ -3242,7 +3242,7 @@ button:disabled {
   background: var(--color-alpha-white-alpha-4);
 }
 
-.gt-wiki-detail-card__feature-card:hover {
+.gt-wiki-detail-card__feature-card.gt-wiki-show-card--interactive:hover {
   border-color: transparent;
   background: var(--color-alpha-white-alpha-4);
 }
@@ -3443,7 +3443,7 @@ button:disabled {
   border-radius: 4.5px;
 }
 
-.gt-wiki-show-card:hover {
+.gt-wiki-show-card--interactive:hover {
   border-color: transparent;
   background: var(--color-alpha-white-alpha-4);
 }
@@ -3490,7 +3490,7 @@ button:disabled {
 }
 
 .gt-wiki-show-card__voice-icon {
-  color: var(--color-primary-base);
+  color: var(--color-icon-strong);
 }
 
 .gt-wiki-show-card--voice {
