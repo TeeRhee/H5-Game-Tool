@@ -34,6 +34,7 @@ export function CategoryCard({
 
   if (normalizedCountLabel && Number.isFinite(numericCount) && numericCount === 0) return null;
   const isInteractive = !disabled && (interactive ?? Boolean(onClick));
+  const hasStats = resolvedAvatarSrcs.length > 0 || Boolean(resolvedCountLabel);
 
   return (
     <button
@@ -57,16 +58,20 @@ export function CategoryCard({
         </span>
         {description ? <span className="gt-wiki-category-card__description">{description}</span> : null}
       </span>
-      <span className="gt-wiki-category-card__stats" aria-label={resolvedCountLabel ? `内容数量 ${resolvedCountLabel}` : undefined}>
-        <span className="gt-wiki-category-card__avatars" aria-hidden="true">
-          {resolvedAvatarSrcs.map((src, index) => (
-            <span key={`${src}-${index}`} className={`gt-wiki-category-card__avatar gt-wiki-category-card__avatar--${index + 1}`}>
-              <img src={src} alt="" />
+      {hasStats ? (
+        <span className="gt-wiki-category-card__stats" aria-label={resolvedCountLabel ? `内容数量 ${resolvedCountLabel}` : undefined}>
+          {resolvedAvatarSrcs.length > 0 ? (
+            <span className="gt-wiki-category-card__avatars" aria-hidden="true">
+              {resolvedAvatarSrcs.map((src, index) => (
+                <span key={`${src}-${index}`} className={`gt-wiki-category-card__avatar gt-wiki-category-card__avatar--${index + 1}`}>
+                  <img src={src} alt="" />
+                </span>
+              ))}
             </span>
-          ))}
+          ) : null}
+          {resolvedCountLabel ? <span className="gt-wiki-category-card__meta">{resolvedCountLabel}</span> : null}
         </span>
-        {resolvedCountLabel ? <span className="gt-wiki-category-card__meta">{resolvedCountLabel}</span> : null}
-      </span>
+      ) : null}
     </button>
   );
 }
