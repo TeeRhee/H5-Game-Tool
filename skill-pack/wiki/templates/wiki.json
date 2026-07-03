@@ -1455,7 +1455,7 @@
         "articleLayout": "Body-relative x=32, y=62, w=936; horizontal layout gap=20.",
         "leftNav": "Optional Nav.Navigate at ArticleLayout x=0, y=0, w=96; h=607.9389 in GuideDetailWithNavAndInfo, h=576 in GuideDetailWithNav; padding top/bottom=8, padding right=16, right divider 1px var(--color-stroke-area).",
         "articleContent": "Vertical ArticleContent with gap=12 and no padding. Width is 540 with nav+info, 656 with info only, and 820 with nav only.",
-        "rightInfo": "Optional RelatedInfoSidebar at ArticleLayout x=676, y=0, w=260, h=204; vertical gap=8. Title frame h=36 with 8px inset text and a 1px bottom divider at y=36, w=260, using var(--color-stroke-area) / rgba(255,255,255,0.10). List starts at y=44, w=260, h=160, item h=34, list gap=8.",
+        "rightInfo": "Optional RelatedInfoSidebar at ArticleLayout x=676, y=0, w=260; vertical gap=8. The current Figma sample shows a 204px-tall sidebar with a 160px related-info list area, but that sample is not a row-count limit. Title frame h=36 with 8px inset text and a 1px bottom divider at y=36, w=260, using var(--color-stroke-area) / rgba(255,255,255,0.10). List starts at y=44, w=260, item h=34, list gap=8. If real related-info links exceed the four visible sample rows, continue stacking rows downward and grow the sidebar instead of clipping or truncating the list.",
         "articleBody": "ArticleBody starts at ArticleContent y=64, uses vertical gap=8. All article images keep the source image aspect ratio; constrain image rendering by max-height=230 only and do not force the Figma sample 16:9 ratio. Text is full ArticleContent width, Body/SM 12px/18px. RelatedContentSection is optional and starts at y=382 when present."
       },
       "observedGuideDetailLayouts": {
@@ -1500,7 +1500,8 @@
             "layoutRelativeX": 676,
             "layoutRelativeY": 0,
             "width": 260,
-            "height": 204,
+            "observedExampleHeight": 204,
+            "heightRule": "Observed Figma sample height is 204, but rendered sidebar height must grow downward with the real related-info item count instead of capping at four rows.",
             "titleHeight": 36,
             "titleDivider": {
               "x": 0,
@@ -1511,7 +1512,8 @@
               "strokeToken": "var(--color-stroke-area)"
             },
             "listY": 44,
-            "listHeight": 160,
+            "observedExampleListHeight": 160,
+            "listHeightRule": "Observed Figma sample list area is 160 high for four visible rows, but rendered output must keep stacking additional related-info items downward instead of clipping to that sample height.",
             "listItemHeight": 34,
             "listGap": 8
           }
@@ -1550,7 +1552,8 @@
             "layoutRelativeX": 676,
             "layoutRelativeY": 0,
             "width": 260,
-            "height": 204,
+            "observedExampleHeight": 204,
+            "heightRule": "Observed Figma sample height is 204, but rendered sidebar height must grow downward with the real related-info item count instead of capping at four rows.",
             "titleHeight": 36,
             "titleDivider": {
               "x": 0,
@@ -1561,7 +1564,8 @@
               "strokeToken": "var(--color-stroke-area)"
             },
             "listY": 44,
-            "listHeight": 160,
+            "observedExampleListHeight": 160,
+            "listHeightRule": "Observed Figma sample list area is 160 high for four visible rows, but rendered output must keep stacking additional related-info items downward instead of clipping to that sample height.",
             "listItemHeight": 34,
             "listGap": 8
           }

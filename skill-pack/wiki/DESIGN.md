@@ -163,8 +163,8 @@ Shared layout:
 
 Variant layout:
 
-- With nav and info: `Nav.Navigate x=0, y=0, w=96, h=607.9389`; `ArticleContent x=116, y=0, w=540, h=607.9389`; `RelatedInfoSidebar x=676, y=0, w=260, h=204`.
-- With info only: `ArticleContent x=0, y=0, w=656, h=607.9389`; `RelatedInfoSidebar x=676, y=0, w=260, h=204`.
+- With nav and info: `Nav.Navigate x=0, y=0, w=96, h=607.9389`; `ArticleContent x=116, y=0, w=540, h=607.9389`; `RelatedInfoSidebar x=676, y=0, w=260`. The current Figma sample happens to be `h=204`, but that is not a fixed maximum when more related links exist.
+- With info only: `ArticleContent x=0, y=0, w=656, h=607.9389`; `RelatedInfoSidebar x=676, y=0, w=260`. The current Figma sample happens to be `h=204`, but that is not a fixed maximum when more related links exist.
 - With nav only: `Nav.Navigate x=0, y=0, w=96, h=576`; `ArticleContent x=116, y=0, w=820, h=576`.
 
 Article content:
@@ -177,7 +177,7 @@ Article content:
 Side modules:
 
 - Left `Nav.Navigate` is for real article anchors only. It uses width `96`, vertical padding `8`, right padding `16`, and a right divider. Do not use it for related links.
-- Right `RelatedInfoSidebar` has title frame `h=36` with text inset `8`; the title frame must draw a `1px` bottom divider at `y=36`, `w=260`, using `var(--color-stroke-area)` / `rgba(255,255,255,0.10)`. The related list starts at `y=44`, `w=260, h=160`, item `h=34`, list gap `8`.
+- Right `RelatedInfoSidebar` has title frame `h=36` with text inset `8`; the title frame must draw a `1px` bottom divider at `y=36`, `w=260`, using `var(--color-stroke-area)` / `rgba(255,255,255,0.10)`. The related list starts at `y=44`, `w=260`, item `h=34`, list gap `8`. The observed sample shows `h=160` for four visible rows, but that is only an example; if the datasource has more related-info links, continue stacking rows downward and grow the sidebar instead of truncating at four.
 - Related info list items use `Nav.CommandMenuItem`, `w=260, h=34`, optional badge, and right arrow. They must be bound to real related-info links.
 
 ### Observed Detail Layout
