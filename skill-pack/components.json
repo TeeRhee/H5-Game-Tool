@@ -852,6 +852,7 @@
       "observedStructure": {
         "rule": "Wiki list/detail describe card. Use it when the source entry has richer title, description, image, badge, meta/attribute content, or secondary rich text that needs more than one visible line. Optional regions are controlled by ShowImage, ShowTitle, ShowDescription, ShowBadge, and ShowAttributes; when a region is disabled, do not render it and do not reserve its spacing. For page/list card consistency, if any card in the same rendered page/list needs more than one visible subtitle/body line, use Layout.DescribeCard with size=sm for all related cards on that current page/list instead of Game.ShowCard. Here same rendered page/list means the active secondary tab plus optional active third-level group; do not inherit this decision across sibling second-level tabs or the whole active first-level category. This is separate from the map popup detail card.",
         "smDefaultNode": "Figma node 177:1104, Size=SM State=Default: root w=328 h=106, horizontal auto-layout, padding 8, gap 12, 1px white 10% stroke, radius 6. Base.Image instance is x=8 y=8 w=90 h=90 opacity 80%. Right body is x=110 y=8 w=210 h=90 vertical, gap 6. Title/description group is w=210 h=62, gap 4; title row is h=22; subtitle text is w=210 h=36 with Body/SM 12px/18px and two visible lines. Attribute row is y=68 w=210 h=22, padding 4px 6px, gap 2.",
+        "nestedImageComponent": "The image/media region is a nested Base.Image component, not a DescribeCard-owned raw image layer. Render it through ImageFrame/Base.Image and pass imageSrc/imageRatio to that nested component. When showImage=false, remove the nested Base.Image instance and collapse its spacing.",
         "smDescriptionRule": "For size=sm, render description/subtitle as its own text node under the title row, not as a one-line ShowCard subtitle. It occupies a two-line 36px-high region using 12px text with 18px line-height. Clamp visible text to two lines; preserve the full string and expose Base.ToolTip only when the subtitle text is actually truncated or hidden.",
         "lgNoAttributesRule": "For size=lg with showAttributes=false, the card height must adapt to rendered content instead of keeping the full LG fixed height reserved for the attributes row.",
         "lgNoDescriptionRule": "For size=lg when description/subtitle is absent, render the image-first structure as image plus title and any explicitly bound badge/meta only. Do not render an empty subtitle row or reserve subtitle spacing, and let the card height adapt to image, title, and padding."
@@ -872,7 +873,8 @@
         "imageSrc": {
           "type": "string",
           "required": false,
-          "source": "TODO_FROM_DATASOURCE"
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Forward to the nested Base.Image/ImageFrame component. Do not render a separate raw img layer outside the nested image component."
         },
         "imageRatio": {
           "type": "enum",

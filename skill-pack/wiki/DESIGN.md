@@ -4,7 +4,7 @@ name: H5 Game Wiki Tool
 source:
   figmaFile: fnA9NEBTDyxU94M0fvNy8e
   pageNode: 167:628
-  homeNode: 167:630
+  homeNode: 477:3685
   secondaryListNode: 304:5972
   secondaryLargeCardNode: 304:13409
   detailLargeCardExpandedNode: 304:17202
@@ -21,7 +21,7 @@ The H5 Game Wiki Tool is an operational reference interface for browsing structu
 
 The current Wiki contract covers desktop states only:
 
-- Home: header, summary text, and top-level category grid.
+- Home: header, top summary banner, summary text, and top-level category grid.
 - Secondary list: header and selected-category entry content, using the card family and layout variant that best matches the original source page.
 - Detail: header, breadcrumbs, scrollable content, summary card, attributes, related cards, structured detail card, and optional extended content.
 - Document guide detail: article-like guide pages with prose, media, metadata, optional left section anchors, and optional right related-info links.
@@ -52,7 +52,7 @@ The desktop Wiki viewport is `1000 x 610`.
 
 - `shell.background` covers `x=0, y=0, w=1000, h=610`.
 - `shell.header` is shared by home, secondary list, and detail states.
-- Home content starts with summary text, then shows top-level categories in a four-column grid.
+- Home content follows Figma node `477:3685`: a `936 x 100` summary banner at Content `x=0, y=0`, PageSummary text inside the banner at `x=20, y=22`, then top-level categories in a four-column grid at Content `x=0, y=112`. The banner image is supplied by the current tool/game config; preview or missing-data states may use the configured placeholder only.
 - Secondary list content uses a three-column card grid and pagination.
 - Detail content may exceed the visible canvas height. The renderer owns real scrolling; `Layout.Scroll` only reflects scroll state visually.
 - Breadcrumbs render only on final detail pages unless a future routing contract explicitly enables secondary breadcrumbs. When rendered, `Nav.Breadcrumbs` sits in the first Body row at Body-relative `x=32, y=16, h=26`; text uses `12px/18px`; structured detail pages use `w=294`, document guide detail pages use `w=188`, and the content below starts at Body-relative `y=62`.
@@ -73,7 +73,8 @@ The `SecondaryPage` design node is `304:5972` and uses the default `1000 x 610` 
 - Card grid: 3 columns x 4 visible design rows, card `w=306.6667, h=96`, column gap `8`, row gap `8`.
 - Card x positions inside each row: `0`, `314.6667`, `629.3334`.
 - Row y positions inside the list container: `0`, `104`, `208`, `312`.
-- `Layout.DescribeCard` SM default component node `177:1104`: root `w=328, h=106`, padding `8`, horizontal gap `12`, image `x=8, y=8, w=90, h=90`, content `x=110, y=8, w=210, h=90`, content vertical gap `6`.
+- `Layout.DescribeCard` SM default component node `177:1104`: root `w=328, h=106`, padding `8`, horizontal gap `12`, nested `Base.Image` at `x=8, y=8, w=90, h=90`, content `x=110, y=8, w=210, h=90`, content vertical gap `6`.
+- `Layout.DescribeCard` image/media is a nested `Base.Image` component. Bind `imageSrc` and `imageRatio` to that nested component and do not create a separate raw image layer outside the DescribeCard component.
 - `Layout.DescribeCard` SM subtitle structure: title/description group `w=210, h=62`, title row `h=22`, subtitle text `x=0, y=26, w=210, h=36`, Body/SM `12px/18px`, two visible lines. Clamp overflow to two lines and expose the full text through `Base.ToolTip` only when the rendered subtitle is actually truncated or hidden.
 - `Layout.DescribeCard` optional regions are controlled by `showImage`, `showTitle`, `showDescription`, `showBadge`, and `showAttributes`. Derive these flags from actual source fields and the selected presentation. When a flag is false, omit that region and collapse its spacing; if both `showTitle=false` and `showBadge=false`, omit the whole title row.
 - Pagination: Body-relative `x=0, y=482, w=1000, h=64`, absolute `x=0, y=562, w=1000, h=64`.

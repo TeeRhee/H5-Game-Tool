@@ -603,11 +603,26 @@ button:disabled {
   gap: var(--wiki-home-content-gap);
 }
 
+.wiki-home-template-summary-banner {
+  position: relative;
+  width: var(--wiki-home-summary-banner-width);
+  height: var(--wiki-home-summary-banner-height);
+  flex: 0 0 var(--wiki-home-summary-banner-height);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(90deg, rgba(0, 3, 6, 0.86) 0%, rgba(0, 3, 6, 0.42) 58%, rgba(0, 3, 6, 0.12) 100%),
+    url("/assets/preview/map-placeholder.png") center / cover no-repeat,
+    var(--color-bg-soft);
+}
+
 .wiki-home-template-summary {
+  position: absolute;
+  top: var(--wiki-home-summary-y);
+  left: var(--wiki-home-summary-x);
   display: flex;
-  width: 190px;
+  width: 170px;
   height: 56px;
-  flex: 0 0 56px;
   flex-direction: column;
   gap: 8px;
   white-space: nowrap;

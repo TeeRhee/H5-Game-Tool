@@ -65,7 +65,7 @@ export function WikiDescribeCard({
       )}
       {...props}
     >
-      {showImage ? <ImageFrame ratio={imageRatio} src={imageSrc} alt="" /> : null}
+      {showImage ? <ImageFrame className="gt-wiki-describe-card__image" ratio={imageRatio} src={imageSrc} alt="" /> : null}
       {hasBody ? (
         <div className="gt-wiki-describe-card__body">
           {hasContent ? (

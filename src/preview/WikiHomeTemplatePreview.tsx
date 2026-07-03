@@ -35,6 +35,10 @@ export function WikiHomeTemplatePreview() {
     "--wiki-home-content-width": `${wikiHomeTemplateLayout.content.width}px`,
     "--wiki-home-content-height": `${wikiHomeTemplateLayout.content.height}px`,
     "--wiki-home-content-gap": `${wikiHomeTemplateLayout.content.gap}px`,
+    "--wiki-home-summary-banner-width": `${wikiHomeTemplateLayout.summaryBanner.width}px`,
+    "--wiki-home-summary-banner-height": `${wikiHomeTemplateLayout.summaryBanner.height}px`,
+    "--wiki-home-summary-x": `${wikiHomeTemplateLayout.summary.bodyRelativeFrame.x - wikiHomeTemplateLayout.content.bodyRelativeX}px`,
+    "--wiki-home-summary-y": `${wikiHomeTemplateLayout.summary.bodyRelativeFrame.y - wikiHomeTemplateLayout.content.bodyRelativeY}px`,
     "--wiki-home-grid-width": `${wikiHomeTemplateLayout.grid.width}px`,
     "--wiki-home-grid-height": `${wikiHomeTemplateLayout.grid.height}px`,
     "--wiki-home-card-width": `${wikiHomeTemplateLayout.cardGrid.cardWidth}px`,
@@ -52,7 +56,8 @@ export function WikiHomeTemplatePreview() {
 
           <div className="wiki-home-template-body">
             <div className="wiki-home-template-content">
-              <section className="wiki-home-template-summary" aria-label="Wiki home summary">
+              <section className="wiki-home-template-summary-banner" aria-label="Wiki home summary banner">
+                <div className="wiki-home-template-summary">
                 <div className="wiki-home-template-summary__title">
                   <span>游戏名称</span>
                   <span>Wiki攻略</span>
@@ -61,6 +66,7 @@ export function WikiHomeTemplatePreview() {
                   <span>共19个分类</span>
                   <span>·</span>
                   <span>5348项</span>
+                </div>
                 </div>
               </section>
 
@@ -93,7 +99,7 @@ export function WikiHomeTemplatePreview() {
         <p className="preview-kicker">Template self-check</p>
         <h2>WikiHome layout contract</h2>
         <p>
-          Preview reads Home layout values from <code>skill-pack/wiki/templates/wiki.json</code> and checks them against the Figma node <code>167:630</code>.
+          Preview reads Home layout values from <code>skill-pack/wiki/templates/wiki.json</code> and checks them against the Figma node <code>477:3685</code>.
         </p>
         <div className="wiki-home-template-audit__summary">
           {passedChecks}/{checks.length} checks passed

@@ -9,7 +9,7 @@
     "pageNodeId": "167:628",
     "pageName": "Wiki class template components and notes",
     "stateNodes": {
-      "home": "167:630",
+      "home": "477:3685",
       "secondaryList": "304:5972",
       "secondaryLargeCard": "304:13409",
       "secondaryMultiNav": "375:4979",
@@ -211,31 +211,43 @@
       "purpose": "Shows the WikiHome title composition '<game name>' + 'Wiki攻略' and aggregate counts before the category grid.",
       "allowedComponents": [],
       "layout": {
-        "contentFrame": "Body-relative x=32, y=20, w=936, h=568; absolute x=32, y=104",
-        "pageSummary": "Content-relative x=0, y=0, w=190, h=56",
-        "titleRow": "x=0, y=0, w=190, h=28; horizontal text row, gap=4; first text '<game name>' w=80, second text 'Wiki攻略' x=84, w=86",
+        "contentFrame": "Body-relative x=32, y=20, w=936, h=604; absolute x=32, y=88",
+        "summaryBanner": "Content-relative x=0, y=0, w=936, h=100; rounded image placeholder/background supplied by the tool/game config",
+        "pageSummary": "Inside summaryBanner x=20, y=22, w=170, h=56",
+        "titleRow": "x=0, y=0, w=170, h=28; horizontal text row, gap=4; first text '<game name>' w=80, second text 'Wiki攻略' x=84, w=86",
         "metaRow": "x=0, y=36, w=132, h=20; horizontal meta row, gap=4; category count w=73, separator x=77 w=4, item count x=85 w=47"
       },
       "observedHomeLayout": {
-        "sourceNodeId": "303:16791",
-        "parentContentNodeId": "175:5807",
+        "sourceNodeId": "477:4038",
+        "parentContentNodeId": "477:3692",
+        "summaryBanner": {
+          "sourceNodeId": "477:4035",
+          "placeholderImageNodeId": "477:4058",
+          "contentRelativeX": 0,
+          "contentRelativeY": 0,
+          "absoluteX": 32,
+          "absoluteY": 88,
+          "width": 936,
+          "height": 100,
+          "rule": "Use the provided tool/game image for this banner. In preview or missing-data states, use the configured placeholder image only; do not invent a final game image."
+        },
         "bodyRelativeFrame": {
-          "x": 32,
-          "y": 20,
-          "width": 190,
+          "x": 52,
+          "y": 42,
+          "width": 170,
           "height": 56
         },
         "absoluteFrame": {
-          "x": 32,
-          "y": 104,
-          "width": 190,
+          "x": 52,
+          "y": 110,
+          "width": 170,
           "height": 56
         },
         "titleRow": {
-          "sourceNodeId": "175:5806",
+          "sourceNodeId": "477:4039",
           "x": 0,
           "y": 0,
-          "width": 190,
+          "width": 170,
           "height": 28,
           "gap": 4,
           "typography": "Title/H2",
@@ -256,7 +268,7 @@
           ]
         },
         "metaRow": {
-          "sourceNodeId": "303:16794",
+          "sourceNodeId": "477:4042",
           "x": 0,
           "y": 36,
           "width": 132,
@@ -304,7 +316,7 @@
         "Base.Badge"
       ],
       "layout": {
-        "grid": "Content-relative x=0, y=76, w=936, h=492; absolute x=32, y=180; content overflows the 526px Body viewport by 62px",
+        "grid": "Content-relative x=0, y=112, w=936, h=492; absolute x=32, y=200; content overflows the 542px Body viewport by 82px",
         "columns": "4 columns, each card w=225, h=114; card x positions are 0, 237, 474, 711 within each row",
         "columnGap": "12px",
         "rowGap": "12px",
@@ -312,32 +324,32 @@
         "cardContent": "title, short description, icon/avatar cluster previewing up to the first three linked secondary-page item icons/images, count badge showing total category items, trailing arrow"
       },
       "observedHomeLayout": {
-        "sourceNodeId": "175:5745",
-        "bodyNodeId": "175:5810",
-        "contentNodeId": "175:5807",
+        "sourceNodeId": "477:3701",
+        "bodyNodeId": "477:3691",
+        "contentNodeId": "477:3692",
         "body": {
           "x": 0,
-          "y": 84,
+          "y": 68,
           "width": 1000,
-          "height": 526,
+          "height": 542,
           "overflow": "clip"
         },
         "contentFrame": {
           "bodyRelativeX": 32,
           "bodyRelativeY": 20,
           "absoluteX": 32,
-          "absoluteY": 104,
+          "absoluteY": 88,
           "width": 936,
-          "height": 568,
+          "height": 604,
           "layoutMode": "vertical",
-          "gap": 20,
-          "overflowBeyondBody": 62
+          "gap": 12,
+          "overflowBeyondBody": 82
         },
         "gridFrame": {
           "contentRelativeX": 0,
-          "contentRelativeY": 76,
+          "contentRelativeY": 112,
           "absoluteX": 32,
-          "absoluteY": 180,
+          "absoluteY": 200,
           "width": 936,
           "height": 492,
           "layoutMode": "vertical",
@@ -346,7 +358,7 @@
         "rows": [
           {
             "name": "CategoryRow01",
-            "sourceNodeId": "175:5423",
+            "sourceNodeId": "477:3702",
             "x": 0,
             "y": 0,
             "width": 936,
@@ -354,7 +366,7 @@
           },
           {
             "name": "CategoryRow02",
-            "sourceNodeId": "175:5466",
+            "sourceNodeId": "477:3707",
             "x": 0,
             "y": 126,
             "width": 936,
@@ -362,7 +374,7 @@
           },
           {
             "name": "CategoryRow03",
-            "sourceNodeId": "175:5551",
+            "sourceNodeId": "477:3712",
             "x": 0,
             "y": 252,
             "width": 936,
@@ -370,7 +382,7 @@
           },
           {
             "name": "CategoryRow04",
-            "sourceNodeId": "175:5636",
+            "sourceNodeId": "477:3717",
             "x": 0,
             "y": 378,
             "width": 936,
@@ -392,15 +404,15 @@
           ]
         },
         "scrollbar": {
-          "sourceNodeId": "175:5982",
+          "sourceNodeId": "477:3722",
           "absoluteX": 988,
-          "absoluteY": 84,
+          "absoluteY": 68,
           "width": 12,
-          "height": 526,
+          "height": 542,
           "thumbWidth": 4,
           "thumbHeight": 80,
           "thumbX": 4,
-          "thumbY": 119
+          "thumbY": 8
         }
       },
       "pendingDataBoundElements": [
@@ -519,11 +531,14 @@
             "gap": 12
           },
           "image": {
+            "component": "Base.Image",
+            "nestedIn": "Layout.DescribeCard",
             "x": 8,
             "y": 8,
             "width": 90,
             "height": 90,
-            "shape": "rounded-rect from Base.Image unless the source image itself is circular"
+            "shape": "rounded-rect from nested Base.Image unless the source image itself is circular",
+            "bindingRule": "Bind imageSrc and imageRatio to the nested Base.Image/ImageFrame inside Layout.DescribeCard. Do not create a separate raw image layer outside the component."
           },
           "content": {
             "x": 110,
@@ -1636,10 +1651,11 @@
     "Render modal.item-explanation only when the original source page uses a modal overlay to explain a single item or video source material. Place Base.Modal centered over the current page with a #000000 50% opacity overlay. Use variant=detail for Property=Detail node 436:5415: 381px wide, max-height 460px, content-adaptive height, and a lower description area capped at 232px that scrolls internally when the full explanation is longer. Use variant=video for Figma Property=Vedio node 438:3662: 381px wide, 290px high, with a 357 x 238 video area and centered play icon.",
     "When multiple components can represent the same region, choose the component by source information density before applying layout. The phrase same page/list means the currently rendered list only: active secondary tab plus optional active third-level group. Compact text entries may use Game.ShowCard only when every visible card subtitle/body in that current list fits within one visible line, richer inline entries may use compact Layout.DescribeCard, and image-first gallery entries may use the SecondaryPageLargeCard Layout.DescribeCard grid.",
     "For Layout.DescribeCard, bind ShowImage, ShowTitle, ShowDescription, ShowBadge, and ShowAttributes from actual source fields and the chosen presentation. When one is false, the renderer must omit that region and collapse its spacing rather than rendering empty placeholders. If showTitle=false and showBadge=false, omit the whole title row.",
+    "Layout.DescribeCard owns its image/media area through a nested Base.Image component. Bind imageSrc and imageRatio to that nested Base.Image/ImageFrame instance, preserve the observed nested image coordinates, and do not render a separate raw image layer for DescribeCard images.",
     "For every rendered card set that uses imageSrc, choose Base.Image ratio from the source image dimensions or visual type of the current page/list before applying the card layout. Use 1:1 for square icons and near-square art; use 4:5 for vertical portraits, character/card art, posters, and portrait-like assets around width/height 0.8; use 3:2 or 16:9 for weapons, equipment thumbnails, maps, screenshots, landscapes, banners, and other wide assets to avoid square-frame cropping. Do not reuse an imageRatio selected for one second-level tab or sibling secondary page on another tab under the same first-level category.",
     "Use semantic tokens from the Wiki or shared token source; do not hardcode colors when a token exists.",
     "Header navigation and search are shared across home, secondary list, and detail states.",
-    "Home state renders a category grid after the summary block; secondary state renders a list grid plus pagination; detail state renders breadcrumbs plus vertically scrollable detail content.",
+    "Home state follows Figma node 477:3685. It renders a 936 x 100 summary banner image at Content x=0 y=0, places the PageSummary text inside that banner at x=20 y=22, then renders the category grid at Content x=0 y=112. Secondary, detail, and guide pages keep their own existing templates.",
     "Use DetailPageLargeCardExpanded as the default 1000 x 610 detail viewport reference. Use DetailPageAllStates only to understand optional section stacking and overflow content height.",
     "SecondaryPage layout follows Body x=0, y=80, w=1000, h=530 after the 84px Header update; list container absolute x=32, y=144, w=936, h=408; three columns with card w=306.6667, h=96, 8px column gap, and 8px row gap.",
     "If a secondary page has no second-level navigation row, no third-level sidebar/navigation, and no breadcrumbs above the list, place the list region 20px from the Body top. For SecondaryPage use Body-relative y=20 instead of the observed y=64 reserved for pages with an upper reference region.",
@@ -1659,7 +1675,7 @@
     "DetailContent is a special clipped shell and must keep its own chrome: background var(--color-bg-black) / #000306, 1px inside var(--color-stroke-area) / rgba(255,255,255,0.10), radius 8, and clipsContent=true.",
     "DetailContent itself has padding=0 and gap=0. HeroSection uses 16px internal padding and 10px gap; DetailSections and ExpandedSections use 16px internal padding and 12px vertical gaps between sections.",
     "Detail pages may stack multiple Layout.DetailCard modules. For each DetailCard, require a title plus at least one real optional content block from the source section, then render only the internal blocks supported by that source data. The module order should follow the source detail section order, while template spacing, card widths, section gaps, and scroll behavior follow the Figma detail templates.",
-    "Home summary title follows the WikiHome two-segment title row: '<game name>' followed by the literal 'Wiki攻略'.",
+    "Home summary title follows the WikiHome two-segment title row inside the summary banner: '<game name>' followed by the literal 'Wiki攻略'. The summary banner image is supplied by the tool/game config; preview or missing-data states may use the configured placeholder image only.",
     "In home.category-grid, each Game.CategoryCard previews up to the first three items of its linked secondary page through the avatar cluster, prefers icon over image when both exist, shows the total item count for that category in the trailing count badge, and is hidden when that total count is 0.",
     "Nav.TopBar items are global first-level Wiki categories.",
     "Form.SearchBar is global Wiki search across categories and entries.",

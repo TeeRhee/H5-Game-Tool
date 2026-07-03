@@ -20,6 +20,7 @@
     "Breadcrumb labels and target routes must come from datasource or routing context.",
     "Pagination state must come from datasource or renderer state, not from hardcoded sample values.",
     "Home summary title follows the WikiHome two-segment title row: '<game name>' followed by the literal 'Wiki攻略'.",
+    "Home page uses Figma node 477:3685. Bind the 936 x 100 summary banner image from the tool/game config when provided; in preview or missing-data states use the configured placeholder only and do not invent a final game/tool image.",
     "Nav.TopBar items are global first-level Wiki categories.",
     "Form.SearchBar is global Wiki search across categories and entries.",
     "For Game.CategoryCard in home.category-grid, filter out categories whose linked secondary page or category total item count is 0.",
@@ -32,6 +33,7 @@
     "When a secondary page renders no second-level navigation, no third-level navigation/sidebar, and no breadcrumbs above its list, place the list region 20px from the Body top. Do not inherit the lower list y offset from templates that reserve space for breadcrumbs or secondary navigation.",
     "In secondary.card-list, choose Game.ShowCard only when every visible entry's subtitle/body text in the current rendered page/list fits within one visible line and the card can fully represent the original source entry; choose compact Layout.DescribeCard when the current page/list needs richer inline description, image, badge, or meta fields; choose the SecondaryPageLargeCard Layout.DescribeCard grid only when the current source page is image-first or gallery-like.",
     "If any source card in the current secondary, multi-level, or related rendered page/list needs more than one visible line of secondary/rich text, use Layout.DescribeCard with size=SM for all related cards in that current page/list instead of mixing Game.ShowCard with DescribeCard. Bind the subtitle/body text to the SM description node as a two-line region; expose the full string through Base.ToolTip only when the rendered text is actually truncated or hidden. Do not carry this decision across sibling second-level tabs or the whole first-level category.",
+    "For Layout.DescribeCard image data, bind imageSrc and imageRatio to the nested Base.Image/ImageFrame component inside the DescribeCard. Do not create or map a separate raw image element outside the nested component.",
     "For Layout.DescribeCard, derive showImage, showTitle, showDescription, showBadge, and showAttributes from the actual source fields and presentation requirement. Set a show flag false when the source lacks that field or the selected template intentionally omits that region; false means the region is not rendered and does not keep placeholder spacing.",
     "Using SecondaryPageLargeCard means using its large-card placement rules for chosen Layout.DescribeCard entries, not forcing all source pages into large image cards. For card-like large grids without third-level navigation, use repeat(4, 210px) by default and downgrade to repeat(3, 210px) only when the available width cannot fit four columns plus gaps. When the chosen large-card entries render only one row, vertically center that row inside the large-card list container after choosing the column template; item count or single-row state must not change the column count by itself.",
     "Use secondary.multi-level-tabs only when the original source page exposes second-level branches under the active first-level Nav.TopBar category.",
@@ -52,6 +54,12 @@
     "When mapping detail sections to Layout.DetailCard, treat each source section as one possible module. Each rendered module must bind title and at least one real optional block; choose description, features, infoItems, statusBadges, tableRows/table, aside, media, or child content from the source section shape. Preserve source section order for module stacking, but use the template detail layout for spacing, width, gaps, and scroll behavior."
   ],
   "fieldMappings": [
+    {
+      "source": "TODO_FROM_DATASOURCE_OR_TOOL_CONFIG > home summary banner image for the current tool/game; preview fallback may use placeholder",
+      "target": "regions[home.summary].observedHomeLayout.summaryBanner.imageSrc",
+      "required": false,
+      "rule": "The user supplies different tool/game images. Use the provided image when available; otherwise keep the configured placeholder for preview only."
+    },
     {
       "source": "TODO_FROM_DATASOURCE > source modal state for selected item explanation or video media, including modal type, title, optional subtitle, full description, optional icon/image, optional videoSrc/posterSrc/videoTitle, and open/close renderer state",
       "target": "regions[modal.item-explanation].components[Base.Modal].props",
