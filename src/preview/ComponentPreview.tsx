@@ -7,6 +7,7 @@ import {
   type PointerEvent,
 } from "react";
 import { ComponentGallery } from "./ComponentGallery";
+import { WikiDocumentTemplatePreview } from "./WikiDocumentTemplatePreview";
 import { WikiHomeTemplatePreview } from "./WikiHomeTemplatePreview";
 import {
   Button,
@@ -723,7 +724,7 @@ function MapDemoPreview() {
 }
 
 export function ComponentPreview() {
-  const [activeView, setActiveView] = useState<"components" | "wiki-home" | "map">("components");
+  const [activeView, setActiveView] = useState<"components" | "wiki-home" | "wiki-document" | "map">("components");
 
   return (
     <main className="preview-shell preview-shell--workbench">
@@ -757,6 +758,15 @@ export function ComponentPreview() {
           <button
             type="button"
             role="tab"
+            aria-selected={activeView === "wiki-document"}
+            className={activeView === "wiki-document" ? "preview-view-switch__item preview-view-switch__item--active" : "preview-view-switch__item"}
+            onClick={() => setActiveView("wiki-document")}
+          >
+            Event Document
+          </button>
+          <button
+            type="button"
+            role="tab"
             aria-selected={activeView === "map"}
             className={activeView === "map" ? "preview-view-switch__item preview-view-switch__item--active" : "preview-view-switch__item"}
             onClick={() => setActiveView("map")}
@@ -766,7 +776,7 @@ export function ComponentPreview() {
         </div>
       </section>
 
-      {activeView === "components" ? <ComponentGallery /> : activeView === "wiki-home" ? <WikiHomeTemplatePreview /> : <MapDemoPreview />}
+      {activeView === "components" ? <ComponentGallery /> : activeView === "wiki-home" ? <WikiHomeTemplatePreview /> : activeView === "wiki-document" ? <WikiDocumentTemplatePreview /> : <MapDemoPreview />}
     </main>
   );
 }

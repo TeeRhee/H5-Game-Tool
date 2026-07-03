@@ -684,14 +684,14 @@
         "wiki:guide.document-detail"
       ],
       "observedStructure": {
-        "rule": "Compact command/link row used in the document-guide related information sidebar. Current guide sidebar item is w=260, h=34, padding follows the Figma component, radius 4, background var(--color-alpha-white-alpha-4), title text one line, optional badge, and right arrow. Items stack with 8px vertical gap in the guide related-info list. Use only for related-info link rows, not for left article anchor navigation."
+        "rule": "Compact command/link row used in the document-guide related information sidebar. Current guide sidebar item is w=260, h=34, padding follows the Figma component, radius 4, background var(--color-alpha-white-alpha-4), title text one line, optional badge, and right arrow. The text/content region uses fill behavior inside the row: when the component width grows, the content region expands and the trailing badge plus right arrow stay pinned to the right edge instead of floating near the label. Items stack with 8px vertical gap in the guide related-info list. Use only for related-info link rows, not for left article anchor navigation."
       },
       "props": {
         "children": {
           "type": "string",
           "required": true,
           "source": "TODO_FROM_DATASOURCE",
-          "rule": "Visible related-info item label."
+          "rule": "Visible related-info item label. It stays single-line, ellipsizes inside the fill content region, and must not push the trailing badge or right arrow away from the right edge."
         },
         "icon": {
           "type": "component|node",
