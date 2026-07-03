@@ -176,7 +176,7 @@ Article content:
 Side modules:
 
 - Left `Nav.Navigate` is for real article anchors only. It uses width `96`, vertical padding `8`, right padding `16`, and a right divider. Do not use it for related links.
-- Right `RelatedInfoSidebar` has title frame `h=36` with text inset `8`; list starts at `y=44`, `w=260, h=160`, item `h=34`, list gap `8`.
+- Right `RelatedInfoSidebar` has title frame `h=36` with text inset `8`; the title frame must draw a `1px` bottom divider at `y=36`, `w=260`, using `var(--color-stroke-area)` / `rgba(255,255,255,0.10)`. The related list starts at `y=44`, `w=260, h=160`, item `h=34`, list gap `8`.
 - Related info list items use `Nav.CommandMenuItem`, `w=260, h=34`, optional badge, and right arrow. They must be bound to real related-info links.
 
 ### Observed Detail Layout
