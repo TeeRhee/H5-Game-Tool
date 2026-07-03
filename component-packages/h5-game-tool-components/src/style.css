@@ -1907,6 +1907,17 @@ button:disabled {
   background: var(--color-bg-weak);
 }
 
+.gt-tool-tip__bubble--portal {
+  position: fixed;
+  z-index: 1001;
+}
+
+.gt-tool-tip__bubble--visible {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: var(--gt-tool-tip-show-delay, 120ms);
+}
+
 .gt-tool-tip--enabled:hover .gt-tool-tip__bubble,
 .gt-tool-tip--enabled:focus-within .gt-tool-tip__bubble,
 .gt-wiki-show-card:focus-visible .gt-tool-tip--enabled .gt-tool-tip__bubble {
@@ -1982,14 +1993,20 @@ button:disabled {
 
 .gt-tool-tip--TopLeft .gt-tool-tip__bubble::before,
 .gt-tool-tip--TopCenter .gt-tool-tip__bubble::before,
-.gt-tool-tip--TopRight .gt-tool-tip__bubble::before {
+.gt-tool-tip--TopRight .gt-tool-tip__bubble::before,
+.gt-tool-tip__bubble--TopLeft::before,
+.gt-tool-tip__bubble--TopCenter::before,
+.gt-tool-tip__bubble--TopRight::before {
   top: -6px;
   clip-path: polygon(50% 0, 0 100%, 100% 100%);
 }
 
 .gt-tool-tip--BottomLeft .gt-tool-tip__bubble::before,
 .gt-tool-tip--BottomCenter .gt-tool-tip__bubble::before,
-.gt-tool-tip--BottomRight .gt-tool-tip__bubble::before {
+.gt-tool-tip--BottomRight .gt-tool-tip__bubble::before,
+.gt-tool-tip__bubble--BottomLeft::before,
+.gt-tool-tip__bubble--BottomCenter::before,
+.gt-tool-tip__bubble--BottomRight::before {
   bottom: -6px;
   clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
@@ -1999,14 +2016,30 @@ button:disabled {
   left: 12px;
 }
 
+.gt-tool-tip__bubble--TopLeft::before,
+.gt-tool-tip__bubble--BottomLeft::before {
+  left: 12px;
+}
+
 .gt-tool-tip--TopCenter .gt-tool-tip__bubble::before,
 .gt-tool-tip--BottomCenter .gt-tool-tip__bubble::before {
   left: 50%;
   transform: translateX(-50%);
 }
 
+.gt-tool-tip__bubble--TopCenter::before,
+.gt-tool-tip__bubble--BottomCenter::before {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .gt-tool-tip--TopRight .gt-tool-tip__bubble::before,
 .gt-tool-tip--BottomRight .gt-tool-tip__bubble::before {
+  right: 12px;
+}
+
+.gt-tool-tip__bubble--TopRight::before,
+.gt-tool-tip__bubble--BottomRight::before {
   right: 12px;
 }
 
@@ -2028,6 +2061,13 @@ button:disabled {
   clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 
+.gt-tool-tip__bubble--Left::before {
+  top: 50%;
+  left: -9px;
+  transform: translateY(-50%) rotate(90deg);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
 .gt-tool-tip--Right .gt-tool-tip__bubble {
   top: 50%;
   right: calc(100% + 6px);
@@ -2040,6 +2080,13 @@ button:disabled {
 }
 
 .gt-tool-tip--Right .gt-tool-tip__bubble::before {
+  top: 50%;
+  right: -9px;
+  transform: translateY(-50%) rotate(-90deg);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.gt-tool-tip__bubble--Right::before {
   top: 50%;
   right: -9px;
   transform: translateY(-50%) rotate(-90deg);

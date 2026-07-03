@@ -113,11 +113,58 @@ function validateContracts(errors) {
   }
 }
 
+function validateTooltipContracts(errors) {
+  const components = readJson("components.json");
+  const wikiTemplate = readJson("wiki/templates/wiki.json");
+  const wikiMapping = readJson("wiki/mapping/wiki.json");
+  const tooltip = (components.components ?? []).find((component) => component.id === "Base.ToolTip");
+
+  assert(Boolean(tooltip), "Base.ToolTip component definition is missing", errors);
+  assert(
+    tooltip?.observedStructure?.portalRule?.includes("page/body-level overlay or portal") &&
+      tooltip?.observedStructure?.portalRule?.includes("never cropped by small cards or list rows") &&
+      tooltip?.observedStructure?.portalRule?.includes("overflow:visible"),
+    "Base.ToolTip portalRule must forbid container-local tooltip rendering and require a page/body-level portal overlay",
+    errors,
+  );
+  assert(
+    tooltip?.props?.placement?.default === "auto" &&
+      tooltip?.props?.placement?.rule?.includes("best fits the current viewport") &&
+      tooltip?.props?.placement?.rule?.includes("portal/overlay"),
+    "Base.ToolTip placement contract must keep auto viewport-aware placement through the portal overlay",
+    errors,
+  );
+  assert(
+    tooltip?.props?.showDelayMs?.default === 120,
+    "Base.ToolTip showDelayMs default must stay 120ms",
+    errors,
+  );
+  assert(
+    (wikiTemplate.requiredRendererBehavior ?? []).some((rule) =>
+      rule.includes("Base.ToolTip") &&
+      rule.includes("page/body-level portal overlay") &&
+      rule.includes("small hover containers"),
+    ),
+    "Wiki template renderer rules must require Base.ToolTip to render through a page/body-level portal overlay",
+    errors,
+  );
+  assert(
+    (wikiMapping.rules ?? []).some((rule) =>
+      rule.includes("Base.ToolTip") &&
+      rule.includes("page/body-level portal overlay") &&
+      rule.includes("overflow:hidden, clip, or scroll containers"),
+    ),
+    "Wiki mapping rules must require Base.ToolTip portal rendering that escapes clipped containers",
+    errors,
+  );
+}
+
 function main() {
   const errors = [];
 
   validateToolTypes(errors);
   validateContracts(errors);
+  validateTooltipContracts(errors);
 
   if (errors.length) {
     for (const error of errors) console.error(`ERROR ${error}`);
@@ -129,7 +176,7 @@ function main() {
       {
         skillDir: path.relative(repoRoot, skillDir),
         status: "valid",
-        checks: ["tool-type references", "template component references", "mapping references", "JSON without BOM"],
+        checks: ["tool-type references", "template component references", "mapping references", "tooltip portal contracts", "JSON without BOM"],
       },
       null,
       2,
