@@ -1,6 +1,7 @@
-import type { HTMLAttributes, ReactNode } from "react";
+import type { CSSProperties, HTMLAttributes, ReactNode } from "react";
 import { Badge } from "./Badge";
 import { ShowCard } from "./ShowCard";
+import { TableHeaderCell, TableRowCell } from "./TableCell";
 import { cx } from "./wikiUtils";
 
 type DetailCardBadgeTone = "info" | "error" | "neutral" | "warning";
@@ -22,12 +23,13 @@ export interface DetailCardStatusBadge {
   tone?: DetailCardBadgeTone;
 }
 
-export interface DetailCardTableRow {
-  level: string;
-  attack: string;
-  price: string;
-  material: string;
+export interface DetailCardTableColumn {
+  key: string;
+  label: ReactNode;
+  width?: string;
 }
+
+export type DetailCardTableRow = Record<string, ReactNode>;
 
 export interface DetailCardProps extends HTMLAttributes<HTMLElement> {
   title?: string;
@@ -36,6 +38,7 @@ export interface DetailCardProps extends HTMLAttributes<HTMLElement> {
   features?: DetailCardFeature[];
   infoItems?: DetailCardInfoItem[];
   statusBadges?: DetailCardStatusBadge[];
+  tableColumns?: DetailCardTableColumn[];
   tableRows?: DetailCardTableRow[];
   table?: Array<{ label: string; value: string; icon?: ReactNode }>;
   aside?: ReactNode;
@@ -60,6 +63,13 @@ const defaultStatusBadges: DetailCardStatusBadge[] = [
   { label: "辅助标签", tone: "warning" },
 ];
 
+const defaultTableColumns: DetailCardTableColumn[] = [
+  { key: "level", label: "等级", width: "80px" },
+  { key: "attack", label: "攻击", width: "80px" },
+  { key: "price", label: "价格", width: "100px" },
+  { key: "material", label: "材料", width: "minmax(0, 1fr)" },
+];
+
 const defaultTableRows: DetailCardTableRow[] = [
   { level: "0", attack: "12", price: "2,500", material: "表格内容" },
   { level: "1", attack: "123", price: "2,500", material: "表格内容" },
@@ -74,6 +84,7 @@ export function DetailCard({
   features = defaultFeatures,
   infoItems = defaultInfoItems,
   statusBadges,
+  tableColumns,
   tableRows,
   table = [],
   className = "",
@@ -84,16 +95,25 @@ export function DetailCard({
     statusBadges ??
     (badges.length > 0 ? badges.map((badge): DetailCardStatusBadge => ({ label: badge, tone: "neutral" })) : defaultStatusBadges);
 
-  const resolvedTableRows =
+  const resolvedTableRows: DetailCardTableRow[] =
     tableRows ??
     (table.length > 0
-      ? table.map((row, index) => ({
-          level: String(index),
-          attack: row.label,
-          price: row.value,
-          material: "表格内容",
+      ? table.map((row): DetailCardTableRow => ({
+          label: row.label,
+          value: row.value,
         }))
       : defaultTableRows);
+  const resolvedTableColumns: DetailCardTableColumn[] =
+    tableColumns ??
+    (table.length > 0
+      ? [
+          { key: "label", label: "属性", width: "minmax(0, 1fr)" },
+          { key: "value", label: "数值", width: "minmax(0, 1fr)" },
+        ]
+      : defaultTableColumns);
+  const tableStyle = {
+    "--gt-wiki-table-columns": resolvedTableColumns.map((column) => column.width ?? "minmax(0, 1fr)").join(" "),
+  } as CSSProperties;
 
   return (
     <article className={cx("gt-wiki-detail-card", className)} {...props}>
@@ -140,20 +160,22 @@ export function DetailCard({
         </div>
       ) : null}
 
-      {resolvedTableRows.length > 0 ? (
-        <div className="gt-wiki-detail-card__table" role="table" aria-label="详情数据">
+      {resolvedTableColumns.length > 0 && resolvedTableRows.length > 0 ? (
+        <div className="gt-wiki-detail-card__table" role="table" aria-label="详情数据" style={tableStyle}>
           <div className="gt-wiki-detail-card__table-row gt-wiki-detail-card__table-row--header" role="row">
-            <div role="columnheader">等级</div>
-            <div role="columnheader">攻击</div>
-            <div role="columnheader">价格</div>
-            <div role="columnheader">材料</div>
+            {resolvedTableColumns.map((column) => (
+              <TableHeaderCell key={column.key}>
+                {column.label}
+              </TableHeaderCell>
+            ))}
           </div>
-          {resolvedTableRows.map((row) => (
-            <div key={`${row.level}-${row.attack}-${row.price}-${row.material}`} className="gt-wiki-detail-card__table-row" role="row">
-              <div role="cell">{row.level}</div>
-              <div role="cell">{row.attack}</div>
-              <div role="cell">{row.price}</div>
-              <div role="cell">{row.material}</div>
+          {resolvedTableRows.map((row, rowIndex) => (
+            <div key={`table-row-${rowIndex}`} className="gt-wiki-detail-card__table-row" role="row">
+              {resolvedTableColumns.map((column) => (
+                <TableRowCell key={column.key} state={row[column.key] == null || row[column.key] === "" ? "none" : "default"}>
+                  {row[column.key]}
+                </TableRowCell>
+              ))}
             </div>
           ))}
         </div>

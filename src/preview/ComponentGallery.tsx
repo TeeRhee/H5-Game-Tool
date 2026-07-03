@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useMemo, useState, type CSSProperties, type ReactNode } from "react";
 import tokensCssFallback from "../../design-system-pack/tokens.css?raw";
 import {
   Button,
@@ -502,13 +502,27 @@ export function ComponentGallery() {
           </ComponentCard>
 
           <ComponentCard title="Data / TableHeaderCell / Default" description="详情页表格表头和单元格。" wide>
-            <div className="gt-wiki-table">
-              <TableHeaderCell>属性</TableHeaderCell>
-              <TableHeaderCell>数值</TableHeaderCell>
-              <TableRowCell icon={<RemixIcon name="sword-line" size={16} />}>攻击</TableRowCell>
-              <TableRowCell>128</TableRowCell>
-              <TableRowCell icon={<RemixIcon name="shield-line" size={16} />}>防御</TableRowCell>
-              <TableRowCell>86</TableRowCell>
+            <div className="gt-wiki-table" style={{ "--gt-wiki-table-columns": "80px 80px 100px minmax(0, 1fr)" } as CSSProperties}>
+              <TableHeaderCell>等级</TableHeaderCell>
+              <TableHeaderCell>攻击</TableHeaderCell>
+              <TableHeaderCell>价格</TableHeaderCell>
+              <TableHeaderCell>材料</TableHeaderCell>
+              <TableRowCell>0</TableRowCell>
+              <TableRowCell>12</TableRowCell>
+              <TableRowCell>2,500</TableRowCell>
+              <TableRowCell>表格内容</TableRowCell>
+              <TableRowCell>1</TableRowCell>
+              <TableRowCell>123</TableRowCell>
+              <TableRowCell>2,500</TableRowCell>
+              <TableRowCell>表格内容</TableRowCell>
+              <TableRowCell>2</TableRowCell>
+              <TableRowCell>1234</TableRowCell>
+              <TableRowCell>2,500</TableRowCell>
+              <TableRowCell>表格内容</TableRowCell>
+              <TableRowCell>3</TableRowCell>
+              <TableRowCell>1233</TableRowCell>
+              <TableRowCell>2,500</TableRowCell>
+              <TableRowCell>表格内容</TableRowCell>
             </div>
           </ComponentCard>
 

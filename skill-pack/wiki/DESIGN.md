@@ -251,7 +251,7 @@ Current Wiki template components include:
 
 `Layout.DetailCard` title rows include a fixed internal decoration from Figma: a `var(--color-primary-base)` marker before the title text, visual size 1.5 x 14, inside a 20px-high horizontal title row with 6px gap. Treat it as component chrome; data mapping only supplies the title string.
 
-Detail pages can be assembled from multiple `Layout.DetailCard` modules. Each module must contain a title plus at least one real optional content block. The optional internal blocks are data-driven: render description, feature cards, key-value info, status badges, table rows, media/aside, or approved child content only when the source section contains that shape. Preserve the source detail section order when stacking modules, but keep the page layout, card width, section gaps, vertical spacing, and scroll behavior aligned to the Figma detail templates.
+Detail pages can be assembled from multiple `Layout.DetailCard` modules. Each module must contain a title plus at least one real optional content block. The optional internal blocks are data-driven: render description, feature cards, key-value info, status badges, table columns and rows, media/aside, or approved child content only when the source section contains that shape. Preserve the source detail section order when stacking modules, but keep the page layout, card width, section gaps, vertical spacing, and scroll behavior aligned to the Figma detail templates.
 
 Text-only blocks such as `home.summary` may remain region data until a confirmed shared component exists. Do not register a new component only to fill one text block unless it is confirmed in design and code.
 
@@ -275,7 +275,7 @@ Missing optional fields should collapse the related UI element instead of showin
 
 Pagination state may come from datasource or renderer state. It must not come from hardcoded sample values.
 
-Detail tables must use structured columns and rows when that data exists. Do not encode table data as plain rich text when table structure is available.
+Detail tables must use structured columns and rows when that data exists. `Data.TableHeaderCell` and `Data.TableRowCell` are reusable cells, not a fixed table layout: repeat one header cell per source column and one row cell per source row/column cell. The renderer sets the table grid columns from the source schema; do not hardcode a fixed number of rows or columns, and do not encode table data as plain rich text when table structure is available.
 
 ## Mode And Theme Rules
 

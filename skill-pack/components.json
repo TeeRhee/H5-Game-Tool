@@ -1169,8 +1169,8 @@
         "wiki:detail.extended-section"
       ],
       "observedStructure": {
-        "rule": "Use for structured detail content when source sections match one of the supported structures: title/description, features, infoItems, statusBadges, structured tableRows/table, or an approved media/aside block. Do not force unstructured content into this component when the source shape does not match.",
-        "compositionRule": "A detail page may be assembled from multiple Layout.DetailCard modules. Each module represents one source detail section, and the renderer chooses which optional internal blocks to render from that section's actual data. The only required content for each module is title plus at least one optional content block from description, features, infoItems, statusBadges, tableRows/table, aside, media, or approved child content.",
+        "rule": "Use for structured detail content when source sections match one of the supported structures: title/description, features, infoItems, statusBadges, structured tableColumns/tableRows/table, or an approved media/aside block. Do not force unstructured content into this component when the source shape does not match.",
+        "compositionRule": "A detail page may be assembled from multiple Layout.DetailCard modules. Each module represents one source detail section, and the renderer chooses which optional internal blocks to render from that section's actual data. The only required content for each module is title plus at least one optional content block from description, features, infoItems, statusBadges, tableColumns/tableRows/table, aside, media, or approved child content.",
         "orderingRule": "Within a Layout.DetailCard module, keep title first, then render only the optional blocks that exist in the source data, preserving the source section order where possible. Do not force every DetailCard to include all internal parts just because the Figma component demonstrates them.",
         "titleRow": "Title renders inside an internal H1 row: horizontal auto layout, h=20, gap=6, vertically centered.",
         "titleDecoration": "Always render the internal title decoration before the title text. Figma node Rectangle 1 is a primary-color vertical cut marker, visual size 1.5 x 14, using var(--color-primary-base). This decoration is component chrome and must not be mapped from datasource."
@@ -1206,10 +1206,17 @@
           "required": false,
           "source": "TODO_FROM_DATASOURCE"
         },
+        "tableColumns": {
+          "type": "array",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Column definitions come from the source table schema. Use these columns to set the table grid template; do not hardcode a fixed number of columns."
+        },
         "tableRows": {
           "type": "array",
           "required": false,
-          "source": "TODO_FROM_DATASOURCE"
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Rows come from the source table data and are rendered by repeating Data.TableRowCell across each source row and column."
         },
         "table": {
           "type": "array",
@@ -1226,10 +1233,20 @@
     {
       "id": "Data.TableHeaderCell",
       "figmaName": "Data / TableHeaderCell / Default",
+      "sourceNodeId": "183:5882",
       "observedUse": [
         "wiki:detail.detail-card-section",
         "wiki:detail.extended-section"
       ],
+      "observedStructure": {
+        "width": 256,
+        "height": 34,
+        "padding": "8px 12px",
+        "gap": 10,
+        "background": "rgba(255,255,255,0.04)",
+        "text": "12px / 18px, var(--color-text-soft)",
+        "rule": "This is a reusable table header cell. It does not define the whole table, row count, or column count. Repeat one header cell per source column."
+      },
       "props": {
         "align": {
           "type": "enum",
@@ -1246,6 +1263,7 @@
     {
       "id": "Data.TableRowCell",
       "figmaName": "Data / TableRowCell / Default",
+      "sourceNodeId": "183:6664",
       "observedUse": [
         "wiki:detail.detail-card-section",
         "wiki:detail.extended-section"
@@ -1261,10 +1279,23 @@
           "required": false,
           "values": [
             "default",
-            "hover"
+            "none"
           ],
           "default": "default"
         }
+      },
+      "observedStructure": {
+        "variants": {
+          "default": "183:5504",
+          "none": "183:6663"
+        },
+        "width": 256,
+        "height": 48,
+        "padding": "12px",
+        "gap": 12,
+        "stroke": "1px rgba(255,255,255,0.04)",
+        "text": "12px / 18px, var(--color-text-soft)",
+        "rule": "This is a reusable table body cell. It does not define the whole table, row count, or column count. Repeat one row cell per source row and column. Use state=none only for intentionally empty or unavailable table cells."
       }
     },
     {
