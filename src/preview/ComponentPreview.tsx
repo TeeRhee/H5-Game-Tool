@@ -607,6 +607,7 @@ function MapDemoPreview() {
                 scrollTop={filterScroll.scrollTop}
                 scrollHeight={filterScroll.scrollHeight}
                 viewportHeight={filterScroll.viewportHeight}
+                trackHeight={filterScroll.viewportHeight}
                 visible={filterScroll.scrollHeight > filterScroll.viewportHeight}
               />
             </div>

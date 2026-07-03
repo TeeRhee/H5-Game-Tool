@@ -47,9 +47,9 @@
       ],
       "observedStructure": {
         "templateInstance": "x=252, y=102, w=12, h=586 inside Panel Content",
-        "track": "12px wide, background follows panel background #2C3134 in the map template",
-        "thumb": "4px wide, 80px high, x=4, radius 999, fill #FFFFFF @ 12%",
-        "rule": "Use as the visual scrollbar for the left filter list. It reflects the list scroll position; it does not define datasource fields."
+        "track": "12px wide, transparent track, no panel-background block. Use 8px top/bottom track padding unless the template explicitly overrides it.",
+        "thumb": "4px wide, 80px high by default, x=4, radius 999, fill #FFFFFF @ 12%. Thumb y = trackPadding + scrollRatio * (trackHeight - thumbHeight - trackPadding * 2).",
+        "rule": "Use as a visual scrollbar that reflects renderer scroll state. It does not define datasource fields. Track height comes from the rendered scrollbar instance or template position, not automatically from the content viewport unless they are intentionally the same."
       },
       "props": {
         "scrollTop": {
@@ -66,6 +66,18 @@
           "type": "number",
           "required": false,
           "source": "renderer state"
+        },
+        "trackHeight": {
+          "type": "number",
+          "required": false,
+          "source": "template/component instance",
+          "rule": "Visual scrollbar track height. Use the actual Layout.Scroll instance height from the template. If omitted, the renderer may fall back to viewportHeight only when the scrollbar track exactly matches the viewport."
+        },
+        "trackPadding": {
+          "type": "number",
+          "required": false,
+          "default": 8,
+          "rule": "Top and bottom inset for the thumb movement area."
         },
         "visible": {
           "type": "boolean",
@@ -857,10 +869,10 @@
         "ShowAttributes=true|false"
       ],
       "observedStructure": {
-        "rule": "Wiki list/detail describe card. Use it when the source entry has richer title, description, image, badge, meta/attribute content, or secondary rich text that needs more than one visible line. Optional regions are controlled by ShowImage, ShowTitle, ShowDescription, ShowBadge, and ShowAttributes; when a region is disabled, do not render it and do not reserve its spacing. For page/list card consistency, if any card in the same rendered page/list needs more than one visible subtitle/body line, use Layout.DescribeCard with size=sm for all related cards on that current page/list instead of Game.ShowCard. Here same rendered page/list means the active secondary tab plus optional active third-level group; do not inherit this decision across sibling second-level tabs or the whole active first-level category. This is separate from the map popup detail card.",
-        "smDefaultNode": "Figma node 177:1104, Size=SM State=Default: root w=328 h=106, horizontal auto-layout, padding 8, gap 12, 1px white 10% stroke, radius 6. Base.Image instance is x=8 y=8 w=90 h=90 opacity 80%. Right body is x=110 y=8 w=210 h=90 vertical, gap 6. Title/description group is w=210 h=62, gap 4; title row is h=22; subtitle text is w=210 h=36 with Body/SM 12px/18px and two visible lines. Attribute row is y=68 w=210 h=22, padding 4px 6px, gap 2.",
+        "rule": "Wiki list/detail describe card. Use it when the source entry has richer title, description, image, badge, meta/attribute content, or secondary rich text that needs more than one visible line. Card height and description height adapt to rendered content by default; do not hard-code the component height unless a specific template explicitly requires a fixed frame. Optional regions are controlled by ShowImage, ShowTitle, ShowDescription, ShowBadge, and ShowAttributes; when a region is disabled, do not render it and do not reserve its spacing. For page/list card consistency, if any card in the same rendered page/list needs more than one visible subtitle/body line, use Layout.DescribeCard with size=sm for all related cards on that current page/list instead of Game.ShowCard. Here same rendered page/list means the active secondary tab plus optional active third-level group; do not inherit this decision across sibling second-level tabs or the whole active first-level category. This is separate from the map popup detail card.",
+        "smDefaultNode": "Figma node 177:1104, Size=SM State=Default: observed root is w=328 h=106 as the compact example, but implementation height is content-adaptive. Horizontal auto-layout, padding 8, gap 12, 1px white 10% stroke, radius 6. Base.Image instance is x=8 y=8 w=90 h=90 opacity 80%. Right body starts at x=110 y=8 w=210 vertical, gap 6. Title/description group uses gap 4; title row is h=22; subtitle text uses Body/SM 12px/18px and wraps to the source content instead of forcing a fixed 36px region. Attribute row uses padding 4px 6px, gap 2.",
         "nestedImageComponent": "The image/media region is a nested Base.Image component, not a DescribeCard-owned raw image layer. Render it through ImageFrame/Base.Image and pass imageSrc/imageRatio to that nested component. When showImage=false, remove the nested Base.Image instance and collapse its spacing.",
-        "smDescriptionRule": "For size=sm, render description/subtitle as its own text node under the title row, not as a one-line ShowCard subtitle. It occupies a two-line 36px-high region using 12px text with 18px line-height. Clamp visible text to two lines; preserve the full string and expose Base.ToolTip only when the subtitle text is actually truncated or hidden.",
+        "smDescriptionRule": "For size=sm, render description/subtitle as its own text node under the title row, not as a one-line ShowCard subtitle. The description region height adapts to the rendered source text using 12px text with 18px line-height. Do not clamp by default; use Base.ToolTip only if a specific template or host container intentionally truncates or hides the text.",
         "lgNoAttributesRule": "For size=lg with showAttributes=false, the card height must adapt to rendered content instead of keeping the full LG fixed height reserved for the attributes row.",
         "lgNoDescriptionRule": "For size=lg when description/subtitle is absent, render the image-first structure as image plus title and any explicitly bound badge/meta only. Do not render an empty subtitle row or reserve subtitle spacing, and let the card height adapt to image, title, and padding.",
         "hoverRule": "Render hover state only when the card can click through, open a detail/modal, expand, play, or otherwise trigger new information. If it is display-only, do not show hover styling."
@@ -1395,11 +1407,12 @@
       "observedStructure": {
         "rule": "Centered modal for item explanation content only. Use this component when the original source data/page represents the selected item explanation as a modal, not as a normal detail page, tooltip, card expansion, or map popup.",
         "overlay": "Place over the current page with a #000000 overlay at 50% opacity. The page underneath remains visible only through the dim layer.",
-        "dialog": "Base / Modal / Default component set: Property=Detail node 436:5415 is 381 x 460; Property=Vedio node 438:3662 is 381 x 290. Center the panel above the overlay, using the selected variant height.",
+        "dialog": "Base / Modal / Default component set: Property=Detail node 436:5415 is 381 x 484; Property=Vedio node 438:3662 is 381 x 290. Center the panel above the overlay, using the selected variant height.",
+        "chrome": "Panel background #11161B, radius 12, no outer stroke. Close button is x=341 y=12, 28 x 28, radius 6, fill #FFFFFF @ 12%, icon #7E8994.",
         "close": "Close icon button at the top-right of the panel. It closes the modal and returns to the underlying page state.",
-        "detailVariant": "Property=Detail: optional 100x100 centered image, centered title, optional subtitle/brief summary, and lower 357 x 232 description box. Omit unavailable optional fields and collapse their spacing.",
+        "detailVariant": "Property=Detail: optional 100x100 centered image, centered title 16px/24px bold #F5F7FA, optional subtitle 12px/18px #AEB6BE, and lower 357 x 256 description box. Omit unavailable optional fields and collapse their spacing.",
         "videoVariant": "Property=Vedio in Figma, exposed as variant=video in code: panel 381 x 290 with a 357 x 238 video area at x=12, y=40 and a centered play icon. Use for video source material only.",
-        "description": "Detail variant lower description box is the max-visible text area. It grows with content until its max height, then only this description area scrolls vertically; the panel height itself remains capped."
+        "description": "Detail variant lower description box is the max-visible text area: padding 8, 1px #FFFFFF @ 10% stroke, radius 8, text 14px/20px #AEB6BE. It grows with content until its max height, then only this description area scrolls vertically with the Layout.Scroll visual style: 12px track, 4px thumb, #FFFFFF @ 12%."
       },
       "props": {
         "open": {
@@ -1482,13 +1495,13 @@
           "type": "number|string",
           "required": false,
           "default": "variant-dependent",
-          "rule": "Defaults to 460 for variant=detail and 290 for variant=video. Height remains content-adaptive below the active variant cap when applicable."
+          "rule": "Defaults to 484 for variant=detail and 290 for variant=video. Height remains content-adaptive below the active variant cap when applicable."
         },
         "descriptionMaxHeight": {
           "type": "number|string",
           "required": false,
-          "default": 232,
-          "rule": "Maximum height of the lower explanation area. When text exceeds this area, show the internal vertical scrollbar."
+          "default": 256,
+          "rule": "Maximum height of the lower explanation area. When text exceeds this area, show the internal vertical scrollbar using the Layout.Scroll visual style."
         },
         "mode": {
           "type": "enum",

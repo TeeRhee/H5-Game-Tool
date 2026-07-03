@@ -51,7 +51,7 @@ export function Modal({
   closeLabel = "Close modal",
   ariaLabel,
   maxHeight,
-  descriptionMaxHeight = 232,
+  descriptionMaxHeight = 256,
   mode = "fixed",
   showOverlay = true,
   className = "",
@@ -59,7 +59,7 @@ export function Modal({
   ...props
 }: ModalProps) {
   const titleId = useId();
-  const computedMaxHeight = maxHeight ?? (variant === "video" ? 290 : 460);
+  const computedMaxHeight = maxHeight ?? (variant === "video" ? 290 : 484);
   const labelledBy = title ? titleId : undefined;
   const fallbackAriaLabel = ariaLabel ?? videoTitle ?? title ?? "Modal";
 

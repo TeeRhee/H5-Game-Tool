@@ -90,6 +90,7 @@ export function WikiHomeTemplatePreview() {
               scrollTop={getObservedScrollbarTop()}
               scrollHeight={contentScrollHeight}
               viewportHeight={wikiHomeTemplateLayout.body.height}
+              trackHeight={wikiHomeTemplateLayout.scrollbar.height}
               thumbHeight={wikiHomeTemplateLayout.scrollbar.thumbHeight}
             />
           </div>
