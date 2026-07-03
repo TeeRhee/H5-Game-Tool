@@ -2825,8 +2825,8 @@ button:disabled {
   color: var(--color-text-soft);
   font-size: var(--type-size-100);
   line-height: var(--type-line-height-100);
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .gt-wiki-table-header-cell {
@@ -2862,10 +2862,11 @@ button:disabled {
 }
 
 .gt-wiki-table-row-cell__content {
+  display: block;
+  width: 100%;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .gt-wiki-breadcrumbs {
@@ -3342,6 +3343,7 @@ button:disabled {
 .gt-wiki-detail-card__table {
   display: grid;
   width: 100%;
+  max-width: 100%;
   overflow: hidden;
   border-radius: var(--radius-lg);
   box-shadow: inset 0 0 0 1px var(--color-alpha-white-alpha-4);
@@ -3350,7 +3352,7 @@ button:disabled {
 .gt-wiki-detail-card__table-row {
   display: grid;
   min-height: 48px;
-  grid-template-columns: var(--gt-wiki-table-columns, 80px 80px 100px minmax(0, 1fr));
+  grid-template-columns: var(--gt-wiki-table-columns, repeat(var(--gt-wiki-table-column-count, 4), minmax(0, 1fr)));
 }
 
 .gt-wiki-detail-card__table-row--header {

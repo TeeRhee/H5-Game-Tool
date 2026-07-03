@@ -502,7 +502,7 @@ export function ComponentGallery() {
           </ComponentCard>
 
           <ComponentCard title="Data / TableHeaderCell / Default" description="详情页表格表头和单元格。" wide>
-            <div className="gt-wiki-table" style={{ "--gt-wiki-table-columns": "80px 80px 100px minmax(0, 1fr)" } as CSSProperties}>
+            <div className="gt-wiki-table" style={{ "--gt-wiki-table-columns": "repeat(4, minmax(0, 1fr))" } as CSSProperties}>
               <TableHeaderCell>等级</TableHeaderCell>
               <TableHeaderCell>攻击</TableHeaderCell>
               <TableHeaderCell>价格</TableHeaderCell>

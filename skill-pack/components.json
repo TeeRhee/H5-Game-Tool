@@ -1210,7 +1210,7 @@
           "type": "array",
           "required": false,
           "source": "TODO_FROM_DATASOURCE",
-          "rule": "Column definitions come from the source table schema. Use these columns to set the table grid template; do not hardcode a fixed number of columns."
+          "rule": "Column definitions come from the source table schema. Use these columns to set the table grid template; do not hardcode a fixed number of columns. Detail tables should use compressible column tracks such as minmax(0, 1fr), follow the parent container width, and must not set a fixed 928px table width or horizontal scrolling for wide tables such as character intimacy tables."
         },
         "tableRows": {
           "type": "array",
@@ -1295,7 +1295,7 @@
         "gap": 12,
         "stroke": "1px rgba(255,255,255,0.04)",
         "text": "12px / 18px, var(--color-text-soft)",
-        "rule": "This is a reusable table body cell. It does not define the whole table, row count, or column count. Repeat one row cell per source row and column. Use state=none only for intentionally empty or unavailable table cells."
+        "rule": "This is a reusable table body cell. It does not define the whole table, row count, or column count. Repeat one row cell per source row and column. Use state=none only for intentionally empty or unavailable table cells. Text wraps with overflow-wrap:anywhere rather than nowrap or ellipsis."
       }
     },
     {

@@ -1350,7 +1350,7 @@
         },
         "moduleCompositionRule": "Detail templates can be assembled from multiple Layout.DetailCard modules stacked in the template detail section positions. Each module must have a title plus at least one optional content block. Choose the optional blocks and their order from the source section data; do not force description, feature cards, info rows, badges, tables, or media to appear when that source section does not contain them.",
         "templateLayoutRule": "The DetailCard internal content selection is data-driven, but page structure, section stack spacing, DetailCard width, vertical gaps, scroll behavior, and placement still follow the observed detail template frames.",
-        "dataShapeRule": "Use this region for structured rows, tables, key-value blocks, and grouped notes. If the source exposes table structure, map it to tableColumns and tableRows rather than rich text. Data.TableHeaderCell and Data.TableRowCell are repeated according to the source schema and source rows; do not hardcode a fixed number of table rows or columns."
+        "dataShapeRule": "Use this region for structured rows, tables, key-value blocks, and grouped notes. If the source exposes table structure, map it to tableColumns and tableRows rather than rich text. Data.TableHeaderCell and Data.TableRowCell are repeated according to the source schema and source rows; do not hardcode a fixed number of table rows or columns. Detail tables, including character intimacy tables, must stay within the parent content width, avoid fixed 928px table width, avoid horizontal scrolling, and use compressible column tracks."
       },
       "pendingDataBoundElements": [
         "section title",

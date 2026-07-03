@@ -64,9 +64,9 @@ const defaultStatusBadges: DetailCardStatusBadge[] = [
 ];
 
 const defaultTableColumns: DetailCardTableColumn[] = [
-  { key: "level", label: "等级", width: "80px" },
-  { key: "attack", label: "攻击", width: "80px" },
-  { key: "price", label: "价格", width: "100px" },
+  { key: "level", label: "等级", width: "minmax(0, 1fr)" },
+  { key: "attack", label: "攻击", width: "minmax(0, 1fr)" },
+  { key: "price", label: "价格", width: "minmax(0, 1fr)" },
   { key: "material", label: "材料", width: "minmax(0, 1fr)" },
 ];
 

@@ -275,7 +275,7 @@ Missing optional fields should collapse the related UI element instead of showin
 
 Pagination state may come from datasource or renderer state. It must not come from hardcoded sample values.
 
-Detail tables must use structured columns and rows when that data exists. `Data.TableHeaderCell` and `Data.TableRowCell` are reusable cells, not a fixed table layout: repeat one header cell per source column and one row cell per source row/column cell. The renderer sets the table grid columns from the source schema; do not hardcode a fixed number of rows or columns, and do not encode table data as plain rich text when table structure is available.
+Detail tables must use structured columns and rows when that data exists. `Data.TableHeaderCell` and `Data.TableRowCell` are reusable cells, not a fixed table layout: repeat one header cell per source column and one row cell per source row/column cell. The renderer sets the table grid columns from the source schema with compressible tracks such as `minmax(0, 1fr)`; do not hardcode a fixed number of rows or columns, do not set fixed `928px` table width or horizontal scrolling for character detail intimacy tables, and do not encode table data as plain rich text when table structure is available.
 
 ## Mode And Theme Rules
 
