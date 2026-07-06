@@ -148,6 +148,27 @@ common surfaces such as:
 - controls: `Button`, `SearchBar`, `Select`, `Checkbox`
 - overlays and helpers: `ToolTip`, `Modal`, `PopupDescribeCard`, `Scroll`
 
+### `WikiDescribeCard` Sizing
+
+`WikiDescribeCard` hugs its rendered content by default. Page or template layout
+requirements take priority when the consuming page explicitly provides card
+width, height, grid tracks, or component sizing CSS variables.
+
+For image-heavy entries, pass image props through the component instead of
+overriding page CSS:
+
+```tsx
+<WikiDescribeCard
+  size="lg"
+  imageRatio="3:2"
+  imageFit="contain"
+  imageSrc={weaponImage}
+/>
+```
+
+Use `imageFit="contain"` for weapons, attachments, commodity thumbnails, and
+other item art that must remain fully visible. The default remains `cover`.
+
 If you need the exact current export list, inspect:
 
 - `component-packages/h5-game-tool-components/src/components/game-tool/index.ts`

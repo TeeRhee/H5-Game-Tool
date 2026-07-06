@@ -2997,12 +2997,16 @@ button:disabled {
 }
 
 .gt-wiki-describe-card {
-  --gt-wiki-describe-card-image-width: 90px;
-  --gt-wiki-describe-card-image-height: 90px;
+  --gt-wiki-describe-card-body-width: 186px;
+  --gt-wiki-describe-card-content-width: 198px;
+  --gt-wiki-describe-card-image-ratio: 1;
+  --gt-wiki-describe-card-image-size: 100px;
   display: flex;
-  width: 328px;
+  width: var(--gt-wiki-describe-card-width, fit-content);
+  height: var(--gt-wiki-describe-card-height, auto);
+  max-width: 100%;
   box-sizing: border-box;
-  align-items: center;
+  align-items: stretch;
   gap: 12px;
   padding: 8px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -3012,21 +3016,20 @@ button:disabled {
 }
 
 .gt-wiki-describe-card--image-3-2 {
-  --gt-wiki-describe-card-image-width: 135px;
+  --gt-wiki-describe-card-image-ratio: 1.5;
 }
 
 .gt-wiki-describe-card--image-4-5 {
-  --gt-wiki-describe-card-image-width: 72px;
+  --gt-wiki-describe-card-image-ratio: 0.8;
 }
 
 .gt-wiki-describe-card--image-16-9 {
-  --gt-wiki-describe-card-image-width: 160px;
+  --gt-wiki-describe-card-image-ratio: 1.7778;
 }
 
 .gt-wiki-describe-card--lg {
-  --gt-wiki-describe-card-image-width: 194px;
-  --gt-wiki-describe-card-image-height: 194px;
-  width: 210px;
+  --gt-wiki-describe-card-body-width: var(--gt-wiki-describe-card-content-width);
+  width: var(--gt-wiki-describe-card-width, fit-content);
   flex-direction: column;
   align-items: stretch;
   gap: 8px;
@@ -3034,18 +3037,6 @@ button:disabled {
   border-color: rgba(255, 255, 255, 0.1);
   background: transparent;
   box-shadow: none;
-}
-
-.gt-wiki-describe-card--lg.gt-wiki-describe-card--image-3-2 {
-  --gt-wiki-describe-card-image-height: 129.3333px;
-}
-
-.gt-wiki-describe-card--lg.gt-wiki-describe-card--image-4-5 {
-  --gt-wiki-describe-card-image-width: 155.2px;
-}
-
-.gt-wiki-describe-card--lg.gt-wiki-describe-card--image-16-9 {
-  --gt-wiki-describe-card-image-height: 109.125px;
 }
 
 .gt-wiki-describe-card--hover,
@@ -3072,31 +3063,37 @@ button:disabled {
 }
 
 .gt-wiki-describe-card > .gt-wiki-image {
-  flex: 0 0 var(--gt-wiki-describe-card-image-width);
-  width: var(--gt-wiki-describe-card-image-width);
-  height: var(--gt-wiki-describe-card-image-height);
+  flex: 0 0 auto;
+  width: calc(var(--gt-wiki-describe-card-image-size) * var(--gt-wiki-describe-card-image-ratio));
+  height: var(--gt-wiki-describe-card-image-size);
+  align-self: flex-start;
+  aspect-ratio: var(--gt-wiki-describe-card-image-ratio);
   opacity: 0.8;
   border-radius: 6px;
 }
 
 .gt-wiki-describe-card--lg > .gt-wiki-image {
-  flex-basis: var(--gt-wiki-describe-card-image-height);
-  width: var(--gt-wiki-describe-card-image-width);
-  height: var(--gt-wiki-describe-card-image-height);
+  flex: 0 0 auto;
+  width: var(--gt-wiki-describe-card-content-width);
+  min-width: 0;
+  height: auto;
+  min-height: 0;
+  align-self: stretch;
+  aspect-ratio: var(--gt-wiki-describe-card-image-ratio);
 }
 
 .gt-wiki-describe-card__body {
   display: flex;
-  width: auto;
+  width: var(--gt-wiki-describe-card-body-width);
   min-width: 0;
-  flex: 1 1 auto;
+  flex: 0 0 var(--gt-wiki-describe-card-body-width);
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 6px;
 }
 
 .gt-wiki-describe-card--lg .gt-wiki-describe-card__body {
-  width: 194px;
+  width: var(--gt-wiki-describe-card-body-width);
   flex: 0 0 auto;
   padding: 0 6px;
   box-sizing: border-box;
