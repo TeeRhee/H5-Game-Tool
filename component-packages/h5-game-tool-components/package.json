@@ -28,7 +28,15 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json && node scripts/copy-assets.mjs",
-    "clean": "node scripts/clean.mjs"
+    "clean": "node scripts/clean.mjs",
+    "pack:dry-run": "npm pack --dry-run",
+    "publish:check": "npm run clean && npm run build && npm pack --dry-run",
+    "prepublishOnly": "npm run publish:check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TeeRhee/H5-Game-Tool.git",
+    "directory": "component-packages/h5-game-tool-components"
   },
   "peerDependencies": {
     "react": ">=18",

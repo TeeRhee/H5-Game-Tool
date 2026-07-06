@@ -9,6 +9,8 @@ This repository maintains the design contracts, shared React components, and gen
 - `skill-pack/`: AI and renderer contracts. Shared files live at the root, while each tool type owns its templates, mappings, examples, and datasource rules in its own folder.
 - `skill-pack/schemas/`: JSON schemas for validating contract files.
 - `docs/`: planning notes, implementation checklists, and non-packaged working documents.
+- `docs/FRONTEND_COMPONENT_GUIDE.md`: frontend-facing install/import guide for `@h5-game-tool/components`.
+- `docs/NPM_PUBLISHING.md`: how to publish `@h5-game-tool/components` and what downstream wiki teams should consume from npm versus from this repo.
 - `deliverables/`: generated zip and tarball handoff files. Treat source folders as canonical, then regenerate deliverables when source changes.
 - `src/`: local preview and renderer demo source.
 - `scripts/`: validation, token sync, packaging, and data adapter scripts.
@@ -35,6 +37,8 @@ This keeps map, wiki, and future tool types visually consistent while allowing e
 - `skill-pack/wiki/DESIGN.md`: Wiki-specific human-readable design rules.
 - `docs/wiki/WIKI_FILE_PLAN.md`: Wiki implementation plan and status checklist.
 - `component-packages/h5-game-tool-components/README.md`: install and import instructions for the component package.
+- `docs/FRONTEND_COMPONENT_GUIDE.md`: frontend developer guide for installing and importing the shared component package.
+- `docs/NPM_PUBLISHING.md`: publishing flow and downstream integration boundary for `@h5-game-tool/components`.
 
 ## Validation
 
@@ -42,6 +46,7 @@ This keeps map, wiki, and future tool types visually consistent while allowing e
 npm run validate:skill-pack
 npm run build
 npm --prefix component-packages/h5-game-tool-components run build
+npm run pack:components:dry-run
 ```
 
 Regenerate component handoff packages after component source changes:
