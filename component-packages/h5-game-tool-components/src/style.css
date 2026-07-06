@@ -2464,6 +2464,14 @@ button:disabled {
   object-fit: cover;
 }
 
+.gt-wiki-image--fit-cover img {
+  object-fit: cover;
+}
+
+.gt-wiki-image--fit-contain img {
+  object-fit: contain;
+}
+
 .gt-wiki-category-card__content,
 .gt-wiki-show-card__content {
   display: grid;

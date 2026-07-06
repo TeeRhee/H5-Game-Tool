@@ -1,6 +1,6 @@
 import type { HTMLAttributes, MouseEventHandler } from "react";
 import { Badge, type BadgeTone, type BadgeVariant } from "./Badge";
-import { ImageFrame, type ImageRatio } from "./ImageFrame";
+import { ImageFrame, type ImageFit, type ImageRatio } from "./ImageFrame";
 import { ToolTip } from "./ToolTip";
 import { cx } from "./wikiUtils";
 
@@ -23,6 +23,7 @@ export interface WikiDescribeCardProps extends HTMLAttributes<HTMLElement> {
   description?: string;
   imageSrc?: string;
   imageRatio?: ImageRatio;
+  imageFit?: ImageFit;
   size?: "sm" | "lg";
   state?: "default" | "hover";
   showImage?: boolean;
@@ -55,6 +56,7 @@ export function WikiDescribeCard({
   description,
   imageSrc,
   imageRatio = "1:1",
+  imageFit = "cover",
   size = "sm",
   state = "default",
   showImage = true,
@@ -101,7 +103,7 @@ export function WikiDescribeCard({
       )}
       {...props}
     >
-      {showImage ? <ImageFrame className="gt-wiki-describe-card__image" ratio={imageRatio} src={imageSrc} alt="" /> : null}
+      {showImage ? <ImageFrame className="gt-wiki-describe-card__image" ratio={imageRatio} src={imageSrc} alt="" fit={imageFit} /> : null}
       {hasBody ? (
         <div className="gt-wiki-describe-card__body">
           {hasContent ? (
