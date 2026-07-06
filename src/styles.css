@@ -2450,6 +2450,47 @@ button:disabled {
   white-space: nowrap;
 }
 
+.gt-wiki-badge-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gt-wiki-badge-counter__value {
+  min-width: 0;
+}
+
+.gt-wiki-badge-counter__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 2px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--color-alpha-white-alpha-4);
+  color: var(--color-text-sub);
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease, opacity 120ms ease;
+}
+
+.gt-wiki-badge-counter__button:hover:not(:disabled),
+.gt-wiki-badge-counter__button:focus-visible {
+  background: var(--color-alpha-white-alpha-8);
+  color: var(--color-text-strong);
+}
+
+.gt-wiki-badge-counter__button:focus-visible {
+  outline: 1px solid var(--color-primary-base);
+  outline-offset: 1px;
+}
+
+.gt-wiki-badge-counter__button:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
 .gt-wiki-badge--info,
 .gt-wiki-badge--primary {
   color: var(--color-status-info);
@@ -3382,9 +3423,21 @@ button:disabled {
   white-space: normal;
 }
 
+.gt-wiki-describe-card__badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 6px;
+}
+
 .gt-wiki-describe-card p {
   overflow-wrap: anywhere;
   white-space: normal;
+}
+
+.gt-wiki-describe-card__badge-group > .gt-wiki-badge {
+  color: var(--color-status-info);
+  background: var(--color-status-info-bg);
 }
 
 .gt-wiki-describe-card__attributes {
@@ -3413,6 +3466,10 @@ button:disabled {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.gt-wiki-describe-card--lg.gt-wiki-describe-card--no-badge-group .gt-wiki-describe-card__body {
+  justify-content: space-between;
 }
 
 .gt-wiki-detail-card {

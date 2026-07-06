@@ -168,10 +168,14 @@ export function ComponentGallery() {
   const [describeOpen, setDescribeOpen] = useState(true);
   const [mapTipActive, setMapTipActive] = useState(false);
   const [breadcrumbCount, setBreadcrumbCount] = useState(3);
+  const [badgeLevelIndex, setBadgeLevelIndex] = useState(0);
+  const [badgeNumericValue, setBadgeNumericValue] = useState(12);
   const [tokenQuery, setTokenQuery] = useState("");
   const [activeTokenGroup, setActiveTokenGroup] = useState("color");
   const [saveStates, setSaveStates] = useState<Record<string, SaveState>>({});
   const [lastSyncMessage, setLastSyncMessage] = useState("当前使用本地 token 文件。");
+
+  const badgeLevels = ["Lv.1", "Lv.2", "Lv.3", "Lv.4"];
 
   useEffect(() => {
     let cancelled = false;
@@ -543,7 +547,7 @@ export function ComponentGallery() {
             </div>
           </ComponentCard>
 
-          <ComponentCard title="Layout / DescribeCard / Default" description="Figma 属性：Size=SM/LG、State=Default/Hover、ShowImage、ShowTitle、ShowDescription、ShowBadge、ShowAttributes。" wide>
+          <ComponentCard title="Layout / DescribeCard / Default" description="Figma 属性：Size=SM/LG、State=Default/Hover、ShowImage、ShowTitle、ShowDescription、ShowBadge、ShowBadgeGroup、ShowAttributes。" wide>
             <div className="wiki-describe-preview">
               <div className="wiki-describe-preview__group">
                 <span>SM / 默认</span>
@@ -551,6 +555,7 @@ export function ComponentGallery() {
                   title="项目名称"
                   description="项目详细介绍"
                   badge="核心标签"
+                  badgeGroup={["详细字段1", "详细字段2", "详细字段3"]}
                   meta={["补充信息1", "补充信息2", "补充信息3"]}
                   imageSrc="/assets/preview/map-placeholder.png"
                 />
@@ -561,6 +566,7 @@ export function ComponentGallery() {
                   title="项目名称"
                   description="项目详细介绍项目详细介绍项目详细介绍项目详细介绍"
                   badge="核心标签"
+                  badgeGroup={["详细字段1", "详细字段2", "详细字段3"]}
                   meta={["补充信息1", "补充信息2", "补充信息3"]}
                   imageSrc="/assets/preview/map-placeholder.png"
                   state="hover"
@@ -574,6 +580,7 @@ export function ComponentGallery() {
                   title="项目名称"
                   description="项目详细介绍项目详细介绍项目详细介绍项目详细介绍"
                   badge="核心标签"
+                  badgeGroup={["详细字段1", "详细字段2", "详细字段3"]}
                   meta={["辅助信息"]}
                   imageSrc="/assets/preview/map-placeholder.png"
                 />
@@ -586,6 +593,7 @@ export function ComponentGallery() {
                   title="项目名称"
                   description="项目详细介绍项目详细介绍项目详细介绍项目详细介绍"
                   badge="核心标签"
+                  badgeGroup={["详细字段1", "详细字段2", "详细字段3"]}
                   meta={["辅助信息"]}
                   imageSrc="/assets/preview/map-placeholder.png"
                   interactive
@@ -599,6 +607,7 @@ export function ComponentGallery() {
                   showImage={false}
                   showTitle={false}
                   showBadge={false}
+                  showBadgeGroup={false}
                 />
               </div>
             </div>
@@ -662,12 +671,40 @@ export function ComponentGallery() {
             </div>
           </ComponentCard>
 
-          <ComponentCard title="Base / Badge / Default" description="Figma 状态：Info、Error、Neutral、Warning。">
-            <div className="inline-row">
-              <Badge tone="info">辅助标签</Badge>
-              <Badge tone="error">辅助标签</Badge>
-              <Badge tone="neutral">辅助标签</Badge>
-              <Badge tone="warning">辅助标签</Badge>
+          <ComponentCard title="Base / Badge / Default" description="Figma 属性：Tone=Neutral/Info/Error/Warning/Success，Variant=Default/Counter。">
+            <div className="gallery-state-stack">
+              <div className="gallery-state-row">
+                <span className="gallery-state-label">Default</span>
+                <div className="inline-row">
+                  <Badge tone="neutral">辅助标签</Badge>
+                  <Badge tone="info">辅助标签</Badge>
+                  <Badge tone="error">辅助标签</Badge>
+                  <Badge tone="warning">辅助标签</Badge>
+                  <Badge tone="success">辅助标签</Badge>
+                </div>
+              </div>
+              <div className="gallery-state-row">
+                <span className="gallery-state-label">Counter</span>
+                <div className="inline-row">
+                  <Badge
+                    variant="counter"
+                    onDecrement={() => setBadgeLevelIndex((current) => Math.max(0, current - 1))}
+                    onIncrement={() => setBadgeLevelIndex((current) => Math.min(badgeLevels.length - 1, current + 1))}
+                    decrementDisabled={badgeLevelIndex === 0}
+                    incrementDisabled={badgeLevelIndex === badgeLevels.length - 1}
+                  >
+                    {badgeLevels[badgeLevelIndex]}
+                  </Badge>
+                  <Badge
+                    variant="counter"
+                    onDecrement={() => setBadgeNumericValue((current) => Math.max(0, current - 1))}
+                    onIncrement={() => setBadgeNumericValue((current) => current + 1)}
+                    decrementDisabled={badgeNumericValue === 0}
+                  >
+                    {badgeNumericValue}
+                  </Badge>
+                </div>
+              </div>
             </div>
           </ComponentCard>
         </div>

@@ -385,6 +385,14 @@
     {
       "id": "Base.Badge",
       "figmaName": "Base / Badge / Default",
+      "observedVariants": [
+        "Tone=Neutral, Variant=Default",
+        "Tone=Info, Variant=Default",
+        "Tone=Error, Variant=Default",
+        "Tone=Warning, Variant=Default",
+        "Tone=Success, Variant=Default",
+        "Tone=Neutral, Variant=Counter"
+      ],
       "observedUse": [
         "desktop:left-panel.controls",
         "mobile:bottom-sheet.list",
@@ -415,10 +423,31 @@
           ],
           "default": "neutral",
           "rule": "Use source-provided tag type when available. For Wiki attribute tags, assign the same tone to the same tag class and a different stable tone to different tag classes when source colors are not provided."
+        },
+        "variant": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "default",
+            "counter"
+          ],
+          "default": "default",
+          "rule": "Use variant=counter when the badge content should be changed by adjacent decrement/increment controls instead of rendering as a static label."
+        },
+        "onDecrement": {
+          "type": "interaction",
+          "required": false,
+          "rule": "Used only for variant=counter. Clicking the left control should switch to the previous badge value or decrement a numeric value."
+        },
+        "onIncrement": {
+          "type": "interaction",
+          "required": false,
+          "rule": "Used only for variant=counter. Clicking the right control should switch to the next badge value or increment a numeric value."
         }
       },
       "observedStructure": {
-        "mobile": "count badge at row end, uses --color-bg-alpha-weak and Label/MD tokens"
+        "mobile": "count badge at row end, uses --color-bg-alpha-weak and Label/MD tokens",
+        "counter": "Counter variant is a horizontal group: 22x22 subtract button, center badge content, 22x22 add button, with 4px gap between items."
       }
     },
     {
@@ -866,11 +895,13 @@
         "ShowTitle=true|false",
         "ShowDescription=true|false",
         "ShowBadge=true|false",
+        "ShowBadgeGroup=true|false",
         "ShowAttributes=true|false"
       ],
       "observedStructure": {
-        "rule": "Wiki list/detail describe card. Use it when the source entry has richer title, description, image, badge, meta/attribute content, or secondary rich text that needs more than one visible line. Card height and description height adapt to rendered content by default; do not hard-code the component height unless a specific template explicitly requires a fixed frame. Optional regions are controlled by ShowImage, ShowTitle, ShowDescription, ShowBadge, and ShowAttributes; when a region is disabled, do not render it and do not reserve its spacing. For page/list card consistency, if any card in the same rendered page/list needs more than one visible subtitle/body line, use Layout.DescribeCard with size=sm for all related cards on that current page/list instead of Game.ShowCard. Here same rendered page/list means the active secondary tab plus optional active third-level group; do not inherit this decision across sibling second-level tabs or the whole active first-level category. This is separate from the map popup detail card.",
+        "rule": "Wiki list/detail describe card. Use it when the source entry has richer title, description, image, badge, badge-group detail fields, meta/attribute content, or secondary rich text that needs more than one visible line. Card height and description height adapt to rendered content by default; do not hard-code the component height unless a specific template explicitly requires a fixed frame. Optional regions are controlled by ShowImage, ShowTitle, ShowDescription, ShowBadge, ShowBadgeGroup, and ShowAttributes; when a region is disabled, do not render it and do not reserve its spacing. For page/list card consistency, if any card in the same rendered page/list needs more than one visible subtitle/body line, use Layout.DescribeCard with size=sm for all related cards on that current page/list instead of Game.ShowCard. Here same rendered page/list means the active secondary tab plus optional active third-level group; do not inherit this decision across sibling second-level tabs or the whole active first-level category. This is separate from the map popup detail card.",
         "smDefaultNode": "Figma node 177:1104, Size=SM State=Default: observed root is w=328 h=106 as the compact example, but implementation height is content-adaptive. Horizontal auto-layout, padding 8, gap 12, 1px white 10% stroke, radius 6. Base.Image instance is x=8 y=8 w=90 h=90 opacity 80%. Right body starts at x=110 y=8 w=210 vertical, gap 6. Title/description group uses gap 4; title row is h=22; subtitle text uses Body/SM 12px/18px and wraps to the source content instead of forcing a fixed 36px region. Attribute row uses padding 4px 6px, gap 2.",
+        "badgeGroupRule": "Badge-group is a dedicated optional row between the description block and the attributes/meta row. It uses horizontal layout with 6px item gap and each item is a Base.Badge, typically info-toned when carrying detailed fields such as caliber, slots, or damage.",
         "nestedImageComponent": "The image/media region is a nested Base.Image component, not a DescribeCard-owned raw image layer. Render it through ImageFrame/Base.Image and pass imageSrc/imageRatio to that nested component. When showImage=false, remove the nested Base.Image instance and collapse its spacing.",
         "smDescriptionRule": "For size=sm, render description/subtitle as its own text node under the title row, not as a one-line ShowCard subtitle. The description region height adapts to the rendered source text using 12px text with 18px line-height. Do not clamp by default; use Base.ToolTip only if a specific template or host container intentionally truncates or hides the text.",
         "lgNoAttributesRule": "For size=lg with showAttributes=false, the card height must adapt to rendered content instead of keeping the full LG fixed height reserved for the attributes row.",
@@ -933,6 +964,12 @@
           "default": true,
           "rule": "When false, do not render the badge. If showTitle is also false, omit the whole title row."
         },
+        "showBadgeGroup": {
+          "type": "boolean",
+          "required": false,
+          "default": true,
+          "rule": "When false, do not render the badge-group detail row and do not reserve its spacing."
+        },
         "showAttributes": {
           "type": "boolean",
           "required": false,
@@ -973,7 +1010,14 @@
         "badges": {
           "type": "string[]",
           "required": false,
-          "source": "TODO_FROM_DATASOURCE"
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Legacy single-badge fallback. If badge is absent, the first item may be used as the title-row badge. Do not use this array for the dedicated badge-group row."
+        },
+        "badgeGroup": {
+          "type": "array",
+          "required": false,
+          "source": "TODO_FROM_DATASOURCE",
+          "rule": "Optional badge-group detail row rendered between description and attributes. Each item may be a plain label or a Base.Badge-like object with tone/variant when the source needs richer field chips."
         },
         "meta": {
           "type": "string[]",

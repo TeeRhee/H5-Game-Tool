@@ -100,7 +100,13 @@ const checks = [
   { label: "DescribeCard nested Base.Image template", actual: secondaryList.describeCardInternals.image.component, expected: "Base.Image" },
   { label: "DescribeCard nested Base.Image mapping", actual: mapping.rules.some((rule) => rule.includes("Layout.DescribeCard image data") && rule.includes("nested Base.Image")), expected: true },
   { label: "DescribeCard optional region renderer rule", actual: template.requiredRendererBehavior.some((rule) => rule.includes("ShowImage") && rule.includes("ShowTitle") && rule.includes("collapse its spacing")), expected: true },
-  { label: "DescribeCard optional region mapping rule", actual: mapping.rules.some((rule) => rule.includes("showImage, showTitle, showDescription, showBadge, and showAttributes")), expected: true },
+  {
+    label: "DescribeCard optional region mapping rule",
+    actual: mapping.rules.some((rule) =>
+      rule.includes("showImage, showTitle, showDescription, showBadge, showBadgeGroup, and showAttributes"),
+    ),
+    expected: true,
+  },
   { label: "Header frame", actual: header.absoluteFrame, expected: { x: 0, y: 0, width: 1000, height: 84 } },
   { label: "Header padding", actual: header.padding, expected: { top: 32, right: 32, bottom: 16, left: 32 } },
   { label: "Header topbar", actual: header.topBar, expected: { x: 32, y: 32, width: 696, height: 36 } },
