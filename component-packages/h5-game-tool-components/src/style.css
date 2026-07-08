@@ -2598,7 +2598,9 @@ button:disabled {
 
 .gt-wiki-image {
   display: grid;
+  box-sizing: border-box;
   place-items: center;
+  padding: var(--gt-wiki-image-padding, 4px);
   overflow: hidden;
   border-radius: var(--radius-lg);
   color: var(--color-icon-soft);

@@ -854,6 +854,9 @@
         "wiki:detail.related-section",
         "wiki:detail.extended-section"
       ],
+      "observedStructure": {
+        "rule": "Reusable image frame. The outer frame follows the selected ratio and caller/page sizing, while the image placement area is inset by 4px on every side to match the Figma component's maximum image slot: Ratio=1:1 uses outer 80x80 with image slot 72x72; Ratio=3:2 uses outer 120x80 with image slot 112x72; Ratio=16:9 uses outer 142x80 with image slot 134x72; Ratio=4:5 uses outer 64x80 with image slot 56x72. Page or parent layout may scale the outer frame, but the component must keep this internal image placement area instead of letting the image cover the full background frame."
+      },
       "props": {
         "ratio": {
           "type": "enum",
@@ -866,6 +869,16 @@
           ],
           "default": "1:1",
           "rule": "Choose the closest supported ratio from the source asset dimensions or visual content before rendering. Use 1:1 for square icons and near-square assets; use 4:5 for vertical portraits, character/card art, posters, and other portrait assets around width/height 0.8; use 3:2 for moderately wide images; use 16:9 for wide landscape assets, banners, weapon/item renders, maps, screenshots, and other assets that would be noticeably cropped in a square frame. Do not default to 1:1 when source width/height or visual content clearly indicates a vertical or wider image."
+        },
+        "fit": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "cover",
+            "contain"
+          ],
+          "default": "cover",
+          "rule": "Controls how the source image fills the internal image placement area, not the full outer background frame. Use cover by default to preserve existing pages; use contain for weapons, attachments, commodity thumbnails, and item art that must remain fully visible."
         },
         "src": {
           "type": "string",
