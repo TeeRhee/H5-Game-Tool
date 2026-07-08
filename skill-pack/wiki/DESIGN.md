@@ -129,7 +129,7 @@ The `SecondaryPageMultiNav` design node is `375:4979` and uses the default `1000
 - `Nav.SecondaryTab`: each tab is `w=60, h=26`, gap `6`, x positions `0`, `66`, `132`, `198`, `264`, `330`.
 - Active tab: `State=Active`, text uses `var(--color-primary-base)`. Default tabs use `var(--color-text-weak)`.
 - Content shell: Body-relative `x=32, y=62, w=936, h=480`, absolute `x=32, y=146`.
-- `Nav.Navigate`: shell-relative `x=0, y=0, w=96, h=480`; right divider; internal list width `80`; padding right `16`, vertical padding `8`.
+- `Nav.Navigate`: Figma component set is `Nav / Navigate / Default`, with `Orientation=Vertical` and `Orientation=Horizontal` variants. Desktop uses `orientation="vertical"` at shell-relative `x=0, y=0, w=96, h=480`; right divider; internal list width `80`; padding right `16`, vertical padding `8`.
 - Right card list: shell-relative `x=116, y=0, w=820, h=480`, leaving a `20px` gap after the navigation column.
 - `Game.ShowCard` grid: 2 columns, card `w=406, h=76`, column gap `8`, row gap `8`.
 - Row y positions: `0`, `84`, `168`, `252`, `336`, `420`. The sixth row overflows the 480px shell by `16px`; renderer should scroll or clip by host behavior rather than shrinking cards.
@@ -218,9 +218,11 @@ The detail hero card family follows the previous page card family. Attribute bad
 
 Use the mobile Wiki layout when the rendered page width is `<600px`. Use the desktop Wiki layout when the rendered page width is `>=600px`. Do not use the old `767px` breakpoint for Wiki pages unless a host product explicitly overrides the Wiki contract.
 
-The observed mobile Wiki frames use a `375 x 812` reference viewport, but implementation must adapt to the actual viewport width. Treat `375` as the design reference, not a hardcoded production width.
+The observed mobile Wiki frames use a `375 x 812` reference viewport, but implementation must adapt to the actual viewport width. Treat `375` as the design reference, not a hardcoded production width. Below `600px`, the Wiki page root/frame must fill the available host container or browser viewport width (`width: 100%`, bounded by the actual screen/container), and reference widths such as `351`, `335`, or `319` are derived from the 375px sample by its insets. They must become `calc(100% - inset)` or `width: 100%` inside the actual mobile container rather than fixed production widths.
 
 Mobile template pages are adaptation references, not replacement pages. If a host Wiki page has already made product-specific adjustments on top of the desktop template, preserve its source-driven structure, component choices, field order, hidden or added details, and real data. Below `600px`, adapt that existing page with the mobile template's layout methods: mobile shell behavior, `12px` side insets, single-column stacking, horizontal-scrolling tabs/nav, mobile typography, mobile card widths, image behavior, and mobile visibility rules. Do not discard the customized page and do not inject, reorder, or remove business details solely because the observed mobile reference shows a different sample structure.
+
+Below `600px`, mobile Wiki pages do not show scrollbar chrome. Keep real vertical or horizontal scrolling where content overflows, but hide native scrollbars and do not render `Layout.Scroll` visual scrollbar instances. Mobile pages also do not render hover visual states: ignore `:hover`, `state=hover`, `--hover`, and `--state-hover` presentation for cards, navigation, command items, pagination, breadcrumbs, modal close buttons, tooltips, and similar UI. Keep selected, active, focus-visible, pressed, and open states because those represent actual interaction state, not hover. Do not rely on hover-only `Base.ToolTip` disclosure for required mobile information; expose important text in visible layout, tap/open state, or the destination page instead.
 
 Observed mobile source nodes:
 
@@ -236,11 +238,14 @@ Observed mobile source nodes:
 
 ### Mobile Shell
 
-- Mobile pages use `MobileHeader x=0, y=0, w=375, h=92` as template chrome. This is not a new shared component in the current package; treat it as Wiki mobile shell structure until a formal component is approved.
-- Main content starts at `y=104`, with a `12px` left/right inset and default content width `351px` on the 375px reference viewport.
+- Mobile pages use `MobileHeader x=0, y=0, w=375, h=92` only as reference chrome. In production, the mobile header and page frame fill the actual container/viewport width, not a fixed 375px width. This is not a new shared component in the current package; treat it as Wiki mobile shell structure until a formal component is approved.
+- When the host/product titlebar is outside the Wiki surface, do not recreate that white titlebar inside the Wiki page. The dark Wiki content shell owns an internal mobile action bar at `h=68` with `12px` side/top inset, a left search icon button, and a right primary-menu icon button. Both icon buttons must be at least `44 x 44`; the desktop `Nav.TopBar` strip and desktop `Form.SearchBar` input are hidden in this mobile shell.
+- Main content starts at `y=104`, with a `12px` left/right inset. The 375px reference content width is `351px`, but production content width is `calc(100% - 24px)` inside the actual mobile page width.
 - Use `PingFang SC, Microsoft YaHei UI, sans-serif` for mobile Wiki typography. The primary observed mobile font is `PingFang SC`.
-- The right header menu opens the first-level navigation menu shown by node `590:9324`. It carries the same datasource and active state as desktop `Nav.TopBar`; do not invent separate mobile menu items.
+- The right header menu opens the first-level navigation menu shown by node `590:9324`. In the embedded dark Wiki shell, the panel opens below the internal action bar at `top=68` and covers the remaining Wiki shell with a dark overlay. It carries the same datasource and active state as desktop `Nav.TopBar`; do not invent separate mobile menu items.
+- The mobile primary menu list uses the mobile content column (`12px` side inset; reference `w=351`). Menu rows are touch rows with `min-height=56`, large left-aligned labels, and the active row uses the brand gradient/underline treatment from the reference instead of the desktop TopBar active pill.
 - Mobile document/article detail does not render the desktop left anchor navigation or right related-info sidebar. Do not show those side modules on mobile unless a future mobile design explicitly defines their placement.
+- Mobile scroll containers should set scrollbar chrome to hidden while preserving touch scroll; horizontal mobile nav rows still scroll when content overflows, but no scrollbar is visible.
 
 ### Mobile Typography
 
@@ -255,31 +260,32 @@ Observed mobile source nodes:
 
 ### Mobile Home
 
-- Home content uses a single-column vertical layout inside `x=12, y=104, w=351`.
+- Home content uses a single-column vertical layout inside `x=12, y=104, w=351` on the 375px reference; production width fills the mobile page content area (`calc(100% - 24px)`).
+- In the generated embedded Wiki home, the content scroll area starts below the internal `68px` action bar when the external host/titlebar is not part of the Wiki surface. Keep the home banner and category cards aligned to the same `12px` side inset as the action bar buttons.
 - Page summary sits at `x=34, y=174, w=166, h=56` in the observed state.
-- `Game.CategoryCard` cards render as a single column at `w=351, h=114`, with `12px` vertical row gap in the observed layout.
+- `Game.CategoryCard` cards render as a single column at reference `w=351, h=114`, with `12px` vertical row gap in the observed layout. In production, each card uses `width: 100%` of the mobile content column.
 - Do not use the desktop four-column category grid on mobile.
 
 ### Mobile Secondary Pages
 
 - Secondary tabs are horizontal-scroll rows. Use `x=12, y=152, h=36` on the 375px reference viewport. Do not wrap tabs to multiple lines.
-- `SecondaryPageSimpleInfo-mobile` uses single-column `Game.ShowCard` rows at `w=351, h=76`, row gap `12px`.
-- `SecondaryPage-mobile` uses single-column `Layout.DescribeCard Size=SM` rows at `w=351, h=106`, row gap `12px`.
-- `SecondaryPageLargeCard-mobile` uses single-column `Layout.DescribeCard Size=LG` rows at `w=351`; the observed `16:9` image frame is `335 x 188.44`, while square image-first items may use `335 x 335`.
+- `SecondaryPageSimpleInfo-mobile` uses single-column `Game.ShowCard` rows at reference `w=351, h=76`, row gap `12px`; production rows fill the mobile content column.
+- `SecondaryPage-mobile` uses single-column `Layout.DescribeCard Size=SM` rows at reference `w=351, h=106`, row gap `12px`; production rows fill the mobile content column.
+- `SecondaryPageLargeCard-mobile` uses single-column `Layout.DescribeCard Size=LG` rows at reference `w=351`; the observed `16:9` image frame is `335 x 188.44`, while square image-first items may use `335 x 335`. In production, the card and media width fill the mobile content column after its internal padding.
 - `SecondaryPageMultiNav-mobile` keeps second-level tabs horizontal-scroll and replaces the desktop left sidebar with a horizontal mobile `Nav` row. The observed local nav row is `x=12, y=200, w=448, h=32` and may overflow horizontally; allow horizontal scroll and do not wrap.
 
 ### Mobile Detail And Article Pages
 
-- Mobile structured detail content uses `x=12, y=152, w=351` for the main detail content shell. Do not render desktop breadcrumbs on mobile; use the mobile header back/title pattern instead.
-- Mobile `DetailContent` stacks vertically. The observed hero card is `Game.ShowCard w=319, h=76` inside `x=28, y=168`; detail modules use `Layout.DetailCard w=319` with content-driven height.
+- Mobile structured detail content uses `x=12, y=152, w=351` for the main detail content shell on the 375px reference; production shell width is `calc(100% - 24px)`. Do not render desktop breadcrumbs on mobile; use the mobile header back/title pattern instead.
+- Mobile `DetailContent` stacks vertically. The observed hero card is `Game.ShowCard w=319, h=76` inside `x=28, y=168`; detail modules use reference `Layout.DetailCard w=319` with content-driven height. In production, these inner cards fill the actual detail content width after the observed inset.
 - Detail tables must fit the mobile detail card width. Use compressible column tracks and repeat `Data.TableHeaderCell` / `Data.TableRowCell` from structured table data. Do not preserve desktop fixed table width such as `928px`.
-- Mobile document/article detail uses `ArticleContent x=12, y=152, w=351`; article body blocks use `x=24, w=327`. Paragraph text is `14px/20px`. Desktop left anchors and right related-info links are not rendered on mobile.
+- Mobile document/article detail uses reference `ArticleContent x=12, y=152, w=351`; article body blocks use reference `x=24, w=327`. Production article content fills `calc(100% - 24px)`, and article body blocks fill the article content after their internal inset. Paragraph text is `14px/20px`. Desktop left anchors and right related-info links are not rendered on mobile.
 
 ### Mobile Modal
 
 - Mobile `Base.Modal` detail state is observed in node `624:7298`: overlay over `375 x 812`, panel `x=20, y=210, w=335, h=464`.
 - Mobile detail modal image uses `Base.Image Ratio=1:1` at `80 x 80`.
-- Mobile modal keeps the lower description area scrollable and uses `Layout.Scroll` visual behavior for internal overflow.
+- Mobile modal keeps the lower description area scrollable for internal overflow, but scrollbar chrome remains hidden and `Layout.Scroll` is not rendered below `600px`.
 - Mobile video modal is not defined yet. Keep `variant=video` mobile placement as `TODO_FROM_FIGMA_OR_IMPLEMENTATION` until the video mobile Figma state is added.
 
 ## Components

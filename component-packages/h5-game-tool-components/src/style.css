@@ -3773,7 +3773,8 @@ button:disabled {
   background: var(--color-alpha-white-alpha-2);
 }
 
-.gt-wiki-navigate-item--active {
+.gt-wiki-navigate-item--active,
+.gt-wiki-navigate-item--active:hover {
   color: var(--color-text-strong);
   background: transparent;
 }
@@ -3928,7 +3929,7 @@ button:disabled {
 @media (max-width: 599px) {
   .wiki-home-template-workspace,
   .wiki-document-template-workspace {
-    grid-template-columns: max-content;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .wiki-home-template-audit,
@@ -3938,13 +3939,50 @@ button:disabled {
 
   .wiki-home-template-stage,
   .wiki-document-template-stage {
+    width: 100%;
+    max-width: 100%;
     overflow: auto;
+  }
+
+  .wiki-home-template-stage,
+  .wiki-document-template-stage,
+  .wiki-home-template-frame,
+  .wiki-document-template-frame,
+  .wiki-home-template-body,
+  .wiki-document-template-body,
+  .wiki-document-template-layout,
+  .wiki-home-template-content,
+  .wiki-document-template-article,
+  .wiki-document-template-article-body,
+  .gt-wiki-navigate--horizontal,
+  .gt-modal__description {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .wiki-home-template-stage::-webkit-scrollbar,
+  .wiki-document-template-stage::-webkit-scrollbar,
+  .wiki-home-template-frame::-webkit-scrollbar,
+  .wiki-document-template-frame::-webkit-scrollbar,
+  .wiki-home-template-body::-webkit-scrollbar,
+  .wiki-document-template-body::-webkit-scrollbar,
+  .wiki-document-template-layout::-webkit-scrollbar,
+  .wiki-home-template-content::-webkit-scrollbar,
+  .wiki-document-template-article::-webkit-scrollbar,
+  .wiki-document-template-article-body::-webkit-scrollbar,
+  .gt-wiki-navigate--horizontal::-webkit-scrollbar,
+  .gt-modal__description::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
   }
 
   .wiki-home-template-frame,
   .wiki-document-template-frame {
-    width: 375px;
-    height: 812px;
+    width: 100%;
+    min-width: 0;
+    max-width: 100vw;
+    height: max(812px, 100vh);
     border-radius: 0;
   }
 
@@ -3955,23 +3993,27 @@ button:disabled {
 
   .wiki-home-template-body {
     top: 104px;
-    width: 375px;
-    height: 708px;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: auto;
     overflow-y: auto;
   }
 
   .wiki-home-template-content {
     position: relative;
     top: 0;
-    left: 12px;
-    width: 351px;
+    left: 0;
+    width: calc(100% - 24px);
     height: auto;
+    box-sizing: border-box;
+    margin: 0 12px;
     padding-bottom: 24px;
     gap: 12px;
   }
 
   .wiki-home-template-summary-banner {
-    width: 351px;
+    width: 100%;
     height: 100px;
     flex-basis: 100px;
   }
@@ -3989,15 +4031,15 @@ button:disabled {
   }
 
   .wiki-home-template-grid {
-    width: 351px;
+    width: 100%;
     height: auto;
-    grid-template-columns: 351px;
+    grid-template-columns: minmax(0, 1fr);
     grid-auto-rows: 114px;
     gap: 12px;
   }
 
   .wiki-home-template-grid .gt-wiki-category-card {
-    width: 351px;
+    width: 100%;
     height: 114px;
     min-height: 114px;
   }
@@ -4019,16 +4061,18 @@ button:disabled {
 
   .wiki-document-template-layout {
     position: relative;
-    left: 12px;
+    left: 0;
     top: 48px;
     display: block;
-    width: 351px;
+    width: calc(100% - 24px);
     height: auto;
+    box-sizing: border-box;
+    margin: 0 12px;
     overflow: visible;
   }
 
   .wiki-document-template-article {
-    width: 351px;
+    width: 100%;
     min-height: 0;
     gap: 12px;
     font-family: "PingFang SC", "Microsoft YaHei UI", sans-serif;
@@ -4051,13 +4095,13 @@ button:disabled {
   }
 
   .wiki-document-template-article-body {
-    width: 327px;
+    width: calc(100% - 24px);
     margin-left: 12px;
     gap: 8px;
   }
 
   .wiki-document-template-hero {
-    width: 327px;
+    width: 100%;
     max-height: 230px;
   }
 
@@ -4108,7 +4152,7 @@ button:disabled {
   }
 
   .gt-wiki-category-card {
-    width: min(100%, 351px);
+    width: 100%;
     min-height: 114px;
     padding: 12px;
     gap: 8px;
@@ -4132,7 +4176,7 @@ button:disabled {
   }
 
   .gt-wiki-show-card {
-    width: min(100%, 351px);
+    width: 100%;
     min-height: 76px;
     font-family: "PingFang SC", "Microsoft YaHei UI", sans-serif;
   }
@@ -4155,20 +4199,29 @@ button:disabled {
 
   .gt-wiki-describe-card {
     --gt-wiki-describe-card-body-width: 233px;
-    --gt-wiki-describe-card-content-width: 335px;
+    --gt-wiki-describe-card-content-width: 100%;
     --gt-wiki-describe-card-image-size: 90px;
-    width: 351px;
+    width: 100%;
     min-height: 106px;
     font-family: "PingFang SC", "Microsoft YaHei UI", sans-serif;
   }
 
   .gt-wiki-describe-card--lg {
-    width: 351px;
+    width: 100%;
     min-height: 0;
   }
 
   .gt-wiki-describe-card--lg > .gt-wiki-image {
-    width: 335px;
+    width: 100%;
+  }
+
+  .gt-wiki-describe-card__body {
+    width: auto;
+    flex: 1 1 0;
+  }
+
+  .gt-wiki-describe-card--lg .gt-wiki-describe-card__body {
+    width: 100%;
   }
 
   .gt-wiki-describe-card--sm h3 {
@@ -4195,7 +4248,7 @@ button:disabled {
   }
 
   .gt-wiki-detail-card {
-    width: 319px;
+    width: 100%;
     font-family: "PingFang SC", "Microsoft YaHei UI", sans-serif;
   }
 
@@ -4215,7 +4268,7 @@ button:disabled {
   }
 
   .gt-wiki-detail-card__feature-card {
-    width: 319px;
+    width: 100%;
   }
 
   .gt-wiki-detail-card__table {
@@ -4225,6 +4278,107 @@ button:disabled {
 
   .gt-wiki-detail-card__table-row {
     grid-template-columns: var(--gt-wiki-table-columns, repeat(var(--gt-wiki-table-column-count, 4), minmax(0, 1fr)));
+  }
+
+  .gt-scroll {
+    display: none;
+  }
+
+  .gt-wiki-topbar-item--hover,
+  .gt-wiki-topbar-item:hover {
+    color: var(--color-text-weak);
+    background: transparent;
+  }
+
+  .gt-wiki-topbar-item--active:hover {
+    color: var(--color-text-sub);
+    background: linear-gradient(180deg, rgba(254, 235, 132, 0.016) 0%, rgba(255, 215, 50, 0.08) 100%);
+  }
+
+  .gt-wiki-command-item--hover,
+  .gt-wiki-command-item:hover {
+    background: var(--color-alpha-white-alpha-4);
+  }
+
+  .gt-wiki-secondary-tab:hover {
+    color: var(--color-text-weak);
+    background: transparent;
+  }
+
+  .gt-wiki-secondary-tab--active:hover {
+    color: var(--color-primary-base);
+    background: transparent;
+  }
+
+  .gt-wiki-navigate-item--hover,
+  .gt-wiki-navigate-item:hover {
+    color: #767c7f;
+    background: transparent;
+  }
+
+  .gt-wiki-navigate-item--active,
+  .gt-wiki-navigate-item--active:hover {
+    color: var(--color-text-strong);
+    background: transparent;
+  }
+
+  .gt-wiki-category-card--interactive:hover,
+  .gt-wiki-category-card--hover {
+    border-color: transparent;
+    background: var(--color-alpha-white-alpha-2);
+    box-shadow: 0 1px 2px rgba(255, 255, 255, 0.03);
+  }
+
+  .gt-wiki-show-card--interactive:hover,
+  .gt-wiki-detail-card__feature-card.gt-wiki-show-card--interactive:hover {
+    border-color: transparent;
+    background: var(--color-alpha-white-alpha-4);
+  }
+
+  .gt-wiki-describe-card--hover,
+  .gt-wiki-describe-card--interactive:hover,
+  .gt-wiki-describe-card--lg.gt-wiki-describe-card--hover,
+  .gt-wiki-describe-card--lg.gt-wiki-describe-card--interactive:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .gt-wiki-pagination-cell:hover,
+  .gt-wiki-pagination-cell--hover {
+    border-color: var(--color-stroke-area);
+    color: var(--color-text-weak);
+    background: transparent;
+  }
+
+  .gt-wiki-pagination__arrow:hover {
+    color: var(--color-text-weak);
+    background: transparent;
+  }
+
+  .gt-wiki-breadcrumb-item--hover,
+  .gt-wiki-breadcrumb-item:hover {
+    color: var(--color-text-weak);
+    background: transparent;
+  }
+
+  .gt-wiki-badge-counter__button:hover:not(:disabled) {
+    color: var(--color-text-sub);
+    background: var(--color-alpha-white-alpha-4);
+  }
+
+  .gt-modal__close:hover {
+    color: #7e8994;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .gt-tool-tip__bubble,
+  .gt-tool-tip__bubble--visible,
+  .gt-tool-tip--enabled:hover .gt-tool-tip__bubble,
+  .gt-tool-tip--enabled:focus-within .gt-tool-tip__bubble {
+    opacity: 0;
+    visibility: hidden;
+    transition-delay: 0ms;
   }
 
   .gt-modal-layer {

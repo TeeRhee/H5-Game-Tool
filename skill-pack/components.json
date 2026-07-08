@@ -49,7 +49,8 @@
         "templateInstance": "x=252, y=102, w=12, h=586 inside Panel Content",
         "track": "12px wide, transparent track, no panel-background block. Use 8px top/bottom track padding unless the template explicitly overrides it.",
         "thumb": "4px wide, 80px high by default, x=4, radius 999, fill #FFFFFF @ 12%. Thumb y = trackPadding + scrollRatio * (trackHeight - thumbHeight - trackPadding * 2).",
-        "rule": "Use as a visual scrollbar that reflects renderer scroll state. It does not define datasource fields. Track height comes from the rendered scrollbar instance or template position, not automatically from the content viewport unless they are intentionally the same."
+        "rule": "Use as a visual scrollbar that reflects renderer scroll state. It does not define datasource fields. Track height comes from the rendered scrollbar instance or template position, not automatically from the content viewport unless they are intentionally the same.",
+        "mobileRule": "Below 600px on Wiki pages, do not render Layout.Scroll or any native visible scrollbar. Content may still scroll, but scrollbar chrome must be hidden."
       },
       "props": {
         "scrollTop": {
@@ -562,7 +563,7 @@
         "padding": "Desktop header padding is top=32, right=32, bottom=16, left=32. The bottom 16px is part of the header mask/scroll cutoff area.",
         "layout": "TopBar and SearchBar stay aligned at y=32 with height 36. Other page content starts after the 84px header region and should disappear under the header from its bottom padding boundary while scrolling.",
         "rule": "Do not place page body content inside the header padding. Template body/content absolute positions should shift down with the 84px header.",
-        "mobileRule": "Below 600px, do not reuse desktop Nav.Header. Use the host/product mobile shell behavior from the Wiki mobile template reference: MobileHeader/TitlebarCenter x=0, y=0, w=375, h=92 with content starting at y=104. This mobile header is not a formal component export in the current package, and it must not replace the page's product-customized body structure."
+        "mobileRule": "Below 600px, do not reuse desktop Nav.Header. Use the host/product mobile shell behavior from the Wiki mobile template reference: MobileHeader/TitlebarCenter x=0, y=0, w=375, h=92 with content starting at y=104. The 375px width is a Figma reference only; production mobile shell/header width must fill the available host container or browser viewport. When the host/product titlebar is outside the Wiki surface, the dark Wiki shell uses its own internal 68px action bar with 12px inset, a left 44x44 search icon button, and a right 44x44 primary-menu icon button; hide desktop Nav.TopBar and the desktop Form.SearchBar input in that shell. This mobile header/action-bar chrome is not a formal component export in the current package, and it must not replace the page's product-customized body structure."
       },
       "props": {
         "searchValue": {
@@ -597,7 +598,7 @@
         "container": "Global first-level Wiki navigation container. Background uses color/bg/alpha-bg equivalent alpha surface and a 6px background blur/backdrop-filter from Figma node 312:3809.",
         "layout": "Horizontal flex row, 8px item gap, radius md, 8 items observed at w=80, h=36.",
         "rule": "Keep the blur on the TopBar container only. Do not add blur to individual TopBarItem states.",
-        "mobileMenuRule": "Below 600px, Nav.TopBar items are not rendered as the desktop header strip. The right header menu opens the mobile primary navigation panel from Figma node 590:9324 and reuses the same items and activeId datasource. This is navigation chrome only; do not use the mobile menu reference to replace or reorder the page's body content."
+        "mobileMenuRule": "Below 600px, Nav.TopBar items are not rendered as the desktop header strip. The right header menu opens the mobile primary navigation panel from Figma node 590:9324 and reuses the same items and activeId datasource. In the embedded dark Wiki shell, the menu opens below the 68px internal action bar, covers the remaining shell, uses the 12px side inset / 351px reference content column, renders each first-level item as a min-height 56px touch row, and keeps the active brand gradient/underline treatment. This is navigation chrome only; do not use the mobile menu reference to replace or reorder the page's body content."
       },
       "props": {
         "items": {
@@ -668,7 +669,7 @@
         "wiki:detail.content-shell"
       ],
       "observedStructure": {
-        "rule": "Vertical local navigation used when a selected second-level tab contains real third-level groups or when a long detail page needs section anchors. In the multi-level secondary template it sits left of the card list and has a right divider, but it remains optional when the source page has only second-level navigation.",
+        "rule": "Figma source is Nav / Navigate / Default with Orientation=Vertical/Horizontal variants. Vertical local navigation is used when a selected second-level tab contains real third-level groups or when a long detail page needs section anchors. In the multi-level secondary template it sits left of the card list and has a right divider, but it remains optional when the source page has only second-level navigation.",
         "mobileRule": "Below 600px, do not render the desktop vertical sidebar. For secondary multi-nav pages, use the horizontal mobile local navigation row from node 590:10996: reference x=12, y=200, w=448, h=32; allow horizontal scroll and no wrapping. Mobile document/article pages do not render local anchors."
       },
       "props": {
@@ -689,6 +690,17 @@
           "required": false,
           "source": "renderer state",
           "rule": "Initial selected item id for uncontrolled usage. If omitted, use the first item marked state=active, otherwise the first item."
+        },
+        "orientation": {
+          "type": "enum",
+          "required": false,
+          "values": [
+            "vertical",
+            "horizontal"
+          ],
+          "default": "vertical",
+          "source": "layout breakpoint / renderer context",
+          "rule": "Maps to the Figma Orientation variant: vertical = Orientation=Vertical, horizontal = Orientation=Horizontal. Use vertical for the desktop sidebar and horizontal for the mobile local navigation row below 600px when real third-level groups exist."
         },
         "onActiveChange": {
           "type": "interaction",
@@ -776,7 +788,7 @@
       "observedStructure": {
         "rule": "This card is the top-level Wiki category entry on the home page. The circular preview slots summarize up to the first three items of the linked secondary page in display order, and the trailing count shows the total number of items contained by that category. Hide the whole card when the total item count is 0.",
         "hoverRule": "Render hover state only when the card can click through to a real secondary page or otherwise trigger new information. If it cannot navigate or trigger a real information change, keep the default state even on pointer hover.",
-        "mobile": "Below 600px, WikiHome-mobile renders CategoryCard in a single column at w=351, h=114 with 12px row gap. Title uses 16px/24px PingFang SC Bold, description uses 14px/20px PingFang SC Regular, and count badge uses 12px/14px."
+        "mobile": "Below 600px, WikiHome-mobile renders CategoryCard in a single column at reference w=351, h=114 with 12px row gap. In production, the card width fills the actual mobile content column rather than staying fixed at 351px. Title uses 16px/24px PingFang SC Bold, description uses 14px/20px PingFang SC Regular, and count badge uses 12px/14px."
       },
       "props": {
         "title": {
@@ -925,8 +937,8 @@
         "lgNoAttributesRule": "For size=lg with showAttributes=false, the card height must adapt to rendered content instead of keeping the full LG fixed height reserved for the attributes row.",
         "lgNoDescriptionRule": "For size=lg when description/subtitle is absent, render the image-first structure as image plus title and any explicitly bound badge/meta only. Do not render an empty subtitle row or reserve subtitle spacing, and let the card height adapt to image, title, and padding.",
         "hoverRule": "Render hover state only when the card can click through, open a detail/modal, expand, play, or otherwise trigger new information. If it is display-only, do not show hover styling.",
-        "mobileSm": "Below 600px, SecondaryPage-mobile renders Layout.DescribeCard Size=SM as a single-column list: card w=351, h=106 in the observed reference. Title uses 14px/20px PingFang SC Regular, description uses 12px/18px PingFang SC Regular, and badges/meta use 12px/14px.",
-        "mobileLg": "Below 600px, SecondaryPageLargeCard-mobile renders Layout.DescribeCard Size=LG as a single-column image-first card: card w=351, observed h=312.44 for 16:9 images and h=459 for square image-first items. Content/media width is 335; the observed 16:9 image frame is 335 x 188.44 and square image frame is 335 x 335. Title uses 16px/24px PingFang SC Bold, description uses 14px/20px PingFang SC Regular, and badges use 12px/14px."
+        "mobileSm": "Below 600px, SecondaryPage-mobile renders Layout.DescribeCard Size=SM as a single-column list: reference card w=351, h=106 in the observed 375px frame. In production, the card width fills the actual mobile content column. Title uses 14px/20px PingFang SC Regular, description uses 12px/18px PingFang SC Regular, and badges/meta use 12px/14px.",
+        "mobileLg": "Below 600px, SecondaryPageLargeCard-mobile renders Layout.DescribeCard Size=LG as a single-column image-first card: reference card w=351, observed h=312.44 for 16:9 images and h=459 for square image-first items. Content/media width is 335 on the 375px reference; in production, card and media width fill the actual mobile content column after internal padding. Title uses 16px/24px PingFang SC Bold, description uses 14px/20px PingFang SC Regular, and badges use 12px/14px."
       },
       "props": {
         "title": {
@@ -1103,7 +1115,7 @@
           },
           "rule": "Voice state is an audio playback row: left play/pause icon, title, right time label, and bottom playback progress bar. The play/pause icon uses var(--color-icon-strong); the playback progress fill uses var(--color-primary-base). It represents playable audio content, not drill-down navigation."
         },
-        "mobile": "Below 600px, SecondaryPageSimpleInfo-mobile renders Game.ShowCard as a single-column row at w=351, h=76. In SecondaryPageMultiNav-mobile, ShowCard rows may be w=448 inside a horizontally scrollable content area. Title uses 16px/24px PingFang SC Bold, description uses 14px/20px PingFang SC Regular, and badge uses 12px/14px."
+        "mobile": "Below 600px, SecondaryPageSimpleInfo-mobile renders Game.ShowCard as a single-column row at reference w=351, h=76. In production, standard mobile rows fill the actual mobile content column. In SecondaryPageMultiNav-mobile, ShowCard rows may be reference w=448 inside a horizontally scrollable content area. Title uses 16px/24px PingFang SC Bold, description uses 14px/20px PingFang SC Regular, and badge uses 12px/14px."
       },
       "props": {
         "title": {
@@ -1284,7 +1296,7 @@
         "orderingRule": "Within a Layout.DetailCard module, keep title first, then render only the optional blocks that exist in the source data, preserving the source section order where possible. Do not force every DetailCard to include all internal parts just because the Figma component demonstrates them.",
         "titleRow": "Title renders inside an internal H1 row: horizontal auto layout, h=20, gap=6, vertically centered.",
         "titleDecoration": "Always render the internal title decoration before the title text. Figma node Rectangle 1 is a primary-color vertical cut marker, visual size 1.5 x 14, using var(--color-primary-base). This decoration is component chrome and must not be mapped from datasource.",
-        "mobile": "Below 600px, DetailPageAllStates-mobile uses Layout.DetailCard modules at w=319 inside the 351px detail content shell, with content-driven heights such as 84, 128, 258, or 232. Do not preserve desktop 928px module width on mobile."
+        "mobile": "Below 600px, DetailPageAllStates-mobile uses Layout.DetailCard modules at reference w=319 inside the 351px detail content shell, with content-driven heights such as 84, 128, 258, or 232. In production, modules fill the actual mobile detail content width after observed insets. Do not preserve desktop 928px module width on mobile."
       },
       "props": {
         "title": {
@@ -1424,6 +1436,7 @@
         "bubble": "Figma node 385:6113 defines the visible bubble as a hug-content 100x34 sample: background color/bg/weak (#11161B), radius lg/6px, horizontal padding 12px, vertical padding 8px, Body/SM 12px/18px text in color/text/strong, regular-small white drop shadow.",
         "tail": "12x6 triangle tail attached to the bubble edge. Supported Type values place the tail at TopLeft, TopCenter, TopRight, BottomLeft, BottomCenter, BottomRight, Left, or Right. The Type name describes the tail edge/anchor on the bubble, not the source trigger's side.",
         "behavior": "Hidden by default. Enable display only when the wrapped text is actually truncated, overflow-clipped, or visually hidden while the full text exists. Show on mouse hover over the wrapped text and on keyboard focus of the parent interactive card when applicable, after a short delay of about 120ms. The bubble is non-interactive and must not affect layout size.",
+        "mobileRule": "Below 600px on Wiki pages, do not show hover tooltip bubbles. Mobile content must not rely on hover-only disclosure for required information; expose important text in the visible layout, tap/open state, or destination page instead.",
         "portalRule": "The visible bubble must render in a page/body-level overlay or portal, not as a normal child inside the hovered text/card/list container. The trigger remains inside the original component for measurement, but the bubble must escape overflow:hidden, clip, and scroll containers so it is never cropped by small cards or list rows. When the trigger is inside a wiki page shell, clamp the bubble to the page shell plus viewport margin; otherwise clamp to the viewport. A tooltip implementation that depends on local overflow:visible, local z-index stacking, or absolute positioning inside the hovered container is invalid."
       },
       "props": {
@@ -1493,7 +1506,7 @@
         "detailVariant": "Property=Detail: optional 100x100 centered image, centered title 16px/24px bold #F5F7FA, optional subtitle 12px/18px #AEB6BE, and lower 357 x 256 description box. Omit unavailable optional fields and collapse their spacing.",
         "videoVariant": "Property=Vedio in Figma, exposed as variant=video in code: panel 381 x 290 with a 357 x 238 video area at x=12, y=40 and a centered play icon. Use for video source material only.",
         "description": "Detail variant lower description box is the max-visible text area: padding 8, 1px #FFFFFF @ 10% stroke, radius 8, text 14px/20px #AEB6BE. It grows with content until its max height, then only this description area scrolls vertically with the Layout.Scroll visual style: 12px track, 4px thumb, #FFFFFF @ 12%.",
-        "mobileDetail": "Below 600px, mobile detail modal follows node 624:7298: overlay over the viewport, panel x=20, y=210, w=335, h=464 on the 375px reference. Detail image uses Base.Image Ratio=1:1 at 80x80. Description remains the internal scroll area. Mobile video modal is not defined yet and remains TODO_FROM_FIGMA_OR_IMPLEMENTATION."
+        "mobileDetail": "Below 600px, mobile detail modal follows node 624:7298: overlay over the viewport, panel x=20, y=210, w=335, h=464 on the 375px reference. Detail image uses Base.Image Ratio=1:1 at 80x80. Description remains internally scrollable, but scrollbar chrome and Layout.Scroll are not rendered on mobile. Mobile video modal is not defined yet and remains TODO_FROM_FIGMA_OR_IMPLEMENTATION."
       },
       "props": {
         "open": {
