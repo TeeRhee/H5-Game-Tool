@@ -1421,10 +1421,10 @@
       "observedStructure": {
         "rule": "Text hover disclosure bubble for truncated or visually hidden text only. Do not show a tooltip when the wrapped text is fully visible and not clipped. Do not use this component for map markers; Map.MapTip remains the map point marker.",
         "trigger": "Wrap the visible text node that owns the clamp/ellipsis/hidden styling. The trigger keeps its original layout and text clamp rules.",
-        "bubble": "Background color/bg/weak, radius lg, horizontal padding 12px, vertical padding 4px, Body/MD 14px/20px text in color/text/strong, regular-small white drop shadow.",
-        "tail": "12x6 triangle tail attached to the bubble edge. Supported directions place the tail at TopLeft, TopCenter, TopRight, BottomLeft, BottomCenter, BottomRight, Left, or Right.",
+        "bubble": "Figma node 385:6113 defines the visible bubble as a hug-content 100x34 sample: background color/bg/weak (#11161B), radius lg/6px, horizontal padding 12px, vertical padding 8px, Body/SM 12px/18px text in color/text/strong, regular-small white drop shadow.",
+        "tail": "12x6 triangle tail attached to the bubble edge. Supported Type values place the tail at TopLeft, TopCenter, TopRight, BottomLeft, BottomCenter, BottomRight, Left, or Right. The Type name describes the tail edge/anchor on the bubble, not the source trigger's side.",
         "behavior": "Hidden by default. Enable display only when the wrapped text is actually truncated, overflow-clipped, or visually hidden while the full text exists. Show on mouse hover over the wrapped text and on keyboard focus of the parent interactive card when applicable, after a short delay of about 120ms. The bubble is non-interactive and must not affect layout size.",
-        "portalRule": "The visible bubble must render in a page/body-level overlay or portal, not as a normal child inside the hovered text/card/list container. The trigger remains inside the original component for measurement, but the bubble must escape overflow:hidden, clip, and scroll containers so it is never cropped by small cards or list rows. A tooltip implementation that depends on local overflow:visible, local z-index stacking, or absolute positioning inside the hovered container is invalid."
+        "portalRule": "The visible bubble must render in a page/body-level overlay or portal, not as a normal child inside the hovered text/card/list container. The trigger remains inside the original component for measurement, but the bubble must escape overflow:hidden, clip, and scroll containers so it is never cropped by small cards or list rows. When the trigger is inside a wiki page shell, clamp the bubble to the page shell plus viewport margin; otherwise clamp to the viewport. A tooltip implementation that depends on local overflow:visible, local z-index stacking, or absolute positioning inside the hovered container is invalid."
       },
       "props": {
         "content": {
@@ -1454,7 +1454,7 @@
             "Right"
           ],
           "default": "auto",
-          "rule": "Use auto for production text disclosure so the component chooses the direction that best fits the current viewport. Do not constrain placement to the nearest scroll/clipping container; the bubble is rendered through the portal/overlay specifically to escape those containers. Do not keep the bubble inside the hovered card/list row just to satisfy local layout rules. Use a fixed direction only for intentional component demos or when the caller has already resolved placement."
+          "rule": "Use auto for production text disclosure so the component chooses the Type direction that best fits the current page shell and viewport. Do not constrain placement to the nearest scroll/clipping container; the bubble is rendered through the portal/overlay specifically to escape those containers. Do not keep the bubble inside the hovered card/list row just to satisfy local layout rules. Use a fixed Type only for intentional component demos or when the caller has already resolved placement."
         },
         "active": {
           "type": "boolean|auto",

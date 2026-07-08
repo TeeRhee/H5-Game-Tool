@@ -19,12 +19,25 @@ export interface ToolTipProps {
   showDelayMs?: number;
 }
 
-function getBoundaryRect() {
-  return {
+function getBoundaryRect(root: HTMLElement) {
+  const viewportBoundary = {
     left: VIEWPORT_MARGIN,
     top: VIEWPORT_MARGIN,
     right: window.innerWidth - VIEWPORT_MARGIN,
     bottom: window.innerHeight - VIEWPORT_MARGIN,
+  };
+  const shell = root.closest(".wiki-page-shell");
+
+  if (!(shell instanceof HTMLElement)) {
+    return viewportBoundary;
+  }
+
+  const rect = shell.getBoundingClientRect();
+  return {
+    left: Math.max(viewportBoundary.left, rect.left + VIEWPORT_MARGIN),
+    top: Math.max(viewportBoundary.top, rect.top + VIEWPORT_MARGIN),
+    right: Math.min(viewportBoundary.right, rect.right - VIEWPORT_MARGIN),
+    bottom: Math.min(viewportBoundary.bottom, rect.bottom - VIEWPORT_MARGIN),
   };
 }
 
@@ -59,6 +72,37 @@ function getOverflowScore(rect: ReturnType<typeof getPlacementRect>, boundary: R
     Math.max(boundary.top - rect.top, 0) +
     Math.max(rect.bottom - boundary.bottom, 0)
   );
+}
+
+function getBubbleBounds(boundary: ReturnType<typeof getBoundaryRect>) {
+  const width = Math.max(0, boundary.right - boundary.left);
+  const height = Math.max(0, boundary.bottom - boundary.top);
+
+  return {
+    maxWidth: Math.min(320, width),
+    maxHeight: height,
+  };
+}
+
+function getClampedBubbleStyle(
+  rect: ReturnType<typeof getPlacementRect>,
+  bubbleRect: DOMRect,
+  boundary: ReturnType<typeof getBoundaryRect>,
+  showDelayMs: number,
+) {
+  const bubbleBounds = getBubbleBounds(boundary);
+  const clampedWidth = Math.min(bubbleRect.width, bubbleBounds.maxWidth);
+  const clampedHeight = Math.min(bubbleRect.height, bubbleBounds.maxHeight);
+  const maxLeft = Math.max(boundary.left, boundary.right - clampedWidth);
+  const maxTop = Math.max(boundary.top, boundary.bottom - clampedHeight);
+
+  return {
+    left: Math.min(Math.max(rect.left, boundary.left), maxLeft),
+    top: Math.min(Math.max(rect.top, boundary.top), maxTop),
+    maxWidth: bubbleBounds.maxWidth,
+    maxHeight: bubbleBounds.maxHeight,
+    "--gt-tool-tip-show-delay": `${showDelayMs}ms`,
+  } as CSSProperties;
 }
 
 export function ToolTip({
@@ -107,18 +151,17 @@ export function ToolTip({
     const bubble = bubbleRef.current;
     if (!root || !bubble) return resolvedPlacement;
 
+    const rootRect = root.getBoundingClientRect();
+    const bubbleRect = bubble.getBoundingClientRect();
+    const boundary = getBoundaryRect(root);
+
     if (placement !== "auto") {
       setResolvedPlacement(placement);
-      const rootRect = root.getBoundingClientRect();
-      const bubbleRect = bubble.getBoundingClientRect();
       const rect = getPlacementRect(placement, rootRect, bubbleRect);
-      setBubbleStyle({ left: rect.left, top: rect.top, "--gt-tool-tip-show-delay": `${showDelayMs}ms` } as CSSProperties);
+      setBubbleStyle(getClampedBubbleStyle(rect, bubbleRect, boundary, showDelayMs));
       return placement;
     }
 
-    const rootRect = root.getBoundingClientRect();
-    const bubbleRect = bubble.getBoundingClientRect();
-    const boundary = getBoundaryRect();
     const best = AUTO_PLACEMENTS.reduce(
       (best, candidate) => {
         const rect = getPlacementRect(candidate, rootRect, bubbleRect);
@@ -128,14 +171,8 @@ export function ToolTip({
       { placement: resolvedPlacement, score: Number.POSITIVE_INFINITY, rect: getPlacementRect(resolvedPlacement, rootRect, bubbleRect) },
     );
 
-    const maxLeft = Math.max(boundary.left, boundary.right - bubbleRect.width);
-    const maxTop = Math.max(boundary.top, boundary.bottom - bubbleRect.height);
     setResolvedPlacement(best.placement);
-    setBubbleStyle({
-      left: Math.min(Math.max(best.rect.left, boundary.left), maxLeft),
-      top: Math.min(Math.max(best.rect.top, boundary.top), maxTop),
-      "--gt-tool-tip-show-delay": `${showDelayMs}ms`,
-    } as CSSProperties);
+    setBubbleStyle(getClampedBubbleStyle(best.rect, bubbleRect, boundary, showDelayMs));
     return best.placement;
   }, [placement, resolvedPlacement, showDelayMs]);
 
@@ -153,18 +190,21 @@ export function ToolTip({
   }, []);
 
   const showBubble = useCallback(() => {
-    clearShowTimer();
     const nextEnabled = updateBeforeShow();
     if (!nextEnabled) {
+      clearShowTimer();
       setIsVisible(false);
       return;
     }
 
+    if (isVisible || showTimerRef.current != null) return;
+
     showTimerRef.current = window.setTimeout(() => {
+      showTimerRef.current = null;
       updateBeforeShow();
       setIsVisible(true);
     }, showDelayMs);
-  }, [clearShowTimer, showDelayMs, updateBeforeShow]);
+  }, [clearShowTimer, isVisible, showDelayMs, updateBeforeShow]);
 
   const hideBubble = useCallback(() => {
     clearShowTimer();
@@ -235,7 +275,11 @@ export function ToolTip({
       ref={rootRef}
       className={cx("gt-tool-tip", isEnabled && "gt-tool-tip--enabled", `gt-tool-tip--${resolvedPlacement}`, className)}
       onPointerEnter={showBubble}
+      onPointerMove={showBubble}
       onPointerLeave={hideBubble}
+      onMouseEnter={showBubble}
+      onMouseMove={showBubble}
+      onMouseLeave={hideBubble}
       onFocus={showBubble}
       onBlur={hideBubble}
       style={{ "--gt-tool-tip-show-delay": `${showDelayMs}ms` } as CSSProperties}

@@ -129,9 +129,9 @@ function validateTooltipContracts(errors) {
   );
   assert(
     tooltip?.props?.placement?.default === "auto" &&
-      tooltip?.props?.placement?.rule?.includes("best fits the current viewport") &&
+      tooltip?.props?.placement?.rule?.includes("best fits the current page shell and viewport") &&
       tooltip?.props?.placement?.rule?.includes("portal/overlay"),
-    "Base.ToolTip placement contract must keep auto viewport-aware placement through the portal overlay",
+    "Base.ToolTip placement contract must keep auto page-shell and viewport-aware placement through the portal overlay",
     errors,
   );
   assert(
