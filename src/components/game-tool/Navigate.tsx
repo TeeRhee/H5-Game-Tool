@@ -2,6 +2,8 @@ import { useMemo, useState } from "react";
 import type { ButtonHTMLAttributes, HTMLAttributes } from "react";
 import { cx } from "./wikiUtils";
 
+export type NavigateOrientation = "vertical" | "horizontal";
+
 export interface NavigateItemProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   state?: "default" | "hover" | "active";
 }
@@ -18,10 +20,11 @@ export interface NavigateProps extends HTMLAttributes<HTMLElement> {
   items?: Array<{ id: string; label: string; state?: "default" | "hover" | "active" }>;
   activeId?: string;
   defaultActiveId?: string;
+  orientation?: NavigateOrientation;
   onActiveChange?: (id: string) => void;
 }
 
-export function Navigate({ items, activeId, defaultActiveId, onActiveChange, className = "", children, ...props }: NavigateProps) {
+export function Navigate({ items, activeId, defaultActiveId, orientation = "vertical", onActiveChange, className = "", children, ...props }: NavigateProps) {
   const resolvedItems =
     items ?? [
       { id: "intro", label: "顶部导航", state: "active" as const },
@@ -45,7 +48,7 @@ export function Navigate({ items, activeId, defaultActiveId, onActiveChange, cla
   };
 
   return (
-    <nav className={cx("gt-wiki-navigate", className)} aria-label="页内导航" {...props}>
+    <nav className={cx("gt-wiki-navigate", `gt-wiki-navigate--${orientation}`, className)} aria-label="页内导航" {...props}>
       <div className="gt-wiki-navigate__list">
         {children ??
           resolvedItems.map((item) => {

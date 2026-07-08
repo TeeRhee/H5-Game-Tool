@@ -561,7 +561,8 @@
         "container": "Shared Wiki header shell at x=0, y=0, w=1000, h=84. It contains the global TopBar and global SearchBar.",
         "padding": "Desktop header padding is top=32, right=32, bottom=16, left=32. The bottom 16px is part of the header mask/scroll cutoff area.",
         "layout": "TopBar and SearchBar stay aligned at y=32 with height 36. Other page content starts after the 84px header region and should disappear under the header from its bottom padding boundary while scrolling.",
-        "rule": "Do not place page body content inside the header padding. Template body/content absolute positions should shift down with the 84px header."
+        "rule": "Do not place page body content inside the header padding. Template body/content absolute positions should shift down with the 84px header.",
+        "mobileRule": "Below 600px, do not reuse desktop Nav.Header. Use the host/product mobile shell behavior from the Wiki mobile template reference: MobileHeader/TitlebarCenter x=0, y=0, w=375, h=92 with content starting at y=104. This mobile header is not a formal component export in the current package, and it must not replace the page's product-customized body structure."
       },
       "props": {
         "searchValue": {
@@ -595,7 +596,8 @@
       "observedStructure": {
         "container": "Global first-level Wiki navigation container. Background uses color/bg/alpha-bg equivalent alpha surface and a 6px background blur/backdrop-filter from Figma node 312:3809.",
         "layout": "Horizontal flex row, 8px item gap, radius md, 8 items observed at w=80, h=36.",
-        "rule": "Keep the blur on the TopBar container only. Do not add blur to individual TopBarItem states."
+        "rule": "Keep the blur on the TopBar container only. Do not add blur to individual TopBarItem states.",
+        "mobileMenuRule": "Below 600px, Nav.TopBar items are not rendered as the desktop header strip. The right header menu opens the mobile primary navigation panel from Figma node 590:9324 and reuses the same items and activeId datasource. This is navigation chrome only; do not use the mobile menu reference to replace or reorder the page's body content."
       },
       "props": {
         "items": {
@@ -632,7 +634,7 @@
         "wiki:secondary.multi-level-tabs"
       ],
       "typography": {
-        "label": "Body/SM, 12px/18px, regular; active text uses var(--color-primary-base), default text uses var(--color-text-weak)."
+        "label": "Desktop: Body/SM, 12px/18px, regular; active text uses var(--color-primary-base), default text uses var(--color-text-weak). Mobile: 14px/20px PingFang SC Bold in the observed SecondaryPage mobile tab rows."
       },
       "props": {
         "children": {
@@ -666,7 +668,8 @@
         "wiki:detail.content-shell"
       ],
       "observedStructure": {
-        "rule": "Vertical local navigation used when a selected second-level tab contains real third-level groups or when a long detail page needs section anchors. In the multi-level secondary template it sits left of the card list and has a right divider, but it remains optional when the source page has only second-level navigation."
+        "rule": "Vertical local navigation used when a selected second-level tab contains real third-level groups or when a long detail page needs section anchors. In the multi-level secondary template it sits left of the card list and has a right divider, but it remains optional when the source page has only second-level navigation.",
+        "mobileRule": "Below 600px, do not render the desktop vertical sidebar. For secondary multi-nav pages, use the horizontal mobile local navigation row from node 590:10996: reference x=12, y=200, w=448, h=32; allow horizontal scroll and no wrapping. Mobile document/article pages do not render local anchors."
       },
       "props": {
         "items": {
@@ -772,7 +775,8 @@
       ],
       "observedStructure": {
         "rule": "This card is the top-level Wiki category entry on the home page. The circular preview slots summarize up to the first three items of the linked secondary page in display order, and the trailing count shows the total number of items contained by that category. Hide the whole card when the total item count is 0.",
-        "hoverRule": "Render hover state only when the card can click through to a real secondary page or otherwise trigger new information. If it cannot navigate or trigger a real information change, keep the default state even on pointer hover."
+        "hoverRule": "Render hover state only when the card can click through to a real secondary page or otherwise trigger new information. If it cannot navigate or trigger a real information change, keep the default state even on pointer hover.",
+        "mobile": "Below 600px, WikiHome-mobile renders CategoryCard in a single column at w=351, h=114 with 12px row gap. Title uses 16px/24px PingFang SC Bold, description uses 14px/20px PingFang SC Regular, and count badge uses 12px/14px."
       },
       "props": {
         "title": {
@@ -920,7 +924,9 @@
         "smDescriptionRule": "For size=sm, render description/subtitle as its own text node under the title row, not as a one-line ShowCard subtitle. The description region height adapts to the rendered source text using 12px text with 18px line-height. Do not clamp by default; use Base.ToolTip only if a specific template or host container intentionally truncates or hides the text.",
         "lgNoAttributesRule": "For size=lg with showAttributes=false, the card height must adapt to rendered content instead of keeping the full LG fixed height reserved for the attributes row.",
         "lgNoDescriptionRule": "For size=lg when description/subtitle is absent, render the image-first structure as image plus title and any explicitly bound badge/meta only. Do not render an empty subtitle row or reserve subtitle spacing, and let the card height adapt to image, title, and padding.",
-        "hoverRule": "Render hover state only when the card can click through, open a detail/modal, expand, play, or otherwise trigger new information. If it is display-only, do not show hover styling."
+        "hoverRule": "Render hover state only when the card can click through, open a detail/modal, expand, play, or otherwise trigger new information. If it is display-only, do not show hover styling.",
+        "mobileSm": "Below 600px, SecondaryPage-mobile renders Layout.DescribeCard Size=SM as a single-column list: card w=351, h=106 in the observed reference. Title uses 14px/20px PingFang SC Regular, description uses 12px/18px PingFang SC Regular, and badges/meta use 12px/14px.",
+        "mobileLg": "Below 600px, SecondaryPageLargeCard-mobile renders Layout.DescribeCard Size=LG as a single-column image-first card: card w=351, observed h=312.44 for 16:9 images and h=459 for square image-first items. Content/media width is 335; the observed 16:9 image frame is 335 x 188.44 and square image frame is 335 x 335. Title uses 16px/24px PingFang SC Bold, description uses 14px/20px PingFang SC Regular, and badges use 12px/14px."
       },
       "props": {
         "title": {
@@ -1096,7 +1102,8 @@
             "height": 58
           },
           "rule": "Voice state is an audio playback row: left play/pause icon, title, right time label, and bottom playback progress bar. The play/pause icon uses var(--color-icon-strong); the playback progress fill uses var(--color-primary-base). It represents playable audio content, not drill-down navigation."
-        }
+        },
+        "mobile": "Below 600px, SecondaryPageSimpleInfo-mobile renders Game.ShowCard as a single-column row at w=351, h=76. In SecondaryPageMultiNav-mobile, ShowCard rows may be w=448 inside a horizontally scrollable content area. Title uses 16px/24px PingFang SC Bold, description uses 14px/20px PingFang SC Regular, and badge uses 12px/14px."
       },
       "props": {
         "title": {
@@ -1276,7 +1283,8 @@
         "compositionRule": "A detail page may be assembled from multiple Layout.DetailCard modules. Each module represents one source detail section, and the renderer chooses which optional internal blocks to render from that section's actual data. The only required content for each module is title plus at least one optional content block from description, features, infoItems, statusBadges, tableColumns/tableRows/table, aside, media, or approved child content.",
         "orderingRule": "Within a Layout.DetailCard module, keep title first, then render only the optional blocks that exist in the source data, preserving the source section order where possible. Do not force every DetailCard to include all internal parts just because the Figma component demonstrates them.",
         "titleRow": "Title renders inside an internal H1 row: horizontal auto layout, h=20, gap=6, vertically centered.",
-        "titleDecoration": "Always render the internal title decoration before the title text. Figma node Rectangle 1 is a primary-color vertical cut marker, visual size 1.5 x 14, using var(--color-primary-base). This decoration is component chrome and must not be mapped from datasource."
+        "titleDecoration": "Always render the internal title decoration before the title text. Figma node Rectangle 1 is a primary-color vertical cut marker, visual size 1.5 x 14, using var(--color-primary-base). This decoration is component chrome and must not be mapped from datasource.",
+        "mobile": "Below 600px, DetailPageAllStates-mobile uses Layout.DetailCard modules at w=319 inside the 351px detail content shell, with content-driven heights such as 84, 128, 258, or 232. Do not preserve desktop 928px module width on mobile."
       },
       "props": {
         "title": {
@@ -1348,7 +1356,8 @@
         "gap": 10,
         "background": "rgba(255,255,255,0.04)",
         "text": "12px / 18px, var(--color-text-soft)",
-        "rule": "This is a reusable table header cell. It does not define the whole table, row count, or column count. Repeat one header cell per source column."
+        "rule": "This is a reusable table header cell. It does not define the whole table, row count, or column count. Repeat one header cell per source column.",
+        "mobile": "Below 600px, repeat header cells inside the mobile table width, typically inside a 319px Layout.DetailCard. Use compressible column tracks and do not preserve desktop fixed table widths."
       },
       "props": {
         "align": {
@@ -1398,7 +1407,8 @@
         "gap": 12,
         "stroke": "1px rgba(255,255,255,0.04)",
         "text": "12px / 18px, var(--color-text-soft)",
-        "rule": "This is a reusable table body cell. It does not define the whole table, row count, or column count. Repeat one row cell per source row and column. Use state=none only for intentionally empty or unavailable table cells. Text wraps with overflow-wrap:anywhere rather than nowrap or ellipsis."
+        "rule": "This is a reusable table body cell. It does not define the whole table, row count, or column count. Repeat one row cell per source row and column. Use state=none only for intentionally empty or unavailable table cells. Text wraps with overflow-wrap:anywhere rather than nowrap or ellipsis.",
+        "mobile": "Below 600px, row cells must fit the mobile table width, typically inside a 319px Layout.DetailCard. Keep 12px/18px text, allow wrapping, and avoid fixed desktop table width."
       }
     },
     {
@@ -1482,7 +1492,8 @@
         "close": "Close icon button at the top-right of the panel. It closes the modal and returns to the underlying page state.",
         "detailVariant": "Property=Detail: optional 100x100 centered image, centered title 16px/24px bold #F5F7FA, optional subtitle 12px/18px #AEB6BE, and lower 357 x 256 description box. Omit unavailable optional fields and collapse their spacing.",
         "videoVariant": "Property=Vedio in Figma, exposed as variant=video in code: panel 381 x 290 with a 357 x 238 video area at x=12, y=40 and a centered play icon. Use for video source material only.",
-        "description": "Detail variant lower description box is the max-visible text area: padding 8, 1px #FFFFFF @ 10% stroke, radius 8, text 14px/20px #AEB6BE. It grows with content until its max height, then only this description area scrolls vertically with the Layout.Scroll visual style: 12px track, 4px thumb, #FFFFFF @ 12%."
+        "description": "Detail variant lower description box is the max-visible text area: padding 8, 1px #FFFFFF @ 10% stroke, radius 8, text 14px/20px #AEB6BE. It grows with content until its max height, then only this description area scrolls vertically with the Layout.Scroll visual style: 12px track, 4px thumb, #FFFFFF @ 12%.",
+        "mobileDetail": "Below 600px, mobile detail modal follows node 624:7298: overlay over the viewport, panel x=20, y=210, w=335, h=464 on the 375px reference. Detail image uses Base.Image Ratio=1:1 at 80x80. Description remains the internal scroll area. Mobile video modal is not defined yet and remains TODO_FROM_FIGMA_OR_IMPLEMENTATION."
       },
       "props": {
         "open": {

@@ -216,15 +216,71 @@ The detail hero card family follows the previous page card family. Attribute bad
 
 ## Mobile Layout
 
-No mobile Wiki state was captured in this contract pass.
+Use the mobile Wiki layout when the rendered page width is `<600px`. Use the desktop Wiki layout when the rendered page width is `>=600px`. Do not use the old `767px` breakpoint for Wiki pages unless a host product explicitly overrides the Wiki contract.
 
-Do not invent a mobile layout from desktop frames. Define mobile only after one of these inputs exists:
+The observed mobile Wiki frames use a `375 x 812` reference viewport, but implementation must adapt to the actual viewport width. Treat `375` as the design reference, not a hardcoded production width.
 
-- mobile Wiki Figma nodes
-- explicit implementation constraints from the host app
-- a development-approved mobile adaptation contract
+Mobile template pages are adaptation references, not replacement pages. If a host Wiki page has already made product-specific adjustments on top of the desktop template, preserve its source-driven structure, component choices, field order, hidden or added details, and real data. Below `600px`, adapt that existing page with the mobile template's layout methods: mobile shell behavior, `12px` side insets, single-column stacking, horizontal-scrolling tabs/nav, mobile typography, mobile card widths, image behavior, and mobile visibility rules. Do not discard the customized page and do not inject, reorder, or remove business details solely because the observed mobile reference shows a different sample structure.
 
-Until then, keep mobile fields and rules as `TODO_FROM_FIGMA_OR_IMPLEMENTATION`.
+Observed mobile source nodes:
+
+- `WikiHome-mobile`: `577:8639`
+- `WikiHome-mobile` with primary-nav menu panel: `590:9117`, menu panel node `590:9324`
+- `SecondaryPageSimpleInfo-mobile`: `590:10341`
+- `SecondaryPage-mobile`: `590:10708`
+- `SecondaryPageLargeCard-mobile`: `590:9357`
+- `SecondaryPageMultiNav-mobile`: `590:10996`
+- `DetailPageAllStates-mobile`: `624:4277`
+- Document/article detail mobile: `624:6596`
+- Mobile detail modal: `624:7298`
+
+### Mobile Shell
+
+- Mobile pages use `MobileHeader x=0, y=0, w=375, h=92` as template chrome. This is not a new shared component in the current package; treat it as Wiki mobile shell structure until a formal component is approved.
+- Main content starts at `y=104`, with a `12px` left/right inset and default content width `351px` on the 375px reference viewport.
+- Use `PingFang SC, Microsoft YaHei UI, sans-serif` for mobile Wiki typography. The primary observed mobile font is `PingFang SC`.
+- The right header menu opens the first-level navigation menu shown by node `590:9324`. It carries the same datasource and active state as desktop `Nav.TopBar`; do not invent separate mobile menu items.
+- Mobile document/article detail does not render the desktop left anchor navigation or right related-info sidebar. Do not show those side modules on mobile unless a future mobile design explicitly defines their placement.
+
+### Mobile Typography
+
+- Mobile page summary title: `20px/28px`, `PingFang SC Bold`.
+- Mobile header/titlebar title: `16px/22px`, `PingFang SC Semibold`.
+- Mobile secondary tabs and top nav labels: `14px/20px`, active/default weight from the Figma instance, commonly `PingFang SC Bold` for tab labels.
+- Mobile category card title: `16px/24px`, `PingFang SC Bold`; category description: `14px/20px`, `PingFang SC Regular`; count badge: `12px/14px`.
+- Mobile `Game.ShowCard` title: `16px/24px`, `PingFang SC Bold`; description: `14px/20px`, `PingFang SC Regular`; badge: `12px/14px`.
+- Mobile `Layout.DescribeCard` SM title: `14px/20px`, `PingFang SC Regular`; description: `12px/18px`, `PingFang SC Regular`; badges/meta: `12px/14px`.
+- Mobile `Layout.DescribeCard` LG title: `16px/24px`, `PingFang SC Bold`; description: `14px/20px`, `PingFang SC Regular`; badges: `12px/14px`.
+- Mobile structured detail and document paragraphs use `14px/20px`, `PingFang SC Regular`, unless a nested component has a more specific text rule.
+
+### Mobile Home
+
+- Home content uses a single-column vertical layout inside `x=12, y=104, w=351`.
+- Page summary sits at `x=34, y=174, w=166, h=56` in the observed state.
+- `Game.CategoryCard` cards render as a single column at `w=351, h=114`, with `12px` vertical row gap in the observed layout.
+- Do not use the desktop four-column category grid on mobile.
+
+### Mobile Secondary Pages
+
+- Secondary tabs are horizontal-scroll rows. Use `x=12, y=152, h=36` on the 375px reference viewport. Do not wrap tabs to multiple lines.
+- `SecondaryPageSimpleInfo-mobile` uses single-column `Game.ShowCard` rows at `w=351, h=76`, row gap `12px`.
+- `SecondaryPage-mobile` uses single-column `Layout.DescribeCard Size=SM` rows at `w=351, h=106`, row gap `12px`.
+- `SecondaryPageLargeCard-mobile` uses single-column `Layout.DescribeCard Size=LG` rows at `w=351`; the observed `16:9` image frame is `335 x 188.44`, while square image-first items may use `335 x 335`.
+- `SecondaryPageMultiNav-mobile` keeps second-level tabs horizontal-scroll and replaces the desktop left sidebar with a horizontal mobile `Nav` row. The observed local nav row is `x=12, y=200, w=448, h=32` and may overflow horizontally; allow horizontal scroll and do not wrap.
+
+### Mobile Detail And Article Pages
+
+- Mobile structured detail content uses `x=12, y=152, w=351` for the main detail content shell. Do not render desktop breadcrumbs on mobile; use the mobile header back/title pattern instead.
+- Mobile `DetailContent` stacks vertically. The observed hero card is `Game.ShowCard w=319, h=76` inside `x=28, y=168`; detail modules use `Layout.DetailCard w=319` with content-driven height.
+- Detail tables must fit the mobile detail card width. Use compressible column tracks and repeat `Data.TableHeaderCell` / `Data.TableRowCell` from structured table data. Do not preserve desktop fixed table width such as `928px`.
+- Mobile document/article detail uses `ArticleContent x=12, y=152, w=351`; article body blocks use `x=24, w=327`. Paragraph text is `14px/20px`. Desktop left anchors and right related-info links are not rendered on mobile.
+
+### Mobile Modal
+
+- Mobile `Base.Modal` detail state is observed in node `624:7298`: overlay over `375 x 812`, panel `x=20, y=210, w=335, h=464`.
+- Mobile detail modal image uses `Base.Image Ratio=1:1` at `80 x 80`.
+- Mobile modal keeps the lower description area scrollable and uses `Layout.Scroll` visual behavior for internal overflow.
+- Mobile video modal is not defined yet. Keep `variant=video` mobile placement as `TODO_FROM_FIGMA_OR_IMPLEMENTATION` until the video mobile Figma state is added.
 
 ## Components
 
@@ -310,7 +366,7 @@ These items are intentionally not finalized:
 - Wiki datasource schema
 - concrete Wiki field names
 - concrete route shape
-- mobile Wiki layout
+- mobile video modal layout
 - real page output example
 - Wiki-specific output schema
 

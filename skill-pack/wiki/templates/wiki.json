@@ -20,7 +20,17 @@
       "guideDetailWithNav": "306:4716",
       "modal": "438:3663",
       "modalDetail": "436:5415",
-      "modalVideo": "438:3662"
+      "modalVideo": "438:3662",
+      "mobileHome": "577:8639",
+      "mobileHomeMenu": "590:9117",
+      "mobilePrimaryNavMenu": "590:9324",
+      "mobileSecondarySimpleInfo": "590:10341",
+      "mobileSecondaryList": "590:10708",
+      "mobileSecondaryLargeCard": "590:9357",
+      "mobileSecondaryMultiNav": "590:10996",
+      "mobileDetailAllStates": "624:4277",
+      "mobileDocumentArticle": "624:6596",
+      "mobileModalDetail": "624:7298"
     },
     "quickLocate": {
       "itemExplanationModal": {
@@ -68,7 +78,7 @@
     },
     "responsiveRules": {
       "desktop": {
-        "breakpoint": "min-width: 768px",
+        "breakpoint": "min-width: 600px",
         "canvas": "x=0, y=0, w=1000, h=610",
         "header": "x=0, y=0, w=1000, h=84",
         "body": "x=0, y=80 or 84, w=1000, h=526 or 530 depending on state",
@@ -76,9 +86,15 @@
         "scrollbar": "right edge visual scroll component; home x=988, list/detail x=980 or x=988 depending on content state"
       },
       "mobile": {
-        "breakpoint": "max-width: 767px",
-        "status": "TODO_FROM_FIGMA_OR_IMPLEMENTATION",
-        "rule": "No mobile Wiki state was captured in this template pass. Do not invent a mobile layout from the desktop frames; define a mobile template only after mobile design nodes or implementation constraints are supplied."
+        "breakpoint": "width < 600px",
+        "canvas": "375 x 812 Figma reference; implementation adapts to actual viewport width",
+        "header": "MobileHeader x=0, y=0, w=375, h=92; template chrome only, not a formal shared component in this contract pass",
+        "body": "content starts at y=104 with 12px left/right inset and a 351px reference content width",
+        "fontFamily": "PingFang SC, Microsoft YaHei UI, sans-serif",
+        "primaryNavMenu": "Right header menu opens node 590:9324 and reuses desktop Nav.TopBar datasource/active state as first-level Wiki navigation.",
+        "navigation": "Secondary tabs and mobile local Nav rows scroll horizontally and do not wrap.",
+        "documentSideModules": "Desktop document left anchors and right related-info sidebars are not rendered on mobile.",
+        "videoModal": "Mobile video modal remains TODO_FROM_FIGMA_OR_IMPLEMENTATION until a Figma mobile video state exists."
       }
     },
     "templateColors": {
@@ -103,7 +119,13 @@
     "cardLikeNoThirdLevelGrid": "For card-like large Layout.DescribeCard grids without third-level navigation, use repeat(4, 210px) by default. If the available content width cannot fit four 210px columns plus gaps, downgrade to repeat(3, 210px). A single rendered row is vertically centered after the column count is chosen; item count or single-row alignment must not reduce the column count by itself.",
     "pageScopedCardSetConsistency": "Card family, image frame ratio, and similar card-set consistency rules are scoped to the current rendered page/list only: the active secondary tab plus optional active third-level group. Do not inherit a component family or imageRatio from sibling second-level tabs, sibling secondary pages, or the whole active first-level Nav.TopBar category.",
     "documentGuideDetail": "Use guide.document-detail for article-like guide pages with long prose, one main media block, article metadata, optional section anchors, and optional related-info links. Choose among GuideDetailWithNavAndInfo, GuideDetailWithInfo, and GuideDetailWithNav based on the source data; do not force nav or related info when the source lacks those structures.",
-    "itemExplanationModal": "Use modal.item-explanation only as an overlay state above the current page when the original source page opens a modal to explain a single item. Do not replace normal detail pages, tooltips, card descriptions, or map popups with Modal just because the item has explanatory text."
+    "itemExplanationModal": "Use modal.item-explanation only as an overlay state above the current page when the original source page opens a modal to explain a single item. Do not replace normal detail pages, tooltips, card descriptions, or map popups with Modal just because the item has explanatory text.",
+    "mobileBreakpoint": "When rendered page width is less than 600px, use the mobile Wiki template family. When width is 600px or greater, use the desktop template family.",
+    "mobileAdaptationPriority": "Below 600px, preserve the host page's already selected or product-customized source structure, component family, field order, optional detail visibility, and real data first. Use the mobile template nodes as layout-method references for stacking, widths, typography, horizontal scrolling, image sizing, and side-module visibility. Do not replace a customized page with a full observed mobile sample page, and do not fabricate, reorder, or remove business details solely to match the reference screenshot.",
+    "mobileHeaderPolicy": "MobileHeader and TitlebarCenter are template chrome for mobile Wiki pages in this contract pass. Do not register a new Nav.MobileHeader component yet.",
+    "mobilePrimaryNavMenu": "The right header menu opens the mobile primary navigation panel from node 590:9324 and reuses the desktop Nav.TopBar item datasource and active first-level category state.",
+    "mobileDocumentSideModules": "Do not render desktop guide document left anchors or right related-info sidebars on mobile. Mobile document/article pages render the article content only unless a future mobile design defines these side modules.",
+    "mobileHorizontalNavigation": "Mobile secondary tabs and third-level local navigation rows may overflow horizontally. Enable horizontal scrolling and do not wrap navigation items to additional lines."
   },
   "regions": [
     {
@@ -116,7 +138,8 @@
       "layout": {
         "home": "x=0, y=0, w=1000, h=610",
         "list": "x=0, y=0, w=1000, h=610",
-        "detail": "x=0, y=0, w=1000, h=610"
+        "detail": "x=0, y=0, w=1000, h=610",
+        "mobile": "x=0, y=0, w=100vw, min-h=100vh; Figma reference is 375 x 812"
       },
       "dataRequirement": "STATIC_TEMPLATE_CHROME"
     },
@@ -136,7 +159,8 @@
         "description": "For variant=detail, the lower description box is w=357, max-height=256, padding=8, 1px #FFFFFF @ 10% stroke, radius=8, text 14px/20px #AEB6BE. If the full explanation exceeds that area, only the description box scrolls vertically with the Layout.Scroll visual style: 12px track, 4px thumb, #FFFFFF @ 12%.",
         "close": "Close button sits at x=341, y=12, w=28, h=28 with radius=6, fill #FFFFFF @ 12%, icon #7E8994.",
         "video": "For variant=video, use the Figma Property=Vedio state: panel w=381 h=290 with a 357 x 238 video area at x=12, y=40 and centered play icon. Do not render title, subtitle, or description unless the source video modal explicitly has separate text outside the video.",
-        "usage": "Render this region only as a modal state on top of the underlying page. The underlying page keeps its own selected template and component choices."
+        "usage": "Render this region only as a modal state on top of the underlying page. The underlying page keeps its own selected template and component choices.",
+        "mobile": "Use mobileModalDetail node 624:7298 for variant=detail on pages under 600px: overlay covers the viewport, panel x=20, y=210, w=335, h=464 on the 375px reference, image is 80x80, and the lower description area scrolls internally. Mobile variant=video is TODO_FROM_FIGMA_OR_IMPLEMENTATION."
       },
       "dataBinding": {
         "title": "TODO_FROM_DATASOURCE modal item title",
@@ -161,7 +185,9 @@
       "layout": {
         "header": "x=0, y=0, w=1000, h=84",
         "topBar": "x=32, y=32, w=696, h=36; 8 first-level tabs, each w=80, h=36, gap=8",
-        "search": "x=748, y=32, w=220, h=36; right edge aligned to x=968 with 32px right inset"
+        "search": "x=748, y=32, w=220, h=36; right edge aligned to x=968 with 32px right inset",
+        "mobile": "Use MobileHeader x=0, y=0, w=375, h=92. TitlebarCenter occupies x=0, y=48, w=375, h=44. The left side carries back/close actions from routing context, the right side carries the menu trigger. Do not reuse the desktop Nav.Header layout on mobile.",
+        "mobilePrimaryNavMenu": "Right menu opens node 590:9324 below the mobile header and reuses regions[shell.header].components[Nav.TopBar].props.items / activeId as first-level navigation data. This menu is template chrome and not a new component in this contract pass."
       },
       "observedHomeLayout": {
         "sourceNodeId": "173:7278",
@@ -216,7 +242,8 @@
         "summaryBanner": "Content-relative x=0, y=0, w=936, h=100; rounded image placeholder/background supplied by the tool/game config",
         "pageSummary": "Inside summaryBanner x=20, y=22, w=170, h=56",
         "titleRow": "x=0, y=0, w=170, h=28; horizontal text row, gap=4; first text '<game name>' w=80, second text 'Wiki攻略' x=84, w=86",
-        "metaRow": "x=0, y=36, w=132, h=20; horizontal meta row, gap=4; category count w=73, separator x=77 w=4, item count x=85 w=47"
+        "metaRow": "x=0, y=36, w=132, h=20; horizontal meta row, gap=4; category count w=73, separator x=77 w=4, item count x=85 w=47",
+        "mobile": "In WikiHome-mobile node 577:8639, PageSummary sits at x=34, y=174, w=166, h=56. Title uses 20px/28px PingFang SC Bold; meta uses 14px/20px PingFang SC Regular. Mobile home does not use the desktop 936x100 summary banner as a full-width layout requirement."
       },
       "observedHomeLayout": {
         "sourceNodeId": "477:4038",
@@ -322,7 +349,8 @@
         "columnGap": "12px",
         "rowGap": "12px",
         "observedRows": "4 rows in the design; row y positions are 0, 126, 252, 378; the last row is clipped by the Body viewport until scrolled",
-        "cardContent": "title, short description, icon/avatar cluster previewing up to the first three linked secondary-page item icons/images, count badge showing total category items, trailing arrow"
+        "cardContent": "title, short description, icon/avatar cluster previewing up to the first three linked secondary-page item icons/images, count badge showing total category items, trailing arrow",
+        "mobile": "In WikiHome-mobile node 577:8639, render a single-column vertical list inside x=12, y=264, w=351. Each Game.CategoryCard is w=351, h=114 with 12px row gap. Do not use the desktop four-column grid below 600px."
       },
       "observedHomeLayout": {
         "sourceNodeId": "477:3701",
@@ -479,7 +507,10 @@
         "largeCardContainer": "SecondaryPageLargeCard Body-relative x=50, y=64, w=900; absolute x=50, y=148",
         "plainLargeCardContainer": "When there is no secondary navigation and no breadcrumbs above a SecondaryPageLargeCard list, use Body-relative x=50, y=20, w=900; absolute y is Body.y + 20.",
         "largeCardGrid": "Default grid-template-columns: repeat(4, 210px). If the available content width cannot fit four 210px columns plus gaps, use repeat(3, 210px). Column count is determined by available width, not by item count. Column gap=20; row gap=20; row y positions 0 and 304 in the observed frame. When the selected large-card set renders only one row, vertically center that row inside the large-card container without changing the chosen column count.",
-        "pagination": "x=0, y=482, w=1000, h=64 inside SecondaryPage Body"
+        "pagination": "x=0, y=482, w=1000, h=64 inside SecondaryPage Body",
+        "mobileShowCardList": "SecondaryPageSimpleInfo-mobile node 590:10341 uses a single-column list at x=12, y=200, w=351. Game.ShowCard rows are w=351, h=76 with 12px row gap.",
+        "mobileDescribeCardList": "SecondaryPage-mobile node 590:10708 uses a single-column list at x=12, y=200, w=351. Layout.DescribeCard Size=SM rows are w=351, h=106 with 12px row gap.",
+        "mobileLargeCardList": "SecondaryPageLargeCard-mobile node 590:9357 uses a single-column list at x=12, y=152, w=351. Layout.DescribeCard Size=LG rows are w=351, observed h=312.44 for 16:9 image cards and h=459 for square image-first cards. The observed 16:9 Base.Image frame is 335 x 188.44; square image-first frame is 335 x 335."
       },
       "observedSecondaryLayout": {
         "pageNodeId": "304:5972",
@@ -699,7 +730,8 @@
         "template": "SecondaryPageMultiNav",
         "tabsContainer": "Body-relative x=32, y=16, w=390, h=26; absolute x=32, y=100",
         "tab": "Each Nav.SecondaryTab is w=60, h=26 with x positions 0, 66, 132, 198, 264, 330 and 6px gap",
-        "states": "First observed tab is State=Active; following tabs are State=Default"
+        "states": "First observed tab is State=Active; following tabs are State=Default",
+        "mobile": "Mobile secondary tabs use nodes 590:10341, 590:10708, and 590:10996: x=12, y=152, h=36. Tabs keep their observed widths such as 52, 80, or 136px and scroll horizontally when total width exceeds the viewport. Do not wrap to multiple rows."
       },
       "observedSecondaryMultiNavLayout": {
         "pageNodeId": "375:4979",
@@ -759,7 +791,8 @@
       "layout": {
         "contentShell": "Body-relative x=32, y=62, w=936, h=480; absolute x=32, y=146",
         "navigate": "Inside content shell x=0, y=0, w=96, h=480; right divider; content list w=80 with 16px right padding and 8px vertical padding",
-        "relationship": "The right card list starts at x=116, leaving a 20px gap after the 96px navigation column"
+        "relationship": "The right card list starts at x=116, leaving a 20px gap after the 96px navigation column",
+        "mobile": "SecondaryPageMultiNav-mobile node 590:10996 replaces the desktop left sidebar with a horizontal mobile Nav row at x=12, y=200, w=448, h=32 on the 375px reference. Items such as Nav.NavigateItem are 68x32. Allow horizontal scrolling and do not render a vertical sidebar below 600px."
       },
       "observedSecondaryMultiNavLayout": {
         "pageNodeId": "375:4979",
@@ -809,7 +842,8 @@
       "layout": {
         "showCardList": "Inside content shell x=116, y=0, w=820, h=480",
         "grid": "2 columns, visible rows use card w=406, h=76, column gap=8, row gap=8",
-        "overflow": "Observed sixth row starts at y=420 and extends 16px beyond the 480px shell; renderer should scroll or clip according to host scroll behavior instead of shrinking card height"
+        "overflow": "Observed sixth row starts at y=420 and extends 16px beyond the 480px shell; renderer should scroll or clip according to host scroll behavior instead of shrinking card height",
+        "mobile": "In SecondaryPageMultiNav-mobile node 590:10996, content follows the horizontal mobile Nav row. The observed list uses single-column Game.ShowCard rows at w=448, h=76 because the list is horizontally wider than the viewport; keep the horizontal scroll container and do not force desktop two-column placement on mobile."
       },
       "observedSecondaryMultiNavLayout": {
         "pageNodeId": "375:4979",
@@ -866,7 +900,8 @@
       ],
       "layout": {
         "breadcrumbs": "Body-relative x=32, y=16, w=294, h=26 in detail states; absolute x=32, y=100 when Body.y=84.",
-        "itemSizing": "Each Nav.Breadcrumbs item is width:auto / hug text content, h=26, text 12px/18px. The overall breadcrumb row may occupy the template frame, but individual item widths must not be fixed to the observed sample label width."
+        "itemSizing": "Each Nav.Breadcrumbs item is width:auto / hug text content, h=26, text 12px/18px. The overall breadcrumb row may occupy the template frame, but individual item widths must not be fixed to the observed sample label width.",
+        "mobile": "Do not render desktop Nav.Breadcrumbs on mobile detail pages. Use MobileHeader back/title behavior from routing context instead."
       },
       "observedDetailLayouts": {
         "largeCardExpanded": {
@@ -929,7 +964,8 @@
         "detailContent": "Body-relative x=20, y=62, w=960; absolute x=20, y=146 when Body.y=84; observed height ranges from 1022 to 1204 depending on expanded content",
         "detailContentChrome": "DetailContent is a special clipped shell: background var(--color-bg-black) / #000306, 1px inside stroke using var(--color-stroke-area) / rgba(255,255,255,0.10), radius 8, clipsContent=true. Do not omit this border even though inner cards also have their own strokes.",
         "internalSpacing": "DetailContent itself has vertical layout with padding=0 and gap=0. HeroSection uses padding=16 and gap=10. DetailSections/ExpandedSections use padding=16 and vertical gap=12.",
-        "scroll": "Body-relative x=980, y=60, w=12; height is 446 in large-card-expanded and 995 in all-states reference"
+        "scroll": "Body-relative x=980, y=60, w=12; height is 446 in large-card-expanded and 995 in all-states reference",
+        "mobile": "DetailPageAllStates-mobile node 624:4277 uses DetailContent x=12, y=152, w=351. Stack HeroSection and DetailSections vertically. Do not preserve the desktop 960px content width or desktop right-edge visual scrollbar placement on mobile."
       },
       "observedDetailLayouts": {
         "largeCardExpanded": {
@@ -1054,7 +1090,8 @@
       ],
       "layout": {
         "largeDescribeCard": "DetailPageLargeCardExpanded HeroSection x=0, y=0, w=960, h=120, padding=16, gap=10; card x=16, y=16, w=928, h=88",
-        "compactShowCard": "DetailPageAllStates HeroSection x=0, y=0, w=960, h=108, padding=16, gap=10; card x=16, y=16, w=928, h=76"
+        "compactShowCard": "DetailPageAllStates HeroSection x=0, y=0, w=960, h=108, padding=16, gap=10; card x=16, y=16, w=928, h=76",
+        "mobile": "DetailPageAllStates-mobile node 624:4277 uses HeroSection x=12, y=152, w=351, h=108. Compact hero card is Game.ShowCard x=28, y=168, w=319, h=76."
       },
       "observedDetailLayouts": {
         "largeCardExpanded": {
@@ -1312,7 +1349,8 @@
       "layout": {
         "largeExpanded": "Layout.DetailCard x=16, y=402, w=928, h=328",
         "allStates": "Layout.DetailCard x=16, y=364, w=928, h=258",
-        "table": "full-width table inside card; observed columns include level, attack, price, material"
+        "table": "full-width table inside card; observed columns include level, attack, price, material",
+        "mobile": "DetailPageAllStates-mobile node 624:4277 uses Layout.DetailCard modules at x=28, w=319 with content-driven heights such as 84, 128, 258, or 232. Detail tables must fit the 319px card width with compressible columns; do not preserve desktop 928px table width."
       },
       "observedDetailLayouts": {
         "largeCardExpanded": {
@@ -1456,7 +1494,8 @@
         "leftNav": "Optional Nav.Navigate at ArticleLayout x=0, y=0, w=96; h=607.9389 in GuideDetailWithNavAndInfo, h=576 in GuideDetailWithNav; padding top/bottom=8, padding right=16, right divider 1px var(--color-stroke-area).",
         "articleContent": "Vertical ArticleContent with gap=12 and no padding. Width is 540 with nav+info, 656 with info only, and 820 with nav only.",
         "rightInfo": "Optional RelatedInfoSidebar at ArticleLayout x=676, y=0, w=260; vertical gap=8. The current Figma sample shows a 204px-tall sidebar with a 160px related-info list area, but that sample is not a row-count limit. Title frame h=36 with 8px inset text and a 1px bottom divider at y=36, w=260, using var(--color-stroke-area) / rgba(255,255,255,0.10). List starts at y=44, w=260, item h=34, list gap=8. If real related-info links exceed the four visible sample rows, continue stacking rows downward and grow the sidebar instead of clipping or truncating the list.",
-        "articleBody": "ArticleBody starts at ArticleContent y=64, uses vertical gap=8. All article images keep the source image aspect ratio; constrain image rendering by max-height=230 only and do not force the Figma sample 16:9 ratio. Text is full ArticleContent width, Body/SM 12px/18px. RelatedContentSection is optional and starts at y=382 when present."
+        "articleBody": "ArticleBody starts at ArticleContent y=64, uses vertical gap=8. All article images keep the source image aspect ratio; constrain image rendering by max-height=230 only and do not force the Figma sample 16:9 ratio. Text is full ArticleContent width, Body/SM 12px/18px. RelatedContentSection is optional and starts at y=382 when present.",
+        "mobile": "Document/article mobile node 624:6596 renders article content only. Use ArticleContent x=12, y=152, w=351 and ArticleBody blocks x=24, w=327 with 14px/20px PingFang SC Regular paragraphs. Do not render desktop leftNav or rightInfo side modules on mobile."
       },
       "observedGuideDetailLayouts": {
         "withNavAndInfo": {
@@ -1661,7 +1700,7 @@
     }
   ],
   "requiredRendererBehavior": [
-    "Render Wiki output in a 1000 x 610 default canvas unless a host shell explicitly overrides the size.",
+    "Render desktop Wiki output in a 1000 x 610 default canvas unless a host shell explicitly overrides the size. When rendered page width is less than 600px, use the mobile Wiki template family with a 375 x 812 Figma reference and responsive viewport width.",
     "Keep this Wiki template independent from skill-pack/map/templates/map.json; do not merge Wiki regions into the map contract.",
     "Reject unknown region ids.",
     "Reject arbitrary HTML or arbitrary component code in AI output.",
@@ -1669,6 +1708,7 @@
     "Do not invent datasource fields; use TODO_FROM_DATASOURCE until the Wiki mapping contract defines source fields.",
     "Treat every Figma template page as a layout reference, not a mandatory data structure. Select regions and components based on the original source page first, then use the matching template coordinates for the selected component family.",
     "A referenced template page may be used partially. Do not render secondary tabs, third-level sidebars, breadcrumbs, large cards, pagination, or detail sections unless the original source page or routing context actually contains that structure.",
+    "On mobile, adapt the current chosen or product-customized page structure instead of replacing it with the full observed mobile reference page. Preserve source-driven component choices, field order, hidden or added details, and host-specific adjustments, then apply mobile spacing, widths, typography, single-column or horizontal-scroll behavior, image rules, and mobile-only visibility rules.",
     "Render modal.item-explanation only when the original source page uses a modal overlay to explain a single item or video source material. Place Base.Modal centered over the current page with a #000000 50% opacity overlay. Use variant=detail for Property=Detail node 436:5415: 381px wide, max-height 484px, content-adaptive height, #11161B panel background, and a lower description area capped at 256px that scrolls internally when the full explanation is longer. Use variant=video for Figma Property=Vedio node 438:3662: 381px wide, 290px high, with a 357 x 238 video area and centered play icon.",
     "When multiple components can represent the same region, choose the component by source information density before applying layout. The phrase same page/list means the currently rendered list only: active secondary tab plus optional active third-level group. Compact text entries may use Game.ShowCard only when every visible card subtitle/body in that current list fits within one visible line, richer inline entries may use compact Layout.DescribeCard, and image-first gallery entries may use the SecondaryPageLargeCard Layout.DescribeCard grid.",
     "For Layout.DescribeCard, bind ShowImage, ShowTitle, ShowDescription, ShowBadge, ShowBadgeGroup, and ShowAttributes from actual source fields and the chosen presentation. When one is false, the renderer must omit that region and collapse its spacing rather than rendering empty placeholders. If showTitle=false and showBadge=false, omit the whole title row.",
@@ -1700,6 +1740,7 @@
     "Home summary title follows the WikiHome two-segment title row inside the summary banner: '<game name>' followed by the literal 'Wiki攻略'. The summary banner image is supplied by the tool/game config; preview or missing-data states may use the configured placeholder image only.",
     "In home.category-grid, each Game.CategoryCard previews up to the first three items of its linked secondary page through the avatar cluster, prefers icon over image when both exist, shows the total item count for that category in the trailing count badge, and is hidden when that total count is 0.",
     "Nav.TopBar items are global first-level Wiki categories.",
+    "On mobile, the right header menu opens the primary navigation menu from node 590:9324 and uses the same first-level category datasource and active state as desktop Nav.TopBar. Do not invent a separate mobile nav datasource.",
     "Form.SearchBar is global Wiki search across categories and entries.",
     "In secondary list state, keep the observed template pagination placement, bind pagination separately from card data, and use backend totalPages instead of preview defaults.",
     "In secondary list state, use Game.ShowCard when it fully represents the original entry and every visible card subtitle/body in the current page/list fits within one visible line; use Layout.DescribeCard size=SM for the whole current card set when any visible entry needs more than one visible line or richer original entry information needs image, badge, description, or meta fields, and keep the DescribeCard height content-adaptive.",
@@ -1709,8 +1750,10 @@
     "Detail hero card family follows the card family used to open the detail page from the previous list page.",
     "Detail attribute badges should preserve original source tag classes when possible; otherwise assign stable different tones across different tag classes.",
     "Detail extended content should render only when the original source data structure matches the supported Wiki detail blocks.",
-    "Use the Figma frame size 1000 x 610 as the default Wiki canvas and allow vertical scrolling for content overflow.",
-    "Do not invent a mobile Wiki layout until mobile Wiki design nodes or explicit implementation constraints are supplied.",
+    "Use the Figma frame size 1000 x 610 as the default desktop Wiki canvas and allow vertical scrolling for content overflow. Use mobile structure only below 600px.",
+    "Below 600px, do not scale down desktop grids, sidebars, breadcrumbs, or the desktop Nav.Header. Preserve the page's selected/customized business structure, then apply MobileHeader shell behavior, 12px side insets, single-column mobile card lists, horizontal scrolling tabs/nav, and mobile typography from the observed mobile Wiki nodes.",
+    "Below 600px, document/article pages do not render desktop left section anchors or right related-info sidebars. Render article content only unless a future mobile design defines those modules.",
+    "Below 600px, mobile video modal layout remains TODO_FROM_FIGMA_OR_IMPLEMENTATION; only Base.Modal detail state is currently defined by node 624:7298.",
     "Preserve breadcrumb hierarchy and active state. Breadcrumb labels and target routes must come from datasource or routing context.",
     "Cards should not fabricate images, badges, counts, progress, or table values. Missing optional fields should collapse gracefully rather than showing placeholder data in final output.",
     "Related cards and progress cards share the detail data model but must remain optional sections controlled by datasource availability.",

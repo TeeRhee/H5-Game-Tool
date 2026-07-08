@@ -4181,6 +4181,328 @@ button:disabled {
   }
 }
 
+@media (max-width: 599px) {
+  .wiki-home-template-workspace,
+  .wiki-document-template-workspace {
+    grid-template-columns: max-content;
+  }
+
+  .wiki-home-template-audit,
+  .wiki-document-template-audit {
+    display: none;
+  }
+
+  .wiki-home-template-stage,
+  .wiki-document-template-stage {
+    overflow: auto;
+  }
+
+  .wiki-home-template-frame,
+  .wiki-document-template-frame {
+    width: 375px;
+    height: 812px;
+    border-radius: 0;
+  }
+
+  .wiki-home-template-frame > .gt-wiki-header,
+  .wiki-document-template-frame > .gt-wiki-header {
+    display: none;
+  }
+
+  .wiki-home-template-body {
+    top: 104px;
+    width: 375px;
+    height: 708px;
+    overflow-y: auto;
+  }
+
+  .wiki-home-template-content {
+    position: relative;
+    top: 0;
+    left: 12px;
+    width: 351px;
+    height: auto;
+    padding-bottom: 24px;
+    gap: 12px;
+  }
+
+  .wiki-home-template-summary-banner {
+    width: 351px;
+    height: 100px;
+    flex-basis: 100px;
+  }
+
+  .wiki-home-template-summary {
+    top: 22px;
+    left: 20px;
+  }
+
+  .wiki-home-template-summary__title {
+    font-family: "PingFang SC", "Microsoft YaHei UI", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+  }
+
+  .wiki-home-template-grid {
+    width: 351px;
+    height: auto;
+    grid-template-columns: 351px;
+    grid-auto-rows: 114px;
+    gap: 12px;
+  }
+
+  .wiki-home-template-grid .gt-wiki-category-card {
+    width: 351px;
+    height: 114px;
+    min-height: 114px;
+  }
+
+  .wiki-home-template-scroll {
+    display: none;
+  }
+
+  .wiki-document-template-body {
+    inset: 104px 0 0;
+    overflow-y: auto;
+  }
+
+  .wiki-document-template-breadcrumbs,
+  .wiki-document-template-nav,
+  .wiki-document-template-info {
+    display: none;
+  }
+
+  .wiki-document-template-layout {
+    position: relative;
+    left: 12px;
+    top: 48px;
+    display: block;
+    width: 351px;
+    height: auto;
+    overflow: visible;
+  }
+
+  .wiki-document-template-article {
+    width: 351px;
+    min-height: 0;
+    gap: 12px;
+    font-family: "PingFang SC", "Microsoft YaHei UI", sans-serif;
+  }
+
+  .wiki-document-template-title-row {
+    min-height: 24px;
+    flex-wrap: wrap;
+  }
+
+  .wiki-document-template-title-row h2 {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+
+  .wiki-document-template-meta-row {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .wiki-document-template-article-body {
+    width: 327px;
+    margin-left: 12px;
+    gap: 8px;
+  }
+
+  .wiki-document-template-hero {
+    width: 327px;
+    max-height: 230px;
+  }
+
+  .wiki-document-template-paragraph {
+    font-family: "PingFang SC", "Microsoft YaHei UI", sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .gt-wiki-secondary-tab {
+    min-width: max-content;
+    min-height: 36px;
+    padding: 8px 10px;
+    font-family: "PingFang SC", "Microsoft YaHei UI", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+  }
+
+  .gt-wiki-navigate--horizontal {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 0;
+    overflow-x: auto;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .gt-wiki-navigate--horizontal .gt-wiki-navigate__list {
+    width: max-content;
+    min-width: 100%;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .gt-wiki-navigate--horizontal .gt-wiki-navigate-item {
+    width: auto;
+    min-width: max-content;
+    height: 32px;
+    padding: 6px 10px;
+    font-family: "PingFang SC", "Microsoft YaHei UI", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+  }
+
+  .gt-wiki-category-card {
+    width: min(100%, 351px);
+    min-height: 114px;
+    padding: 12px;
+    gap: 8px;
+    font-family: "PingFang SC", "Microsoft YaHei UI", sans-serif;
+  }
+
+  .gt-wiki-category-card__title {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+
+  .gt-wiki-category-card__description {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .gt-wiki-category-card__meta {
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  .gt-wiki-show-card {
+    width: min(100%, 351px);
+    min-height: 76px;
+    font-family: "PingFang SC", "Microsoft YaHei UI", sans-serif;
+  }
+
+  .gt-wiki-show-card .gt-wiki-show-card__title {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+
+  .gt-wiki-show-card__description {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .gt-wiki-show-card > .gt-wiki-badge {
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  .gt-wiki-describe-card {
+    --gt-wiki-describe-card-body-width: 233px;
+    --gt-wiki-describe-card-content-width: 335px;
+    --gt-wiki-describe-card-image-size: 90px;
+    width: 351px;
+    min-height: 106px;
+    font-family: "PingFang SC", "Microsoft YaHei UI", sans-serif;
+  }
+
+  .gt-wiki-describe-card--lg {
+    width: 351px;
+    min-height: 0;
+  }
+
+  .gt-wiki-describe-card--lg > .gt-wiki-image {
+    width: 335px;
+  }
+
+  .gt-wiki-describe-card--sm h3 {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+
+  .gt-wiki-describe-card--lg h3 {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+
+  .gt-wiki-describe-card--lg .gt-wiki-describe-card__description {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .gt-wiki-describe-card__badge-group > .gt-wiki-badge,
+  .gt-wiki-describe-card__attributes {
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  .gt-wiki-detail-card {
+    width: 319px;
+    font-family: "PingFang SC", "Microsoft YaHei UI", sans-serif;
+  }
+
+  .gt-wiki-detail-card__title {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .gt-wiki-detail-card__description,
+  .gt-wiki-detail-card p {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .gt-wiki-detail-card__features {
+    grid-template-columns: 1fr;
+  }
+
+  .gt-wiki-detail-card__feature-card {
+    width: 319px;
+  }
+
+  .gt-wiki-detail-card__table {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .gt-wiki-detail-card__table-row {
+    grid-template-columns: var(--gt-wiki-table-columns, repeat(var(--gt-wiki-table-column-count, 4), minmax(0, 1fr)));
+  }
+
+  .gt-modal-layer {
+    --gt-modal-max-height: 464px;
+    --gt-modal-description-max-height: 240px;
+  }
+
+  .gt-modal-layer--fixed {
+    padding: 0;
+  }
+
+  .gt-modal {
+    width: 335px;
+    max-height: min(464px, calc(100vh - 40px));
+  }
+
+  .gt-modal__image {
+    width: 80px;
+    height: 80px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .gt-map-tip,
   .gt-wiki-topbar::after,

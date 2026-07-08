@@ -49,7 +49,7 @@ export function WikiHomeTemplatePreview() {
   return (
     <section className="wiki-home-template-workspace">
       <div className="wiki-home-template-stage" aria-label="WikiHome template preview from skill-pack/wiki/templates/wiki.json">
-        <Background className="wiki-home-template-frame" style={frameStyle}>
+        <Background className="wiki-home-template-frame wiki-home-template-mobile" style={frameStyle}>
           <Header searchPlaceholder="搜索栏">
             <TopBar items={topBarItems} />
           </Header>

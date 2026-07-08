@@ -53,7 +53,7 @@ export function WikiDocumentTemplatePreview() {
   return (
     <section className="wiki-document-template-workspace">
       <div className="wiki-document-template-stage" aria-label="Event document guide preview">
-        <Background className="wiki-document-template-frame">
+        <Background className="wiki-document-template-frame wiki-document-template-mobile">
           <Header searchPlaceholder="搜索攻略">
             <TopBar items={topBarItems} activeId="event" />
           </Header>
