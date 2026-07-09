@@ -563,7 +563,7 @@
         "padding": "Desktop header padding is top=32, right=32, bottom=16, left=32. The bottom 16px is part of the header mask/scroll cutoff area.",
         "layout": "TopBar and SearchBar stay aligned at y=32 with height 36. Other page content starts after the 84px header region and should disappear under the header from its bottom padding boundary while scrolling.",
         "rule": "Do not place page body content inside the header padding. Template body/content absolute positions should shift down with the 84px header.",
-        "mobileRule": "Below 600px, do not reuse desktop Nav.Header. Use the host/product mobile shell behavior from the Wiki mobile template reference: MobileHeader/TitlebarCenter x=0, y=0, w=375, h=92 with content starting at y=104. The 375px width is a Figma reference only; production mobile shell/header width must fill the available host container or browser viewport. When the host/product titlebar is outside the Wiki surface, the dark Wiki shell uses its own internal 68px action bar with 12px inset, a left 44x44 search icon button, and a right 44x44 primary-menu icon button; hide desktop Nav.TopBar and the desktop Form.SearchBar input in that shell. This mobile header/action-bar chrome is not a formal component export in the current package, and it must not replace the page's product-customized body structure."
+        "mobileRule": "Below 600px, do not reuse desktop Nav.Header. Use the host/product mobile shell behavior from the Wiki mobile template reference: MobileHeader/TitlebarCenter x=0, y=0, w=375, h=92 with content starting at y=104 when that full mobile header is owned by the Wiki surface. The 375px width is a Figma reference only; production mobile shell/header width must fill the available host container or browser viewport. When the host/product titlebar is outside the Wiki surface, the dark Wiki shell uses its own internal 68px action bar. The visible action row starts 12px from the page top, follows Figma node 694:3658 as a 351x36 reference row, shows the active first-level page name on non-home pages, renders no left title on the mobile home page, and uses only a right-aligned 36x36 primary-menu icon button; do not render a left search icon button. Embedded dark-shell content starts below that action bar at y=68, so pages with a first secondary tab row must not add another top inset before the row. Hide desktop Nav.TopBar and the desktop Form.SearchBar input in that shell. This mobile header/action-bar chrome is not a formal component export in the current package, and it must not replace the page's product-customized body structure."
       },
       "props": {
         "searchValue": {
@@ -634,6 +634,9 @@
       "observedUse": [
         "wiki:secondary.multi-level-tabs"
       ],
+      "observedStructure": {
+        "mobile": "Mobile secondary tab rows follow node 590:11004: row reference w=351, h=36, horizontal auto-layout gap=6, no wrapping. Each Nav.SecondaryTab item is hug-content, h=36, padding 8px 12px, radius 4, and 1px border using var(--color-stroke-area) in both default and active states. Active text uses var(--color-primary-base), but active border remains var(--color-stroke-area). Typical observed widths are 52px for 2 Chinese characters, 80px for 4 characters, and 136px for 8 characters."
+      },
       "typography": {
         "label": "Desktop: Body/SM, 12px/18px, regular; active text uses var(--color-primary-base), default text uses var(--color-text-weak). Mobile: 14px/20px PingFang SC Bold in the observed SecondaryPage mobile tab rows."
       },
@@ -788,7 +791,7 @@
       "observedStructure": {
         "rule": "This card is the top-level Wiki category entry on the home page. The circular preview slots summarize up to the first three items of the linked secondary page in display order, and the trailing count shows the total number of items contained by that category. Hide the whole card when the total item count is 0.",
         "hoverRule": "Render hover state only when the card can click through to a real secondary page or otherwise trigger new information. If it cannot navigate or trigger a real information change, keep the default state even on pointer hover.",
-        "mobile": "Below 600px, WikiHome-mobile renders CategoryCard in a single column at reference w=351, h=114 with 12px row gap. In production, the card width fills the actual mobile content column rather than staying fixed at 351px. Title uses 16px/24px PingFang SC Bold, description uses 14px/20px PingFang SC Regular, and count badge uses 12px/14px."
+        "mobile": "Below 600px, WikiHome-mobile renders CategoryCard in a single column at reference w=351, h=114 with 12px row gap and a 1px border using var(--color-stroke-area). In production, the card width fills the actual mobile content column rather than staying fixed at 351px. Title uses 16px/24px PingFang SC Bold, description uses 14px/20px PingFang SC Regular, and count badge uses 12px/14px."
       },
       "props": {
         "title": {
@@ -938,7 +941,7 @@
         "lgNoDescriptionRule": "For size=lg when description/subtitle is absent, render the image-first structure as image plus title and any explicitly bound badge/meta only. Do not render an empty subtitle row or reserve subtitle spacing, and let the card height adapt to image, title, and padding.",
         "hoverRule": "Render hover state only when the card can click through, open a detail/modal, expand, play, or otherwise trigger new information. If it is display-only, do not show hover styling.",
         "mobileSm": "Below 600px, SecondaryPage-mobile renders Layout.DescribeCard Size=SM as a single-column list: reference card w=351, h=106 in the observed 375px frame. In production, the card width fills the actual mobile content column. Title uses 14px/20px PingFang SC Regular, description uses 12px/18px PingFang SC Regular, and badges/meta use 12px/14px.",
-        "mobileLg": "Below 600px, SecondaryPageLargeCard-mobile renders Layout.DescribeCard Size=LG as a single-column image-first card: reference card w=351, observed h=312.44 for 16:9 images and h=459 for square image-first items. Content/media width is 335 on the 375px reference; in production, card and media width fill the actual mobile content column after internal padding. Title uses 16px/24px PingFang SC Bold, description uses 14px/20px PingFang SC Regular, and badges use 12px/14px."
+        "mobileLg": "Below 600px, SecondaryPageLargeCard-mobile renders Layout.DescribeCard Size=LG as a single-column image-first card: reference card w=351, observed h=312.44 for 16:9 images and h=459 for square image-first items. Content/media width is 335 on the 375px reference; in production, card and media width fill the actual mobile content column after internal padding. Mobile adapts layout and width only; it must preserve the imageRatio/imageFit selected for the same current PC page/list. If the PC page/list uses imageRatio=1:1 for those cards, the mobile card image remains 1:1 rather than being forced to 16:9. Title uses 16px/24px PingFang SC Bold, description uses 14px/20px PingFang SC Regular, and badges use 12px/14px."
       },
       "props": {
         "title": {
