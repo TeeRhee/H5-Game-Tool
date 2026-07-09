@@ -1,6 +1,6 @@
 {
   "name": "@h5-game-tool/components",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Reusable React components, tokens, and styles for H5 game tool UIs.",
   "type": "module",
   "private": false,
